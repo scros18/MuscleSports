@@ -10,6 +10,7 @@ import { useCart } from "@/context/cart-context";
 import { formatPrice } from "@/lib/utils";
 import { ShoppingCart, ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { generateProductSchema, generateBreadcrumbSchema } from "@/lib/seo";
 
 // Render this page dynamically so product fetch happens at request-time
 export const dynamic = 'force-dynamic';
@@ -29,7 +30,28 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         if (!r.ok) throw new Error('Not found');
         return r.json();
       })
-      .then((data) => mounted && setProduct(data))
+      .then((data) => {
+        if (!mounted) return;
+        setProduct(data);
+
+        // Add structured data to page
+        const productSchema = generateProductSchema(data);
+        const breadcrumbSchema = generateBreadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Products', url: '/products' },
+          { name: data.name, url: `/products/${data.id}` },
+        ]);
+
+        const productScript = document.createElement('script');
+        productScript.type = 'application/ld+json';
+        productScript.text = JSON.stringify(productSchema);
+        document.head.appendChild(productScript);
+
+        const breadcrumbScript = document.createElement('script');
+        breadcrumbScript.type = 'application/ld+json';
+        breadcrumbScript.text = JSON.stringify(breadcrumbSchema);
+        document.head.appendChild(breadcrumbScript);
+      })
       .catch((err) => {
         console.error('Failed to load product', err);
         mounted && setProduct(null);

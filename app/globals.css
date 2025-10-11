@@ -64,6 +64,19 @@
 
 /* iOS-style smooth transitions */
 @layer utilities {
+  /* iOS Spring Animation - Performance optimized */
+  .ease-spring {
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .ease-ios {
+    transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+
+  .ease-elastic {
+    transition-timing-function: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  }
+
   /* Smooth page transitions */
   .page-transition {
     animation: fadeIn 0.3s ease-in-out;
@@ -78,6 +91,43 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  /* iOS-style bounce keyframes */
+  @keyframes iosBounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes iosPop {
+    0% { transform: scale(0.9); opacity: 0; }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes iosSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Animation classes */
+  .animate-ios-bounce {
+    animation: iosBounce 0.3s ease-spring;
+  }
+
+  .animate-ios-pop {
+    animation: iosPop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .animate-ios-slide-up {
+    animation: iosSlideUp 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
   }
 
   /* Smooth button and link interactions */
@@ -135,6 +185,18 @@
     will-change: transform;
   }
 
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   /* Custom light blue scrollbar for mobile */
   @media (max-width: 1023px) {
     /* Webkit browsers (Chrome, Safari, Edge) */
@@ -172,6 +234,15 @@
   }
   100% {
     background-position: 1000px 0;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 

@@ -10,12 +10,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/context/cart-context";
 import { useAuth } from "@/context/auth-context";
+import { usePerformance } from "@/context/performance-context";
+import { useSiteSettings } from "@/context/site-settings-context";
 import { Badge } from "@/components/ui/badge";
 import { SaleBanner } from "@/components/sale-banner";
 
 export function Header() {
   const { totalItems } = useCart();
   const { user, logout } = useAuth();
+  const { settings } = usePerformance();
+  const { settings: siteSettings } = useSiteSettings();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -131,8 +135,8 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center flex-shrink-0">
           <Image
-            src="/ordifydirectltd.png"
-            alt="Ordify Direct Ltd"
+            src={siteSettings.logoUrl}
+            alt={siteSettings.siteName}
             width={120}
             height={40}
             className="h-10 w-auto"
@@ -140,24 +144,42 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
+        <nav className="hidden md:flex items-center space-x-3 text-sm font-medium">
           <Link
             href="/"
-            className="transition-colors hover:text-foreground/80 text-foreground"
+            className={`relative px-4 py-2 rounded-full backdrop-blur-md bg-gradient-to-br from-white/80 via-white/60 to-white/40 dark:from-gray-800/80 dark:via-gray-800/60 dark:to-gray-800/40 border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl text-foreground hover:text-primary font-semibold overflow-hidden group ${
+              settings.animationsEnabled
+                ? 'transition-all duration-300 hover:scale-105 active:scale-95'
+                : 'transition-shadow duration-200'
+            }`}
           >
-            Home
+            <span className="relative z-10">Home</span>
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.4)] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)]"></div>
           </Link>
           <Link
             href="/products"
-            className="transition-colors hover:text-foreground/80 text-foreground/60"
+            className={`relative px-4 py-2 rounded-full backdrop-blur-md bg-gradient-to-br from-white/80 via-white/60 to-white/40 dark:from-gray-800/80 dark:via-gray-800/60 dark:to-gray-800/40 border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl text-foreground hover:text-primary font-semibold overflow-hidden group ${
+              settings.animationsEnabled
+                ? 'transition-all duration-300 hover:scale-105 active:scale-95'
+                : 'transition-shadow duration-200'
+            }`}
           >
-            Products
+            <span className="relative z-10">Products</span>
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.4)] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)]"></div>
           </Link>
           <Link
             href="/categories"
-            className="transition-colors hover:text-foreground/80 text-foreground/60"
+            className={`relative px-4 py-2 rounded-full backdrop-blur-md bg-gradient-to-br from-white/80 via-white/60 to-white/40 dark:from-gray-800/80 dark:via-gray-800/60 dark:to-gray-800/40 border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl text-foreground hover:text-primary font-semibold overflow-hidden group ${
+              settings.animationsEnabled
+                ? 'transition-all duration-300 hover:scale-105 active:scale-95'
+                : 'transition-shadow duration-200'
+            }`}
           >
-            Categories
+            <span className="relative z-10">Categories</span>
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.4)] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)]"></div>
           </Link>
         </nav>
 
@@ -458,27 +480,45 @@ export function Header() {
             </div>
 
             {/* Mobile Navigation Links */}
-            <nav className="space-y-2">
+            <nav className="space-y-3">
               <Link
                 href="/"
-                className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md text-center"
+                className={`relative block px-4 py-3 text-base font-semibold rounded-full backdrop-blur-md bg-gradient-to-br from-white/80 via-white/60 to-white/40 dark:from-gray-800/80 dark:via-gray-800/60 dark:to-gray-800/40 border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl text-center text-foreground hover:text-primary overflow-hidden group ${
+                  settings.animationsEnabled
+                    ? 'transition-all duration-300 active:scale-95'
+                    : 'transition-colors duration-200'
+                }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Home
+                <span className="relative z-10">Home</span>
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.4)] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)]"></div>
               </Link>
               <Link
                 href="/products"
-                className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md text-center"
+                className={`relative block px-4 py-3 text-base font-semibold rounded-full backdrop-blur-md bg-gradient-to-br from-white/80 via-white/60 to-white/40 dark:from-gray-800/80 dark:via-gray-800/60 dark:to-gray-800/40 border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl text-center text-foreground hover:text-primary overflow-hidden group ${
+                  settings.animationsEnabled
+                    ? 'transition-all duration-300 active:scale-95'
+                    : 'transition-colors duration-200'
+                }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Products
+                <span className="relative z-10">Products</span>
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.4)] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)]"></div>
               </Link>
               <Link
                 href="/categories"
-                className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md text-center"
+                className={`relative block px-4 py-3 text-base font-semibold rounded-full backdrop-blur-md bg-gradient-to-br from-white/80 via-white/60 to-white/40 dark:from-gray-800/80 dark:via-gray-800/60 dark:to-gray-800/40 border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl text-center text-foreground hover:text-primary overflow-hidden group ${
+                  settings.animationsEnabled
+                    ? 'transition-all duration-300 active:scale-95'
+                    : 'transition-colors duration-200'
+                }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Categories
+                <span className="relative z-10">Categories</span>
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.4)] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)]"></div>
               </Link>
             </nav>
 

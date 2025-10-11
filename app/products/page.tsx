@@ -4,8 +4,10 @@ import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
+import { LoadingSpinner } from "@/components/loading-spinner";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { generateBreadcrumbSchema } from "@/lib/seo";
 
 type P = { id: string; name: string; price: number; image?: string | null; category?: string; inStock?: boolean; featured?: boolean };
 
@@ -32,6 +34,21 @@ export default function ProductsPage() {
     if (searchParam) {
       setSearchQuery(searchParam);
     }
+
+    // Add structured data to page
+    const breadcrumbSchema = generateBreadcrumbSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Products', url: '/products' },
+    ]);
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
   }, [searchParams]);
 
   // Fetch products whenever page, category, search, or price filters change
@@ -92,9 +109,8 @@ export default function ProductsPage() {
     setMinPrice("");
     setMaxPrice("");
     setCurrentPage(1);
-  };
   
-  if (loading) return <div className="container py-8">Loading products…</div>;
+  if (loading) return <LoadingSpinner message="Loading products..." />;
 
   return (
     <div className="container py-8">

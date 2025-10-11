@@ -6,6 +6,7 @@ import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import HeroCarousel from '@/components/hero-carousel';
 import HomePanels from '@/components/home-panels';
+import { LoadingSpinner } from "@/components/loading-spinner";
 import { Star } from "lucide-react";
 
 // Force dynamic rendering to avoid long static generation during build
@@ -63,7 +64,7 @@ export default function Home() {
   const newStock = products.slice(5, isMobile ? 9 : 10);
   const displayedReviews = reviews.slice(0, isMobile ? 3 : 6);
 
-  if (loading) return <div className="container py-8">Loading products…</div>;
+  if (loading) return <LoadingSpinner message="Loading products..." />;
 
   return (
     <div className="container py-8">

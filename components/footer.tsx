@@ -1,22 +1,26 @@
+"use client";
+
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import Image from "next/image";
+import { useSiteSettings } from "@/context/site-settings-context";
 
 export function Footer() {
+  const { settings } = useSiteSettings();
   return (
     <footer className="border-t bg-background">
       <div className="container py-8 md:py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="text-center md:text-left">
             <Image
-              src="/ordifydirectltd.png"
-              alt="Ordify Direct Ltd"
+              src={settings.logoUrl}
+              alt={settings.siteName}
               width={120}
               height={40}
               className="h-10 w-auto mb-4 mx-auto md:mx-0"
             />
             <p className="text-sm text-muted-foreground">
-              Your one-stop shop for premium products. Quality guaranteed.
+              {settings.tagline}
             </p>
           </div>
 

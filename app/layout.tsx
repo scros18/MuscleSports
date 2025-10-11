@@ -5,15 +5,28 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { CartProvider } from "@/context/cart-context";
 import { AuthProvider } from "@/context/auth-context";
+import { PerformanceProvider } from "@/context/performance-context";
+import { SiteSettingsProvider } from "@/context/site-settings-context";
 import { ToastProvider } from "@/components/toast";
 import { PageTransition } from "@/components/page-transition";
+import { generateSEO, generateOrganizationSchema, generateWebsiteSchema, getJsonLdScript } from "@/lib/seo";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Ordify Direct Ltd - Your Premium Online Store",
-  description: "Shop the latest products with great deals and fast shipping",
-};
+export const metadata: Metadata = generateSEO({
+  title: undefined, // Use default
+  description: undefined, // Use default
+  path: '',
+  keywords: [
+    'e-commerce',
+    'online shopping',
+    'buy online',
+    'fast shipping',
+    'secure checkout',
+    'premium products',
+    'online store',
+  ],
+});
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -26,22 +39,39 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const organizationSchema = generateOrganizationSchema();
+  const websiteSchema = generateWebsiteSchema();
+
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={getJsonLdScript(organizationSchema)}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={getJsonLdScript(websiteSchema)}
+        />
+      </head>
       <body className={inter.className}>
-        <AuthProvider>
-          <CartProvider>
-            <ToastProvider>
-              <div className="flex min-h-screen flex-col">
-                <Header />
-                <main className="flex-1 relative z-0">
-                  <PageTransition>{children}</PageTransition>
-                </main>
-                <Footer />
-              </div>
-            </ToastProvider>
-          </CartProvider>
-        </AuthProvider>
+        <SiteSettingsProvider>
+          <PerformanceProvider>
+            <AuthProvider>
+              <CartProvider>
+                <ToastProvider>
+                <div className="flex min-h-screen flex-col">
+                  <Header />
+                  <main className="flex-1 relative z-0">
+                    <PageTransition>{children}</PageTransition>
+                  </main>
+                  <Footer />
+                </div>
+                </ToastProvider>
+              </CartProvider>
+            </AuthProvider>
+          </PerformanceProvider>
+        </SiteSettingsProvider>
       </body>
     </html>
   );

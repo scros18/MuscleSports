@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import { usePerformance } from "@/context/performance-context";
 
 interface PanelItem {
   title: string;
@@ -19,6 +20,8 @@ interface Panel {
 }
 
 export default function HomePanels() {
+  const { settings } = usePerformance();
+  
   const panels: Panel[] = [
     {
       key: 'top-offers',
@@ -71,7 +74,7 @@ export default function HomePanels() {
         },
         { 
           title: 'E-Liquids', 
-          img: 'https://www.washingtonvapeswholesale.co.uk/cdn/shop/files/ivg-pro-12-3_600x.webp?v=1741749726',
+          img: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?q=80&w=800&auto=format&fit=crop',
           category: 'Vapes & Accessories',
           link: '/products?category=Vapes+%26+Accessories'
         },
@@ -103,7 +106,11 @@ export default function HomePanels() {
       {panels.map((panel) => (
         <div 
           key={panel.key} 
-          className="bg-card rounded-xl shadow-md hover:shadow-xl transition-all duration-300 ease-out overflow-hidden border border-border/50 hover:border-primary/30 hover:-translate-y-1"
+          className={`bg-card rounded-xl shadow-md hover:shadow-xl overflow-hidden border border-border/50 hover:border-primary/30 ${
+            settings.animationsEnabled
+              ? 'transition-all duration-300 ease-out hover:-translate-y-1'
+              : 'transition-shadow duration-200'
+          }`}
         >
           <div className="p-5">
             <div className="flex items-center justify-between mb-4">
@@ -124,7 +131,11 @@ export default function HomePanels() {
                 <Link 
                   key={idx} 
                   href={item.link || `/products?category=${encodeURIComponent(item.category || item.title)}`}
-                  className="group relative block rounded-lg overflow-hidden bg-muted/30 hover:bg-muted/50 transition-all duration-300 ease-out hover:shadow-md active:scale-95"
+                  className={`group relative block rounded-lg overflow-hidden bg-muted/30 hover:bg-muted/50 hover:shadow-md ${
+                    settings.animationsEnabled
+                      ? 'transition-all duration-300 ease-out active:scale-95'
+                      : 'transition-colors duration-200'
+                  }`}
                 >
                   <div className="aspect-square relative overflow-hidden">
                     <Image
@@ -132,7 +143,11 @@ export default function HomePanels() {
                       alt={item.title}
                       fill
                       sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
-                      className="object-cover transition-transform duration-500 ease-out"
+                      className={`transition-transform duration-500 ease-out ${
+                        item.title.includes('E-Liquid') || item.title.includes('Starter Kit') 
+                          ? 'object-contain p-2' 
+                          : 'object-cover'
+                      }`}
                       unoptimized
                     />
                   </div>

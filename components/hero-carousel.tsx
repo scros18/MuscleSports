@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { usePerformance } from "@/context/performance-context";
 
 type Slide = {
   id: number;
@@ -22,7 +23,7 @@ const slides: Slide[] = [
     title: "WEEKLY SPECIALS",
     subtitle: "Limited Time Offers",
     image:
-      "https://images.unsplash.com/photo-1606813902803-8cdbf1b5d9d7?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=3c5c8c5f2e4a6b7a8c9d0e1f2a3b4c5d",
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3",
   },
   {
     id: 3,
@@ -34,6 +35,7 @@ const slides: Slide[] = [
 ];
 
 export default function HeroCarousel() {
+  const { settings } = usePerformance();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const touchStartX = useRef<number | null>(null);
@@ -117,7 +119,11 @@ export default function HeroCarousel() {
                 )}
                 
                 {/* Shop Now CTA */}
-                <button className="mt-5 md:mt-6 bg-white text-black px-6 md:px-10 py-2.5 md:py-3.5 rounded-full font-black text-xs md:text-sm uppercase tracking-wider hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white transition-all duration-300 shadow-2xl hover:shadow-blue-500/50 hover:scale-105 active:scale-95">
+                <button className={`mt-5 md:mt-6 bg-white text-black px-6 md:px-10 py-2.5 md:py-3.5 rounded-full font-black text-xs md:text-sm uppercase tracking-wider hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white shadow-2xl hover:shadow-blue-500/50 ${
+                  settings.animationsEnabled
+                    ? 'transition-all duration-300 hover:scale-105 active:scale-95'
+                    : 'transition-colors duration-200'
+                }`}>
                   Shop Now
                 </button>
               </div>
