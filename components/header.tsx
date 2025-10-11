@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { useCart } from "@/context/cart-context";
 import { useAuth } from "@/context/auth-context";
 import { Badge } from "@/components/ui/badge";
+import { SaleBanner } from "@/components/sale-banner";
 
 export function Header() {
   const { totalItems } = useCart();
@@ -125,7 +126,8 @@ export function Header() {
   }, [showResults]);
 
   return (
-    <header className="sticky top-0 z-[99999] w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 overflow-visible">
+    <>
+      <header className="sticky top-0 z-[99999] w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 overflow-visible">
       <div className="container flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center flex-shrink-0">
           <Image
@@ -296,8 +298,8 @@ export function Header() {
         </div>
       </div>
 
-      {/* Category Navigation Bar */}
-      <div className="border-t bg-muted/30">
+      {/* Category Navigation Bar - Hidden on mobile */}
+      <div className="border-t bg-muted/30 hidden md:block">
         <div className="container px-4">
           <nav className="flex items-center space-x-6 py-2 text-sm" ref={dropdownRef}>
             <Link
@@ -459,21 +461,21 @@ export function Header() {
             <nav className="space-y-2">
               <Link
                 href="/"
-                className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md"
+                className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md text-center"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Home
               </Link>
               <Link
                 href="/products"
-                className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md"
+                className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md text-center"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Products
               </Link>
               <Link
                 href="/categories"
-                className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md"
+                className="block px-3 py-2 text-base font-medium hover:bg-accent rounded-md text-center"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Categories
@@ -481,7 +483,7 @@ export function Header() {
             </nav>
 
             {/* Mobile Auth */}
-            <div className="border-t pt-4 space-y-4">
+            <div className="border-t pt-4 space-y-4 flex flex-col items-center">
               {user ? (
                 <div className="space-y-3">
                   <Link href="/account" onClick={() => setIsMobileMenuOpen(false)}>
@@ -521,5 +523,9 @@ export function Header() {
         </div>
       )}
     </header>
+    
+    {/* Sale Banner */}
+    <SaleBanner />
+    </>
   );
 }

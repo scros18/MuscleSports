@@ -3,6 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import csv from 'csv-parser'
 import { Database } from '@/lib/database';
+import { products as staticProducts } from '@/data/products';
 
 export const dynamic = 'force-dynamic';
 
@@ -98,8 +99,19 @@ export async function GET(request: Request) {
     const minPrice = minPriceParam ? parseFloat(minPriceParam) : undefined;
     const maxPrice = maxPriceParam ? parseFloat(maxPriceParam) : undefined;
 
-    // Get products from database
-    const allProducts = await Database.getAllProducts();
+    // Try to get products from database, fall back to static products
+    let allProducts;
+    try {
+      allProducts = await Database.getAllProducts();
+      if (!allProducts || allProducts.length === 0) {
+        console.log('Database returned no products, using static products');
+        allProducts = staticProducts;
+      }
+    } catch (dbError) {
+      console.log('Database error, using static products:', dbError);
+      allProducts = staticProducts;
+    }
+
     const pricing = await readPricingCsv();
 
     const categories = Array.from(new Set(allProducts.map((p: any) => p.category).filter(Boolean)));

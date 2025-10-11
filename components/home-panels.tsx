@@ -1,56 +1,158 @@
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+
+interface PanelItem {
+  title: string;
+  img: string;
+  category?: string;
+  link?: string;
+}
+
+interface Panel {
+  key: string;
+  title: string;
+  items: PanelItem[];
+  link?: string;
+}
 
 export default function HomePanels() {
-  const panels = [
+  const panels: Panel[] = [
     {
       key: 'top-offers',
       title: 'Top offers',
+      link: '/products?featured=true',
       items: [
-        { title: 'Fire TV Stick', img: 'https://via.placeholder.com/300x180?text=Offer+1' },
-        { title: 'Tablet', img: 'https://via.placeholder.com/300x180?text=Offer+2' },
+        { 
+          title: 'Outdoor Furniture', 
+          img: 'https://img.aosomcdn.com/100/product/2025/01/23/FAkd3d19493af4097.jpg',
+          category: 'Garden & Outdoor',
+          link: '/products?category=Garden+%26+Outdoor'
+        },
+        { 
+          title: 'Home Storage', 
+          img: 'https://img.aosomcdn.com/100/product/2025/07/25/vYO03a19842a63a06.jpg',
+          category: 'Home Goods',
+          link: '/products?category=Home+Goods'
+        },
       ],
     },
     {
       key: 'popular-cats',
       title: 'Popular categories',
+      link: '/products',
       items: [
-        { title: 'Grocery', img: 'https://via.placeholder.com/300x180?text=Grocery' },
-        { title: 'Home Storage', img: 'https://via.placeholder.com/300x180?text=Storage' },
+        { 
+          title: 'Pet Supplies', 
+          img: 'https://img.aosomcdn.com/100/product/2025/04/01/Ml498a195ef2d51da.jpg',
+          category: 'Pet Supplies',
+          link: '/products?category=Pet+Supplies'
+        },
+        { 
+          title: 'Sports & Leisure', 
+          img: 'https://img.aosomcdn.com/100/product/2025/09/29/Z23ed0199938888db.jpg',
+          category: 'Sports & Leisure',
+          link: '/products?category=Sports+%26+Leisure'
+        },
       ],
     },
     {
       key: 'vapes',
       title: 'Vapes',
+      link: '/products?category=Vapes+%26+Accessories',
       items: [
-        { title: 'Starter Kits', img: 'https://via.placeholder.com/300x180?text=Vape+1' },
-        { title: 'E-Liquids', img: 'https://via.placeholder.com/300x180?text=Vape+2' },
+        { 
+          title: 'Starter Kits', 
+          img: 'https://www.washingtonvapeswholesale.co.uk/cdn/shop/files/ivg-pro-12-kit-pack-of-5-washington-vapes-wholesale-627386_1800x1800.webp?v=1741749726',
+          category: 'Vapes & Accessories',
+          link: '/products?category=Vapes+%26+Accessories'
+        },
+        { 
+          title: 'E-Liquids', 
+          img: 'https://www.washingtonvapeswholesale.co.uk/cdn/shop/files/ivg-pro-12-3_600x.webp?v=1741749726',
+          category: 'Vapes & Accessories',
+          link: '/products?category=Vapes+%26+Accessories'
+        },
       ],
     },
     {
       key: 'more',
       title: 'Garden essentials',
+      link: '/products?category=Garden+%26+Outdoor',
       items: [
-        { title: 'Furniture', img: 'https://via.placeholder.com/300x180?text=Garden' },
-        { title: 'Decor', img: 'https://via.placeholder.com/300x180?text=Decor' },
+        { 
+          title: 'Garden Furniture', 
+          img: 'https://img.aosomcdn.com/100/product/2025/04/01/Ml498a195ef2d51da.jpg',
+          category: 'Garden & Outdoor',
+          link: '/products?category=Garden+%26+Outdoor'
+        },
+        { 
+          title: 'Planters & Beds', 
+          img: 'https://img.aosomcdn.com/100/product/2024/09/05/xWU014191c08e5d1a.jpg',
+          category: 'Garden & Outdoor',
+          link: '/products?category=Garden+%26+Outdoor'
+        },
       ],
     },
   ];
 
   return (
     <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {panels.map((p) => (
-        <div key={p.key} className="bg-card rounded-lg shadow p-4">
-          <h3 className="text-xl font-semibold mb-4">{p.title}</h3>
-          <div className="grid grid-cols-1 gap-3">
-            {p.items.map((it, idx) => (
-              <Link key={idx} href={`/products?cat=${encodeURIComponent(it.title)}`} className="flex items-center gap-3">
-                <img src={it.img} alt={it.title} className="w-20 h-14 object-cover rounded" />
-                <div>
-                  <div className="font-medium">{it.title}</div>
-                  <div className="text-sm text-muted-foreground">Shop now</div>
-                </div>
+      {panels.map((panel) => (
+        <div 
+          key={panel.key} 
+          className="bg-card rounded-xl shadow-md hover:shadow-xl transition-all duration-300 ease-out overflow-hidden border border-border/50 hover:border-primary/30 hover:-translate-y-1"
+        >
+          <div className="p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-bold text-foreground">{panel.title}</h3>
+              {panel.link && (
+                <Link 
+                  href={panel.link}
+                  className="text-primary hover:text-primary/80 transition-all duration-200 hover:scale-110"
+                  aria-label={`View all ${panel.title}`}
+                >
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
+              )}
+            </div>
+            
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              {panel.items.map((item, idx) => (
+                <Link 
+                  key={idx} 
+                  href={item.link || `/products?category=${encodeURIComponent(item.category || item.title)}`}
+                  className="group relative block rounded-lg overflow-hidden bg-muted/30 hover:bg-muted/50 transition-all duration-300 ease-out hover:shadow-md active:scale-95"
+                >
+                  <div className="aspect-square relative overflow-hidden">
+                    <Image
+                      src={item.img}
+                      alt={item.title}
+                      fill
+                      sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
+                      className="object-cover transition-transform duration-500 ease-out"
+                      unoptimized
+                    />
+                  </div>
+                  <div className="p-2">
+                    <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-200 line-clamp-1">
+                      {item.title}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+
+            {panel.link && (
+              <Link 
+                href={panel.link}
+                className="block w-full text-center text-sm font-medium text-primary hover:text-primary/80 hover:underline transition-all duration-200 py-2 active:scale-95"
+              >
+                See more
               </Link>
-            ))}
+            )}
           </div>
         </div>
       ))}

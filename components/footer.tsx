@@ -7,20 +7,20 @@ export function Footer() {
     <footer className="border-t bg-background">
       <div className="container py-8 md:py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
+          <div className="text-center md:text-left">
             <Image
               src="/ordifydirectltd.png"
               alt="Ordify Direct Ltd"
               width={120}
               height={40}
-              className="h-10 w-auto mb-4"
+              className="h-10 w-auto mb-4 mx-auto md:mx-0"
             />
             <p className="text-sm text-muted-foreground">
               Your one-stop shop for premium products. Quality guaranteed.
             </p>
           </div>
 
-          <div>
+          <div className="text-center md:text-left">
             <h4 className="font-semibold mb-4">Shop</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
@@ -41,7 +41,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="text-center md:text-left">
             <h4 className="font-semibold mb-4">Support</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
@@ -62,7 +62,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="text-center md:text-left">
             <h4 className="font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>

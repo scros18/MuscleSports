@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer";
 import { CartProvider } from "@/context/cart-context";
 import { AuthProvider } from "@/context/auth-context";
 import { ToastProvider } from "@/components/toast";
+import { PageTransition } from "@/components/page-transition";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +34,9 @@ export default function RootLayout({
             <ToastProvider>
               <div className="flex min-h-screen flex-col">
                 <Header />
-                <main className="flex-1 relative z-0">{children}</main>
+                <main className="flex-1 relative z-0">
+                  <PageTransition>{children}</PageTransition>
+                </main>
                 <Footer />
               </div>
             </ToastProvider>

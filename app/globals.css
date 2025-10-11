@@ -61,3 +61,127 @@
     width: 100%;
   }
 }
+
+/* iOS-style smooth transitions */
+@layer utilities {
+  /* Smooth page transitions */
+  .page-transition {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Smooth button and link interactions */
+  a, button {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  a:active, button:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+
+  /* Smooth card hover effects */
+  [class*="hover:shadow"] {
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Smooth scale effects */
+  [class*="hover:scale"] {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Smooth background transitions */
+  [class*="transition-colors"],
+  [class*="hover:bg"],
+  [class*="hover:text"] {
+    transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Smooth border transitions */
+  [class*="hover:border"] {
+    transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Smooth opacity transitions */
+  [class*="hover:opacity"] {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Remove default tap highlight on mobile */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  /* Smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Hardware acceleration for better performance */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  /* Custom light blue scrollbar for mobile */
+  @media (max-width: 1023px) {
+    /* Webkit browsers (Chrome, Safari, Edge) */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #7dd3fc;
+      border-radius: 10px;
+      border: 2px solid #f1f5f9;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #38bdf8;
+    }
+
+    /* Firefox */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #7dd3fc #f1f5f9;
+    }
+  }
+}
+
+/* Loading and skeleton animations */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  background-size: 1000px 100%;
+}
