@@ -1,0 +1,7 @@
+{
+    "chat.agent.maxRequests": 5000000,
+    "chat.tools.terminal.autoReplyToPrompts": true,
+    "chat.tools.terminal.autoApprove": {
+        "*": true
+    }
+}
