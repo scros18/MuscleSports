@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/context/cart-context";
 import { formatPrice } from "@/lib/utils";
-import { ShoppingCart, ArrowLeft } from "lucide-react";
+import { ShoppingCart, ArrowLeft, Check, Plus, Minus } from "lucide-react";
 import Link from "next/link";
 
 interface ProductPageClientProps {
@@ -19,11 +19,9 @@ export default function ProductPageClient({ params }: ProductPageClientProps) {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const { addToCart } = useCart();
-  // lazy import useToast to avoid adding provider dependency in server bundles
-  const { useToast } = require("@/components/toast");
-  const { showToast } = useToast();
   const [product, setProduct] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAdded, setIsAdded] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -50,7 +48,10 @@ export default function ProductPageClient({ params }: ProductPageClientProps) {
     for (let i = 0; i < quantity; i++) {
       addToCart(product);
     }
-    showToast(`${product.name} added to cart`);
+    setIsAdded(true);
+    setTimeout(() => {
+      setIsAdded(false);
+    }, 2000);
   };
 
   return (
@@ -137,16 +138,17 @@ export default function ProductPageClient({ params }: ProductPageClientProps) {
           {/* Quantity Selector */}
           <div className="flex items-center gap-4 mb-6">
             <span className="font-semibold">Quantity:</span>
-            <div className="flex items-center border rounded-md">
+            <div className="flex items-center border-2 rounded-lg overflow-hidden">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                disabled={!product.inStock}
+                disabled={!product.inStock || quantity <= 1}
+                className="rounded-none hover:bg-gray-100"
               >
-                -
+                <Minus className="h-4 w-4" />
               </Button>
-              <span className="px-4 py-2 min-w-[3rem] text-center">
+              <span className="px-6 py-2 min-w-[4rem] text-center font-semibold">
                 {quantity}
               </span>
               <Button
@@ -154,8 +156,9 @@ export default function ProductPageClient({ params }: ProductPageClientProps) {
                 size="icon"
                 onClick={() => setQuantity(quantity + 1)}
                 disabled={!product.inStock}
+                className="rounded-none hover:bg-gray-100"
               >
-                +
+                <Plus className="h-4 w-4" />
               </Button>
             </div>
           </div>
@@ -163,12 +166,23 @@ export default function ProductPageClient({ params }: ProductPageClientProps) {
           {/* Add to Cart Button */}
           <Button
             size="lg"
-            className="w-full md:w-auto"
+            className={`w-full md:w-auto transition-all duration-300 ${
+              isAdded ? "bg-green-600 hover:bg-green-700" : ""
+            }`}
             onClick={handleAddToCart}
-            disabled={!product.inStock}
+            disabled={!product.inStock || isAdded}
           >
-            <ShoppingCart className="mr-2 h-5 w-5" />
-            Add to Cart
+            {isAdded ? (
+              <>
+                <Check className="mr-2 h-5 w-5 animate-in zoom-in" />
+                Added to Cart!
+              </>
+            ) : (
+              <>
+                <ShoppingCart className="mr-2 h-5 w-5" />
+                Add {quantity > 1 ? `${quantity} Items` : "to Cart"}
+              </>
+            )}
           </Button>
 
           <div className="mt-8 p-4 bg-muted rounded-lg">

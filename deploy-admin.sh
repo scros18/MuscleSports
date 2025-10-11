@@ -35,13 +35,6 @@ else
     exit 1
 fi
 
-if npx tsx scripts/migrate-products.ts; then
-    print_status "Products migrated to database"
-else
-    print_error "Failed to migrate products"
-    exit 1
-fi
-
 print_warning "Step 2: Building application..."
 if npm run build; then
     print_status "Application built successfully"

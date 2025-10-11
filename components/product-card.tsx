@@ -1,12 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge, badgeVariants } from "@/components/ui/badge";
 import { Product } from "@/types/product";
 import { formatPrice } from "@/lib/utils";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Check, Plus, Minus } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import Link from "next/link";
 
@@ -16,12 +17,23 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
-  const { useToast } = require("@/components/toast");
-  const { showToast } = useToast();
+  const [quantity, setQuantity] = useState(1);
+  const [isAdded, setIsAdded] = useState(false);
   const firstImage = Array.isArray((product as any).images) && (product as any).images.length
     ? (product as any).images[0]
     : (product as any).image || "/placeholder.svg";
   const description = (product as any).description || "";
+
+  const handleAddToCart = () => {
+    for (let i = 0; i < quantity; i++) {
+      addToCart(product);
+    }
+    setIsAdded(true);
+    setTimeout(() => {
+      setIsAdded(false);
+      setQuantity(1);
+    }, 2000);
+  };
 
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
@@ -57,17 +69,59 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
       </CardContent>
 
-      <CardFooter className="p-4 pt-0 mt-auto flex items-center justify-between">
-        <span className="text-2xl font-bold">{formatPrice(product.price)}</span>
+      <CardFooter className="p-4 pt-0 mt-auto flex flex-col gap-3">
+        <div className="w-full flex items-center justify-between">
+          <span className="text-2xl font-bold">{formatPrice(product.price)}</span>
+          <div className="flex items-center border-2 rounded-lg overflow-hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 rounded-none hover:bg-gray-100"
+              onClick={(e) => {
+                e.stopPropagation();
+                setQuantity(Math.max(1, quantity - 1));
+              }}
+              disabled={quantity <= 1}
+            >
+              <Minus className="h-3 w-3" />
+            </Button>
+            <span className="px-3 py-1 min-w-[2.5rem] text-center font-semibold text-sm">
+              {quantity}
+            </span>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 rounded-none hover:bg-gray-100"
+              onClick={(e) => {
+                e.stopPropagation();
+                setQuantity(quantity + 1);
+              }}
+            >
+              <Plus className="h-3 w-3" />
+            </Button>
+          </div>
+        </div>
         <Button
-          onClick={() => {
-            addToCart(product);
-            showToast(`${product.name} added to cart`);
+          className={`w-full transition-all duration-300 ${
+            isAdded ? "bg-green-600 hover:bg-green-700" : ""
+          }`}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleAddToCart();
           }}
-          disabled={!product.inStock}
+          disabled={!product.inStock || isAdded}
         >
-          <ShoppingCart className="mr-2 h-4 w-4" />
-          {product.inStock ? "Add to Cart" : "Out of Stock"}
+          {isAdded ? (
+            <>
+              <Check className="mr-2 h-4 w-4 animate-in zoom-in" />
+              Added to Cart!
+            </>
+          ) : (
+            <>
+              <ShoppingCart className="mr-2 h-4 w-4" />
+              Add {quantity > 1 ? `${quantity} Items` : "to Cart"}
+            </>
+          )}
         </Button>
       </CardFooter>
     </Card>
