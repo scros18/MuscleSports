@@ -79,7 +79,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
   try {
   const mod = await import('../../../../data/products');
     const products = mod.products ?? [];
-    const product = products.find((p: any) => p.id === id);
+    // Allow tolerant matching: compare normalized ids (strip non-alphanumerics, lowercase)
+    const normalize = (s: any) => (s === undefined || s === null) ? '' : String(s).replace(/[^a-z0-9]/gi, '').toLowerCase();
+    const idNorm = normalize(id);
+    const product = products.find((p: any) => p.id === id || normalize(p.id) === idNorm);
     if (!product) return new Response(null, { status: 404 });
     const pricing = await readPricingCsv();
     const override = pricing[id];

@@ -7,6 +7,8 @@ export interface Product {
   category: string;
   inStock: boolean;
   featured: boolean;
+  // optional array of flavour/variant names (some products include flavour lists)
+  flavours?: string[];
 }
 
 export interface CartItem extends Product {

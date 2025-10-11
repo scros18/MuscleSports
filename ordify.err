@@ -1358,3 +1358,173 @@ Error: listen EADDRINUSE: address already in use :::3000
   address: '::',
   port: 3000
 }
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1817:16)
+    at listenInCluster (node:net:1865:12)
+    at Server.listen (node:net:1953:7)
+    at /var/www/html/node_modules/next/dist/server/lib/start-server.js:279:16
+    at new Promise (<anonymous>)
+    at startServer (/var/www/html/node_modules/next/dist/server/lib/start-server.js:190:11)
+    at nextStart (/var/www/html/node_modules/next/dist/cli/next-start.js:50:40)
+    at /var/www/html/node_modules/next/dist/bin/next:157:54
+    at async main (/var/www/html/node_modules/next/dist/bin/next:157:5) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1817:16)
+    at listenInCluster (node:net:1865:12)
+    at Server.listen (node:net:1953:7)
+    at /var/www/html/node_modules/next/dist/server/lib/start-server.js:279:16
+    at new Promise (<anonymous>)
+    at startServer (/var/www/html/node_modules/next/dist/server/lib/start-server.js:190:11)
+    at nextStart (/var/www/html/node_modules/next/dist/cli/next-start.js:50:40)
+    at /var/www/html/node_modules/next/dist/bin/next:157:54
+    at async main (/var/www/html/node_modules/next/dist/bin/next:157:5) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1817:16)
+    at listenInCluster (node:net:1865:12)
+    at Server.listen (node:net:1953:7)
+    at /var/www/html/node_modules/next/dist/server/lib/start-server.js:279:16
+    at new Promise (<anonymous>)
+    at startServer (/var/www/html/node_modules/next/dist/server/lib/start-server.js:190:11)
+    at nextStart (/var/www/html/node_modules/next/dist/cli/next-start.js:50:40)
+    at /var/www/html/node_modules/next/dist/bin/next:157:54
+    at async main (/var/www/html/node_modules/next/dist/bin/next:157:5) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1817:16)
+    at listenInCluster (node:net:1865:12)
+    at Server.listen (node:net:1953:7)
+    at /var/www/html/node_modules/next/dist/server/lib/start-server.js:279:16
+    at new Promise (<anonymous>)
+    at startServer (/var/www/html/node_modules/next/dist/server/lib/start-server.js:190:11)
+    at nextStart (/var/www/html/node_modules/next/dist/cli/next-start.js:50:40)
+    at /var/www/html/node_modules/next/dist/bin/next:157:54
+    at async main (/var/www/html/node_modules/next/dist/bin/next:157:5) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1817:16)
+    at listenInCluster (node:net:1865:12)
+    at Server.listen (node:net:1953:7)
+    at /var/www/html/node_modules/next/dist/server/lib/start-server.js:279:16
+    at new Promise (<anonymous>)
+    at startServer (/var/www/html/node_modules/next/dist/server/lib/start-server.js:190:11)
+    at nextStart (/var/www/html/node_modules/next/dist/cli/next-start.js:50:40)
+    at /var/www/html/node_modules/next/dist/bin/next:157:54
+    at async main (/var/www/html/node_modules/next/dist/bin/next:157:5) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1817:16)
+    at listenInCluster (node:net:1865:12)
+    at Server.listen (node:net:1953:7)
+    at /var/www/html/node_modules/next/dist/server/lib/start-server.js:279:16
+    at new Promise (<anonymous>)
+    at startServer (/var/www/html/node_modules/next/dist/server/lib/start-server.js:190:11)
+    at nextStart (/var/www/html/node_modules/next/dist/cli/next-start.js:50:40)
+    at /var/www/html/node_modules/next/dist/bin/next:157:54
+    at async main (/var/www/html/node_modules/next/dist/bin/next:157:5) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1817:16)
+    at listenInCluster (node:net:1865:12)
+    at Server.listen (node:net:1953:7)
+    at /var/www/html/node_modules/next/dist/server/lib/start-server.js:279:16
+    at new Promise (<anonymous>)
+    at startServer (/var/www/html/node_modules/next/dist/server/lib/start-server.js:190:11)
+    at nextStart (/var/www/html/node_modules/next/dist/cli/next-start.js:50:40)
+    at /var/www/html/node_modules/next/dist/bin/next:157:54
+    at async main (/var/www/html/node_modules/next/dist/bin/next:157:5) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1817:16)
+    at listenInCluster (node:net:1865:12)
+    at Server.listen (node:net:1953:7)
+    at /var/www/html/node_modules/next/dist/server/lib/start-server.js:279:16
+    at new Promise (<anonymous>)
+    at startServer (/var/www/html/node_modules/next/dist/server/lib/start-server.js:190:11)
+    at nextStart (/var/www/html/node_modules/next/dist/cli/next-start.js:50:40)
+    at /var/www/html/node_modules/next/dist/bin/next:157:54
+    at async main (/var/www/html/node_modules/next/dist/bin/next:157:5) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1817:16)
+    at listenInCluster (node:net:1865:12)
+    at Server.listen (node:net:1953:7)
+    at /var/www/html/node_modules/next/dist/server/lib/start-server.js:279:16
+    at new Promise (<anonymous>)
+    at startServer (/var/www/html/node_modules/next/dist/server/lib/start-server.js:190:11)
+    at nextStart (/var/www/html/node_modules/next/dist/cli/next-start.js:50:40)
+    at /var/www/html/node_modules/next/dist/bin/next:157:54
+    at async main (/var/www/html/node_modules/next/dist/bin/next:157:5) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1817:16)
+    at listenInCluster (node:net:1865:12)
+    at Server.listen (node:net:1953:7)
+    at /var/www/html/node_modules/next/dist/server/lib/start-server.js:279:16
+    at new Promise (<anonymous>)
+    at startServer (/var/www/html/node_modules/next/dist/server/lib/start-server.js:190:11)
+    at nextStart (/var/www/html/node_modules/next/dist/cli/next-start.js:50:40)
+    at /var/www/html/node_modules/next/dist/bin/next:157:54
+    at async main (/var/www/html/node_modules/next/dist/bin/next:157:5) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 3000
+}
