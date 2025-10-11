@@ -16,6 +16,7 @@ export default function AccountPage() {
   const router = useRouter();
   const [orders, setOrders] = useState<Order[]>([]);
   const [ordersLoading, setOrdersLoading] = useState(true);
+  const [isServerAdmin, setIsServerAdmin] = useState(false);
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [passwordForm, setPasswordForm] = useState({
     currentPassword: '',
@@ -38,6 +39,29 @@ export default function AccountPage() {
     if (user) {
       fetchOrders();
     }
+    // Also verify admin status with server in case auth context is missing role
+    const verifyAdmin = async () => {
+      try {
+        const token = localStorage.getItem('auth_token');
+        const headers: Record<string, string> = {};
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+
+        const res = await fetch('/api/auth/me', {
+          headers,
+          credentials: 'include',
+        });
+        if (!res.ok) return;
+        const data = await res.json();
+        const u = data.user ? data.user : data;
+        if (u && (u.role === 'admin' || u.isAdmin)) {
+          setIsServerAdmin(true);
+        }
+      } catch (err) {
+        // ignore
+      }
+    };
+
+    verifyAdmin();
   }, [user]);
 
   const fetchOrders = async () => {
@@ -179,6 +203,19 @@ export default function AccountPage() {
                 </div>
               </div>
             </div>
+
+            {/* Admin Entry */}
+            {((user.role === 'admin' || user.isAdmin) || isServerAdmin) && (
+              <div className="pt-4">
+                <Button
+                  variant="default"
+                  className="w-full"
+                  onClick={() => router.push('/admin')}
+                >
+                  Enter Admin
+                </Button>
+              </div>
+            )}
 
             {/* Password Change Section */}
             <div className="pt-6 border-t">

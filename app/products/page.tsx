@@ -24,6 +24,7 @@ export default function ProductsPage() {
   const [total, setTotal] = useState(0);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   // Initialize search query from URL params
   useEffect(() => {
@@ -115,8 +116,79 @@ export default function ProductsPage() {
         )}
 
         <div className="flex gap-8">
-          {/* Sidebar Filters */}
-          <div className="w-64 flex-shrink-0">
+          {/* Mobile filters toggle */}
+          <div className="md:hidden w-full mb-4">
+            <div className="flex items-center justify-between">
+              <div className="text-sm text-muted-foreground">Showing {total ? startIndex + 1 : 0}-{endIndex} of {total} products</div>
+              <Button variant="outline" size="sm" onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}>
+                {mobileFiltersOpen ? 'Close Filters' : 'Filters'}
+              </Button>
+            </div>
+
+            {mobileFiltersOpen && (
+              <div className="mt-3 bg-muted/50 p-4 rounded-lg">
+                {/* Category Filter (mobile) */}
+                <div className="mb-4">
+                  <Label className="text-sm font-medium mb-2 block">Category</Label>
+                  <div className="space-y-2">
+                    {categories.map((category) => (
+                      <Button
+                        key={category}
+                        variant={selectedCategory === category ? "default" : "ghost"}
+                        size="sm"
+                        className="w-full justify-start"
+                        onClick={() => {
+                          setSelectedCategory(category);
+                          setCurrentPage(1);
+                        }}
+                      >
+                        {category}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Price Filter (mobile) */}
+                <div className="mb-4">
+                  <Label className="text-sm font-medium mb-2 block">Price Range</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <Label htmlFor="minPrice" className="text-xs text-muted-foreground">Min</Label>
+                      <Input
+                        id="minPrice"
+                        type="number"
+                        placeholder="0"
+                        value={minPrice}
+                        onChange={(e) => { setMinPrice(e.target.value); setCurrentPage(1); }}
+                        className="mt-1"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="maxPrice" className="text-xs text-muted-foreground">Max</Label>
+                      <Input
+                        id="maxPrice"
+                        type="number"
+                        placeholder="No limit"
+                        value={maxPrice}
+                        onChange={(e) => { setMaxPrice(e.target.value); setCurrentPage(1); }}
+                        className="mt-1"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Clear Filters (mobile) */}
+                {(selectedCategory !== "All" || minPrice || maxPrice) && (
+                  <Button variant="outline" size="sm" onClick={clearFilters} className="w-full">
+                    Clear All Filters
+                  </Button>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Sidebar Filters (desktop) */}
+          <div className="hidden md:block w-64 flex-shrink-0">
             <div className="bg-muted/50 p-6 rounded-lg">
               <h3 className="text-lg font-semibold mb-4">Filters</h3>
               
@@ -193,7 +265,7 @@ export default function ProductsPage() {
             </div>
 
             {/* Products Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {currentProducts.map((product) => (
                 <ProductCard key={product.id} product={product as any} />
               ))}

@@ -19,29 +19,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Check for existing session on mount
   useEffect(() => {
+    // Try verifying via token in localStorage and also via cookie session.
     const token = localStorage.getItem("auth_token");
-    if (token) {
-      // Verify token with server
-      fetch("/api/auth/verify", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.user) {
-            setUser(data.user);
-          } else {
-            localStorage.removeItem("auth_token");
-          }
-        })
-        .catch(() => {
+
+    const headers: Record<string, string> = {};
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    fetch("/api/auth/me", {
+      headers,
+      credentials: 'include',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const userData = data.user ? data.user : data;
+        if (userData && userData.email) {
+          const normalized = {
+            id: userData.id,
+            name: userData.name,
+            email: userData.email,
+            role: userData.role,
+            isAdmin: userData.isAdmin,
+            createdAt: userData.createdAt || userData.created_at,
+          } as any;
+
+          setUser(normalized);
+        } else {
           localStorage.removeItem("auth_token");
-        })
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
-    }
+        }
+      })
+      .catch(() => {
+        localStorage.removeItem("auth_token");
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
