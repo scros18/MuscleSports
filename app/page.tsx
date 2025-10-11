@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
+import HeroCarousel from '@/components/hero-carousel';
+import HomePanels from '@/components/home-panels';
 
 // Force dynamic rendering to avoid long static generation during build
 export const dynamic = 'force-dynamic';
@@ -51,17 +53,14 @@ export default function Home() {
 
   return (
     <div className="container py-8">
-      {/* Hero Section */}
-      <section className="mb-16 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">
-          Welcome to Ordify Direct Ltd
-        </h1>
-        <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-          Discover premium products at unbeatable prices. Quality you can trust, delivered to your door.
-        </p>
-        <a href="https://ordifydirect.com/products" rel="noopener noreferrer">
-          <Button size="lg">Shop Now</Button>
-        </a>
+      {/* Hero carousel */}
+      <section className="mb-12">
+        <HeroCarousel />
+      </section>
+
+      {/* Panels under hero (Top offers, Popular categories, Vapes, etc.) */}
+      <section className="mb-16">
+        <HomePanels />
       </section>
 
       {/* Dropshipping Section */}
