@@ -6,6 +6,7 @@ import { Database } from '@/lib/database';
 import { products as staticProducts } from '@/data/products';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 60; // Revalidate every 60 seconds
 
 type PriceRow = { id?: string; sku?: string; price?: string; stock?: string; quantity?: string; qty?: string; instock?: string };
 type PriceMap = { [id: string]: { price?: number; inStock?: boolean } };

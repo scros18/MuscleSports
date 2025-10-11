@@ -167,13 +167,14 @@ export default function CartPage() {
                 </div>
               </div>
 
-              <Button
-                className="w-full"
-                size="lg"
-                onClick={() => alert('Checkout functionality would be implemented here with payment processing.')}
-              >
-                Proceed to Checkout
-              </Button>
+              <Link href="/checkout" className="block">
+                <Button
+                  className="w-full"
+                  size="lg"
+                >
+                  Proceed to Checkout
+                </Button>
+              </Link>
             </CardContent>
 
             <CardFooter className="bg-muted p-4">

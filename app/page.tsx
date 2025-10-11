@@ -128,8 +128,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {displayedReviews.map((review) => (
-              <div key={review.id} className="bg-white dark:bg-card p-6 rounded-2xl border shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="flex items-center justify-between mb-4">
+              <div key={review.id} className="bg-white dark:bg-card p-6 rounded-xl border shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">\n                <div className="flex items-center justify-between mb-4">
                   <div className="flex gap-0.5">
                     {[...Array(5)].map((_, i) => (
                       <Star
@@ -142,7 +141,7 @@ export default function Home() {
                       />
                     ))}
                   </div>
-                  <span className="text-xs text-muted-foreground font-medium bg-muted px-2 py-1 rounded-full">
+                  <span className="text-xs text-muted-foreground font-medium bg-muted px-2.5 py-1 rounded-lg">
                     {review.date}
                   </span>
                 </div>
@@ -154,7 +153,7 @@ export default function Home() {
                     <p className="font-bold text-sm text-foreground">{review.reviewer}</p>
                     <p className="text-xs text-muted-foreground mt-0.5">{review.item}</p>
                   </div>
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
                     {review.reviewer.charAt(0)}
                   </div>
                 </div>
@@ -167,7 +166,7 @@ export default function Home() {
               href="https://www.ebay.co.uk/fdbk/feedback_profile/ordifydirectltd"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-semibold text-base bg-primary/10 hover:bg-primary/20 px-6 py-3 rounded-full transition-all duration-200"
+              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-semibold text-base bg-primary/10 hover:bg-primary/20 px-6 py-3 rounded-xl transition-all duration-200"
             >
               View all reviews on eBay
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -189,9 +188,9 @@ export default function Home() {
           <p className="text-muted-foreground text-lg">Partner with Ordify Direct Ltd for seamless dropshipping solutions</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="group text-center p-8 bg-gradient-to-br from-white to-gray-50 dark:from-card dark:to-card/50 rounded-2xl hover:shadow-2xl transition-all duration-300 border-2 hover:border-primary/30 hover:-translate-y-2">
+          <div className="group text-center p-8 bg-gradient-to-br from-white to-gray-50 dark:from-card dark:to-card/50 rounded-xl hover:shadow-2xl transition-all duration-300 border hover:border-primary/20 hover:-translate-y-2">
             <div className="mb-6 flex justify-center">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+              <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
                 </svg>

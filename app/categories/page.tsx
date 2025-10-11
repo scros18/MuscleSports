@@ -94,7 +94,7 @@ export default function CategoriesPage() {
               href={`/products?category=${encodeURIComponent(category.name)}`}
               className="group"
             >
-              <Card className="h-full transition-all duration-300 hover:shadow-lg hover:scale-105">
+              <Card className="h-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] border hover:border-primary/20 rounded-lg">
                 <CardContent className="p-4 sm:p-6">
                   <div className="flex items-center justify-between mb-3 sm:mb-4">
                     <Package className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
