@@ -109,6 +109,7 @@ export default function ProductsPage() {
     setMinPrice("");
     setMaxPrice("");
     setCurrentPage(1);
+  };
   
   if (loading) return <LoadingSpinner message="Loading products..." />;
 
