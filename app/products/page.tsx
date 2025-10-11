@@ -114,46 +114,60 @@ export default function ProductsPage() {
   if (loading) return <LoadingSpinner message="Loading products..." />;
 
   return (
-    <div className="container py-8">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-6">
-          {searchQuery ? `Search Results for &quot;${searchQuery}&quot;` : "All Products"}
-        </h1>
+    <div className="min-h-screen bg-background">
+      {/* Header Section */}
+      <div className="border-b bg-card/50">
+        <div className="container py-6">
+          <h1 className="text-3xl font-bold mb-2">
+            {searchQuery ? `Search Results for "${searchQuery}"` : "All Products"}
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            {total.toLocaleString()} results
+          </p>
+        </div>
+      </div>
 
-        {/* Search Results Info */}
-        {searchQuery && (
-          <div className="mb-4 p-4 bg-muted rounded-lg flex items-center justify-between">
+      {/* Search Results Info */}
+      {searchQuery && (
+        <div className="border-b bg-blue-50/50 dark:bg-blue-950/20">
+          <div className="container py-3 flex items-center justify-between">
             <span className="text-sm">
-              Found {total} product{total !== 1 ? 's' : ''} matching &quot;{searchQuery}&quot;
+              Found {total} product{total !== 1 ? 's' : ''} matching "{searchQuery}"
             </span>
             <Button variant="outline" size="sm" onClick={clearSearch}>
               Clear Search
             </Button>
           </div>
-        )}
+        </div>
+      )}
 
-        <div className="flex gap-8">
+      <div className="container">
+        <div className="flex gap-6 py-6">
           {/* Mobile filters toggle */}
           <div className="md:hidden w-full mb-4">
-            <div className="flex items-center justify-between">
-              <div className="text-sm text-muted-foreground">Showing {total ? startIndex + 1 : 0}-{endIndex} of {total} products</div>
-              <Button variant="outline" size="sm" onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}>
-                {mobileFiltersOpen ? 'Close Filters' : 'Filters'}
-              </Button>
-            </div>
+            <Button 
+              variant="outline" 
+              className="w-full justify-between h-11 shadow-sm"
+              onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
+            >
+              <span className="font-medium">Filters</span>
+              <span className="text-xs text-muted-foreground">
+                {selectedCategory !== "All" || minPrice || maxPrice ? "Active" : "None"}
+              </span>
+            </Button>
 
             {mobileFiltersOpen && (
-              <div className="mt-3 bg-muted/50 p-4 rounded-lg">
+              <div className="mt-3 border rounded-lg bg-card p-4 shadow-lg">
                 {/* Category Filter (mobile) */}
                 <div className="mb-4">
-                  <Label className="text-sm font-medium mb-2 block">Category</Label>
-                  <div className="space-y-2">
+                  <Label className="text-sm font-semibold mb-3 block">Category</Label>
+                  <div className="grid grid-cols-2 gap-2">
                     {categories.map((category) => (
                       <Button
                         key={category}
-                        variant={selectedCategory === category ? "default" : "ghost"}
+                        variant={selectedCategory === category ? "default" : "outline"}
                         size="sm"
-                        className="w-full justify-start"
+                        className="h-9 text-xs"
                         onClick={() => {
                           setSelectedCategory(category);
                           setCurrentPage(1);
@@ -167,28 +181,28 @@ export default function ProductsPage() {
 
                 {/* Price Filter (mobile) */}
                 <div className="mb-4">
-                  <Label className="text-sm font-medium mb-2 block">Price Range</Label>
-                  <div className="grid grid-cols-2 gap-2">
+                  <Label className="text-sm font-semibold mb-3 block">Price Range</Label>
+                  <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <Label htmlFor="minPrice" className="text-xs text-muted-foreground">Min</Label>
+                      <Label htmlFor="minPrice" className="text-xs text-muted-foreground mb-1 block">Min</Label>
                       <Input
                         id="minPrice"
                         type="number"
-                        placeholder="0"
+                        placeholder="£0"
                         value={minPrice}
                         onChange={(e) => { setMinPrice(e.target.value); setCurrentPage(1); }}
-                        className="mt-1"
+                        className="h-9"
                       />
                     </div>
                     <div>
-                      <Label htmlFor="maxPrice" className="text-xs text-muted-foreground">Max</Label>
+                      <Label htmlFor="maxPrice" className="text-xs text-muted-foreground mb-1 block">Max</Label>
                       <Input
                         id="maxPrice"
                         type="number"
-                        placeholder="No limit"
+                        placeholder="Any"
                         value={maxPrice}
                         onChange={(e) => { setMaxPrice(e.target.value); setCurrentPage(1); }}
-                        className="mt-1"
+                        className="h-9"
                       />
                     </div>
                   </div>
@@ -196,7 +210,7 @@ export default function ProductsPage() {
 
                 {/* Clear Filters (mobile) */}
                 {(selectedCategory !== "All" || minPrice || maxPrice) && (
-                  <Button variant="outline" size="sm" onClick={clearFilters} className="w-full">
+                  <Button variant="ghost" size="sm" onClick={clearFilters} className="w-full text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20">
                     Clear All Filters
                   </Button>
                 )}
@@ -205,20 +219,20 @@ export default function ProductsPage() {
           </div>
 
           {/* Sidebar Filters (desktop) */}
-          <div className="hidden md:block w-64 flex-shrink-0">
-            <div className="bg-muted/50 p-6 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4">Filters</h3>
+          <aside className="hidden md:block w-60 flex-shrink-0">
+            <div className="sticky top-6 border rounded-lg bg-card p-5 shadow-sm">
+              <h2 className="text-lg font-bold mb-5 pb-3 border-b">Filters</h2>
               
               {/* Category Filter */}
-              <div className="mb-6">
-                <Label className="text-sm font-medium mb-3 block">Category</Label>
-                <div className="space-y-2">
+              <div className="mb-5">
+                <Label className="text-sm font-semibold mb-3 block">Category</Label>
+                <div className="space-y-1.5">
                   {categories.map((category) => (
                     <Button
                       key={category}
                       variant={selectedCategory === category ? "default" : "ghost"}
                       size="sm"
-                      className="w-full justify-start"
+                      className="w-full justify-start h-9 text-sm font-medium"
                       onClick={() => {
                         setSelectedCategory(category);
                         setCurrentPage(1); // reset to first page when category changes
@@ -231,35 +245,35 @@ export default function ProductsPage() {
               </div>
 
               {/* Price Filter */}
-              <div className="mb-6">
-                <Label className="text-sm font-medium mb-3 block">Price Range</Label>
+              <div className="mb-5">
+                <Label className="text-sm font-semibold mb-3 block">Price Range</Label>
                 <div className="space-y-3">
                   <div>
-                    <Label htmlFor="minPrice" className="text-xs text-muted-foreground">Min Price</Label>
+                    <Label htmlFor="minPriceDesktop" className="text-xs text-muted-foreground mb-1 block">Min Price</Label>
                     <Input
-                      id="minPrice"
+                      id="minPriceDesktop"
                       type="number"
-                      placeholder="0"
+                      placeholder="£0"
                       value={minPrice}
                       onChange={(e) => {
                         setMinPrice(e.target.value);
                         setCurrentPage(1);
                       }}
-                      className="mt-1"
+                      className="h-9"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="maxPrice" className="text-xs text-muted-foreground">Max Price</Label>
+                    <Label htmlFor="maxPriceDesktop" className="text-xs text-muted-foreground mb-1 block">Max Price</Label>
                     <Input
-                      id="maxPrice"
+                      id="maxPriceDesktop"
                       type="number"
-                      placeholder="No limit"
+                      placeholder="Any"
                       value={maxPrice}
                       onChange={(e) => {
                         setMaxPrice(e.target.value);
                         setCurrentPage(1);
                       }}
-                      className="mt-1"
+                      className="h-9"
                     />
                   </div>
                 </div>
@@ -267,60 +281,92 @@ export default function ProductsPage() {
 
               {/* Clear Filters */}
               {(selectedCategory !== "All" || minPrice || maxPrice) && (
-                <Button variant="outline" size="sm" onClick={clearFilters} className="w-full">
+                <Button variant="ghost" size="sm" onClick={clearFilters} className="w-full text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20">
                   Clear All Filters
                 </Button>
               )}
             </div>
-          </div>
+          </aside>
 
           {/* Main Content */}
-          <div className="flex-1">
-            {/* Products Count */}
-            <div className="mb-4 text-sm text-muted-foreground">
-              Showing {total ? startIndex + 1 : 0}-{endIndex} of {total} products
+          <main className="flex-1 min-w-0">
+            {/* Toolbar with count and sort */}
+            <div className="flex items-center justify-between mb-5 pb-4 border-b">
+              <p className="text-sm font-medium">
+                <span className="text-muted-foreground">Showing</span>{" "}
+                <span className="font-bold text-foreground">{total ? startIndex + 1 : 0}-{endIndex}</span>{" "}
+                <span className="text-muted-foreground">of</span>{" "}
+                <span className="font-bold text-foreground">{total.toLocaleString()}</span>
+              </p>
+              <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
+                <span>Sort by:</span>
+                <Button variant="ghost" size="sm" className="h-8 font-medium">
+                  Best Match
+                </Button>
+              </div>
             </div>
 
             {/* Products Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-8">
               {currentProducts.map((product) => (
                 <ProductCard key={product.id} product={product as any} />
               ))}
             </div>
 
             {(!currentProducts || currentProducts.length === 0) && (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">No products found matching your filters.</p>
+              <div className="text-center py-20 border rounded-lg bg-muted/20">
+                <div className="max-w-md mx-auto">
+                  <svg className="mx-auto h-16 w-16 text-muted-foreground/50 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <h3 className="text-lg font-semibold mb-2">No products found</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Try adjusting your filters or search terms
+                  </p>
+                  {(selectedCategory !== "All" || minPrice || maxPrice || searchQuery) && (
+                    <Button variant="outline" onClick={clearFilters}>
+                      Clear Filters
+                    </Button>
+                  )}
+                </div>
               </div>
             )}
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex justify-center items-center gap-2 mt-8">
+              <div className="flex justify-center items-center gap-2 mt-10 pt-8 border-t">
                 <Button
                   variant="outline"
+                  size="sm"
+                  className="h-10 px-4"
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
                 >
                   Previous
                 </Button>
 
-                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                  const pageNum = Math.max(1, Math.min(totalPages - 4, currentPage - 2)) + i;
-                  if (pageNum > totalPages) return null;
-                  return (
-                    <Button
-                      key={pageNum}
-                      variant={currentPage === pageNum ? "default" : "outline"}
-                      onClick={() => handlePageChange(pageNum)}
-                    >
-                      {pageNum}
-                    </Button>
-                  );
-                })}
+                <div className="flex gap-1">
+                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                    const pageNum = Math.max(1, Math.min(totalPages - 4, currentPage - 2)) + i;
+                    if (pageNum > totalPages) return null;
+                    return (
+                      <Button
+                        key={pageNum}
+                        variant={currentPage === pageNum ? "default" : "outline"}
+                        size="sm"
+                        className="h-10 w-10"
+                        onClick={() => handlePageChange(pageNum)}
+                      >
+                        {pageNum}
+                      </Button>
+                    );
+                  })}
+                </div>
 
                 <Button
                   variant="outline"
+                  size="sm"
+                  className="h-10 px-4"
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages}
                 >
@@ -328,7 +374,7 @@ export default function ProductsPage() {
                 </Button>
               </div>
             )}
-          </div>
+          </main>
         </div>
       </div>
     </div>
