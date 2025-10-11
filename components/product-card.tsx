@@ -31,7 +31,6 @@ export function ProductCard({ product }: ProductCardProps) {
     setIsAdded(true);
     setTimeout(() => {
       setIsAdded(false);
-      setQuantity(1);
     }, 2000);
   };
 
