@@ -16,6 +16,8 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
+  const { useToast } = require("@/components/toast");
+  const { showToast } = useToast();
   const firstImage = Array.isArray((product as any).images) && (product as any).images.length
     ? (product as any).images[0]
     : (product as any).image || "/placeholder.svg";
@@ -58,7 +60,10 @@ export function ProductCard({ product }: ProductCardProps) {
       <CardFooter className="p-4 pt-0 mt-auto flex items-center justify-between">
         <span className="text-2xl font-bold">{formatPrice(product.price)}</span>
         <Button
-          onClick={() => addToCart(product)}
+          onClick={() => {
+            addToCart(product);
+            showToast(`${product.name} added to cart`);
+          }}
           disabled={!product.inStock}
         >
           <ShoppingCart className="mr-2 h-4 w-4" />

@@ -19,6 +19,9 @@ export default function ProductPageClient({ params }: ProductPageClientProps) {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const { addToCart } = useCart();
+  // lazy import useToast to avoid adding provider dependency in server bundles
+  const { useToast } = require("@/components/toast");
+  const { showToast } = useToast();
   const [product, setProduct] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -47,6 +50,7 @@ export default function ProductPageClient({ params }: ProductPageClientProps) {
     for (let i = 0; i < quantity; i++) {
       addToCart(product);
     }
+    showToast(`${product.name} added to cart`);
   };
 
   return (
