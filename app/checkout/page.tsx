@@ -87,8 +87,10 @@ function CheckoutContent() {
 
       {/* Progress Steps */}
       <div className="border-b bg-card/50">
-        <div className="container py-10">
-          <CheckoutSteps currentStep={currentStep} steps={steps} />
+        <div className="container py-8 md:py-12">
+          <div className="flex items-center justify-center min-h-[100px]">
+            <CheckoutSteps currentStep={currentStep} steps={steps} />
+          </div>
         </div>
       </div>
 

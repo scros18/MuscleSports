@@ -473,7 +473,7 @@ export function Header() {
               {totalItems > 0 && (
                 <Badge
                   variant="destructive"
-                  className="absolute -top-1.5 -right-1.5 h-4.5 w-4.5 sm:h-5 sm:w-5 flex items-center justify-center p-0 text-[10px] sm:text-xs"
+                  className="absolute -top-1.5 -right-1.5 h-5 w-5 min-w-[20px] flex items-center justify-center p-0 text-[10px] sm:text-xs font-semibold rounded-full"
                 >
                   {totalItems}
                 </Badge>
