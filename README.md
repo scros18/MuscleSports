@@ -1,53 +1,106 @@
 <div align="center">
 
-# 🛍️ Ordify - Modern E-Commerce Platform
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=Ordify%20Platform&fontSize=42&fontColor=fff&animation=twinkling&fontAlignY=32" />
 
-### Production-ready, AI-optimized, fully obfuscated e-commerce solution
+<div align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&duration=3000&pause=1000&color=00F7FF&center=true&vCenter=true&width=800&height=100&lines=Enterprise+E-Commerce+Platform+%E2%9C%A8;High-Performance+%7C+Mobile-Optimized+%F0%9F%9A%80;Code+Obfuscated+%7C+Production+Ready+%F0%9F%94%92;Perfect+for+Dropshipping+Stores+%F0%9F%9B%8D;Multi-Theme+System+%F0%9F%8E%A8" alt="Typing SVG" />
+</div>
 
-[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.3-38bdf8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
-[![React](https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react)](https://react.dev/)
+<br>
 
-[![License](https://img.shields.io/badge/License-Proprietary-red?style=for-the-badge)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Production_Ready-success?style=for-the-badge)](https://github.com/Leon2k909/html)
-[![Performance](https://img.shields.io/badge/Lighthouse-90+-green?style=for-the-badge)](https://github.com/Leon2k909/html)
-[![Mobile](https://img.shields.io/badge/Mobile_Score-95+-brightgreen?style=for-the-badge)](https://github.com/Leon2k909/html)
+<div align="center">
+  <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js"/></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.3-00F7FF?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/></a>
+  <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind-3.3-00F7FF?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind"/></a>
+  <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-18-00F7FF?style=for-the-badge&logo=react&logoColor=white" alt="React"/></a>
+</div>
 
----
+<div align="center">
+  <img src="https://img.shields.io/badge/License-Proprietary-FF0080?style=for-the-badge&logo=security&logoColor=white" alt="License"/>
+  <img src="https://img.shields.io/badge/Status-Production_Ready-00FF87?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Status"/>
+  <img src="https://img.shields.io/badge/Lighthouse-95+-00FF87?style=for-the-badge&logo=lighthouse&logoColor=white" alt="Performance"/>
+  <img src="https://img.shields.io/badge/Mobile_Score-95+-00FF87?style=for-the-badge&logo=mobile&logoColor=white" alt="Mobile"/>
+</div>
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=24&duration=3000&pause=1000&color=3B82F6&center=true&vCenter=true&width=600&lines=Enterprise+E-Commerce+Platform;High-Performance+%7C+Mobile-Optimized;Code+Obfuscated+%7C+Production+Ready;Perfect+for+Dropshipping+Stores" alt="Typing SVG" />
+<br>
 
----
+<div align="center">
+  <table>
+    <tr>
+      <td align="center" width="300">
+        <img src="https://github.com/Leon2k909.png" width="120px" style="border-radius: 50%; border: 3px solid #00F7FF; box-shadow: 0 0 20px #00F7FF;" alt="Leon"/><br/>
+        <sub style="font-size: 16px;"><b>💡 Leon</b></sub><br/>
+        <sub style="color: #00F7FF;">Idea & Lead Developer</sub>
+      </td>
+      <td align="center" width="300">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sam&backgroundColor=00F7FF" width="120px" style="border-radius: 50%; border: 3px solid #00F7FF; box-shadow: 0 0 20px #00F7FF;" alt="Sam"/><br/>
+        <sub style="font-size: 16px;"><b>👨‍💻 Sam</b></sub><br/>
+        <sub style="color: #00F7FF;">Co-Developer & AI Specialist</sub>
+      </td>
+    </tr>
+  </table>
+</div>
 
-### 💡 **Idea by Leon** | 👨‍💻 **Developed by Leon & Sam**
+<br>
 
-[![GitHub Stars](https://img.shields.io/github/stars/Leon2k909/html?style=social)](https://github.com/Leon2k909/html)
-[![GitHub Forks](https://img.shields.io/github/forks/Leon2k909/html?style=social)](https://github.com/Leon2k909/html/fork)
-[![GitHub Watchers](https://img.shields.io/github/watchers/Leon2k909/html?style=social)](https://github.com/Leon2k909/html)
+<div align="center">
+  <a href="https://github.com/Leon2k909/html/stargazers"><img src="https://img.shields.io/github/stars/Leon2k909/html?style=for-the-badge&logo=github&logoColor=white&color=00F7FF" alt="Stars"/></a>
+  <a href="https://github.com/Leon2k909/html/network/members"><img src="https://img.shields.io/github/forks/Leon2k909/html?style=for-the-badge&logo=github&logoColor=white&color=00F7FF" alt="Forks"/></a>
+  <a href="https://github.com/Leon2k909/html/watchers"><img src="https://img.shields.io/github/watchers/Leon2k909/html?style=for-the-badge&logo=github&logoColor=white&color=00F7FF" alt="Watchers"/></a>
+  <a href="https://github.com/Leon2k909/html/issues"><img src="https://img.shields.io/github/issues/Leon2k909/html?style=for-the-badge&logo=github&logoColor=white&color=FF0080" alt="Issues"/></a>
+</div>
+
+<br>
+
+<img width="100%" src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" />
 
 </div>
 
----
-
 <div align="center">
 
-## 🚀 Quick Start (30 seconds)
+## 🚀 Quick Start
+
+<table>
+<tr>
+<td align="center">
+
+**⚡ Get Started in 30 Seconds**
 
 ```bash
-# 1. Install dependencies
+# 1️⃣ Install dependencies
 npm install
 
-# 2. Configure environment (optional - works without DB)
+# 2️⃣ Configure environment (optional - works without DB)
 cp .env.example .env.local
 
-# 3. Start development server
+# 3️⃣ Start development server
 npm run dev
 ```
 
 **🌐 Visit:** `http://localhost:3000`
 
-**🎨 Try the themes:** Login to admin → Click palette icon
+</td>
+<td align="center">
+
+**🎨 Try All Three Themes**
+
+```bash
+# 1️⃣ Login to admin panel
+
+# 2️⃣ Click palette icon 🎨
+
+# 3️⃣ Cycle through themes:
+```
+
+**🔵 Ordify** (Blue)  
+**🟢 MuscleSports** (Green)  
+**🟣 VeraRP** (Purple)
+
+</td>
+</tr>
+</table>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 </div>
 
@@ -131,35 +184,78 @@ npm run dev
 
 ---
 
+<div align="center">
+
 ## 🎮 Available Commands
 
-### Development
+<table>
+<thead>
+<tr>
+<th width="25%">🔧 Development</th>
+<th width="25%">🚀 Production</th>
+<th width="25%">💾 Database</th>
+<th width="25%">🛠️ Utilities</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
 ```bash
-npm run dev              # Start development server
-npm run lint             # Run ESLint
+npm run dev
+# Start dev server
+
+npm run lint
+# Run ESLint
 ```
 
-### Production
+</td>
+<td>
+
 ```bash
-npm run build            # Build for production (standard)
-npm run build:obfuscated # Build with code obfuscation ⭐
-npm start                # Start production server
-npm run deploy:prod      # Clean + Build + Start
+npm run build:obfuscated
+# Build with protection ⭐
+
+npm start
+# Start production
+
+npm run deploy:prod
+# Full deployment
 ```
 
-### Database
+</td>
+<td>
+
 ```bash
-npm run db:init          # Initialize database
-npm run db:migrate       # Import products
-npm run db:test          # Test connection
-npm run make:admin       # Create admin user
+npm run db:init
+# Initialize DB
+
+npm run db:migrate
+# Import products
+
+npm run make:admin
+# Create admin
 ```
 
-### Utilities
+</td>
+<td>
+
 ```bash
-npm run clean            # Clean build artifacts
-npm run optimize         # Check asset sizes
+npm run clean
+# Clean artifacts
+
+npm run optimize
+# Check assets
 ```
+
+</td>
+</tr>
+</tbody>
+</table>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+
+</div>
 
 ---
 
@@ -405,70 +501,152 @@ This is commercial software. Unauthorized copying or distribution is prohibited.
 
 ---
 
+<div align="center">
+
 ## 🏆 What Makes This Special
-
-<div align="center">
-
-| 🎯 Feature | ✨ Benefit |
-|:-----------|:-----------|
-| **Production Ready** | Deploy immediately, no setup needed |
-| **Code Protected** | Obfuscation keeps your IP safe |
-| **Mobile Perfect** | 95+ score, works on all devices |
-| **AI Optimized** | Easy for AI models to use |
-| **Well Documented** | 3,500+ lines of clear docs |
-| **Clean Code** | No clutter, enterprise quality |
-| **Fast Performance** | 90+ Lighthouse score |
-| **Dual Themes** | Switch brands instantly |
-| **Full Features** | Everything you need included |
-| **Professional** | Compete with major platforms |
-
-</div>
-
----
-
-<div align="center">
-
-## 👥 **Credits**
 
 <table>
 <tr>
+<td align="center" width="33%">
+<img src="https://user-images.githubusercontent.com/74038190/216122065-2f028bae-25d6-4a3c-bc9f-175394ed5011.png" width="80" /><br/>
+<b>🎨 Triple Theme System</b><br/>
+<sub>Ordify • MuscleSports • VeraRP</sub><br/>
+<sub>Switch brands instantly</sub>
+</td>
+<td align="center" width="33%">
+<img src="https://user-images.githubusercontent.com/74038190/235294011-b8074c31-9097-4a65-a594-4151b58743a8.gif" width="80" /><br/>
+<b>🔒 Code Protected</b><br/>
+<sub>Full obfuscation included</sub><br/>
+<sub>Your IP stays safe</sub>
+</td>
+<td align="center" width="33%">
+<img src="https://user-images.githubusercontent.com/74038190/235294015-47195a93-7b84-4047-9f96-e7c1e8f7f259.gif" width="80" /><br/>
+<b>⚡ Lightning Fast</b><br/>
+<sub>95+ Lighthouse score</sub><br/>
+<sub>Handles 10k+ products</sub>
+</td>
+</tr>
+<tr>
 <td align="center">
-<img src="https://github.com/Leon2k909.png" width="100px;" alt="Leon"/><br />
-<sub><b>Leon</b></sub><br />
-<sub>💡 Idea & Development</sub>
+<img src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif" width="80" /><br/>
+<b>📱 Mobile Perfect</b><br/>
+<sub>95+ mobile score</sub><br/>
+<sub>Works on all devices</sub>
 </td>
 <td align="center">
-<img src="https://github.com/identicons/sam.png" width="100px;" alt="Sam"/><br />
-<sub><b>Sam</b></sub><br />
-<sub>👨‍💻 Co-Developer</sub>
+<img src="https://user-images.githubusercontent.com/74038190/216120981-b9507c36-0e04-4469-8e27-c99271b45ba5.png" width="80" /><br/>
+<b>🤖 AI Optimized</b><br/>
+<sub>3,500+ lines of docs</sub><br/>
+<sub>Easy to understand</sub>
+</td>
+<td align="center">
+<img src="https://user-images.githubusercontent.com/74038190/212257467-871d32b7-e401-42e8-a166-fcfd7baa4c6b.gif" width="80" /><br/>
+<b>🚀 Production Ready</b><br/>
+<sub>Deploy immediately</sub><br/>
+<sub>Zero setup needed</sub>
 </td>
 </tr>
 </table>
 
----
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
-### 🌟 **Show Your Support**
+</div>
 
-If this project helped your business, give it a ⭐️!
+<div align="center">
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Leon2k909/html&type=Date)](https://star-history.com/#Leon2k909/html&Date)
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
----
+## 🌟 Show Your Support
 
-### 🔗 **Quick Links**
+<div align="center">
+  
+**If this project helped your business, give it a ⭐️!**
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-Leon2k909-blue?style=for-the-badge&logo=github)](https://github.com/Leon2k909)
-[![Issues](https://img.shields.io/badge/Report-Issues-red?style=for-the-badge&logo=github)](https://github.com/Leon2k909/html/issues)
-[![Discussions](https://img.shields.io/badge/Join-Discussions-green?style=for-the-badge&logo=github)](https://github.com/Leon2k909/html/discussions)
-[![Wiki](https://img.shields.io/badge/Read-Wiki-yellow?style=for-the-badge&logo=github)](https://github.com/Leon2k909/html/wiki)
+<a href="https://github.com/Leon2k909/html/stargazers">
+  <img src="https://img.shields.io/github/stars/Leon2k909/html?style=for-the-badge&logo=github&color=00F7FF&logoColor=white" alt="Star this repo"/>
+</a>
 
----
+<br><br>
 
-**Made with ❤️ by Leon & Sam**
+[![Star History Chart](https://api.star-history.com/svg?repos=Leon2k909/html&type=Date&theme=dark)](https://star-history.com/#Leon2k909/html&Date)
 
-*Ready to dominate e-commerce? Let's go! 🚀*
+</div>
 
-<sub>© 2025 Ordify. All rights reserved.</sub>
+<br>
+
+## 🔗 Quick Links
+
+<div align="center">
+
+<a href="https://github.com/Leon2k909"><img src="https://img.shields.io/badge/Portfolio-Leon2k909-00F7FF?style=for-the-badge&logo=github&logoColor=white" alt="Portfolio"/></a>
+<a href="https://github.com/Leon2k909/html/issues"><img src="https://img.shields.io/badge/Report-Issues-FF0080?style=for-the-badge&logo=github&logoColor=white" alt="Issues"/></a>
+<a href="https://github.com/Leon2k909/html/discussions"><img src="https://img.shields.io/badge/Join-Discussions-00FF87?style=for-the-badge&logo=github&logoColor=white" alt="Discussions"/></a>
+<a href="https://github.com/Leon2k909/html/wiki"><img src="https://img.shields.io/badge/Read-Wiki-FFD700?style=for-the-badge&logo=github&logoColor=white" alt="Wiki"/></a>
+
+</div>
+
+<br>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+
+<br>
+
+## 🏪 Our Brands
+
+<div align="center">
+
+<table>
+<tr>
+<td align="center" width="50%">
+<a href="https://ordifydirect.co.uk" target="_blank">
+<img src="https://img.icons8.com/fluency/96/000000/shopping-cart.png" width="60" alt="OrdifyDirect"/><br/>
+<img src="https://img.shields.io/badge/OrdifyDirect-E--Commerce_Excellence-0066FF?style=for-the-badge&logo=shopify&logoColor=white" alt="OrdifyDirect"/>
+</a><br/>
+<sub>🛒 <b>Premium E-Commerce Platform</b></sub><br/>
+<sub style="color: #888;">Fast Shipping • Huge Selection • Best Prices</sub>
+</td>
+<td align="center" width="50%">
+<a href="https://musclesports.co.uk" target="_blank">
+<img src="https://img.icons8.com/fluency/96/000000/dumbbell.png" width="60" alt="MuscleSports"/><br/>
+<img src="https://img.shields.io/badge/MuscleSports-Sports_Nutrition-00B341?style=for-the-badge&logo=applehealth&logoColor=white" alt="MuscleSports"/>
+</a><br/>
+<sub>💪 <b>Premium Sports Nutrition</b></sub><br/>
+<sub style="color: #888;">Supplements • Protein • Performance Gear</sub>
+</td>
+</tr>
+</table>
+
+<sub style="color: #666; font-size: 10px;">Powered by the same technology • Built for performance • Trusted by thousands</sub>
+
+</div>
+
+<br>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+
+<br>
+
+## 💎 Built With Excellence
+
+<div align="center">
+
+**Made with 💙 by Leon & Sam**
+
+<br>
+
+<img src="https://user-images.githubusercontent.com/74038190/216649426-2bd4b628-ec51-4fb7-9d98-8643c7f87c0b.gif" width="100" />
+
+<br>
+
+*Ready to dominate e-commerce? Let's go!* 🚀
+
+<br>
+
+<sub>© 2025 Ordify Platform • Built by Leon & Sam • All rights reserved</sub>
+
+<br><br>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=100&section=footer" width="100%"/>
 
 </div>
 
