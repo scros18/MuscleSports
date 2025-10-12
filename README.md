@@ -598,15 +598,19 @@ This is commercial software. Unauthorized copying or distribution is prohibited.
 
 <table>
 <tr>
-<td align="center" width="50%">
+<td align="center" width="50%" style="padding: 20px;">
 <a href="https://ordifydirect.co.uk" target="_blank">
-<img src="https://ordifydirect.co.uk/wp-content/uploads/2024/01/cropped-Untitled-design-6.png" width="120" alt="OrdifyDirect"/><br/>
+<div style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,102,255,0.15);">
+<img src="https://ordifydirect.co.uk/wp-content/uploads/2024/01/cropped-Untitled-design-6.png" width="150" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));" alt="OrdifyDirect"/>
+</div><br/>
 <img src="https://img.shields.io/badge/OrdifyDirect-E--Commerce-0066FF?style=for-the-badge&logo=shopify&logoColor=white" alt="OrdifyDirect"/>
 </a>
 </td>
-<td align="center" width="50%">
+<td align="center" width="50%" style="padding: 20px;">
 <a href="https://musclesports.co.uk" target="_blank">
-<img src="https://musclesports.co.uk/wp-content/uploads/2025/07/Logo_resized-1.jpg" width="120" alt="MuscleSports"/><br/>
+<div style="background: linear-gradient(135deg, #f5faf5 0%, #c3e2c3 100%); padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,179,65,0.15);">
+<img src="https://i.imgur.com/zKqYGJt.png" width="150" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));" alt="MuscleSports"/>
+</div><br/>
 <img src="https://img.shields.io/badge/MuscleSports-Sports_Nutrition-00B341?style=for-the-badge&logo=applehealth&logoColor=white" alt="MuscleSports"/>
 </a>
 </td>
