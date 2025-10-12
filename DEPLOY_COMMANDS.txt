@@ -1,0 +1,37 @@
+# MuscleSports Lumify Deployment - Quick Commands
+# Copy and paste these commands into your MobaXterm terminal (logged in as deploy)
+
+# 1. Go to home directory and clone the repository
+cd ~
+git clone https://github.com/Leon2k909/html.git musclesports-lumify
+cd musclesports-lumify
+
+# 2. Install dependencies
+npm install
+
+# 3. Copy the product data we uploaded
+cp -r /home/deploy/data ./data
+
+# 4. Create .env file
+cat << 'EOF' > .env
+DATABASE_URL=mysql://lumify:Lumify2025!@localhost:3306/musclesports_lumify
+NODE_ENV=production
+PORT=3001
+JWT_SECRET=musclesports_secret_2025_change_this
+NEXT_PUBLIC_SITE_NAME=MuscleSports
+NEXT_PUBLIC_SITE_URL=https://musclesports.co.uk
+EOF
+
+# 5. Build the application
+npm run build
+
+# 6. Test it locally first
+npm start
+
+# After testing works, press Ctrl+C and set up PM2:
+# pm2 start npm --name "musclesports" -- start
+# pm2 save
+# pm2 status
+
+echo "✅ Setup complete! The app should be running on http://localhost:3001"
+echo "Next: Configure nginx to point to port 3001"
