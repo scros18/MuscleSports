@@ -21,6 +21,27 @@ const pool = mysql.createPool(dbConfig);
 // Track if tables have been initialized
 let tablesInitialized = false;
 
+// Helper to safely parse JSON fields returned from DB. mysql2 may return
+// JSON columns as already-parsed objects or as strings depending on driver/config.
+function safeJsonParse<T = any>(value: any, fallback: T | null = null): T | null {
+  if (value === null || value === undefined) return fallback;
+  if (typeof value === 'string') {
+    try {
+      return JSON.parse(value) as T;
+    } catch (err) {
+      // If parsing fails, return the raw string (or fallback)
+      return (fallback as any) ?? (value as any);
+    }
+  }
+  // Already an object/array
+  return value as T;
+}
+
+function safeJsonParseArray<T = any>(value: any): T[] {
+  const parsed = safeJsonParse<T[]>(value, []);
+  return Array.isArray(parsed) ? parsed : [];
+}
+
 // Database utility functions
 export class Database {
   static async getConnection() {
@@ -209,8 +230,8 @@ export class Database {
     const rows = await this.query('SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC', [userId]);
     return (rows as any[]).map(order => ({
       ...order,
-      items: JSON.parse(order.items),
-      shippingAddress: order.shipping_address ? JSON.parse(order.shipping_address) : null
+      items: safeJsonParseArray(order.items),
+      shippingAddress: safeJsonParse(order.shipping_address, null)
     }));
   }
 
@@ -220,8 +241,8 @@ export class Database {
     if (order) {
       return {
         ...order,
-        items: JSON.parse(order.items),
-        shippingAddress: order.shipping_address ? JSON.parse(order.shipping_address) : null
+        items: safeJsonParseArray(order.items),
+        shippingAddress: safeJsonParse(order.shipping_address, null)
       };
     }
     return null;
@@ -250,7 +271,7 @@ export class Database {
     return (rows as any[]).map(product => ({
       ...product,
       price: parseFloat(product.price),
-      images: JSON.parse(product.images || '[]'),
+      images: safeJsonParseArray(product.images),
       inStock: product.in_stock,
       featured: product.featured
     }));
@@ -261,7 +282,7 @@ export class Database {
     return (rows as any[]).map(product => ({
       ...product,
       price: parseFloat(product.price),
-      images: JSON.parse(product.images || '[]'),
+      images: safeJsonParseArray(product.images),
       inStock: product.in_stock,
       featured: product.featured
     }));
@@ -279,7 +300,7 @@ export class Database {
       return {
         ...product,
         price: parseFloat(product.price),
-        images: JSON.parse(product.images || '[]'),
+        images: safeJsonParseArray(product.images),
         inStock: product.in_stock,
         featured: product.featured
       };
@@ -357,7 +378,7 @@ export class Database {
     return (rows as any[]).map(product => ({
       ...product,
       price: parseFloat(product.price),
-      images: JSON.parse(product.images || '[]'),
+      images: safeJsonParseArray(product.images),
       inStock: product.in_stock,
       featured: product.featured
     }));
@@ -535,8 +556,8 @@ export class Database {
     if (settings) {
       return {
         ...settings,
-        openingHours: settings.opening_hours ? JSON.parse(settings.opening_hours) : null,
-        socialMedia: settings.social_media ? JSON.parse(settings.social_media) : null
+        openingHours: safeJsonParse(settings.opening_hours, null),
+        socialMedia: safeJsonParse(settings.social_media, null)
       };
     }
     return null;
@@ -682,7 +703,7 @@ export class Database {
       );
     } else {
       // Insert new
-      const id = require('crypto').randomUUID();
+  const id = (globalThis as any)?.crypto?.randomUUID ? (globalThis as any).crypto.randomUUID() : String(Date.now()) + '-' + Math.random().toString(36).slice(2, 9);
       await this.query(
         'INSERT INTO site_layouts (id, business_id, layout_data) VALUES (?, ?, ?)',
         [id, businessId, JSON.stringify(layout)]
@@ -697,7 +718,7 @@ export class Database {
       return {
         id: layout.id,
         businessId: layout.business_id,
-        layout: JSON.parse(layout.layout_data),
+        layout: safeJsonParse(layout.layout_data, null),
         createdAt: layout.created_at,
         updatedAt: layout.updated_at
       };

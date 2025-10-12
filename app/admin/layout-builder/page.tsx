@@ -128,6 +128,33 @@ export default function LayoutBuilderPage() {
       console.log('Response OK:', response.ok);
 
       if (response.ok) {
+        // Try to read the updated layout from the response
+        try {
+          const updated = await response.json();
+          // If server returned the saved layout object, update local state
+          if (updated?.layout) {
+            setLayout(updated.layout);
+          }
+        } catch (e) {
+          // ignore JSON parse errors
+        }
+
+        // Notify other tabs/windows to refresh layout
+        try {
+          localStorage.setItem('siteLayoutUpdatedAt', String(Date.now()));
+        } catch (e) {
+          /* ignore */
+        }
+
+        // Also broadcast via BroadcastChannel for immediate notification
+        try {
+          const bc = new BroadcastChannel('site-layout');
+          bc.postMessage({ type: 'updated', at: Date.now() });
+          bc.close();
+        } catch (e) {
+          /* ignore if not supported */
+        }
+
         alert('✅ Layout saved! Changes are now live on your site.');
       } else if (response.status === 401) {
         const errorData = await response.json();
