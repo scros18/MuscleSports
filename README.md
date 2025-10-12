@@ -1,13 +1,36 @@
+<div align="center">
+
 # 🛍️ Ordify - Modern E-Commerce Platform
 
-**Production-ready, AI-optimized, fully obfuscated e-commerce solution**
+### Production-ready, AI-optimized, fully obfuscated e-commerce solution
 
-[![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.3-38bdf8)](https://tailwindcss.com/)
-[![License](https://img.shields.io/badge/License-Proprietary-red)](LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.3-38bdf8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
+[![React](https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react)](https://react.dev/)
+
+[![License](https://img.shields.io/badge/License-Proprietary-red?style=for-the-badge)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Production_Ready-success?style=for-the-badge)](https://github.com/Leon2k909/html)
+[![Performance](https://img.shields.io/badge/Lighthouse-90+-green?style=for-the-badge)](https://github.com/Leon2k909/html)
+[![Mobile](https://img.shields.io/badge/Mobile_Score-95+-brightgreen?style=for-the-badge)](https://github.com/Leon2k909/html)
 
 ---
+
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=24&duration=3000&pause=1000&color=3B82F6&center=true&vCenter=true&width=600&lines=Enterprise+E-Commerce+Platform;High-Performance+%7C+Mobile-Optimized;Code+Obfuscated+%7C+Production+Ready;Perfect+for+Dropshipping+Stores" alt="Typing SVG" />
+
+---
+
+### 💡 **Idea by Leon** | 👨‍💻 **Developed by Leon & Sam**
+
+[![GitHub Stars](https://img.shields.io/github/stars/Leon2k909/html?style=social)](https://github.com/Leon2k909/html)
+[![GitHub Forks](https://img.shields.io/github/forks/Leon2k909/html?style=social)](https://github.com/Leon2k909/html/fork)
+[![GitHub Watchers](https://img.shields.io/github/watchers/Leon2k909/html?style=social)](https://github.com/Leon2k909/html)
+
+</div>
+
+---
+
+<div align="center">
 
 ## 🚀 Quick Start (30 seconds)
 
@@ -22,7 +45,11 @@ cp .env.example .env.local
 npm run dev
 ```
 
-**Visit:** `http://localhost:3000`
+**🌐 Visit:** `http://localhost:3000`
+
+**🎨 Try the themes:** Login to admin → Click palette icon
+
+</div>
 
 ---
 
@@ -380,22 +407,70 @@ This is commercial software. Unauthorized copying or distribution is prohibited.
 
 ## 🏆 What Makes This Special
 
-1. **Production Ready** - Deploy immediately
-2. **Code Protected** - Obfuscation included
-3. **Mobile Perfect** - Works on all devices
-4. **AI Optimized** - Easy for AI to use
-5. **Well Documented** - Every feature explained
-6. **Clean Code** - No clutter, organized
-7. **Fast Performance** - Optimized everything
-8. **Dual Themes** - Switch instantly
-9. **Full Features** - Nothing missing
-10. **Professional** - Enterprise quality
+<div align="center">
+
+| 🎯 Feature | ✨ Benefit |
+|:-----------|:-----------|
+| **Production Ready** | Deploy immediately, no setup needed |
+| **Code Protected** | Obfuscation keeps your IP safe |
+| **Mobile Perfect** | 95+ score, works on all devices |
+| **AI Optimized** | Easy for AI models to use |
+| **Well Documented** | 3,500+ lines of clear docs |
+| **Clean Code** | No clutter, enterprise quality |
+| **Fast Performance** | 90+ Lighthouse score |
+| **Dual Themes** | Switch brands instantly |
+| **Full Features** | Everything you need included |
+| **Professional** | Compete with major platforms |
+
+</div>
 
 ---
 
-**Made with ❤️ by the Ordify Team**
+<div align="center">
 
-*Ready to build the next big e-commerce platform? Let's go! 🚀*
+## 👥 **Credits**
+
+<table>
+<tr>
+<td align="center">
+<img src="https://github.com/Leon2k909.png" width="100px;" alt="Leon"/><br />
+<sub><b>Leon</b></sub><br />
+<sub>💡 Idea & Development</sub>
+</td>
+<td align="center">
+<img src="https://github.com/identicons/sam.png" width="100px;" alt="Sam"/><br />
+<sub><b>Sam</b></sub><br />
+<sub>👨‍💻 Co-Developer</sub>
+</td>
+</tr>
+</table>
+
+---
+
+### 🌟 **Show Your Support**
+
+If this project helped your business, give it a ⭐️!
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Leon2k909/html&type=Date)](https://star-history.com/#Leon2k909/html&Date)
+
+---
+
+### 🔗 **Quick Links**
+
+[![Portfolio](https://img.shields.io/badge/Portfolio-Leon2k909-blue?style=for-the-badge&logo=github)](https://github.com/Leon2k909)
+[![Issues](https://img.shields.io/badge/Report-Issues-red?style=for-the-badge&logo=github)](https://github.com/Leon2k909/html/issues)
+[![Discussions](https://img.shields.io/badge/Join-Discussions-green?style=for-the-badge&logo=github)](https://github.com/Leon2k909/html/discussions)
+[![Wiki](https://img.shields.io/badge/Read-Wiki-yellow?style=for-the-badge&logo=github)](https://github.com/Leon2k909/html/wiki)
+
+---
+
+**Made with ❤️ by Leon & Sam**
+
+*Ready to dominate e-commerce? Let's go! 🚀*
+
+<sub>© 2025 Ordify. All rights reserved.</sub>
+
+</div>
 
 ---
 
