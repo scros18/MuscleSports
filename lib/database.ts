@@ -145,6 +145,18 @@ export class Database {
           )
         `);
 
+        // Create site layout table (for drag-and-drop page builder)
+        await connection.execute(`
+          CREATE TABLE IF NOT EXISTS site_layouts (
+            id VARCHAR(255) PRIMARY KEY,
+            business_id VARCHAR(255) NOT NULL DEFAULT 'default',
+            layout_data JSON NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            INDEX idx_business (business_id)
+          )
+        `);
+
         console.log('Database tables initialized successfully');
       } finally {
         connection.release();
@@ -650,5 +662,50 @@ export class Database {
       [businessId]
     );
     return (rows as any[]).map(row => row.category);
+  }
+
+  // Site Layout CRUD operations
+  static async saveSiteLayout(layoutData: {
+    businessId: string;
+    layout: any;
+  }) {
+    const { businessId, layout } = layoutData;
+    
+    // Check if layout exists
+    const existing = await this.query('SELECT id FROM site_layouts WHERE business_id = ?', [businessId]);
+    
+    if ((existing as any[]).length > 0) {
+      // Update existing
+      await this.query(
+        'UPDATE site_layouts SET layout_data = ?, updated_at = CURRENT_TIMESTAMP WHERE business_id = ?',
+        [JSON.stringify(layout), businessId]
+      );
+    } else {
+      // Insert new
+      const id = require('crypto').randomUUID();
+      await this.query(
+        'INSERT INTO site_layouts (id, business_id, layout_data) VALUES (?, ?, ?)',
+        [id, businessId, JSON.stringify(layout)]
+      );
+    }
+  }
+
+  static async getSiteLayout(businessId: string = 'default') {
+    const rows = await this.query('SELECT * FROM site_layouts WHERE business_id = ?', [businessId]);
+    const layout = (rows as any[])[0];
+    if (layout) {
+      return {
+        id: layout.id,
+        businessId: layout.business_id,
+        layout: JSON.parse(layout.layout_data),
+        createdAt: layout.created_at,
+        updatedAt: layout.updated_at
+      };
+    }
+    return null;
+  }
+
+  static async deleteSiteLayout(businessId: string) {
+    await this.query('DELETE FROM site_layouts WHERE business_id = ?', [businessId]);
   }
 }

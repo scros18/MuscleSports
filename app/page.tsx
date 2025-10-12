@@ -9,6 +9,7 @@ import HomePanels from '@/components/home-panels';
 import { SkeletonLoader } from "@/components/skeleton-loader";
 import { Star } from "lucide-react";
 import { SalonHomepage } from "@/components/salon-homepage";
+import { DynamicPageTitle } from "@/components/dynamic-page-title";
 
 // Force dynamic rendering to avoid long static generation during build
 export const dynamic = 'force-dynamic';
@@ -58,7 +59,12 @@ export default function Home() {
 
   // If Bliss Hair theme is active, show salon homepage
   if (currentTheme === 'blisshair') {
-    return <SalonHomepage />;
+    return (
+      <>
+        <DynamicPageTitle pageTitle="Home" />
+        <SalonHomepage />
+      </>
+    );
   }
 
   // Fetch products based on current theme
@@ -150,7 +156,9 @@ export default function Home() {
   const displayedReviews = reviews.slice(0, isMobile ? 3 : 6);
 
   return (
-    <div className="container py-8">
+    <>
+      <DynamicPageTitle pageTitle="Home" />
+      <div className="container py-8">
       {/* Hero carousel */}
       <section className="mb-10">
         <HeroCarousel />
@@ -417,5 +425,6 @@ export default function Home() {
         </div>
       </section>
     </div>
+    </>
   );
 }

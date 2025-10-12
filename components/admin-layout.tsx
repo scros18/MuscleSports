@@ -157,7 +157,7 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
               ) : currentTheme === 'vera' ? (
                 <span className="bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">VeraRP</span>
               ) : currentTheme === 'blisshair' ? (
-                <span className="bg-gradient-to-r from-rose-600 to-pink-400 bg-clip-text text-transparent">Bliss Hair Studio</span>
+                <span className="bg-gradient-to-r from-emerald-600 to-teal-400 bg-clip-text text-transparent">Bliss Hair Studio</span>
               ) : (
                 <span className="text-gray-900">Ordify Admin</span>
               )}
@@ -324,6 +324,20 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           Site Builder
         </Link>
 
+        {/* Layout Builder */}
+        <Link
+          href="/admin/layout-builder"
+          onClick={closeSidebar}
+          className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ${
+            pathname === '/admin/layout-builder'
+              ? 'bg-accent text-accent-foreground border-r-2 border-primary'
+              : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+          }`}
+        >
+          <Package className="mr-3 h-5 w-5" />
+          Layout Builder
+        </Link>
+
         {/* Settings */}
         <Link
           href="/admin/settings"
@@ -355,7 +369,7 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
               : currentTheme === 'vera'
               ? '🟣 Purple gaming/roleplay theme'
               : currentTheme === 'blisshair'
-              ? '🌸 Rose/pink hair & beauty theme'
+              ? '💚 Emerald green hair & beauty theme'
               : '🔵 Standard e-commerce theme'}
           </p>
         </div>

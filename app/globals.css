@@ -211,50 +211,50 @@
     --ring: 270 70% 55%;
   }
 
-  /* Bliss Hair Studio Rose/Pink Theme */
+  /* Bliss Hair Studio Emerald/Green Theme */
   .theme-blisshair {
     --background: 0 0% 100%;
-    --foreground: 340 40% 15%;
+    --foreground: 170 40% 15%;
     --card: 0 0% 100%;
-    --card-foreground: 340 40% 15%;
+    --card-foreground: 170 40% 15%;
     --popover: 0 0% 100%;
-    --popover-foreground: 340 40% 15%;
-    --primary: 340 82% 52%;
+    --popover-foreground: 170 40% 15%;
+    --primary: 170 85% 35%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 340 75% 96%;
-    --secondary-foreground: 340 40% 15%;
-    --muted: 340 30% 97%;
-    --muted-foreground: 340 20% 45%;
-    --accent: 340 75% 96%;
-    --accent-foreground: 340 40% 15%;
+    --secondary: 170 75% 96%;
+    --secondary-foreground: 170 40% 15%;
+    --muted: 170 30% 97%;
+    --muted-foreground: 170 20% 45%;
+    --accent: 43 96% 56%;
+    --accent-foreground: 170 40% 15%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 340 30% 90%;
-    --input: 340 30% 90%;
-    --ring: 340 82% 52%;
+    --border: 170 30% 90%;
+    --input: 170 30% 90%;
+    --ring: 170 85% 35%;
     --radius: 0.75rem;
   }
 
   .theme-blisshair.dark {
-    --background: 340 35% 10%;
-    --foreground: 340 50% 95%;
-    --card: 340 30% 14%;
-    --card-foreground: 340 50% 95%;
-    --popover: 340 30% 14%;
-    --popover-foreground: 340 50% 95%;
-    --primary: 340 78% 58%;
+    --background: 170 35% 10%;
+    --foreground: 170 50% 95%;
+    --card: 170 30% 14%;
+    --card-foreground: 170 50% 95%;
+    --popover: 170 30% 14%;
+    --popover-foreground: 170 50% 95%;
+    --primary: 170 80% 45%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 340 25% 20%;
-    --secondary-foreground: 340 50% 95%;
-    --muted: 340 25% 20%;
-    --muted-foreground: 340 30% 65%;
-    --accent: 340 25% 20%;
-    --accent-foreground: 340 50% 95%;
+    --secondary: 170 25% 20%;
+    --secondary-foreground: 170 50% 95%;
+    --muted: 170 25% 20%;
+    --muted-foreground: 170 30% 65%;
+    --accent: 43 96% 56%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 50%;
     --destructive-foreground: 0 0% 98%;
-    --border: 340 25% 24%;
-    --input: 340 25% 24%;
-    --ring: 340 78% 58%;
+    --border: 170 25% 24%;
+    --input: 170 25% 24%;
+    --ring: 170 80% 45%;
   }
 
   .dark {
