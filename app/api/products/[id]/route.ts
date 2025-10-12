@@ -95,8 +95,30 @@ export async function GET(request: Request, { params }: { params: { id: string }
     // Allow tolerant matching: compare normalized ids (strip non-alphanumerics, lowercase)
     const normalize = (s: any) => (s === undefined || s === null) ? '' : String(s).replace(/[^a-z0-9]/gi, '').toLowerCase();
     const idNorm = normalize(id);
-    const product = products.find((p: any) => p.id === id || normalize(p.id) === idNorm);
-  if (!product) return new Response(null, { status: 404 });
+    let product = products.find((p: any) => p.id === id || normalize(p.id) === idNorm);
+    // If not found in the selected theme catalog, attempt a tolerant fallback
+    // to the MuscleSports catalog (covers cases where product exists only in
+    // the imported musclesports CSV / chunk files but the UI requested the
+    // ordify theme). This prevents unnecessary 404s for products that exist
+    // in the alternate data source.
+    if (!product) {
+      // Try to read a consolidated JSON fallback created by the import script.
+      // `data/products-all.json` is present in the repo and is a reliable
+      // fallback source for imported MuscleSports products.
+      try {
+        const allPath = path.join(process.cwd(), 'data', 'products-all.json');
+        if (fs.existsSync(allPath)) {
+          const raw = fs.readFileSync(allPath, 'utf-8');
+          const arr = JSON.parse(raw);
+          if (Array.isArray(arr)) {
+            product = arr.find((p: any) => p.id === id || p.sku === id || normalize(p.id) === idNorm || normalize(p.sku) === idNorm);
+          }
+        }
+      } catch (e) {
+        // ignore and fall through to 404
+      }
+    }
+    if (!product) return new Response(null, { status: 404 });
     const pricing = await readPricingCsv();
     const override = pricing[id];
     const price = (override?.price !== undefined)

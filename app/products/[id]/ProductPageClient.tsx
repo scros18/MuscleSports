@@ -10,6 +10,7 @@ import { useCart } from "@/context/cart-context";
 import { formatPrice } from "@/lib/utils";
 import { ShoppingCart, ArrowLeft, Check, Plus, Minus } from "lucide-react";
 import Link from "next/link";
+import { IVG_PRO_12_FLAVOURS } from '@/data/ivg-pro-12-flavours';
 
 interface ProductPageClientProps {
   params: { id: string };
@@ -22,6 +23,7 @@ export default function ProductPageClient({ params }: ProductPageClientProps) {
   const [product, setProduct] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdded, setIsAdded] = useState(false);
+  const [selectedFlavourIndex, setSelectedFlavourIndex] = useState<number | null>(null);
 
   useEffect(() => {
     let mounted = true;
@@ -44,9 +46,23 @@ export default function ProductPageClient({ params }: ProductPageClientProps) {
   if (loading) return <div className="container py-8">Loading…</div>;
   if (!product) return notFound();
 
+  // Normalize flavours: accept either `flavours: string[]` or a single `flavour`/`flavor` string
+  const productFlavours = Array.isArray(product?.flavours)
+    ? product?.flavours
+    : product?.flavour
+    ? [product.flavour]
+    : product?.flavor
+    ? [product.flavor]
+    : undefined;
+  const hasFlavours = Array.isArray(productFlavours) && productFlavours.length > 0;
+  const flavours: string[] = hasFlavours ? (productFlavours as string[]) : IVG_PRO_12_FLAVOURS;
+
   const handleAddToCart = () => {
+    const item = hasFlavours && selectedFlavourIndex !== null
+      ? { ...product, selectedFlavour: String(flavours[selectedFlavourIndex]) }
+      : product;
     for (let i = 0; i < quantity; i++) {
-      addToCart(product);
+      addToCart(item);
     }
     setIsAdded(true);
     setTimeout(() => {
@@ -134,6 +150,32 @@ export default function ProductPageClient({ params }: ProductPageClientProps) {
               )}
             </p>
           </div>
+
+          {/* Flavours dropdown */}
+          {hasFlavours && flavours.length > 0 && (
+            <div className="mb-4">
+              <label className="text-sm font-semibold mb-2 block">Flavour</label>
+              <div className="flex items-center gap-3">
+                <select
+                  value={selectedFlavourIndex !== null ? String(selectedFlavourIndex) : ""}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === "") {
+                      setSelectedFlavourIndex(null);
+                    } else {
+                      setSelectedFlavourIndex(parseInt(val, 10));
+                    }
+                  }}
+                  className="h-9 px-3 rounded-md bg-background border text-sm"
+                >
+                  <option value="">Select flavour</option>
+                  {flavours.map((f, i: number) => (
+                    <option key={String(i)} value={String(i)}>{String(f)}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
 
           {/* Quantity Selector */}
           <div className="flex items-center gap-4 mb-6">

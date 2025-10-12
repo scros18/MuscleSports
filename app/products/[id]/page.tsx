@@ -31,9 +31,16 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     setQuantityInput(String(quantity));
   }, [quantity]);
 
-  // Use flavours from product data if present
-  const hasFlavours = Array.isArray(product?.flavours) && product.flavours.length > 0;
-  const flavours: string[] = hasFlavours ? product.flavours : IVG_PRO_12_FLAVOURS;
+  // Normalize flavours: accept either `flavours: string[]` or a single `flavour: string`
+  const productFlavours = Array.isArray(product?.flavours)
+    ? product?.flavours
+    : product?.flavour
+    ? [product.flavour]
+    : product?.flavor
+    ? [product.flavor]
+    : undefined;
+  const hasFlavours = Array.isArray(productFlavours) && productFlavours.length > 0;
+  const flavours: string[] = hasFlavours ? (productFlavours as string[]) : IVG_PRO_12_FLAVOURS;
 
   // Map flavours to images if a match is present in product.images (by simple name match)
   // Run this mapping regardless of whether the product object includes flavours
