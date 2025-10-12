@@ -36,7 +36,7 @@ export function SaleBanner() {
   const themeGradients = {
     lumify: "bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700",
     ordify: "bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900",
-    musclesports: "bg-gradient-to-r from-green-500 via-green-600 to-emerald-700",
+    musclesports: "bg-gradient-to-r from-green-800 via-green-900 to-emerald-950",
     verap: "bg-gradient-to-r from-purple-600 via-purple-700 to-indigo-800"
   };
 

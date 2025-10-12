@@ -46,17 +46,17 @@ export function Footer() {
           <div className="text-center md:text-left">
             <Image
               src={currentTheme === 'musclesports' 
-                ? 'https://musclesports.co.uk/wp-content/uploads/2025/07/Logo_resized-1.jpg'
+                ? '/ms.png'
                 : currentTheme === 'vera'
                 ? 'https://i.imgur.com/verarp-logo.png'
                 : settings.logoUrl}
               alt={currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : settings.siteName}
-              width={currentTheme === 'musclesports' ? 240 : 120}
-              height={currentTheme === 'musclesports' ? 80 : 40}
-              className={currentTheme === 'musclesports' ? 'h-20 w-auto mb-4 mx-auto md:mx-0' : 'h-10 w-auto mb-4 mx-auto md:mx-0'}
+              width={currentTheme === 'musclesports' ? 280 : 120}
+              height={currentTheme === 'musclesports' ? 100 : 40}
+              className={currentTheme === 'musclesports' ? 'h-24 w-auto mb-4 mx-auto md:mx-0' : 'h-10 w-auto mb-4 mx-auto md:mx-0'}
               style={currentTheme === 'musclesports' ? {
-                mixBlendMode: 'multiply',
-                filter: 'contrast(1.2) brightness(1.1)',
+                filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1)) brightness(1.05)',
+                imageRendering: 'crisp-edges'
               } : undefined}
             />
             <p className="text-sm text-muted-foreground">

@@ -170,22 +170,22 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-[99999] w-full bg-background/70 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/60 overflow-visible border-b border-white/10 dark:border-white/5 shadow-lg shadow-black/5">
-      <div className="container flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center flex-shrink-0">
+      <header className="sticky top-0 z-[99999] w-full max-w-full bg-background/70 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/60 overflow-visible border-b border-white/10 dark:border-white/5 shadow-lg shadow-black/5">
+      <div className="container mx-auto flex h-16 items-center justify-between px-3 sm:px-4 gap-2 sm:gap-4">
+        <Link href="/" className="flex items-center flex-shrink-0 min-w-0">
           <Image
             src={currentTheme === 'musclesports' 
-              ? 'https://musclesports.co.uk/wp-content/uploads/2025/07/Logo_resized-1.jpg'
+              ? '/ms.png'
               : currentTheme === 'vera'
               ? 'https://i.imgur.com/verarp-logo.png'
               : siteSettings.logoUrl}
             alt={currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : siteSettings.siteName}
-            width={currentTheme === 'musclesports' ? 240 : 120}
-            height={currentTheme === 'musclesports' ? 80 : 40}
-            className={currentTheme === 'musclesports' ? 'h-14 md:h-20 w-auto' : 'h-10 w-auto'}
+            width={currentTheme === 'musclesports' ? 280 : 120}
+            height={currentTheme === 'musclesports' ? 100 : 40}
+            className={currentTheme === 'musclesports' ? 'h-16 md:h-20 lg:h-24 w-auto' : 'h-8 md:h-10 w-auto'}
             style={currentTheme === 'musclesports' ? {
-              filter: 'brightness(1.15) contrast(1.3) saturate(1.1)',
-              backgroundColor: 'transparent'
+              filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1)) brightness(1.05)',
+              imageRendering: 'crisp-edges'
             } : undefined}
           />
         </Link>
@@ -466,14 +466,14 @@ export function Header() {
         </div>
 
         {/* Mobile menu button and cart - always visible on mobile */}
-        <div className="md:hidden flex items-center space-x-2 flex-shrink-0">
+        <div className="md:hidden flex items-center gap-1.5 sm:gap-2 flex-shrink-0 ml-auto">
           <Link href="/cart">
-            <Button variant="outline" size="icon" className="relative">
-              <ShoppingCart className="h-5 w-5" />
+            <Button variant="outline" size="icon" className="relative h-9 w-9 sm:h-10 sm:w-10">
+              <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
               {totalItems > 0 && (
                 <Badge
                   variant="destructive"
-                  className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs"
+                  className="absolute -top-1.5 -right-1.5 h-4.5 w-4.5 sm:h-5 sm:w-5 flex items-center justify-center p-0 text-[10px] sm:text-xs"
                 >
                   {totalItems}
                 </Badge>
@@ -482,13 +482,13 @@ export function Header() {
           </Link>
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 rounded-md hover:bg-accent focus:outline-none focus:ring-2 focus:ring-primary"
+            className="p-2 rounded-md hover:bg-accent focus:outline-none focus:ring-2 focus:ring-primary flex-shrink-0"
             aria-label="Toggle mobile menu"
           >
             {isMobileMenuOpen ? (
-              <X className="h-6 w-6" />
+              <X className="h-5 w-5 sm:h-6 sm:w-6" />
             ) : (
-              <Menu className="h-6 w-6" />
+              <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
             )}
           </button>
         </div>
@@ -581,16 +581,16 @@ export function Header() {
 
       {/* Mobile Navigation Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t bg-background">
-          <div className="px-4 py-4 space-y-4">
+        <div className="md:hidden border-t bg-background max-w-full overflow-x-hidden">
+          <div className="px-3 sm:px-4 py-4 space-y-3 sm:space-y-4 w-full">
             {/* Mobile Search */}
-            <div className="relative" ref={searchRef}>
-              <form onSubmit={handleSearchSubmit} className="flex items-center space-x-2">
-                <div className="relative flex-1">
+            <div className="relative w-full" ref={searchRef}>
+              <form onSubmit={handleSearchSubmit} className="flex items-center gap-2 w-full">
+                <div className="relative flex-1 min-w-0">
                   <Input
                     type="text"
                     placeholder="Search products..."
-                    className="w-full pl-4 pr-10"
+                    className="w-full pl-3 sm:pl-4 pr-10 text-sm"
                     style={{
                       boxShadow: searchQuery ? (
                         currentTheme === 'musclesports' 
@@ -712,10 +712,10 @@ export function Header() {
             </div>
 
             {/* Mobile Navigation Links */}
-            <nav className="space-y-3">
+            <nav className="space-y-2.5 sm:space-y-3 w-full">
               <Link
                 href="/"
-                className={`relative block px-5 py-3 text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
+                className={`relative block px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
                   settings.animationsEnabled
                     ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
                     : 'transition-all duration-300'
@@ -744,7 +744,7 @@ export function Header() {
               </Link>
               <Link
                 href="/products"
-                className={`relative block px-5 py-3 text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
+                className={`relative block px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
                   settings.animationsEnabled
                     ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
                     : 'transition-all duration-300'
@@ -773,7 +773,7 @@ export function Header() {
               </Link>
               <Link
                 href="/categories"
-                className={`relative block px-5 py-3 text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
+                className={`relative block px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
                   settings.animationsEnabled
                     ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
                     : 'transition-all duration-300'
@@ -803,12 +803,12 @@ export function Header() {
             </nav>
 
             {/* Mobile Auth */}
-            <div className="border-t pt-4 space-y-3">
+            <div className="border-t pt-3 sm:pt-4 space-y-2.5 sm:space-y-3 w-full">
               {user ? (
-                <div className="space-y-3 w-full">
+                <div className="space-y-2.5 sm:space-y-3 w-full">
                   <Link href="/account" onClick={() => setIsMobileMenuOpen(false)} className="block w-full">
                     <div
-                      className={`relative flex items-center px-5 py-3 text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
+                      className={`relative flex items-center px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
                         settings.animationsEnabled
                           ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
                           : 'transition-all duration-300'
@@ -822,7 +822,7 @@ export function Header() {
                         borderColor: 'rgba(255, 255, 255, 0.2)'
                       }}
                     >
-                      <User className="h-5 w-5 mr-3 relative z-10" />
+                      <User className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 relative z-10" />
                       <span className="relative z-10">Account</span>
                       <div 
                         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
@@ -837,7 +837,7 @@ export function Header() {
                     </div>
                   </Link>
                   <button
-                    className={`relative flex items-center w-full px-5 py-3 text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
+                    className={`relative flex items-center w-full px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
                       settings.animationsEnabled
                         ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
                         : 'transition-all duration-300'
@@ -855,7 +855,7 @@ export function Header() {
                       setIsMobileMenuOpen(false);
                     }}
                   >
-                    <LogOut className="h-5 w-5 mr-3 relative z-10" />
+                    <LogOut className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 relative z-10" />
                     <span className="relative z-10">Logout</span>
                     <div 
                       className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
@@ -870,10 +870,10 @@ export function Header() {
                   </button>
                 </div>
               ) : (
-                <div className="space-y-3 w-full">
+                <div className="space-y-2.5 sm:space-y-3 w-full">
                   <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="block w-full">
                     <div
-                      className={`relative flex items-center justify-center px-5 py-3 text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
+                      className={`relative flex items-center justify-center px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
                         settings.animationsEnabled
                           ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
                           : 'transition-all duration-300'
@@ -902,7 +902,7 @@ export function Header() {
                   </Link>
                   <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="block w-full">
                     <div
-                      className={`relative flex items-center justify-center px-5 py-3 text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-white overflow-hidden group ${
+                      className={`relative flex items-center justify-center px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-white overflow-hidden group ${
                         settings.animationsEnabled
                           ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
                           : 'transition-all duration-300'
