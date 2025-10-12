@@ -272,16 +272,19 @@ export function Header() {
         <div className="hidden md:flex items-center space-x-3">
           <div className="relative group" ref={searchRef}>
             <form onSubmit={handleSearchSubmit} className="flex items-center">
-              <div className="relative flex items-center">
+              <div className="relative flex items-center overflow-hidden">
                 <Input
                   type="search"
                   placeholder="Search products..."
-                  className="w-10 group-hover:w-64 focus:w-64 transition-all duration-700 ease-out pr-10 rounded-xl backdrop-blur-xl"
+                  className="h-10 w-10 group-hover:w-64 focus:w-64 transition-[width] duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] rounded-xl backdrop-blur-xl bg-background/50 border-white/20 dark:border-white/10 shadow-sm placeholder:opacity-0 group-hover:placeholder:opacity-100 focus:placeholder:opacity-100 placeholder:transition-opacity placeholder:duration-500 placeholder:delay-200"
                   value={searchQuery}
                   onChange={handleSearchChange}
                   onFocus={() => setShowResults(true)}
                 />
-                <Button type="submit" size="icon" variant="ghost" className="absolute right-0 left-0 mx-auto h-full w-10 hover:bg-transparent">
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none group-hover:opacity-0 focus-within:opacity-0 transition-opacity duration-500">
+                  <Search className="h-4 w-4 text-muted-foreground" />
+                </div>
+                <Button type="submit" size="icon" variant="ghost" className="absolute right-1 h-8 w-8 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity duration-500 hover:bg-primary/10">
                   <Search className="h-4 w-4" />
                 </Button>
               </div>
