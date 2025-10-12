@@ -187,36 +187,84 @@ export function Header() {
         <nav className="hidden md:flex items-center space-x-2 text-sm font-medium">
           <Link
             href="/"
-            className={`relative px-5 py-2 rounded-xl bg-primary/5 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] hover:bg-primary/10 hover:shadow-lg text-foreground hover:text-primary font-medium overflow-hidden group ${
+            className={`relative px-5 py-2.5 rounded-xl backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary font-medium overflow-hidden group ${
               settings.animationsEnabled
-                ? 'transition-all duration-300 hover:scale-[1.02] active:scale-95'
-                : 'transition-all duration-200'
+                ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                : 'transition-all duration-300'
             }`}
+            style={{
+              background: currentTheme === 'musclesports' 
+                ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
+                : currentTheme === 'vera'
+                ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
+                : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))'
+            }}
           >
             <span className="relative z-10">Home</span>
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div 
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+              style={{
+                background: currentTheme === 'musclesports'
+                  ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
+                  : currentTheme === 'vera'
+                  ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
+                  : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
+              }}
+            ></div>
           </Link>
           <Link
             href="/products"
-            className={`relative px-5 py-2 rounded-xl bg-primary/5 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] hover:bg-primary/10 hover:shadow-lg text-foreground hover:text-primary font-medium overflow-hidden group ${
+            className={`relative px-5 py-2.5 rounded-xl backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary font-medium overflow-hidden group ${
               settings.animationsEnabled
-                ? 'transition-all duration-300 hover:scale-[1.02] active:scale-95'
-                : 'transition-all duration-200'
+                ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                : 'transition-all duration-300'
             }`}
+            style={{
+              background: currentTheme === 'musclesports' 
+                ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
+                : currentTheme === 'vera'
+                ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
+                : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))'
+            }}
           >
             <span className="relative z-10">Products</span>
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div 
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+              style={{
+                background: currentTheme === 'musclesports'
+                  ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
+                  : currentTheme === 'vera'
+                  ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
+                  : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
+              }}
+            ></div>
           </Link>
           <Link
             href="/categories"
-            className={`relative px-5 py-2 rounded-xl bg-primary/5 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] hover:bg-primary/10 hover:shadow-lg text-foreground hover:text-primary font-medium overflow-hidden group ${
+            className={`relative px-5 py-2.5 rounded-xl backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary font-medium overflow-hidden group ${
               settings.animationsEnabled
-                ? 'transition-all duration-300 hover:scale-[1.02] active:scale-95'
-                : 'transition-all duration-200'
+                ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                : 'transition-all duration-300'
             }`}
+            style={{
+              background: currentTheme === 'musclesports' 
+                ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
+                : currentTheme === 'vera'
+                ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
+                : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))'
+            }}
           >
             <span className="relative z-10">Categories</span>
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div 
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+              style={{
+                background: currentTheme === 'musclesports'
+                  ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
+                  : currentTheme === 'vera'
+                  ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
+                  : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
+              }}
+            ></div>
           </Link>
         </nav>
 
@@ -228,12 +276,12 @@ export function Header() {
                 <Input
                   type="search"
                   placeholder="Search products..."
-                  className="w-10 group-hover:w-64 focus:w-64 transition-all duration-300 ease-in-out pr-10 rounded-lg"
+                  className="w-10 group-hover:w-64 focus:w-64 transition-all duration-700 ease-out pr-10 rounded-xl backdrop-blur-xl"
                   value={searchQuery}
                   onChange={handleSearchChange}
                   onFocus={() => setShowResults(true)}
                 />
-                <Button type="submit" size="icon" variant="ghost" className="absolute right-0 h-full px-2">
+                <Button type="submit" size="icon" variant="ghost" className="absolute right-0 left-0 mx-auto h-full w-10 hover:bg-transparent">
                   <Search className="h-4 w-4" />
                 </Button>
               </div>
