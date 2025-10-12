@@ -6,7 +6,6 @@ import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { ShoppingCart, Search, User, LogOut, X, Menu, ChevronDown } from "lucide-react";
-import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/context/cart-context";
@@ -24,12 +23,16 @@ export function Header() {
   const router = useRouter();
   const [currentTheme, setCurrentTheme] = useState<string>('ordify');
 
-  // Detect theme from body class or localStorage
+  // Detect theme from documentElement class or localStorage
   useEffect(() => {
     const detectTheme = () => {
+      // Check both documentElement and body
+      const htmlClasses = document.documentElement.classList;
       const bodyClasses = document.body.classList;
-      if (bodyClasses.contains('theme-musclesports')) {
+      if (htmlClasses.contains('theme-musclesports') || bodyClasses.contains('theme-musclesports')) {
         setCurrentTheme('musclesports');
+      } else if (htmlClasses.contains('theme-vera') || bodyClasses.contains('theme-vera')) {
+        setCurrentTheme('vera');
       } else {
         setCurrentTheme('ordify');
       }
@@ -37,11 +40,16 @@ export function Header() {
 
     detectTheme();
     
-    // Watch for theme changes
-    const observer = new MutationObserver(detectTheme);
-    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    // Watch for theme changes on both elements
+    const htmlObserver = new MutationObserver(detectTheme);
+    const bodyObserver = new MutationObserver(detectTheme);
+    htmlObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
     
-    return () => observer.disconnect();
+    return () => {
+      htmlObserver.disconnect();
+      bodyObserver.disconnect();
+    };
   }, []);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -165,8 +173,10 @@ export function Header() {
           <Image
             src={currentTheme === 'musclesports' 
               ? 'https://musclesports.co.uk/wp-content/uploads/2025/07/Logo_resized-1.jpg'
+              : currentTheme === 'vera'
+              ? 'https://i.imgur.com/verarp-logo.png'
               : siteSettings.logoUrl}
-            alt={currentTheme === 'musclesports' ? 'MuscleSports' : siteSettings.siteName}
+            alt={currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : siteSettings.siteName}
             width={120}
             height={40}
             className="h-10 w-auto"

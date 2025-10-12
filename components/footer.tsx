@@ -10,12 +10,16 @@ export function Footer() {
   const { settings } = useSiteSettings();
   const [currentTheme, setCurrentTheme] = useState<string>('ordify');
 
-  // Detect theme from body class
+  // Detect theme from documentElement class
   useEffect(() => {
     const detectTheme = () => {
+      // Check both documentElement and body
+      const htmlClasses = document.documentElement.classList;
       const bodyClasses = document.body.classList;
-      if (bodyClasses.contains('theme-musclesports')) {
+      if (htmlClasses.contains('theme-musclesports') || bodyClasses.contains('theme-musclesports')) {
         setCurrentTheme('musclesports');
+      } else if (htmlClasses.contains('theme-vera') || bodyClasses.contains('theme-vera')) {
+        setCurrentTheme('vera');
       } else {
         setCurrentTheme('ordify');
       }
@@ -23,11 +27,16 @@ export function Footer() {
 
     detectTheme();
     
-    // Watch for theme changes
-    const observer = new MutationObserver(detectTheme);
-    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    // Watch for theme changes on both elements
+    const htmlObserver = new MutationObserver(detectTheme);
+    const bodyObserver = new MutationObserver(detectTheme);
+    htmlObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
     
-    return () => observer.disconnect();
+    return () => {
+      htmlObserver.disconnect();
+      bodyObserver.disconnect();
+    };
   }, []);
 
   return (
@@ -38,14 +47,16 @@ export function Footer() {
             <Image
               src={currentTheme === 'musclesports' 
                 ? 'https://musclesports.co.uk/wp-content/uploads/2025/07/Logo_resized-1.jpg'
+                : currentTheme === 'vera'
+                ? 'https://i.imgur.com/verarp-logo.png'
                 : settings.logoUrl}
-              alt={currentTheme === 'musclesports' ? 'MuscleSports' : settings.siteName}
+              alt={currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : settings.siteName}
               width={120}
               height={40}
               className="h-10 w-auto mb-4 mx-auto md:mx-0"
             />
             <p className="text-sm text-muted-foreground">
-              {currentTheme === 'musclesports' ? 'Premium Sports Nutrition' : settings.tagline}
+              {currentTheme === 'musclesports' ? 'Premium Sports Nutrition' : currentTheme === 'vera' ? 'Serious FiveM Roleplay' : settings.tagline}
             </p>
           </div>
 

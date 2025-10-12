@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { ThemeLoader } from "@/components/theme-loader";
 import { CartProvider } from "@/context/cart-context";
 import { AuthProvider } from "@/context/auth-context";
 import { PerformanceProvider } from "@/context/performance-context";
@@ -55,6 +56,7 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
+        <ThemeLoader />
         <SiteSettingsProvider>
           <PerformanceProvider>
             <AuthProvider>

@@ -1,0 +1,26 @@
+"use client";
+
+import { useEffect } from 'react';
+
+export function ThemeLoader() {
+  useEffect(() => {
+    // Load and apply theme from localStorage on page load
+    const savedTheme = localStorage.getItem('admin_theme');
+    
+    // Remove all theme classes first
+    document.documentElement.classList.remove('theme-musclesports', 'theme-vera');
+    document.body.classList.remove('theme-musclesports', 'theme-vera');
+    
+    // Apply saved theme
+    if (savedTheme === 'musclesports') {
+      document.documentElement.classList.add('theme-musclesports');
+      document.body.classList.add('theme-musclesports');
+    } else if (savedTheme === 'vera') {
+      document.documentElement.classList.add('theme-vera');
+      document.body.classList.add('theme-vera');
+    }
+    // ordify is default (no class needed)
+  }, []);
+
+  return null;
+}

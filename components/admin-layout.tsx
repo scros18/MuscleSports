@@ -37,31 +37,49 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [productsExpanded, setProductsExpanded] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState<'ordify' | 'musclesports'>('ordify');
+  const [currentTheme, setCurrentTheme] = useState<'ordify' | 'musclesports' | 'vera'>('ordify');
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
     checkAdminAccess();
     // Load saved theme
-    const savedTheme = localStorage.getItem('admin_theme') as 'ordify' | 'musclesports';
+    const savedTheme = localStorage.getItem('admin_theme') as 'ordify' | 'musclesports' | 'vera';
     if (savedTheme) {
       setCurrentTheme(savedTheme);
       applyTheme(savedTheme);
     }
   }, []);
 
-  const applyTheme = (theme: 'ordify' | 'musclesports') => {
+  const applyTheme = (theme: 'ordify' | 'musclesports' | 'vera') => {
     const root = document.documentElement;
+    const body = document.body;
+    
+    // Remove all theme classes first
+    root.classList.remove('theme-musclesports', 'theme-vera');
+    body.classList.remove('theme-musclesports', 'theme-vera');
+    
+    // Apply new theme
     if (theme === 'musclesports') {
       root.classList.add('theme-musclesports');
-    } else {
-      root.classList.remove('theme-musclesports');
+      body.classList.add('theme-musclesports');
+    } else if (theme === 'vera') {
+      root.classList.add('theme-vera');
+      body.classList.add('theme-vera');
     }
+    // ordify is default (no class needed)
   };
 
   const toggleTheme = () => {
-    const newTheme = currentTheme === 'ordify' ? 'musclesports' : 'ordify';
+    // Cycle through: ordify -> musclesports -> vera -> ordify
+    let newTheme: 'ordify' | 'musclesports' | 'vera';
+    if (currentTheme === 'ordify') {
+      newTheme = 'musclesports';
+    } else if (currentTheme === 'musclesports') {
+      newTheme = 'vera';
+    } else {
+      newTheme = 'ordify';
+    }
     setCurrentTheme(newTheme);
     applyTheme(newTheme);
     localStorage.setItem('admin_theme', newTheme);
@@ -279,11 +297,13 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
             className="flex items-center w-full px-4 py-3 text-sm font-medium rounded-lg transition-all duration-300 bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 text-foreground border border-primary/20 shadow-sm"
           >
             <Palette className="mr-3 h-5 w-5 text-primary" />
-            <span>Theme: {currentTheme === 'musclesports' ? 'MuscleSports' : 'Ordify'}</span>
+            <span>Theme: {currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : 'Ordify'}</span>
           </button>
           <p className="px-4 mt-2 text-xs text-muted-foreground">
             {currentTheme === 'musclesports' 
               ? '🟢 Green sports nutrition theme'
+              : currentTheme === 'vera'
+              ? '🟣 Purple gaming/roleplay theme'
               : '🔵 Standard e-commerce theme'}
           </p>
         </div>
