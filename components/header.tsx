@@ -167,7 +167,7 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-[99999] w-full bg-background/98 backdrop-blur-xl supports-[backdrop-filter]:bg-background/80 overflow-visible border-b border-border/30 shadow-sm">
+      <header className="sticky top-0 z-[99999] w-full bg-background/70 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/60 overflow-visible border-b border-white/10 dark:border-white/5 shadow-lg shadow-black/5">
       <div className="container flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center flex-shrink-0">
           <Image
@@ -187,33 +187,36 @@ export function Header() {
         <nav className="hidden md:flex items-center space-x-2 text-sm font-medium">
           <Link
             href="/"
-            className={`relative px-5 py-2 rounded-lg bg-card/80 backdrop-blur-sm border border-border/60 shadow-sm hover:shadow-md text-foreground hover:text-primary hover:bg-card hover:border-primary/30 font-medium overflow-hidden group ${
+            className={`relative px-5 py-2 rounded-xl bg-primary/5 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] hover:bg-primary/10 hover:shadow-lg text-foreground hover:text-primary font-medium overflow-hidden group ${
               settings.animationsEnabled
-                ? 'transition-all duration-200 hover:scale-[1.02] active:scale-95'
+                ? 'transition-all duration-300 hover:scale-[1.02] active:scale-95'
                 : 'transition-all duration-200'
             }`}
           >
             <span className="relative z-10">Home</span>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </Link>
           <Link
             href="/products"
-            className={`relative px-5 py-2 rounded-lg bg-card/80 backdrop-blur-sm border border-border/60 shadow-sm hover:shadow-md text-foreground hover:text-primary hover:bg-card hover:border-primary/30 font-medium overflow-hidden group ${
+            className={`relative px-5 py-2 rounded-xl bg-primary/5 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] hover:bg-primary/10 hover:shadow-lg text-foreground hover:text-primary font-medium overflow-hidden group ${
               settings.animationsEnabled
-                ? 'transition-all duration-200 hover:scale-[1.02] active:scale-95'
+                ? 'transition-all duration-300 hover:scale-[1.02] active:scale-95'
                 : 'transition-all duration-200'
             }`}
           >
             <span className="relative z-10">Products</span>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </Link>
           <Link
             href="/categories"
-            className={`relative px-5 py-2 rounded-lg bg-card/80 backdrop-blur-sm border border-border/60 shadow-sm hover:shadow-md text-foreground hover:text-primary hover:bg-card hover:border-primary/30 font-medium overflow-hidden group ${
+            className={`relative px-5 py-2 rounded-xl bg-primary/5 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] hover:bg-primary/10 hover:shadow-lg text-foreground hover:text-primary font-medium overflow-hidden group ${
               settings.animationsEnabled
-                ? 'transition-all duration-200 hover:scale-[1.02] active:scale-95'
+                ? 'transition-all duration-300 hover:scale-[1.02] active:scale-95'
                 : 'transition-all duration-200'
             }`}
           >
             <span className="relative z-10">Categories</span>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </Link>
         </nav>
 
