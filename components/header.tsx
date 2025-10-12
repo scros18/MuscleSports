@@ -284,7 +284,7 @@ export function Header() {
                   <Input
                     type="text"
                     placeholder="Search products..."
-                    className="h-10 w-10 group-hover:w-64 focus:w-64 transition-[width] duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] rounded-xl backdrop-blur-xl bg-background/50 border placeholder:opacity-0 group-hover:placeholder:opacity-100 focus:placeholder:opacity-100 placeholder:transition-opacity placeholder:duration-500 placeholder:delay-200 pr-20"
+                    className="h-10 w-10 group-hover:w-64 focus:w-64 transition-[width] duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] rounded-xl backdrop-blur-xl bg-background/50 border placeholder:opacity-0 group-hover:placeholder:opacity-100 focus:placeholder:opacity-100 placeholder:transition-opacity placeholder:duration-500 placeholder:delay-200 pr-10"
                     style={{
                       borderColor: searchQuery ? (
                         currentTheme === 'musclesports' 
@@ -306,20 +306,48 @@ export function Header() {
                     onChange={handleSearchChange}
                     onFocus={() => setShowResults(true)}
                   />
-                  {/* Search Icon - Only show when collapsed, centered perfectly */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-100 group-hover:opacity-0 group-focus-within:opacity-0 transition-opacity duration-300">
-                    <Search className="h-4 w-4 text-muted-foreground" />
-                  </div>
-                  {/* Clear Button - Only show when expanded with text */}
-                  {searchQuery && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSearchQuery('');
-                        setSearchResults([]);
-                        setShowResults(false);
-                      }}
-                      className="absolute right-10 top-1/2 -translate-y-1/2 h-6 w-6 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
+                  {/* Search Icon - Show when collapsed (no text) OR when typing (with text, on the right) */}
+                  {!searchQuery && (
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-100 group-hover:opacity-0 group-focus-within:opacity-0 transition-opacity duration-300">
+                      <Search className="h-4 w-4 text-muted-foreground" />
+                    </div>
+                  )}
+                  {/* Right side buttons - Clear (X) and Search icon when expanded */}
+                  <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                    {searchQuery && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSearchQuery('');
+                          setSearchResults([]);
+                          setShowResults(false);
+                        }}
+                        className="h-7 w-7 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
+                        style={{
+                          background: currentTheme === 'musclesports'
+                            ? 'rgba(0, 179, 65, 0.1)'
+                            : currentTheme === 'vera'
+                            ? 'rgba(255, 107, 0, 0.1)'
+                            : 'rgba(56, 142, 233, 0.1)',
+                        }}
+                      >
+                        <X className="h-3.5 w-3.5" style={{
+                          color: currentTheme === 'musclesports'
+                            ? '#00B341'
+                            : currentTheme === 'vera'
+                            ? '#FF6B00'
+                            : '#388EE9'
+                        }} />
+                      </button>
+                    )}
+                    {/* Search Submit Button - Always visible when expanded or has text */}
+                    <Button 
+                      type="submit" 
+                      size="icon" 
+                      variant="ghost" 
+                      className={`h-7 w-7 rounded-lg transition-all duration-300 ${
+                        searchQuery ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'
+                      }`}
                       style={{
                         background: currentTheme === 'musclesports'
                           ? 'rgba(0, 179, 65, 0.1)'
@@ -328,37 +356,15 @@ export function Header() {
                           : 'rgba(56, 142, 233, 0.1)',
                       }}
                     >
-                      <X className="h-3 w-3" style={{
+                      <Search className="h-4 w-4" style={{
                         color: currentTheme === 'musclesports'
                           ? '#00B341'
                           : currentTheme === 'vera'
                           ? '#FF6B00'
                           : '#388EE9'
                       }} />
-                    </button>
-                  )}
-                  {/* Search Submit Button */}
-                  <Button 
-                    type="submit" 
-                    size="icon" 
-                    variant="ghost" 
-                    className="absolute right-1 h-8 w-8 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-all duration-300 rounded-lg"
-                    style={{
-                      background: currentTheme === 'musclesports'
-                        ? 'rgba(0, 179, 65, 0.1)'
-                        : currentTheme === 'vera'
-                        ? 'rgba(255, 107, 0, 0.1)'
-                        : 'rgba(56, 142, 233, 0.1)',
-                    }}
-                  >
-                    <Search className="h-4 w-4" style={{
-                      color: currentTheme === 'musclesports'
-                        ? '#00B341'
-                        : currentTheme === 'vera'
-                        ? '#FF6B00'
-                        : '#388EE9'
-                    }} />
-                  </Button>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </form>
