@@ -62,7 +62,12 @@ export default function Home() {
       .then(r => r.json())
       .then((data) => {
         if (!mounted) return;
-        setProducts(data.products || []);
+        const allProducts = data.products || [];
+        // Filter out out-of-stock products for MuscleSports theme
+        const filteredProducts = currentTheme === 'musclesports' 
+          ? allProducts.filter((p: any) => p.inStock !== false)
+          : allProducts;
+        setProducts(filteredProducts);
       })
       .catch(err => console.error('Failed to fetch products', err))
       .finally(() => mounted && setLoading(false));
