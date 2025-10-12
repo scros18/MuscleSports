@@ -11,6 +11,7 @@ import { SiteSettingsProvider } from "@/context/site-settings-context";
 import { BusinessSettingsProvider } from "@/context/business-settings-context";
 import { ToastProvider } from "@/components/toast";
 import { PageTransition } from "@/components/page-transition";
+import { DynamicMetadata } from "@/components/dynamic-metadata";
 import { generateSEO, generateOrganizationSchema, generateWebsiteSchema, getJsonLdScript } from "@/lib/seo";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -71,6 +72,7 @@ export default function RootLayout({
         </a>
         <ThemeLoader />
         <BusinessSettingsProvider>
+          <DynamicMetadata />
           <SiteSettingsProvider>
             <PerformanceProvider>
               <AuthProvider>

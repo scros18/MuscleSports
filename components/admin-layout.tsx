@@ -17,6 +17,7 @@ import {
   X,
   Palette,
   Scissors,
+  Wrench,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -308,6 +309,20 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
             Salon Management
           </Link>
         )}
+
+        {/* Site Builder */}
+        <Link
+          href="/admin/site-builder"
+          onClick={closeSidebar}
+          className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ${
+            pathname === '/admin/site-builder'
+              ? 'bg-accent text-accent-foreground border-r-2 border-primary'
+              : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+          }`}
+        >
+          <Wrench className="mr-3 h-5 w-5" />
+          Site Builder
+        </Link>
 
         {/* Settings */}
         <Link
