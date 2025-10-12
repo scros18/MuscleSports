@@ -49,14 +49,14 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
     : "transition-shadow duration-200";
 
   return (
-    <Card className={`overflow-hidden hover:shadow-xl flex flex-col h-full group border hover:border-primary/20 rounded-lg ${animationClass}`}>
+    <Card className={`overflow-hidden hover:shadow-2xl flex flex-col h-full group border hover:border-primary/30 rounded-lg premium-card ${animationClass}`}>
       <Link href={`/products/${product.id}`}>
         <div className="relative aspect-square w-full overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
           <Image
             src={firstImage}
             alt={product.name}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            className="object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
             unoptimized
             loading="lazy"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"

@@ -102,18 +102,23 @@ export default function CategoriesPage() {
               }}
               className="group"
             >
-              <Card className="h-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] border hover:border-primary/20 rounded-lg">
-                <CardContent className="p-4 sm:p-5 md:p-6">
-                  <div className="flex items-center justify-between mb-3 sm:mb-4">
-                    <Package className="h-7 w-7 sm:h-9 sm:w-9 md:h-10 md:w-10 text-primary" />
-                    <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+              <Card className="h-full transition-all duration-300 hover:shadow-2xl hover:scale-[1.03] border hover:border-primary/30 rounded-lg premium-card overflow-hidden">
+                <CardContent className="p-4 sm:p-5 md:p-6 relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-between mb-3 sm:mb-4">
+                      <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors duration-300">
+                        <Package className="h-5 w-5 sm:h-7 sm:w-7 md:h-8 md:w-8 text-primary" />
+                      </div>
+                      <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-muted-foreground group-hover:text-primary group-hover:translate-x-2 transition-all duration-300" />
+                    </div>
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold mb-1.5 sm:mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                      {category.name}
+                    </h3>
+                    <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground font-medium">
+                      {category.count} product{category.count !== 1 ? 's' : ''}
+                    </p>
                   </div>
-                  <h3 className="text-base sm:text-lg md:text-xl font-bold mb-1.5 sm:mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                    {category.name}
-                  </h3>
-                  <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground">
-                    {category.count} product{category.count !== 1 ? 's' : ''}
-                  </p>
                 </CardContent>
               </Card>
             </Link>

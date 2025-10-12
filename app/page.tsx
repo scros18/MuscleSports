@@ -78,11 +78,12 @@ export default function Home() {
 
       {/* Best Sellers */}
       <section className="mb-16">
-        <div className="text-center mb-8">
-          <h2 className="text-4xl font-extrabold mb-2 tracking-tight">
-            <span className="bg-gradient-to-r from-amber-600 via-orange-500 to-red-600 bg-clip-text text-transparent">
+        <div className="text-center mb-8 animate-slide-in-up">
+          <h2 className="text-4xl font-extrabold mb-2 tracking-tight relative inline-block">
+            <span className="bg-gradient-to-r from-amber-600 via-orange-500 to-red-600 bg-clip-text text-transparent relative z-10">
               Best Sellers
             </span>
+            <span className="absolute -inset-2 bg-gradient-to-r from-amber-600/20 via-orange-500/20 to-red-600/20 blur-xl -z-10 opacity-50 group-hover:opacity-75 transition-opacity" />
           </h2>
           <p className="text-muted-foreground text-base font-medium">Most popular products flying off the shelves</p>
         </div>
@@ -107,11 +108,12 @@ export default function Home() {
 
       {/* New Stock */}
       <section className="mb-16">
-        <div className="text-center mb-8">
-          <h2 className="text-4xl font-extrabold mb-2 tracking-tight">
-            <span className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-600 bg-clip-text text-transparent">
+        <div className="text-center mb-8 animate-slide-in-up">
+          <h2 className="text-4xl font-extrabold mb-2 tracking-tight relative inline-block">
+            <span className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-600 bg-clip-text text-transparent relative z-10">
               New Stock
             </span>
+            <span className="absolute -inset-2 bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-cyan-600/20 blur-xl -z-10 opacity-50 group-hover:opacity-75 transition-opacity" />
           </h2>
           <p className="text-muted-foreground text-base font-medium">Fresh products just added to our collection</p>
         </div>

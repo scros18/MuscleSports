@@ -64,17 +64,17 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Shop</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="/products" className="hover:text-foreground">
+                <Link href="/products" className="hover:text-foreground transition-all duration-200 hover:translate-x-1 inline-block">
                   All Products
                 </Link>
               </li>
               <li>
-                <Link href="/categories" className="hover:text-foreground">
+                <Link href="/categories" className="hover:text-foreground transition-all duration-200 hover:translate-x-1 inline-block">
                   Categories
                 </Link>
               </li>
               <li>
-                <Link href="/deals" className="hover:text-foreground">
+                <Link href="/deals" className="hover:text-foreground transition-all duration-200 hover:translate-x-1 inline-block">
                   Deals
                 </Link>
               </li>
@@ -85,17 +85,17 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Support</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="/contact" className="hover:text-foreground">
+                <Link href="/contact" className="hover:text-foreground transition-all duration-200 hover:translate-x-1 inline-block">
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link href="/shipping" className="hover:text-foreground">
+                <Link href="/shipping" className="hover:text-foreground transition-all duration-200 hover:translate-x-1 inline-block">
                   Shipping Info
                 </Link>
               </li>
               <li>
-                <Link href="/returns" className="hover:text-foreground">
+                <Link href="/returns" className="hover:text-foreground transition-all duration-200 hover:translate-x-1 inline-block">
                   Returns
                 </Link>
               </li>

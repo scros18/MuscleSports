@@ -339,7 +339,7 @@ export default function ProductsPage() {
                         animation: `slideInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${idx * 0.02}s backwards`
                       }}
                     >
-                      <ProductCard product={product as any} />
+                      <ProductCard product={product as any} hideDescription={true} />
                     </div>
                   ))}
                 </div>
