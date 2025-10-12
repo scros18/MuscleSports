@@ -191,7 +191,7 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-2 text-sm font-medium">
+        <nav className="hidden md:flex items-center space-x-2 text-sm font-medium transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
           <Link
             href="/"
             className={`relative px-5 py-2.5 rounded-xl backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary font-medium overflow-hidden group ${
