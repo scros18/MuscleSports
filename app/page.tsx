@@ -70,10 +70,57 @@ export default function Home() {
     return () => { mounted = false };
   }, [currentTheme]);
 
-  // Fetch eBay reviews
+  // Fetch eBay reviews or use MuscleSports reviews
   useEffect(() => {
     let mounted = true;
     setReviewsLoading(true);
+
+    // MuscleSports theme-specific reviews
+    if (currentTheme === 'musclesports') {
+      const musclesportsReviews = [
+        {
+          id: 'ms1',
+          author: 'Kris Kosiba',
+          location: 'GB',
+          date: 'Aug 3, 2025',
+          rating: 5,
+          comment: 'I originally wanted to give a 4 star, I love the design and choice of product but once I saw the page had a calculator and recipe tool … I was sold. I entered as much detail and went through what products suited me best. Best £70 spent. Thank you musclesports',
+          verified: true
+        },
+        {
+          id: 'ms2',
+          author: 'joe carpenter',
+          location: 'GB',
+          date: 'Aug 1, 2025',
+          rating: 5,
+          comment: 'Delivery was spot on and product is exactly what I asked for.',
+          verified: true
+        },
+        {
+          id: 'ms3',
+          author: 'Consumer',
+          location: 'GB',
+          date: 'Aug 1, 2025',
+          rating: 5,
+          comment: 'Easy site to navigate and quick delivery',
+          verified: true
+        },
+        {
+          id: 'ms4',
+          author: 'Leon Snailham',
+          location: 'GB',
+          date: 'Aug 3, 2025',
+          rating: 5,
+          comment: 'Has a very good calculator that helped me pick the right products. I had no idea which products I needed until now, just said I wanted to gain muscle, gave my height, age etc and I was sorted',
+          verified: true
+        }
+      ];
+      setReviews(musclesportsReviews);
+      setReviewsLoading(false);
+      return;
+    }
+
+    // Fetch eBay reviews for other themes
     fetch('/api/ebay-reviews?limit=12')
       .then(r => r.json())
       .then((data) => {
@@ -84,7 +131,7 @@ export default function Home() {
       .finally(() => mounted && setReviewsLoading(false));
 
     return () => { mounted = false };
-  }, []);
+  }, [currentTheme]);
 
   const bestSellers = products.slice(0, isMobile ? 4 : 5);
   const newStock = products.slice(5, isMobile ? 9 : 10);
@@ -162,7 +209,7 @@ export default function Home() {
         )}
       </section>
 
-      {/* eBay Reviews Section */}
+      {/* Reviews Section */}
       {!reviewsLoading && reviews.length > 0 && (
         <section className="mb-16">
           <div className="text-center mb-10">
@@ -171,7 +218,11 @@ export default function Home() {
               <span className="font-semibold text-yellow-700 dark:text-yellow-400">Customer Reviews</span>
             </div>
             <h2 className="text-4xl font-bold mb-3">What Our Customers Say</h2>
-            <p className="text-muted-foreground text-lg">Real reviews from real customers on eBay</p>
+            <p className="text-muted-foreground text-lg">
+              {currentTheme === 'musclesports' 
+                ? 'Real reviews from verified MuscleSports customers'
+                : 'Real reviews from real customers on eBay'}
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
