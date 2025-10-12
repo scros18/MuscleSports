@@ -11,7 +11,6 @@ import { formatPrice } from "@/lib/utils";
 import { ShoppingCart, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { generateProductSchema, generateBreadcrumbSchema } from "@/lib/seo";
-import { IVG_PRO_12_FLAVOURS } from '@/data/ivg-pro-12-flavours';
 
 // Render this page dynamically so product fetch happens at request-time
 export const dynamic = 'force-dynamic';
@@ -21,7 +20,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   const [quantityInput, setQuantityInput] = useState(String(1));
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedFlavourIndex, setSelectedFlavourIndex] = useState<number | null>(null);
-  const [mainImage, setMainImage] = useState<string>('');
+  const [mainImage, setMainImage] = useState<string>('/placeholder.svg');
   const { addToCart } = useCart();
   const [product, setProduct] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
@@ -40,11 +39,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     ? [product.flavor]
     : undefined;
   const hasFlavours = Array.isArray(productFlavours) && productFlavours.length > 0;
-  const flavours: string[] = hasFlavours ? (productFlavours as string[]) : IVG_PRO_12_FLAVOURS;
+  const flavours: string[] = hasFlavours 
+    ? (productFlavours as string[]) 
+    : [];
 
   // Map flavours to images if a match is present in product.images (by simple name match)
-  // Run this mapping regardless of whether the product object includes flavours
-  // so the standalone IVG flavour list (IVG_PRO_12_FLAVOURS) can provide images.
   const flavourImages = useMemo(() => {
     const imgs = Array.isArray(product?.images) ? product.images : [];
     // If there are many product.images (pack shot) and separate flavour images
@@ -97,7 +96,9 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   // Set main image when product loads
   useEffect(() => {
     if (product && images.length > 0) {
-      setMainImage(images[0]);
+      // Use placeholder as fallback if the main image URL is broken
+      const mainImg = images[0] || '/placeholder.svg';
+      setMainImage(mainImg);
       // ensure selected thumbnail index is valid for the thumbnails list
       setSelectedImage(0);
     }
@@ -180,10 +181,13 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         <div className="space-y-4">
           <div className="relative h-80 sm:h-96 md:h-[600px] rounded-lg overflow-hidden bg-gray-100 w-full">
             <img
-              src={mainImage}
+              src={mainImage || '/placeholder.svg'}
               alt={product.name}
               className="object-cover w-full h-full"
-              onError={(e) => (e.currentTarget.src = '/placeholder.svg')}
+              onError={(e) => {
+                console.log('Image failed to load:', mainImage);
+                e.currentTarget.src = '/placeholder.svg';
+              }}
             />
           </div>
 
@@ -208,8 +212,9 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                       alt={`${product.name} ${index + 1}`}
                       className="absolute inset-0 w-full h-full object-cover"
                       onError={(e) => {
+                        console.log('Thumbnail image failed to load:', image);
                         setBrokenThumbs((prev) => new Set(prev).add(image));
-                        e.currentTarget.src = '/placeholder.svg'; // optional fallback
+                        e.currentTarget.src = '/placeholder.svg';
                       }}
                     />
                   </div>
@@ -238,10 +243,14 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           <Separator className="mb-6" />
 
           <div className="mb-6">
-            <h2 className="text-lg sm:text-xl font-semibold mb-2">Description</h2>
-            <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap text-sm sm:text-base">
-              {product.description}
-            </p>
+            <h2 className="text-lg sm:text-xl font-semibold mb-4">Description</h2>
+            <div 
+              className="text-muted-foreground leading-relaxed text-sm sm:text-base prose prose-sm max-w-none
+                [&_p]:mb-4 [&_h3]:font-semibold [&_h3]:text-base [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:text-foreground
+                [&_ul]:list-disc [&_ul]:ml-6 [&_ul]:mb-4 [&_ul]:space-y-1
+                [&_li]:text-muted-foreground [&_li]:leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: product.description }}
+            />
           </div>
 
           <Separator className="mb-6" />

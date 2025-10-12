@@ -108,6 +108,7 @@ export class Database {
             category VARCHAR(255),
             in_stock BOOLEAN DEFAULT TRUE,
             featured BOOLEAN DEFAULT FALSE,
+            flavours JSON,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
           )
@@ -258,11 +259,12 @@ export class Database {
     category: string;
     inStock: boolean;
     featured: boolean;
+    flavours?: string[];
   }) {
-    const { id, name, price, description, images, category, inStock, featured } = productData;
+    const { id, name, price, description, images, category, inStock, featured, flavours } = productData;
     await this.query(
-      'INSERT INTO products (id, name, price, description, images, category, in_stock, featured) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [id, name, price, description, JSON.stringify(images), category, inStock, featured]
+      'INSERT INTO products (id, name, price, description, images, category, in_stock, featured, flavours) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [id, name, price, description, JSON.stringify(images), category, inStock, featured, flavours ? JSON.stringify(flavours) : null]
     );
   }
 
@@ -273,7 +275,8 @@ export class Database {
       price: parseFloat(product.price),
       images: safeJsonParseArray(product.images),
       inStock: product.in_stock,
-      featured: product.featured
+      featured: product.featured,
+      flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined
     }));
   }
 
@@ -284,7 +287,8 @@ export class Database {
       price: parseFloat(product.price),
       images: safeJsonParseArray(product.images),
       inStock: product.in_stock,
-      featured: product.featured
+      featured: product.featured,
+      flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined
     }));
   }
 
@@ -302,7 +306,8 @@ export class Database {
         price: parseFloat(product.price),
         images: safeJsonParseArray(product.images),
         inStock: product.in_stock,
-        featured: product.featured
+        featured: product.featured,
+        flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined
       };
     }
     return null;
@@ -316,6 +321,7 @@ export class Database {
     category: string;
     inStock: boolean;
     featured: boolean;
+    flavours: string[];
   }>) {
     const fields = [];
     const values = [];
@@ -347,6 +353,10 @@ export class Database {
     if (productData.featured !== undefined) {
       fields.push('featured = ?');
       values.push(productData.featured);
+    }
+    if (productData.flavours !== undefined) {
+      fields.push('flavours = ?');
+      values.push(JSON.stringify(productData.flavours));
     }
 
     if (fields.length === 0) return;

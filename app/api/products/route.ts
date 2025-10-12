@@ -3,7 +3,6 @@ import fs from 'fs'
 import path from 'path'
 import csv from 'csv-parser'
 import { Database } from '@/lib/database';
-import { ordifyProductCatalog, muscleSportsProductCatalog } from '@/data/product-loader';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 60; // Revalidate every 60 seconds
@@ -100,22 +99,8 @@ export async function GET(request: Request) {
     const minPrice = minPriceParam ? parseFloat(minPriceParam) : undefined;
     const maxPrice = maxPriceParam ? parseFloat(maxPriceParam) : undefined;
 
-    // Check for theme parameter to determine which product catalog to use
-    const themeParam = url.searchParams.get('theme') || 'ordify';
-    const staticProducts = themeParam === 'musclesports' ? muscleSportsProductCatalog : ordifyProductCatalog;
-
-    // Try to get products from database, fall back to static products
-    let allProducts;
-    try {
-      allProducts = await Database.getAllProducts();
-      if (!allProducts || allProducts.length === 0) {
-        console.log('Database returned no products, using static products');
-        allProducts = staticProducts;
-      }
-    } catch (dbError) {
-      console.log('Database error, using static products:', dbError);
-      allProducts = staticProducts;
-    }
+    // Get products from database only
+    const allProducts = await Database.getAllProducts();
 
     const pricing = await readPricingCsv();
 

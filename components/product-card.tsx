@@ -24,6 +24,7 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
   const [quantityInput, setQuantityInput] = useState(String(1));
   const [isAdded, setIsAdded] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const firstImage = Array.isArray((product as any).images) && (product as any).images.length
     ? (product as any).images[0]
     : (product as any).image || "/placeholder.svg";
@@ -31,7 +32,12 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
   
   // keep input string in sync when quantity changes programmatically
   useEffect(() => {
-    setQuantityInput(String(quantity));
+    // Ensure quantity is never 0, always at least 1
+    const safeQuantity = Math.max(1, quantity);
+    setQuantityInput(String(safeQuantity));
+    if (quantity !== safeQuantity) {
+      setQuantity(safeQuantity);
+    }
   }, [quantity]);
 
   const handleAddToCart = () => {
@@ -52,17 +58,18 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
     <Card className={`overflow-hidden hover:shadow-2xl flex flex-col h-full group border hover:border-primary/30 rounded-lg premium-card ${animationClass}`}>
       <Link href={`/products/${product.id}`}>
         <div className="relative aspect-square w-full overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-          <Image
-            src={firstImage}
+          <img
+            src={imageError ? "/placeholder.svg" : firstImage}
             alt={product.name}
-            fill
-            className="object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
-            unoptimized
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
             loading="lazy"
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+            onError={() => {
+              console.log('ProductCard image failed to load:', firstImage);
+              setImageError(true);
+            }}
           />
           
-          {product.featured && (
+          {Boolean(product.featured) && (
             <div className="absolute top-2.5 right-2.5 z-10">
               <div className="relative backdrop-blur-sm bg-gradient-to-br from-blue-500/95 via-indigo-500/95 to-purple-500/95 text-white px-2.5 py-1 rounded-lg shadow-lg border border-white/20 font-semibold text-[10px]">
                 <span className="relative z-10 flex items-center gap-1">
@@ -75,7 +82,7 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
             </div>
           )}
           
-          {!product.inStock && (
+          {!Boolean(product.inStock) && (
             <div className="absolute inset-0 bg-black/60 flex items-center justify-center backdrop-blur-sm">
               <Badge variant="destructive" className="text-sm px-3 py-1.5 rounded-lg">Out of Stock</Badge>
             </div>
@@ -106,7 +113,7 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
           <div className={`hidden md:flex ${badgeVariants({ variant: 'secondary' })} text-[9px] sm:text-[10px] py-0.5 px-1.5 sm:px-2 font-medium`}>
             {product.category}
           </div>
-          {product.inStock && (
+          {Boolean(product.inStock) && (
             <div className="flex items-center text-[9px] sm:text-[10px] text-green-600 dark:text-green-400 font-medium sm:ml-auto w-full md:w-auto justify-center md:justify-start px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md bg-green-50/50 dark:bg-green-950/20 border border-green-200/30 dark:border-green-800/30">
               <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-green-500 rounded-full mr-1 sm:mr-1.5"></span>
               In Stock
@@ -139,7 +146,13 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
             onChange={(e) => {
               // keep only digits in the input string
               const cleaned = e.target.value.replace(/\D/g, "");
-              setQuantityInput(cleaned);
+              // Prevent empty string or "0" from being set
+              if (cleaned === "" || cleaned === "0") {
+                setQuantityInput("1");
+                setQuantity(1);
+              } else {
+                setQuantityInput(cleaned);
+              }
             }}
             onBlur={() => {
               const n = parseInt(quantityInput, 10);
@@ -187,7 +200,7 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
             e.stopPropagation();
             handleAddToCart();
           }}
-          disabled={!product.inStock || isAdded}
+          disabled={!Boolean(product.inStock) || isAdded}
         >
           {isAdded ? (
             <>

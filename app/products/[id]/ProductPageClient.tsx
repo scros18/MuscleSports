@@ -10,7 +10,6 @@ import { useCart } from "@/context/cart-context";
 import { formatPrice } from "@/lib/utils";
 import { ShoppingCart, ArrowLeft, Check, Plus, Minus } from "lucide-react";
 import Link from "next/link";
-import { IVG_PRO_12_FLAVOURS } from '@/data/ivg-pro-12-flavours';
 
 interface ProductPageClientProps {
   params: { id: string };
@@ -55,7 +54,9 @@ export default function ProductPageClient({ params }: ProductPageClientProps) {
     ? [product.flavor]
     : undefined;
   const hasFlavours = Array.isArray(productFlavours) && productFlavours.length > 0;
-  const flavours: string[] = hasFlavours ? (productFlavours as string[]) : IVG_PRO_12_FLAVOURS;
+  const flavours: string[] = hasFlavours 
+    ? (productFlavours as string[]) 
+    : [];
 
   const handleAddToCart = () => {
     const item = hasFlavours && selectedFlavourIndex !== null

@@ -218,8 +218,8 @@ export default function Home() {
                     <SkeletonLoader type="product" count={isMobile ? 4 : 5} />
                   ) : (
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                      {list.slice(0, limit).map((product, pidx) => (
-                        <div key={product.id} style={{ animation: `slideInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${pidx * 0.05}s backwards` }}>
+                      {list.slice(0, limit).map((product) => (
+                        <div key={product.id}>
                           <ProductCard product={product} hideDescription />
                         </div>
                       ))}
