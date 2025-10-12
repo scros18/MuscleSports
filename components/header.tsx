@@ -74,7 +74,9 @@ export function Header() {
 
     setIsSearching(true);
     try {
-      const response = await fetch(`/api/products?search=${encodeURIComponent(query)}&pageSize=5`);
+      // Add theme parameter to filter products by catalog
+      const themeParam = currentTheme === 'musclesports' ? '&theme=musclesports' : '';
+      const response = await fetch(`/api/products?search=${encodeURIComponent(query)}&pageSize=5${themeParam}`);
       if (response.ok) {
         const data = await response.json();
         setSearchResults(data.products || []);
@@ -104,7 +106,8 @@ export function Header() {
     e.preventDefault();
     if (searchQuery.trim()) {
       setShowResults(false);
-      router.push(`/products?search=${encodeURIComponent(searchQuery)}`);
+      const themeParam = currentTheme === 'musclesports' ? '&theme=musclesports' : '';
+      router.push(`/products?search=${encodeURIComponent(searchQuery)}${themeParam}`);
     }
   };
 
@@ -147,10 +150,10 @@ export function Header() {
       const rect = el.getBoundingClientRect();
       setDropdownStyle({
         position: "fixed",
-        top: rect.bottom + window.scrollY,
-        left: rect.left + window.scrollX,
+        top: rect.bottom,
+        left: rect.left,
         width: rect.width,
-        zIndex: 1000000,
+        zIndex: 9999999,
         maxHeight: "50vh",
         overflowY: "auto",
       });
@@ -276,27 +279,93 @@ export function Header() {
         <div className="hidden md:flex items-center space-x-3">
           <div className="relative group" ref={searchRef}>
             <form onSubmit={handleSearchSubmit} className="flex items-center">
-              <div className="relative flex items-center overflow-hidden">
-                <Input
-                  type="search"
-                  placeholder="Search products..."
-                  className="h-10 w-10 group-hover:w-64 focus:w-64 transition-[width] duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] rounded-xl backdrop-blur-xl bg-background/50 border-white/20 dark:border-white/10 shadow-sm placeholder:opacity-0 group-hover:placeholder:opacity-100 focus:placeholder:opacity-100 placeholder:transition-opacity placeholder:duration-500 placeholder:delay-200"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  onFocus={() => setShowResults(true)}
-                />
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none group-hover:opacity-0 focus-within:opacity-0 transition-opacity duration-500">
-                  <Search className="h-4 w-4 text-muted-foreground" />
+              <div className="relative flex items-center">
+                <div className="relative">
+                  <Input
+                    type="text"
+                    placeholder="Search products..."
+                    className="h-10 w-10 group-hover:w-64 focus:w-64 transition-[width] duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] rounded-xl backdrop-blur-xl bg-background/50 border placeholder:opacity-0 group-hover:placeholder:opacity-100 focus:placeholder:opacity-100 placeholder:transition-opacity placeholder:duration-500 placeholder:delay-200 pr-20"
+                    style={{
+                      borderColor: searchQuery ? (
+                        currentTheme === 'musclesports' 
+                          ? 'rgba(0, 179, 65, 0.4)'
+                          : currentTheme === 'vera'
+                          ? 'rgba(255, 107, 0, 0.4)'
+                          : 'rgba(56, 142, 233, 0.4)'
+                      ) : 'rgba(255, 255, 255, 0.2)',
+                      borderWidth: '1px',
+                      boxShadow: searchQuery ? (
+                        currentTheme === 'musclesports' 
+                          ? '0 0 15px rgba(0, 179, 65, 0.15)'
+                          : currentTheme === 'vera'
+                          ? '0 0 15px rgba(255, 107, 0, 0.15)'
+                          : '0 0 15px rgba(56, 142, 233, 0.15)'
+                      ) : 'none'
+                    }}
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    onFocus={() => setShowResults(true)}
+                  />
+                  {/* Search Icon - Only show when collapsed, centered perfectly */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-100 group-hover:opacity-0 group-focus-within:opacity-0 transition-opacity duration-300">
+                    <Search className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                  {/* Clear Button - Only show when expanded with text */}
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSearchQuery('');
+                        setSearchResults([]);
+                        setShowResults(false);
+                      }}
+                      className="absolute right-10 top-1/2 -translate-y-1/2 h-6 w-6 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
+                      style={{
+                        background: currentTheme === 'musclesports'
+                          ? 'rgba(0, 179, 65, 0.1)'
+                          : currentTheme === 'vera'
+                          ? 'rgba(255, 107, 0, 0.1)'
+                          : 'rgba(56, 142, 233, 0.1)',
+                      }}
+                    >
+                      <X className="h-3 w-3" style={{
+                        color: currentTheme === 'musclesports'
+                          ? '#00B341'
+                          : currentTheme === 'vera'
+                          ? '#FF6B00'
+                          : '#388EE9'
+                      }} />
+                    </button>
+                  )}
+                  {/* Search Submit Button */}
+                  <Button 
+                    type="submit" 
+                    size="icon" 
+                    variant="ghost" 
+                    className="absolute right-1 h-8 w-8 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-all duration-300 rounded-lg"
+                    style={{
+                      background: currentTheme === 'musclesports'
+                        ? 'rgba(0, 179, 65, 0.1)'
+                        : currentTheme === 'vera'
+                        ? 'rgba(255, 107, 0, 0.1)'
+                        : 'rgba(56, 142, 233, 0.1)',
+                    }}
+                  >
+                    <Search className="h-4 w-4" style={{
+                      color: currentTheme === 'musclesports'
+                        ? '#00B341'
+                        : currentTheme === 'vera'
+                        ? '#FF6B00'
+                        : '#388EE9'
+                    }} />
+                  </Button>
                 </div>
-                <Button type="submit" size="icon" variant="ghost" className="absolute right-1 h-8 w-8 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity duration-500 hover:bg-primary/10">
-                  <Search className="h-4 w-4" />
-                </Button>
               </div>
             </form>
 
             {/* Search Results Dropdown (portal) */}
             {showResults && typeof document !== "undefined" && createPortal(
-              <div style={dropdownStyle || {}} className="bg-background border rounded-md shadow-lg" data-debug="search-portal">
+              <div style={dropdownStyle || {}} className="bg-background border rounded-md shadow-lg z-[9999999]" data-debug="search-portal">
                 {isSearching ? (
                   <div className="p-4 text-center text-muted-foreground">
                     Searching...
@@ -511,15 +580,71 @@ export function Header() {
             {/* Mobile Search */}
             <div className="relative" ref={searchRef}>
               <form onSubmit={handleSearchSubmit} className="flex items-center space-x-2">
-                <Input
-                  type="search"
-                  placeholder="Search products..."
-                  className="flex-1"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                />
-                <Button type="submit" size="icon" variant="ghost">
-                  <Search className="h-5 w-5" />
+                <div className="relative flex-1">
+                  <Input
+                    type="text"
+                    placeholder="Search products..."
+                    className="w-full pl-4 pr-10"
+                    style={{
+                      boxShadow: searchQuery ? (
+                        currentTheme === 'musclesports' 
+                          ? '0 0 0 2px rgba(0, 179, 65, 0.3), 0 0 20px rgba(0, 179, 65, 0.2)'
+                          : currentTheme === 'vera'
+                          ? '0 0 0 2px rgba(255, 107, 0, 0.3), 0 0 20px rgba(255, 107, 0, 0.2)'
+                          : '0 0 0 2px rgba(56, 142, 233, 0.3), 0 0 20px rgba(56, 142, 233, 0.2)'
+                      ) : undefined
+                    }}
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                  />
+                  {/* Clear Button - Mobile */}
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSearchQuery('');
+                        setSearchResults([]);
+                        setShowResults(false);
+                      }}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 h-6 w-6 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
+                      style={{
+                        background: currentTheme === 'musclesports'
+                          ? 'rgba(0, 179, 65, 0.1)'
+                          : currentTheme === 'vera'
+                          ? 'rgba(255, 107, 0, 0.1)'
+                          : 'rgba(56, 142, 233, 0.1)',
+                      }}
+                    >
+                      <X className="h-3 w-3" style={{
+                        color: currentTheme === 'musclesports'
+                          ? '#00B341'
+                          : currentTheme === 'vera'
+                          ? '#FF6B00'
+                          : '#388EE9'
+                      }} />
+                    </button>
+                  )}
+                </div>
+                <Button 
+                  type="submit" 
+                  size="icon" 
+                  variant="ghost"
+                  className="rounded-lg"
+                  style={{
+                    background: currentTheme === 'musclesports'
+                      ? 'rgba(0, 179, 65, 0.1)'
+                      : currentTheme === 'vera'
+                      ? 'rgba(255, 107, 0, 0.1)'
+                      : 'rgba(56, 142, 233, 0.1)',
+                  }}
+                >
+                  <Search className="h-5 w-5" style={{
+                    color: currentTheme === 'musclesports'
+                      ? '#00B341'
+                      : currentTheme === 'vera'
+                      ? '#FF6B00'
+                      : '#388EE9'
+                  }} />
                 </Button>
               </form>
 

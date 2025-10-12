@@ -8,9 +8,12 @@ type Slide = {
   title: string;
   subtitle?: string;
   image: string;
+  category?: string;
+  sku?: string;
 };
 
-const slides: Slide[] = [
+// Default slides for Lumify/Ordify themes
+const defaultSlides: Slide[] = [
   {
     id: 1,
     title: "AUTUMN COLLECTION",
@@ -34,17 +37,84 @@ const slides: Slide[] = [
   },
 ];
 
+// MuscleSports theme slides - Based on musclesports.co.uk categories
+const muscleSportsSlides: Slide[] = [
+  {
+    id: 1,
+    title: "FUEL YOUR GAINS",
+    subtitle: "Premium Creatine Supplements",
+    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1600&auto=format&fit=crop",
+    category: "CREATINE",
+    sku: "WAR090",
+  },
+  {
+    id: 2,
+    title: "EXPLOSIVE ENERGY",
+    subtitle: "Pre-Workout Formulas",
+    image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1600&auto=format&fit=crop",
+    category: "PRE-WORKOUT",
+    sku: "WA01",
+  },
+  {
+    id: 3,
+    title: "BUILD MUSCLE",
+    subtitle: "High-Quality Protein Powders",
+    image: "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?q=80&w=1600&auto=format&fit=crop",
+    category: "PROTEIN",
+    sku: "WAR065",
+  },
+  {
+    id: 4,
+    title: "COMPLETE NUTRITION",
+    subtitle: "Essential Vitamins & Minerals",
+    image: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?q=80&w=1600&auto=format&fit=crop",
+    category: "VITAMINS",
+    sku: "WAR118",
+  },
+];
+
 export default function HeroCarousel() {
   const { settings } = usePerformance();
+  const [currentTheme, setCurrentTheme] = useState<string>('ordify');
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const touchStartX = useRef<number | null>(null);
+
+  // Detect theme from documentElement class
+  useEffect(() => {
+    const detectTheme = () => {
+      const htmlClasses = document.documentElement.classList;
+      const bodyClasses = document.body.classList;
+      if (htmlClasses.contains('theme-musclesports') || bodyClasses.contains('theme-musclesports')) {
+        setCurrentTheme('musclesports');
+      } else if (htmlClasses.contains('theme-vera') || bodyClasses.contains('theme-vera')) {
+        setCurrentTheme('vera');
+      } else {
+        setCurrentTheme('ordify');
+      }
+    };
+
+    detectTheme();
+    
+    const htmlObserver = new MutationObserver(detectTheme);
+    const bodyObserver = new MutationObserver(detectTheme);
+    htmlObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    
+    return () => {
+      htmlObserver.disconnect();
+      bodyObserver.disconnect();
+    };
+  }, []);
+
+  // Select slides based on theme
+  const slides = currentTheme === 'musclesports' ? muscleSportsSlides : defaultSlides;
 
   useEffect(() => {
     if (paused) return;
     const id = setInterval(() => setIndex((i) => (i + 1) % slides.length), 5000);
     return () => clearInterval(id);
-  }, [paused]);
+  }, [paused, slides.length]);
 
   function prev() {
     setIndex((i) => (i - 1 + slides.length) % slides.length);
@@ -52,9 +122,7 @@ export default function HeroCarousel() {
 
   function next() {
     setIndex((i) => (i + 1) % slides.length);
-  }
-
-  // Keyboard navigation
+  }  // Keyboard navigation
   function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     if (e.key === 'ArrowLeft') {
       e.preventDefault();
@@ -111,7 +179,16 @@ export default function HeroCarousel() {
                 {/* Subtitle with accent line */}
                 {s.subtitle && (
                   <div className="flex items-center gap-2 md:gap-3">
-                    <div className="h-0.5 w-10 md:w-14 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                    <div 
+                      className="h-0.5 w-10 md:w-14"
+                      style={{
+                        background: currentTheme === 'musclesports' 
+                          ? 'linear-gradient(to right, #00B341, #00E050)'
+                          : currentTheme === 'vera'
+                          ? 'linear-gradient(to right, #FF6B00, #FF8C00)'
+                          : 'linear-gradient(to right, #388EE9, #8B5CF6)'
+                      }}
+                    ></div>
                     <p className="text-white text-base md:text-xl font-bold tracking-wide drop-shadow-lg uppercase">
                       {s.subtitle}
                     </p>
@@ -119,11 +196,41 @@ export default function HeroCarousel() {
                 )}
                 
                 {/* Shop Now CTA */}
-                <button className={`mt-5 md:mt-6 bg-white text-black px-6 md:px-10 py-2.5 md:py-3.5 rounded-full font-black text-xs md:text-sm uppercase tracking-wider hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white shadow-2xl hover:shadow-blue-500/50 ${
-                  settings.animationsEnabled
-                    ? 'transition-all duration-300 hover:scale-105 active:scale-95'
-                    : 'transition-colors duration-200'
-                }`}>
+                <button 
+                  className={`mt-5 md:mt-6 bg-white text-black px-6 md:px-10 py-2.5 md:py-3.5 rounded-full font-black text-xs md:text-sm uppercase tracking-wider shadow-2xl ${
+                    settings.animationsEnabled
+                      ? 'transition-all duration-500 hover:scale-105 active:scale-95'
+                      : 'transition-colors duration-200'
+                  }`}
+                  style={{
+                    ...(settings.animationsEnabled && {
+                      background: 'white',
+                    }),
+                  }}
+                  onMouseEnter={(e) => {
+                    if (settings.animationsEnabled) {
+                      const gradients = {
+                        musclesports: 'linear-gradient(to right, #00B341, #00E050)',
+                        vera: 'linear-gradient(to right, #FF6B00, #FF8C00)',
+                        ordify: 'linear-gradient(to right, #388EE9, #8B5CF6)',
+                      };
+                      e.currentTarget.style.background = gradients[currentTheme as keyof typeof gradients] || gradients.ordify;
+                      e.currentTarget.style.color = 'white';
+                      e.currentTarget.style.boxShadow = currentTheme === 'musclesports' 
+                        ? '0 20px 50px rgba(0, 179, 65, 0.5)' 
+                        : currentTheme === 'vera'
+                        ? '0 20px 50px rgba(255, 107, 0, 0.5)'
+                        : '0 20px 50px rgba(56, 142, 233, 0.5)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (settings.animationsEnabled) {
+                      e.currentTarget.style.background = 'white';
+                      e.currentTarget.style.color = 'black';
+                      e.currentTarget.style.boxShadow = '0 25px 50px -12px rgb(0 0 0 / 0.25)';
+                    }
+                  }}
+                >
                   Shop Now
                 </button>
               </div>

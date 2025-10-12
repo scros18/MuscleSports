@@ -18,9 +18,38 @@ interface CategoryWithCount {
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<CategoryWithCount[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentTheme, setCurrentTheme] = useState<string>('ordify');
+
+  // Detect theme from documentElement class
+  useEffect(() => {
+    const detectTheme = () => {
+      const htmlClasses = document.documentElement.classList;
+      const bodyClasses = document.body.classList;
+      if (htmlClasses.contains('theme-musclesports') || bodyClasses.contains('theme-musclesports')) {
+        setCurrentTheme('musclesports');
+      } else if (htmlClasses.contains('theme-vera') || bodyClasses.contains('theme-vera')) {
+        setCurrentTheme('vera');
+      } else {
+        setCurrentTheme('ordify');
+      }
+    };
+
+    detectTheme();
+    
+    const htmlObserver = new MutationObserver(detectTheme);
+    const bodyObserver = new MutationObserver(detectTheme);
+    htmlObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    htmlObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    
+    return () => {
+      htmlObserver.disconnect();
+      bodyObserver.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
-    fetch('/api/products?pageSize=1000')
+    const themeParam = currentTheme === 'musclesports' ? '&theme=musclesports' : '';
+    fetch(`/api/products?pageSize=1000${themeParam}`)
       .then(res => res.json())
       .then(data => {
         const cats = data.categories || [];
@@ -53,7 +82,7 @@ export default function CategoriesPage() {
       })
       .catch(err => console.error('Failed to load categories', err))
       .finally(() => setLoading(false));
-  }, []);
+  }, [currentTheme]);
 
   if (loading) {
     return (
@@ -93,10 +122,12 @@ export default function CategoriesPage() {
         </Card>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-          {categories.map((category, idx) => (
+          {categories.map((category, idx) => {
+            const themeParam = currentTheme === 'musclesports' ? '&theme=musclesports' : '';
+            return (
             <Link
               key={category.name}
-              href={`/products?category=${encodeURIComponent(category.name)}`}
+              href={`/products?category=${encodeURIComponent(category.name)}${themeParam}`}
               style={{
                 animation: `slideInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${idx * 0.05}s backwards`
               }}
@@ -122,7 +153,8 @@ export default function CategoriesPage() {
                 </CardContent>
               </Card>
             </Link>
-          ))}
+          );
+          })}
         </div>
       )}
 
