@@ -803,38 +803,135 @@ export function Header() {
             </nav>
 
             {/* Mobile Auth */}
-            <div className="border-t pt-4 space-y-4 flex flex-col items-center">
+            <div className="border-t pt-4 space-y-3">
               {user ? (
-                <div className="space-y-3">
-                  <Link href="/account" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Button variant="outline" className="w-full justify-start">
-                      <User className="h-4 w-4 mr-2" />
-                      Account
-                    </Button>
+                <div className="space-y-3 w-full">
+                  <Link href="/account" onClick={() => setIsMobileMenuOpen(false)} className="block w-full">
+                    <div
+                      className={`relative flex items-center px-5 py-3 text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
+                        settings.animationsEnabled
+                          ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                          : 'transition-all duration-300'
+                      }`}
+                      style={{
+                        background: currentTheme === 'musclesports' 
+                          ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
+                          : currentTheme === 'vera'
+                          ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
+                          : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))',
+                        borderColor: 'rgba(255, 255, 255, 0.2)'
+                      }}
+                    >
+                      <User className="h-5 w-5 mr-3 relative z-10" />
+                      <span className="relative z-10">Account</span>
+                      <div 
+                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+                        style={{
+                          background: currentTheme === 'musclesports'
+                            ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
+                            : currentTheme === 'vera'
+                            ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
+                            : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
+                        }}
+                      ></div>
+                    </div>
                   </Link>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
+                  <button
+                    className={`relative flex items-center w-full px-5 py-3 text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
+                      settings.animationsEnabled
+                        ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                        : 'transition-all duration-300'
+                    }`}
+                    style={{
+                      background: currentTheme === 'musclesports' 
+                        ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
+                        : currentTheme === 'vera'
+                        ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
+                        : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))',
+                      borderColor: 'rgba(255, 255, 255, 0.2)'
+                    }}
                     onClick={() => {
                       handleLogout();
                       setIsMobileMenuOpen(false);
                     }}
                   >
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Logout
-                  </Button>
+                    <LogOut className="h-5 w-5 mr-3 relative z-10" />
+                    <span className="relative z-10">Logout</span>
+                    <div 
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+                      style={{
+                        background: currentTheme === 'musclesports'
+                          ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
+                          : currentTheme === 'vera'
+                          ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
+                          : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
+                      }}
+                    ></div>
+                  </button>
                 </div>
               ) : (
-                <div className="space-y-2">
-                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Button variant="outline" className="w-full">
-                      Login
-                    </Button>
+                <div className="space-y-3 w-full">
+                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="block w-full">
+                    <div
+                      className={`relative flex items-center justify-center px-5 py-3 text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
+                        settings.animationsEnabled
+                          ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                          : 'transition-all duration-300'
+                      }`}
+                      style={{
+                        background: currentTheme === 'musclesports' 
+                          ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
+                          : currentTheme === 'vera'
+                          ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
+                          : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))',
+                        borderColor: 'rgba(255, 255, 255, 0.2)'
+                      }}
+                    >
+                      <span className="relative z-10">Login</span>
+                      <div 
+                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+                        style={{
+                          background: currentTheme === 'musclesports'
+                            ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
+                            : currentTheme === 'vera'
+                            ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
+                            : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
+                        }}
+                      ></div>
+                    </div>
                   </Link>
-                  <Link href="/register" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Button className="w-full">
-                      Register
-                    </Button>
+                  <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="block w-full">
+                    <div
+                      className={`relative flex items-center justify-center px-5 py-3 text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-white overflow-hidden group ${
+                        settings.animationsEnabled
+                          ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                          : 'transition-all duration-300'
+                      }`}
+                      style={{
+                        background: currentTheme === 'musclesports' 
+                          ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.25), rgba(0, 179, 65, 0.15))'
+                          : currentTheme === 'vera'
+                          ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.35), rgba(255, 107, 0, 0.2))'
+                          : 'linear-gradient(135deg, rgba(56, 142, 233, 0.25), rgba(56, 142, 233, 0.15))',
+                        borderColor: currentTheme === 'musclesports'
+                          ? 'rgba(0, 179, 65, 0.4)'
+                          : currentTheme === 'vera'
+                          ? 'rgba(255, 107, 0, 0.4)'
+                          : 'rgba(56, 142, 233, 0.4)'
+                      }}
+                    >
+                      <span className="relative z-10">Register</span>
+                      <div 
+                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+                        style={{
+                          background: currentTheme === 'musclesports'
+                            ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.4), rgba(0, 179, 65, 0.25))'
+                            : currentTheme === 'vera'
+                            ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.5), rgba(255, 107, 0, 0.3))'
+                            : 'linear-gradient(135deg, rgba(56, 142, 233, 0.4), rgba(56, 142, 233, 0.25))'
+                        }}
+                      ></div>
+                    </div>
                   </Link>
                 </div>
               )}
