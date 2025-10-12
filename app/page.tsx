@@ -168,7 +168,7 @@ export default function Home() {
             }`}></div>
           </div>
 
-          <div className="flex flex-col items-center text-center mb-10 pt-12 animate-slide-in-up">
+          <div className="flex flex-col items-center text-center py-12 animate-slide-in-up">
             {/* Icon badge */}
             <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-6 shadow-md ${
               currentTheme === 'musclesports'
@@ -194,7 +194,7 @@ export default function Home() {
               </span>
             </h2>
             
-            <p className="text-muted-foreground text-base max-w-md">Most popular products flying off the shelves</p>
+            <p className="text-muted-foreground text-base max-w-md mb-0">Most popular products flying off the shelves</p>
           </div>
         </div>
 
@@ -230,7 +230,7 @@ export default function Home() {
             }`}></div>
           </div>
 
-          <div className="flex flex-col items-center text-center mb-10 pt-12 animate-slide-in-up">
+          <div className="flex flex-col items-center text-center py-12 animate-slide-in-up">
             {/* Icon badge */}
             <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-6 shadow-md ${
               currentTheme === 'musclesports'
@@ -256,7 +256,7 @@ export default function Home() {
               </span>
             </h2>
             
-            <p className="text-muted-foreground text-base max-w-md">Fresh products just added to our collection</p>
+            <p className="text-muted-foreground text-base max-w-md mb-0">Fresh products just added to our collection</p>
           </div>
         </div>
 
