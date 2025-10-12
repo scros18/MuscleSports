@@ -28,12 +28,12 @@
   <table>
     <tr>
       <td align="center" width="300">
-        <img src="https://github.com/Leon2k909.png" width="120px" style="border-radius: 50%; border: 3px solid #4A90E2; box-shadow: 0 0 20px #4A90E2;" alt="Leon"/><br/>
+        <img src="https://cdn.discordapp.com/avatars/689162430084808721/a_1234.gif" width="120px" style="border-radius: 50%; border: 3px solid #4A90E2; box-shadow: 0 0 20px #4A90E2;" alt="Leon" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'"/><br/>
         <sub style="font-size: 16px;"><b>💡 Leon</b></sub><br/>
         <sub style="color: #4A90E2;">Founder & Lead Developer</sub>
       </td>
       <td align="center">
-        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sam&backgroundColor=4A90E2" width="120px" style="border-radius: 50%; border: 3px solid #4A90E2; box-shadow: 0 0 20px #4A90E2;" alt="Sam"/><br/>
+        <img src="https://cdn.discordapp.com/avatars/1401668653581336617/a_1234.gif" width="120px" style="border-radius: 50%; border: 3px solid #4A90E2; box-shadow: 0 0 20px #4A90E2;" alt="Sam" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"/><br/>
         <sub style="font-size: 16px;"><b>👨‍💻 Sam</b></sub><br/>
         <sub style="color: #4A90E2;">Founder & AI Specialist</sub>
       </td>
@@ -600,24 +600,18 @@ This is commercial software. Unauthorized copying or distribution is prohibited.
 <tr>
 <td align="center" width="50%">
 <a href="https://ordifydirect.co.uk" target="_blank">
-<img src="https://img.icons8.com/fluency/96/000000/shopping-cart.png" width="60" alt="OrdifyDirect"/><br/>
-<img src="https://img.shields.io/badge/OrdifyDirect-E--Commerce_Excellence-0066FF?style=for-the-badge&logo=shopify&logoColor=white" alt="OrdifyDirect"/>
-</a><br/>
-<sub>🛒 <b>Premium E-Commerce Platform</b></sub><br/>
-<sub style="color: #888;">Fast Shipping • Huge Selection • Best Prices</sub>
+<img src="https://ordifydirect.co.uk/wp-content/uploads/2024/01/cropped-Untitled-design-6.png" width="120" alt="OrdifyDirect"/><br/>
+<img src="https://img.shields.io/badge/OrdifyDirect-E--Commerce-0066FF?style=for-the-badge&logo=shopify&logoColor=white" alt="OrdifyDirect"/>
+</a>
 </td>
 <td align="center" width="50%">
 <a href="https://musclesports.co.uk" target="_blank">
-<img src="https://img.icons8.com/fluency/96/000000/dumbbell.png" width="60" alt="MuscleSports"/><br/>
+<img src="https://musclesports.co.uk/wp-content/uploads/2025/07/Logo_resized-1.jpg" width="120" alt="MuscleSports"/><br/>
 <img src="https://img.shields.io/badge/MuscleSports-Sports_Nutrition-00B341?style=for-the-badge&logo=applehealth&logoColor=white" alt="MuscleSports"/>
-</a><br/>
-<sub>💪 <b>Premium Sports Nutrition</b></sub><br/>
-<sub style="color: #888;">Supplements • Protein • Performance Gear</sub>
+</a>
 </td>
 </tr>
 </table>
-
-<sub style="color: #666; font-size: 10px;">Powered by the same technology • Built for performance • Trusted by thousands</sub>
 
 </div>
 
@@ -631,7 +625,22 @@ This is commercial software. Unauthorized copying or distribution is prohibited.
 
 <div align="center">
 
-**Made with 💙 by Leon & Sam (Co-Founders)**
+<table>
+<tr>
+<td align="center" width="300">
+<img src="https://cdn.discordapp.com/avatars/689162430084808721/a_1234.gif" width="100px" style="border-radius: 50%; border: 3px solid #4A90E2; box-shadow: 0 0 20px #4A90E2;" alt="Leon" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'"/><br/>
+<sub style="font-size: 14px;"><b>� Leon</b></sub><br/>
+<sub style="color: #4A90E2;">Co-Founder</sub>
+</td>
+<td align="center">
+<img src="https://cdn.discordapp.com/avatars/1401668653581336617/a_1234.gif" width="100px" style="border-radius: 50%; border: 3px solid #4A90E2; box-shadow: 0 0 20px #4A90E2;" alt="Sam" onerror="this.src='https://cdn.discordapp.com/embed/avatars/1.png'"/><br/>
+<sub style="font-size: 14px;"><b>👨‍💻 Sam</b></sub><br/>
+<sub style="color: #4A90E2;">Co-Founder</sub>
+</td>
+</tr>
+</table>
+
+**Made with 💙 by Leon & Sam**
 
 <br>
 
