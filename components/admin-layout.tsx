@@ -37,30 +37,33 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [productsExpanded, setProductsExpanded] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState<'ordify' | 'musclesports' | 'vera'>('ordify');
+  const [currentTheme, setCurrentTheme] = useState<'lumify' | 'ordify' | 'musclesports' | 'vera'>('lumify');
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
     checkAdminAccess();
     // Load saved theme
-    const savedTheme = localStorage.getItem('admin_theme') as 'ordify' | 'musclesports' | 'vera';
+    const savedTheme = localStorage.getItem('admin_theme') as 'lumify' | 'ordify' | 'musclesports' | 'vera';
     if (savedTheme) {
       setCurrentTheme(savedTheme);
       applyTheme(savedTheme);
     }
   }, []);
 
-  const applyTheme = (theme: 'ordify' | 'musclesports' | 'vera') => {
+  const applyTheme = (theme: 'lumify' | 'ordify' | 'musclesports' | 'vera') => {
     const root = document.documentElement;
     const body = document.body;
     
     // Remove all theme classes first
-    root.classList.remove('theme-musclesports', 'theme-vera');
-    body.classList.remove('theme-musclesports', 'theme-vera');
+    root.classList.remove('theme-lumify', 'theme-musclesports', 'theme-vera');
+    body.classList.remove('theme-lumify', 'theme-musclesports', 'theme-vera');
     
     // Apply new theme
-    if (theme === 'musclesports') {
+    if (theme === 'lumify') {
+      root.classList.add('theme-lumify');
+      body.classList.add('theme-lumify');
+    } else if (theme === 'musclesports') {
       root.classList.add('theme-musclesports');
       body.classList.add('theme-musclesports');
     } else if (theme === 'vera') {
@@ -71,14 +74,16 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
   };
 
   const toggleTheme = () => {
-    // Cycle through: ordify -> musclesports -> vera -> ordify
-    let newTheme: 'ordify' | 'musclesports' | 'vera';
-    if (currentTheme === 'ordify') {
+    // Cycle through: lumify -> ordify -> musclesports -> vera -> lumify
+    let newTheme: 'lumify' | 'ordify' | 'musclesports' | 'vera';
+    if (currentTheme === 'lumify') {
+      newTheme = 'ordify';
+    } else if (currentTheme === 'ordify') {
       newTheme = 'musclesports';
     } else if (currentTheme === 'musclesports') {
       newTheme = 'vera';
     } else {
-      newTheme = 'ordify';
+      newTheme = 'lumify';
     }
     setCurrentTheme(newTheme);
     applyTheme(newTheme);
@@ -138,14 +143,18 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
         <div className="flex items-center justify-between pt-4">
           <div className="flex flex-col">
             <Link href="/admin" className="text-xl font-bold" onClick={closeSidebar}>
-              {currentTheme === 'musclesports' ? (
+              {currentTheme === 'lumify' ? (
+                <span className="bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Lumify</span>
+              ) : currentTheme === 'musclesports' ? (
                 <span className="bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">MuscleSports</span>
+              ) : currentTheme === 'vera' ? (
+                <span className="bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">VeraRP</span>
               ) : (
                 <span className="text-gray-900">Ordify Admin</span>
               )}
             </Link>
             <span className="text-[10px] font-medium text-muted-foreground mt-0.5">
-              {currentTheme === 'musclesports' ? 'Leon\'s MuscleSports.co.uk' : 'Direct E-commerce'}
+              {currentTheme === 'lumify' ? 'Light Up Your Business' : currentTheme === 'musclesports' ? 'Leon\'s MuscleSports.co.uk' : currentTheme === 'vera' ? 'Serious FiveM Roleplay' : 'Direct E-commerce'}
             </span>
           </div>
           <Button
@@ -297,10 +306,12 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
             className="flex items-center w-full px-4 py-3 text-sm font-medium rounded-lg transition-all duration-300 bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 text-foreground border border-primary/20 shadow-sm"
           >
             <Palette className="mr-3 h-5 w-5 text-primary" />
-            <span>Theme: {currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : 'Ordify'}</span>
+            <span>Theme: {currentTheme === 'lumify' ? 'Lumify' : currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : 'Ordify'}</span>
           </button>
           <p className="px-4 mt-2 text-xs text-muted-foreground">
-            {currentTheme === 'musclesports' 
+            {currentTheme === 'lumify'
+              ? '💙 Bright blue Lumify brand theme'
+              : currentTheme === 'musclesports' 
               ? '🟢 Green sports nutrition theme'
               : currentTheme === 'vera'
               ? '🟣 Purple gaming/roleplay theme'

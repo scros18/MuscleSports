@@ -1,25 +1,25 @@
 <div align="center">
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=Ordify%20Platform&fontSize=42&fontColor=fff&animation=twinkling&fontAlignY=32" />
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:4A90E2,50:2E5BFF,100:1E40AF&height=180&section=header&text=Lumify&fontSize=62&fontColor=fff&animation=twinkling&fontAlignY=32&desc=Light%20Up%20Your%20Business&descSize=18&descAlignY=55" />
 
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&duration=3000&pause=1000&color=00F7FF&center=true&vCenter=true&width=800&height=100&lines=Enterprise+E-Commerce+Platform+%E2%9C%A8;High-Performance+%7C+Mobile-Optimized+%F0%9F%9A%80;Code+Obfuscated+%7C+Production+Ready+%F0%9F%94%92;Perfect+for+Dropshipping+Stores+%F0%9F%9B%8D;Multi-Theme+System+%F0%9F%8E%A8" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&duration=3000&pause=1000&color=4A90E2&center=true&vCenter=true&width=900&height=100&lines=Next-Gen+E-Commerce+Platform+%E2%9C%A8;Multi-Brand+%7C+Lightning+Fast+%F0%9F%9A%80;Enterprise+Ready+%7C+Fully+Secured+%F0%9F%94%92;Perfect+for+Growing+Businesses+%F0%9F%92%BC;4+Premium+Themes+Included+%F0%9F%8E%A8" alt="Typing SVG" />
 </div>
 
 <br>
 
 <div align="center">
-  <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js"/></a>
-  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.3-00F7FF?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/></a>
-  <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind-3.3-00F7FF?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind"/></a>
-  <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-18-00F7FF?style=for-the-badge&logo=react&logoColor=white" alt="React"/></a>
+  <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-14-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js"/></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.3-4A90E2?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/></a>
+  <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind-3.3-4A90E2?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind"/></a>
+  <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-18-4A90E2?style=for-the-badge&logo=react&logoColor=white" alt="React"/></a>
 </div>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/License-Proprietary-FF0080?style=for-the-badge&logo=security&logoColor=white" alt="License"/>
-  <img src="https://img.shields.io/badge/Status-Production_Ready-00FF87?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Status"/>
-  <img src="https://img.shields.io/badge/Lighthouse-95+-00FF87?style=for-the-badge&logo=lighthouse&logoColor=white" alt="Performance"/>
-  <img src="https://img.shields.io/badge/Mobile_Score-95+-00FF87?style=for-the-badge&logo=mobile&logoColor=white" alt="Mobile"/>
+  <img src="https://img.shields.io/badge/License-Proprietary-1E40AF?style=for-the-badge&logo=security&logoColor=white" alt="License"/>
+  <img src="https://img.shields.io/badge/Status-Production_Ready-2E5BFF?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Status"/>
+  <img src="https://img.shields.io/badge/Lighthouse-95+-4A90E2?style=for-the-badge&logo=lighthouse&logoColor=white" alt="Performance"/>
+  <img src="https://img.shields.io/badge/Domain-lumify.store-4A90E2?style=for-the-badge&logo=google-domains&logoColor=white" alt="Domain"/>
 </div>
 
 <br>
@@ -44,10 +44,10 @@
 <br>
 
 <div align="center">
-  <a href="https://github.com/Leon2k909/html/stargazers"><img src="https://img.shields.io/github/stars/Leon2k909/html?style=for-the-badge&logo=github&logoColor=white&color=00F7FF" alt="Stars"/></a>
-  <a href="https://github.com/Leon2k909/html/network/members"><img src="https://img.shields.io/github/forks/Leon2k909/html?style=for-the-badge&logo=github&logoColor=white&color=00F7FF" alt="Forks"/></a>
-  <a href="https://github.com/Leon2k909/html/watchers"><img src="https://img.shields.io/github/watchers/Leon2k909/html?style=for-the-badge&logo=github&logoColor=white&color=00F7FF" alt="Watchers"/></a>
-  <a href="https://github.com/Leon2k909/html/issues"><img src="https://img.shields.io/github/issues/Leon2k909/html?style=for-the-badge&logo=github&logoColor=white&color=FF0080" alt="Issues"/></a>
+  <a href="https://github.com/Leon2k909/html/stargazers"><img src="https://img.shields.io/github/stars/Leon2k909/html?style=for-the-badge&logo=github&logoColor=white&color=4A90E2" alt="Stars"/></a>
+  <a href="https://github.com/Leon2k909/html/network/members"><img src="https://img.shields.io/github/forks/Leon2k909/html?style=for-the-badge&logo=github&logoColor=white&color=4A90E2" alt="Forks"/></a>
+  <a href="https://github.com/Leon2k909/html/watchers"><img src="https://img.shields.io/github/watchers/Leon2k909/html?style=for-the-badge&logo=github&logoColor=white&color=4A90E2" alt="Watchers"/></a>
+  <a href="https://github.com/Leon2k909/html/issues"><img src="https://img.shields.io/github/issues/Leon2k909/html?style=for-the-badge&logo=github&logoColor=white&color=2E5BFF" alt="Issues"/></a>
 </div>
 
 <br>
@@ -82,7 +82,7 @@ npm run dev
 </td>
 <td align="center">
 
-**🎨 Try All Three Themes**
+**🎨 Try All Four Themes**
 
 ```bash
 # 1️⃣ Login to admin panel
@@ -92,7 +92,8 @@ npm run dev
 # 3️⃣ Cycle through themes:
 ```
 
-**🔵 Ordify** (Blue)  
+**💙 Lumify** (Blue) - Default  
+**🔵 Ordify** (Dark Blue)  
 **🟢 MuscleSports** (Green)  
 **🟣 VeraRP** (Purple)
 
@@ -578,10 +579,10 @@ This is commercial software. Unauthorized copying or distribution is prohibited.
 
 <div align="center">
 
-<a href="https://github.com/Leon2k909"><img src="https://img.shields.io/badge/Portfolio-Leon2k909-00F7FF?style=for-the-badge&logo=github&logoColor=white" alt="Portfolio"/></a>
-<a href="https://github.com/Leon2k909/html/issues"><img src="https://img.shields.io/badge/Report-Issues-FF0080?style=for-the-badge&logo=github&logoColor=white" alt="Issues"/></a>
-<a href="https://github.com/Leon2k909/html/discussions"><img src="https://img.shields.io/badge/Join-Discussions-00FF87?style=for-the-badge&logo=github&logoColor=white" alt="Discussions"/></a>
-<a href="https://github.com/Leon2k909/html/wiki"><img src="https://img.shields.io/badge/Read-Wiki-FFD700?style=for-the-badge&logo=github&logoColor=white" alt="Wiki"/></a>
+<a href="https://github.com/Leon2k909"><img src="https://img.shields.io/badge/Portfolio-Leon2k909-4A90E2?style=for-the-badge&logo=github&logoColor=white" alt="Portfolio"/></a>
+<a href="https://github.com/Leon2k909/html/issues"><img src="https://img.shields.io/badge/Report-Issues-2E5BFF?style=for-the-badge&logo=github&logoColor=white" alt="Issues"/></a>
+<a href="https://github.com/Leon2k909/html/discussions"><img src="https://img.shields.io/badge/Join-Discussions-1E40AF?style=for-the-badge&logo=github&logoColor=white" alt="Discussions"/></a>
+<a href="https://lumify.store"><img src="https://img.shields.io/badge/Visit-lumify.store-4A90E2?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Website"/></a>
 
 </div>
 
@@ -638,11 +639,13 @@ This is commercial software. Unauthorized copying or distribution is prohibited.
 
 <br>
 
-*Ready to dominate e-commerce? Let's go!* 🚀
+*Ready to light up your business? Let's go!* ✨
 
 <br>
 
-<sub>© 2025 Ordify Platform • Built by Leon & Sam • All rights reserved</sub>
+<sub>© 2025 Lumify • Built by Leon & Sam • All rights reserved</sub>
+<br>
+<sub>💡 Domain: **lumify.store** • The most affordable & professional choice</sub>
 
 <br><br>
 
