@@ -103,6 +103,48 @@ export class Database {
           )
         `);
 
+        // Create salon/business settings table
+        await connection.execute(`
+          CREATE TABLE IF NOT EXISTS business_settings (
+            id VARCHAR(255) PRIMARY KEY,
+            theme VARCHAR(50) NOT NULL DEFAULT 'ordify',
+            business_name VARCHAR(255),
+            business_type ENUM('salon', 'ecommerce', 'gym', 'other') DEFAULT 'ecommerce',
+            logo_url TEXT,
+            address TEXT,
+            phone VARCHAR(50),
+            email VARCHAR(255),
+            opening_hours JSON,
+            google_maps_embed TEXT,
+            latitude DECIMAL(10, 8),
+            longitude DECIMAL(11, 8),
+            primary_color VARCHAR(20),
+            secondary_color VARCHAR(20),
+            description TEXT,
+            social_media JSON,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+          )
+        `);
+
+        // Create salon services table (for hairdressers/salons)
+        await connection.execute(`
+          CREATE TABLE IF NOT EXISTS salon_services (
+            id VARCHAR(255) PRIMARY KEY,
+            business_id VARCHAR(255) NOT NULL,
+            category VARCHAR(100) NOT NULL,
+            name VARCHAR(255) NOT NULL,
+            description TEXT,
+            price DECIMAL(10,2) NOT NULL,
+            duration_minutes INT,
+            is_active BOOLEAN DEFAULT TRUE,
+            display_order INT DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            FOREIGN KEY (business_id) REFERENCES business_settings(id) ON DELETE CASCADE
+          )
+        `);
+
         console.log('Database tables initialized successfully');
       } finally {
         connection.release();
@@ -386,5 +428,227 @@ export class Database {
 
   static async deleteCategory(id: string) {
     await this.query('DELETE FROM categories WHERE id = ?', [id]);
+  }
+
+  // Business Settings CRUD operations
+  static async createOrUpdateBusinessSettings(settingsData: {
+    id: string;
+    theme: string;
+    businessName?: string;
+    businessType?: string;
+    logoUrl?: string;
+    address?: string;
+    phone?: string;
+    email?: string;
+    openingHours?: any;
+    googleMapsEmbed?: string;
+    latitude?: number;
+    longitude?: number;
+    primaryColor?: string;
+    secondaryColor?: string;
+    description?: string;
+    socialMedia?: any;
+  }) {
+    const {
+      id,
+      theme,
+      businessName,
+      businessType,
+      logoUrl,
+      address,
+      phone,
+      email,
+      openingHours,
+      googleMapsEmbed,
+      latitude,
+      longitude,
+      primaryColor,
+      secondaryColor,
+      description,
+      socialMedia
+    } = settingsData;
+
+    // Check if settings exist
+    const existing = await this.query('SELECT id FROM business_settings WHERE id = ?', [id]);
+    
+    if ((existing as any[]).length > 0) {
+      // Update existing
+      const fields = [];
+      const values = [];
+
+      if (theme !== undefined) { fields.push('theme = ?'); values.push(theme); }
+      if (businessName !== undefined) { fields.push('business_name = ?'); values.push(businessName); }
+      if (businessType !== undefined) { fields.push('business_type = ?'); values.push(businessType); }
+      if (logoUrl !== undefined) { fields.push('logo_url = ?'); values.push(logoUrl); }
+      if (address !== undefined) { fields.push('address = ?'); values.push(address); }
+      if (phone !== undefined) { fields.push('phone = ?'); values.push(phone); }
+      if (email !== undefined) { fields.push('email = ?'); values.push(email); }
+      if (openingHours !== undefined) { fields.push('opening_hours = ?'); values.push(JSON.stringify(openingHours)); }
+      if (googleMapsEmbed !== undefined) { fields.push('google_maps_embed = ?'); values.push(googleMapsEmbed); }
+      if (latitude !== undefined) { fields.push('latitude = ?'); values.push(latitude); }
+      if (longitude !== undefined) { fields.push('longitude = ?'); values.push(longitude); }
+      if (primaryColor !== undefined) { fields.push('primary_color = ?'); values.push(primaryColor); }
+      if (secondaryColor !== undefined) { fields.push('secondary_color = ?'); values.push(secondaryColor); }
+      if (description !== undefined) { fields.push('description = ?'); values.push(description); }
+      if (socialMedia !== undefined) { fields.push('social_media = ?'); values.push(JSON.stringify(socialMedia)); }
+
+      if (fields.length > 0) {
+        const sql = `UPDATE business_settings SET ${fields.join(', ')}, updated_at = CURRENT_TIMESTAMP WHERE id = ?`;
+        values.push(id);
+        await this.query(sql, values);
+      }
+    } else {
+      // Insert new
+      await this.query(
+        `INSERT INTO business_settings (
+          id, theme, business_name, business_type, logo_url, address, phone, email,
+          opening_hours, google_maps_embed, latitude, longitude, primary_color,
+          secondary_color, description, social_media
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          id, theme, businessName || null, businessType || 'ecommerce', logoUrl || null,
+          address || null, phone || null, email || null,
+          openingHours ? JSON.stringify(openingHours) : null,
+          googleMapsEmbed || null, latitude || null, longitude || null,
+          primaryColor || null, secondaryColor || null, description || null,
+          socialMedia ? JSON.stringify(socialMedia) : null
+        ]
+      );
+    }
+  }
+
+  static async getBusinessSettings(id: string = 'default') {
+    const rows = await this.query('SELECT * FROM business_settings WHERE id = ?', [id]);
+    const settings = (rows as any[])[0];
+    if (settings) {
+      return {
+        ...settings,
+        openingHours: settings.opening_hours ? JSON.parse(settings.opening_hours) : null,
+        socialMedia: settings.social_media ? JSON.parse(settings.social_media) : null
+      };
+    }
+    return null;
+  }
+
+  static async deleteBusinessSettings(id: string) {
+    await this.query('DELETE FROM business_settings WHERE id = ?', [id]);
+  }
+
+  // Salon Services CRUD operations
+  static async createSalonService(serviceData: {
+    id: string;
+    businessId: string;
+    category: string;
+    name: string;
+    description?: string;
+    price: number;
+    durationMinutes?: number;
+    isActive?: boolean;
+    displayOrder?: number;
+  }) {
+    const { id, businessId, category, name, description, price, durationMinutes, isActive, displayOrder } = serviceData;
+    await this.query(
+      `INSERT INTO salon_services (
+        id, business_id, category, name, description, price, duration_minutes, is_active, display_order
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [id, businessId, category, name, description || null, price, durationMinutes || null, isActive ?? true, displayOrder || 0]
+    );
+  }
+
+  static async getSalonServices(businessId: string = 'default') {
+    const rows = await this.query(
+      'SELECT * FROM salon_services WHERE business_id = ? AND is_active = TRUE ORDER BY category, display_order, name',
+      [businessId]
+    );
+    return (rows as any[]).map(service => ({
+      ...service,
+      price: parseFloat(service.price),
+      isActive: service.is_active,
+      durationMinutes: service.duration_minutes,
+      displayOrder: service.display_order
+    }));
+  }
+
+  static async getAllSalonServices(businessId: string = 'default') {
+    const rows = await this.query(
+      'SELECT * FROM salon_services WHERE business_id = ? ORDER BY category, display_order, name',
+      [businessId]
+    );
+    return (rows as any[]).map(service => ({
+      ...service,
+      price: parseFloat(service.price),
+      isActive: service.is_active,
+      durationMinutes: service.duration_minutes,
+      displayOrder: service.display_order
+    }));
+  }
+
+  static async getSalonServiceById(id: string) {
+    const rows = await this.query('SELECT * FROM salon_services WHERE id = ?', [id]);
+    const service = (rows as any[])[0];
+    if (service) {
+      return {
+        ...service,
+        price: parseFloat(service.price),
+        isActive: service.is_active,
+        durationMinutes: service.duration_minutes,
+        displayOrder: service.display_order
+      };
+    }
+    return null;
+  }
+
+  static async updateSalonService(id: string, serviceData: Partial<{
+    category: string;
+    name: string;
+    description: string;
+    price: number;
+    durationMinutes: number;
+    isActive: boolean;
+    displayOrder: number;
+  }>) {
+    const fields = [];
+    const values = [];
+
+    if (serviceData.category !== undefined) { fields.push('category = ?'); values.push(serviceData.category); }
+    if (serviceData.name !== undefined) { fields.push('name = ?'); values.push(serviceData.name); }
+    if (serviceData.description !== undefined) { fields.push('description = ?'); values.push(serviceData.description); }
+    if (serviceData.price !== undefined) { fields.push('price = ?'); values.push(serviceData.price); }
+    if (serviceData.durationMinutes !== undefined) { fields.push('duration_minutes = ?'); values.push(serviceData.durationMinutes); }
+    if (serviceData.isActive !== undefined) { fields.push('is_active = ?'); values.push(serviceData.isActive); }
+    if (serviceData.displayOrder !== undefined) { fields.push('display_order = ?'); values.push(serviceData.displayOrder); }
+
+    if (fields.length === 0) return;
+
+    const sql = `UPDATE salon_services SET ${fields.join(', ')}, updated_at = CURRENT_TIMESTAMP WHERE id = ?`;
+    values.push(id);
+
+    await this.query(sql, values);
+  }
+
+  static async deleteSalonService(id: string) {
+    await this.query('DELETE FROM salon_services WHERE id = ?', [id]);
+  }
+
+  static async getSalonServicesByCategory(businessId: string = 'default', category: string) {
+    const rows = await this.query(
+      'SELECT * FROM salon_services WHERE business_id = ? AND category = ? AND is_active = TRUE ORDER BY display_order, name',
+      [businessId, category]
+    );
+    return (rows as any[]).map(service => ({
+      ...service,
+      price: parseFloat(service.price),
+      isActive: service.is_active,
+      durationMinutes: service.duration_minutes,
+      displayOrder: service.display_order
+    }));
+  }
+
+  static async getSalonServiceCategories(businessId: string = 'default') {
+    const rows = await this.query(
+      'SELECT DISTINCT category FROM salon_services WHERE business_id = ? ORDER BY category',
+      [businessId]
+    );
+    return (rows as any[]).map(row => row.category);
   }
 }
