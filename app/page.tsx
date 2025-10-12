@@ -98,7 +98,7 @@ export default function Home() {
       </section>
 
       {/* Panels under hero (Top offers, Popular categories, Vapes, etc.) */}
-      <section className="mb-16 -mx-4 px-4 py-8 bg-gradient-to-b from-muted/30 to-transparent">
+      <section className="mb-16">
         <HomePanels />
       </section>
 

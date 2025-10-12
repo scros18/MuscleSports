@@ -211,16 +211,18 @@ export default function HomePanels() {
 
   return (
     <div className="relative mt-8">
-      {/* Themed color strip background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="h-full w-full bg-gradient-to-b from-primary/15 via-primary/8 to-transparent"></div>
-      </div>
+      {/* Themed color strip background - only for musclesports */}
+      {currentTheme === 'musclesports' && (
+        <div className="absolute inset-0 -z-10 rounded-2xl overflow-hidden">
+          <div className="h-full w-full bg-gradient-to-br from-primary/8 via-primary/4 to-transparent"></div>
+        </div>
+      )}
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {panels.map((panel) => (
           <div 
             key={panel.key} 
-            className={`bg-card/95 backdrop-blur-sm rounded-xl shadow-md hover:shadow-xl overflow-hidden border border-border/50 hover:border-primary/30 ${
+            className={`bg-card/98 backdrop-blur-md rounded-2xl shadow-sm hover:shadow-lg overflow-hidden border border-border/40 hover:border-primary/20 ${
               settings.animationsEnabled
                 ? 'transition-all duration-300 ease-out hover:-translate-y-1'
                 : 'transition-shadow duration-200'
