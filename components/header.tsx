@@ -167,7 +167,9 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-[99999] w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 overflow-visible">
+      <header className="sticky top-0 z-[99999] w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 overflow-visible relative">
+        {/* Theme-colored bottom border overlay */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary z-[100000]"></div>
       <div className="container flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center flex-shrink-0">
           <Image

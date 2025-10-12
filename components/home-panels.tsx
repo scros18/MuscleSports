@@ -210,16 +210,22 @@ export default function HomePanels() {
   const panels = currentTheme === 'musclesports' ? muscleSportsPanels : ordifyPanels;
 
   return (
-    <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {panels.map((panel) => (
-        <div 
-          key={panel.key} 
-          className={`bg-card rounded-xl shadow-md hover:shadow-xl overflow-hidden border border-border/50 hover:border-primary/30 ${
-            settings.animationsEnabled
-              ? 'transition-all duration-300 ease-out hover:-translate-y-1'
-              : 'transition-shadow duration-200'
-          }`}
-        >
+    <div className="relative mt-8">
+      {/* Themed color strip background */}
+      <div className="absolute inset-0 -z-10">
+        <div className="h-full w-full bg-gradient-to-b from-primary/15 via-primary/8 to-transparent"></div>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {panels.map((panel) => (
+          <div 
+            key={panel.key} 
+            className={`bg-card/95 backdrop-blur-sm rounded-xl shadow-md hover:shadow-xl overflow-hidden border border-border/50 hover:border-primary/30 ${
+              settings.animationsEnabled
+                ? 'transition-all duration-300 ease-out hover:-translate-y-1'
+                : 'transition-shadow duration-200'
+            }`}
+          >
           <div className="p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-foreground">{panel.title}</h3>
@@ -271,7 +277,7 @@ export default function HomePanels() {
             {panel.link && (
               <Link 
                 href={panel.link}
-                className="block w-full text-center text-sm font-medium text-primary hover:text-primary/80 hover:underline transition-all duration-200 py-2 active:scale-95"
+                className="block w-full text-center text-sm font-semibold bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg transition-all duration-200 py-3 active:scale-95 shadow-sm hover:shadow-md"
               >
                 See more
               </Link>
@@ -279,6 +285,7 @@ export default function HomePanels() {
           </div>
         </div>
       ))}
+      </div>
     </div>
   );
 }
