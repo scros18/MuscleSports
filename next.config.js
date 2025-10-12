@@ -34,6 +34,22 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'mcrvapedistro.co.uk',
       },
+      {
+        protocol: 'https',
+        hostname: 'musclesports.co.uk',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.musclesports.co.uk',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.tropicanawholesale.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.imgur.com',
+      },
     ],
   },
 
