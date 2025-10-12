@@ -71,7 +71,7 @@ export default function LayoutBuilderPage() {
   const loadLayout = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('auth_token');
       const response = await fetch('/api/site-layout?businessId=default', {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -81,9 +81,13 @@ export default function LayoutBuilderPage() {
       if (response.ok) {
         const data = await response.json();
         setLayout(data.layout);
+      } else {
+        console.error('Failed to load layout:', response.status, response.statusText);
+        alert('⚠️ Failed to load layout. Please make sure you are logged in as admin.');
       }
     } catch (error) {
       console.error('Error loading layout:', error);
+      alert('⚠️ Error loading layout. Please check your connection.');
     } finally {
       setLoading(false);
     }
@@ -94,7 +98,14 @@ export default function LayoutBuilderPage() {
 
     try {
       setSaving(true);
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('auth_token');
+      
+      if (!token) {
+        alert('⚠️ Authentication token not found. Please log in again.');
+        setSaving(false);
+        return;
+      }
+
       const response = await fetch('/api/site-layout', {
         method: 'POST',
         headers: {
@@ -109,12 +120,16 @@ export default function LayoutBuilderPage() {
 
       if (response.ok) {
         alert('✅ Layout saved! Changes are now live on your site.');
+      } else if (response.status === 401) {
+        alert('⚠️ Unauthorized. Please log in as admin and try again.');
       } else {
-        alert('❌ Failed to save layout');
+        const errorText = await response.text();
+        console.error('Save failed:', errorText);
+        alert('❌ Failed to save layout: ' + response.statusText);
       }
     } catch (error) {
       console.error('Error saving layout:', error);
-      alert('❌ Error saving layout');
+      alert('❌ Error saving layout: ' + (error as Error).message);
     } finally {
       setSaving(false);
     }
@@ -124,18 +139,31 @@ export default function LayoutBuilderPage() {
     if (!confirm('⚠️ Reset to default layout? This cannot be undone.')) return;
     
     try {
-      const token = localStorage.getItem('token');
-      await fetch('/api/site-layout?businessId=default', {
+      const token = localStorage.getItem('auth_token');
+      
+      if (!token) {
+        alert('⚠️ Authentication token not found. Please log in again.');
+        return;
+      }
+
+      const response = await fetch('/api/site-layout?businessId=default', {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
       
-      await loadLayout();
-      alert('✅ Layout reset to defaults');
+      if (response.ok) {
+        await loadLayout();
+        alert('✅ Layout reset to defaults');
+      } else if (response.status === 401) {
+        alert('⚠️ Unauthorized. Please log in as admin and try again.');
+      } else {
+        alert('❌ Failed to reset layout');
+      }
     } catch (error) {
       console.error('Error resetting layout:', error);
+      alert('❌ Error resetting layout');
     }
   };
 
