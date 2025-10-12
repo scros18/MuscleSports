@@ -14,9 +14,10 @@ import Link from "next/link";
 
 interface ProductCardProps {
   product: Product;
+  hideDescription?: boolean;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, hideDescription = false }: ProductCardProps) {
   const { addToCart } = useCart();
   const { settings } = usePerformance();
   const [quantity, setQuantity] = useState(1);
@@ -82,50 +83,50 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
       </Link>
 
-      <CardContent className="p-3.5 flex-grow flex flex-col">
+      <CardContent className="p-2.5 sm:p-3 md:p-3.5 flex-grow flex flex-col">
         <Link href={`/products/${product.id}`} className="flex-grow">
-          <h3 className="font-semibold text-sm mb-1.5 hover:text-primary transition-colors line-clamp-2 min-h-[2.5rem] leading-snug">
+          <h3 className="font-semibold text-xs sm:text-sm mb-1 sm:mb-1.5 hover:text-primary transition-colors line-clamp-2 min-h-[2.2rem] sm:min-h-[2.5rem] leading-tight sm:leading-snug">
             {product.name}
           </h3>
         </Link>
-        {description && (
-          <p className="text-xs text-muted-foreground mb-3 line-clamp-2">
+        {!hideDescription && description && (
+          <p className="hidden sm:block text-xs text-muted-foreground mb-3 line-clamp-2">
             {description}
           </p>
         )}
         
         {/* Price prominently displayed */}
-        <div className="mt-auto mb-3">
-          <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+        <div className="mt-auto mb-2 sm:mb-3">
+          <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
             {formatPrice(product.price)}
           </span>
         </div>
 
-        <div className="flex items-center justify-between gap-2 mb-3">
-          <div className={`hidden sm:flex ${badgeVariants({ variant: 'secondary' })} text-[10px] py-0.5 px-2 font-medium`}>
+        <div className="flex items-center justify-between gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+          <div className={`hidden md:flex ${badgeVariants({ variant: 'secondary' })} text-[9px] sm:text-[10px] py-0.5 px-1.5 sm:px-2 font-medium`}>
             {product.category}
           </div>
           {product.inStock && (
-            <div className="flex items-center text-[10px] text-green-600 dark:text-green-400 font-medium sm:ml-auto w-full sm:w-auto justify-center sm:justify-start px-2 py-1 rounded-md bg-green-50/50 dark:bg-green-950/20 border border-green-200/30 dark:border-green-800/30">
-              <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5"></span>
+            <div className="flex items-center text-[9px] sm:text-[10px] text-green-600 dark:text-green-400 font-medium sm:ml-auto w-full md:w-auto justify-center md:justify-start px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md bg-green-50/50 dark:bg-green-950/20 border border-green-200/30 dark:border-green-800/30">
+              <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-green-500 rounded-full mr-1 sm:mr-1.5"></span>
               In Stock
             </div>
           )}
         </div>
 
         {/* Quantity controls */}
-        <div className={`flex items-center border rounded-md overflow-hidden shadow-sm bg-background mb-2 ${settings.animationsEnabled ? 'transition-all duration-200' : ''}`}>
+        <div className={`flex items-center border rounded-md overflow-hidden shadow-sm bg-background mb-1.5 sm:mb-2 ${settings.animationsEnabled ? 'transition-all duration-200' : ''}`}>
           <Button
             variant="ghost"
             size="icon"
-            className={`h-8 w-8 rounded-none hover:bg-primary/10 ${settings.animationsEnabled ? 'active:scale-90 transition-transform duration-150 ease-spring' : 'transition-colors'}`}
+            className={`h-7 w-7 sm:h-8 sm:w-8 rounded-none hover:bg-primary/10 ${settings.animationsEnabled ? 'active:scale-90 transition-transform duration-150 ease-spring' : 'transition-colors'}`}
             onClick={(e) => {
               e.stopPropagation();
               setQuantity(Math.max(1, quantity - 1));
             }}
             disabled={quantity <= 1}
           >
-            <Minus className="h-3 w-3" />
+            <Minus className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
           </Button>
           {/* Input allows typing - keep a string state to allow editing before commit */}
           <input
@@ -156,12 +157,12 @@ export function ProductCard({ product }: ProductCardProps) {
                 e.currentTarget.blur();
               }
             }}
-            className={`px-3 py-1 min-w-[2.5rem] w-16 text-center font-bold text-sm appearance-none bg-transparent outline-none ${settings.animationsEnabled ? 'transition-all duration-200 ease-spring' : ''}`}
+            className={`px-2 sm:px-3 py-1 min-w-[2rem] sm:min-w-[2.5rem] w-12 sm:w-16 text-center font-bold text-xs sm:text-sm appearance-none bg-transparent outline-none ${settings.animationsEnabled ? 'transition-all duration-200 ease-spring' : ''}`}
           />
           <Button
             variant="ghost"
             size="icon"
-            className={`h-8 w-8 rounded-none hover:bg-primary/10 ${settings.animationsEnabled ? 'active:scale-90 transition-transform duration-150 ease-spring' : 'transition-colors'}`}
+            className={`h-7 w-7 sm:h-8 sm:w-8 rounded-none hover:bg-primary/10 ${settings.animationsEnabled ? 'active:scale-90 transition-transform duration-150 ease-spring' : 'transition-colors'}`}
             onClick={(e) => {
               e.stopPropagation();
               const next = quantity + 1;
@@ -169,13 +170,13 @@ export function ProductCard({ product }: ProductCardProps) {
               setQuantityInput(String(next));
             }}
           >
-            <Plus className="h-3 w-3" />
+            <Plus className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
           </Button>
         </div>
 
         {/* Add to cart button */}
         <Button
-          className={`w-full font-semibold shadow-sm hover:shadow-md text-sm h-9 ${
+          className={`w-full font-semibold shadow-sm hover:shadow-md text-xs sm:text-sm h-8 sm:h-9 ${
             isAdded ? "bg-green-600 hover:bg-green-700" : ""
           } ${
             settings.animationsEnabled
@@ -190,13 +191,15 @@ export function ProductCard({ product }: ProductCardProps) {
         >
           {isAdded ? (
             <>
-              <Check className="mr-2 h-4 w-4 animate-in zoom-in" />
-              Added to Cart
+              <Check className="mr-1.5 sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4 animate-in zoom-in" />
+              <span className="hidden sm:inline">Added to Cart</span>
+              <span className="sm:hidden">Added</span>
             </>
           ) : (
             <>
-              <ShoppingCart className="mr-2 h-4 w-4" />
-              Add {quantity > 1 ? `${quantity} ` : ""}to Cart
+              <ShoppingCart className="mr-1.5 sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              <span className="hidden sm:inline">Add {quantity > 1 ? `${quantity} ` : ""}to Cart</span>
+              <span className="sm:hidden">Add {quantity > 1 ? quantity : ""}</span>
             </>
           )}
         </Button>

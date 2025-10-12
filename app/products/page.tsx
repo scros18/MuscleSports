@@ -328,8 +328,8 @@ export default function ProductsPage() {
               </div>
             </div>
 
-            {/* Products Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-8">
+            {/* Products Grid - Optimized for mobile */}
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5 mb-8">
               {currentProducts.map((product) => (
                 <ProductCard key={product.id} product={product as any} />
               ))}

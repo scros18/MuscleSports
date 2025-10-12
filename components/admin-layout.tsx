@@ -15,6 +15,7 @@ import {
   Tag,
   Menu,
   X,
+  Palette,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -36,12 +37,35 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [productsExpanded, setProductsExpanded] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState<'ordify' | 'musclesports'>('ordify');
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
     checkAdminAccess();
+    // Load saved theme
+    const savedTheme = localStorage.getItem('admin_theme') as 'ordify' | 'musclesports';
+    if (savedTheme) {
+      setCurrentTheme(savedTheme);
+      applyTheme(savedTheme);
+    }
   }, []);
+
+  const applyTheme = (theme: 'ordify' | 'musclesports') => {
+    const root = document.documentElement;
+    if (theme === 'musclesports') {
+      root.classList.add('theme-musclesports');
+    } else {
+      root.classList.remove('theme-musclesports');
+    }
+  };
+
+  const toggleTheme = () => {
+    const newTheme = currentTheme === 'ordify' ? 'musclesports' : 'ordify';
+    setCurrentTheme(newTheme);
+    applyTheme(newTheme);
+    localStorage.setItem('admin_theme', newTheme);
+  };
 
   const checkAdminAccess = async () => {
     try {
@@ -92,18 +116,29 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
   const SidebarContent = () => (
     <>
       {/* Logo */}
-      <div className="flex items-center justify-between h-16 px-4 bg-white border-b border-gray-200">
-        <Link href="/admin" className="text-xl font-bold text-gray-900" onClick={closeSidebar}>
-          Ordify Admin
-        </Link>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden"
-          onClick={closeSidebar}
-        >
-          <X className="h-6 w-6" />
-        </Button>
+      <div className="flex flex-col h-20 px-4 bg-white border-b border-gray-200">
+        <div className="flex items-center justify-between pt-4">
+          <div className="flex flex-col">
+            <Link href="/admin" className="text-xl font-bold" onClick={closeSidebar}>
+              {currentTheme === 'musclesports' ? (
+                <span className="bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">MuscleSports</span>
+              ) : (
+                <span className="text-gray-900">Ordify Admin</span>
+              )}
+            </Link>
+            <span className="text-[10px] font-medium text-muted-foreground mt-0.5">
+              {currentTheme === 'musclesports' ? 'Leon\'s MuscleSports.co.uk' : 'Direct E-commerce'}
+            </span>
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={closeSidebar}
+          >
+            <X className="h-6 w-6" />
+          </Button>
+        </div>
       </div>
 
       {/* Navigation */}
@@ -236,6 +271,22 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           <Settings className="mr-3 h-5 w-5" />
           Settings
         </Link>
+
+        {/* Theme Switcher */}
+        <div className="pt-4 mt-4 border-t">
+          <button
+            onClick={toggleTheme}
+            className="flex items-center w-full px-4 py-3 text-sm font-medium rounded-lg transition-all duration-300 bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 text-foreground border border-primary/20 shadow-sm"
+          >
+            <Palette className="mr-3 h-5 w-5 text-primary" />
+            <span>Theme: {currentTheme === 'musclesports' ? 'MuscleSports' : 'Ordify'}</span>
+          </button>
+          <p className="px-4 mt-2 text-xs text-muted-foreground">
+            {currentTheme === 'musclesports' 
+              ? '🟢 Green sports nutrition theme'
+              : '🔵 Standard e-commerce theme'}
+          </p>
+        </div>
       </nav>
 
       {/* User info */}

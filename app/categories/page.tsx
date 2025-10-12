@@ -87,7 +87,7 @@ export default function CategoriesPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
           {categories.map((category) => (
             <Link
               key={category.name}
@@ -95,15 +95,15 @@ export default function CategoriesPage() {
               className="group"
             >
               <Card className="h-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] border hover:border-primary/20 rounded-lg">
-                <CardContent className="p-4 sm:p-6">
+                <CardContent className="p-4 sm:p-5 md:p-6">
                   <div className="flex items-center justify-between mb-3 sm:mb-4">
-                    <Package className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
-                    <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                    <Package className="h-7 w-7 sm:h-9 sm:w-9 md:h-10 md:w-10 text-primary" />
+                    <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold mb-1.5 sm:mb-2 group-hover:text-primary transition-colors line-clamp-2">
                     {category.name}
                   </h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground">
+                  <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground">
                     {category.count} product{category.count !== 1 ? 's' : ''}
                   </p>
                 </CardContent>
