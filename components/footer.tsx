@@ -4,23 +4,48 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import Image from "next/image";
 import { useSiteSettings } from "@/context/site-settings-context";
+import { useState, useEffect } from "react";
 
 export function Footer() {
   const { settings } = useSiteSettings();
+  const [currentTheme, setCurrentTheme] = useState<string>('ordify');
+
+  // Detect theme from body class
+  useEffect(() => {
+    const detectTheme = () => {
+      const bodyClasses = document.body.classList;
+      if (bodyClasses.contains('theme-musclesports')) {
+        setCurrentTheme('musclesports');
+      } else {
+        setCurrentTheme('ordify');
+      }
+    };
+
+    detectTheme();
+    
+    // Watch for theme changes
+    const observer = new MutationObserver(detectTheme);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <footer className="border-t bg-background">
       <div className="container py-8 md:py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="text-center md:text-left">
             <Image
-              src={settings.logoUrl}
-              alt={settings.siteName}
+              src={currentTheme === 'musclesports' 
+                ? 'https://musclesports.co.uk/wp-content/uploads/2025/07/Logo_resized-1.jpg'
+                : settings.logoUrl}
+              alt={currentTheme === 'musclesports' ? 'MuscleSports' : settings.siteName}
               width={120}
               height={40}
               className="h-10 w-auto mb-4 mx-auto md:mx-0"
             />
             <p className="text-sm text-muted-foreground">
-              {settings.tagline}
+              {currentTheme === 'musclesports' ? 'Premium Sports Nutrition' : settings.tagline}
             </p>
           </div>
 

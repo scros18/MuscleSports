@@ -6,6 +6,7 @@ import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { ShoppingCart, Search, User, LogOut, X, Menu, ChevronDown } from "lucide-react";
+import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/context/cart-context";
@@ -21,6 +22,27 @@ export function Header() {
   const { settings } = usePerformance();
   const { settings: siteSettings } = useSiteSettings();
   const router = useRouter();
+  const [currentTheme, setCurrentTheme] = useState<string>('ordify');
+
+  // Detect theme from body class or localStorage
+  useEffect(() => {
+    const detectTheme = () => {
+      const bodyClasses = document.body.classList;
+      if (bodyClasses.contains('theme-musclesports')) {
+        setCurrentTheme('musclesports');
+      } else {
+        setCurrentTheme('ordify');
+      }
+    };
+
+    detectTheme();
+    
+    // Watch for theme changes
+    const observer = new MutationObserver(detectTheme);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    
+    return () => observer.disconnect();
+  }, []);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -141,8 +163,10 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center flex-shrink-0">
           <Image
-            src={siteSettings.logoUrl}
-            alt={siteSettings.siteName}
+            src={currentTheme === 'musclesports' 
+              ? 'https://musclesports.co.uk/wp-content/uploads/2025/07/Logo_resized-1.jpg'
+              : siteSettings.logoUrl}
+            alt={currentTheme === 'musclesports' ? 'MuscleSports' : siteSettings.siteName}
             width={120}
             height={40}
             className="h-10 w-auto"
