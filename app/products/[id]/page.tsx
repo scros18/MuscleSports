@@ -18,12 +18,18 @@ export const dynamic = 'force-dynamic';
 
 export default function ProductPage({ params }: { params: { id: string } }) {
   const [quantity, setQuantity] = useState(1);
+  const [quantityInput, setQuantityInput] = useState(String(1));
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedFlavourIndex, setSelectedFlavourIndex] = useState<number | null>(null);
   const [mainImage, setMainImage] = useState<string>('');
   const { addToCart } = useCart();
   const [product, setProduct] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
+
+  // keep input string in sync when quantity changes programmatically
+  useEffect(() => {
+    setQuantityInput(String(quantity));
+  }, [quantity]);
 
   // Use flavours from product data if present
   const hasFlavours = Array.isArray(product?.flavours) && product.flavours.length > 0;
@@ -56,7 +62,12 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     };
     // Return null when we don't have a specific flavour image so callers
     // can decide whether to fall back to the pack shot or not.
-    return flavours.map((f: string) => lookup[f.toLowerCase()] ?? null);
+    return flavours.map((f) => {
+      if (typeof f === 'string') {
+        return lookup[f.toLowerCase()] ?? null;
+      }
+      return null;
+    });
   }, [hasFlavours, flavours, product]);
 
   const images: string[] = Array.isArray(product?.images) && product.images.length ? product.images : [product?.image || '/placeholder.svg'];
@@ -130,7 +141,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   const handleAddToCart = () => {
     // Include selected flavour for IVG Pro 12 so cart/checkout can show it
     const item = hasFlavours && selectedFlavourIndex !== null
-      ? { ...product, selectedFlavour: flavours[selectedFlavourIndex] }
+      ? { ...product, selectedFlavour: String(flavours[selectedFlavourIndex]) }
       : product;
     for (let i = 0; i < quantity; i++) {
       addToCart(item);
@@ -248,8 +259,8 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                   className="h-9 px-3 rounded-md bg-background border text-sm"
                 >
                   <option value="">Select flavour</option>
-                  {flavours.map((f: string, i: number) => (
-                    <option key={f} value={String(i)}>{f}</option>
+                  {flavours.map((f, i: number) => (
+                    <option key={String(i)} value={String(i)}>{String(f)}</option>
                   ))}
                 </select>
               </div>
@@ -263,19 +274,53 @@ export default function ProductPage({ params }: { params: { id: string } }) {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                onClick={() => {
+                  const next = Math.max(1, quantity - 1);
+                  setQuantity(next);
+                  setQuantityInput(String(next));
+                }}
                 disabled={!product.inStock}
                 className="h-8 w-8 sm:h-10 sm:w-10"
               >
                 -
               </Button>
-              <span className="px-3 sm:px-4 py-2 min-w-[2.5rem] sm:min-w-[3rem] text-center text-sm sm:text-base">
-                {quantity}
-              </span>
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                aria-label={`Quantity for ${product.name}`}
+                value={quantityInput}
+                onChange={(e) => {
+                  // keep only digits in the input string
+                  const cleaned = e.target.value.replace(/\D/g, "");
+                  setQuantityInput(cleaned);
+                }}
+                onBlur={() => {
+                  const n = parseInt(quantityInput, 10);
+                  const final = Number.isNaN(n) || n < 1 ? 1 : n;
+                  setQuantity(final);
+                  setQuantityInput(String(final));
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    const n = parseInt(quantityInput, 10);
+                    const final = Number.isNaN(n) || n < 1 ? 1 : n;
+                    setQuantity(final);
+                    setQuantityInput(String(final));
+                    // prevent form submits or other handlers
+                    e.currentTarget.blur();
+                  }
+                }}
+                className="px-3 sm:px-4 py-2 min-w-[2.5rem] sm:min-w-[3rem] text-center text-sm sm:text-base appearance-none bg-transparent outline-none"
+              />
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setQuantity(quantity + 1)}
+                onClick={() => {
+                  const next = quantity + 1;
+                  setQuantity(next);
+                  setQuantityInput(String(next));
+                }}
                 disabled={!product.inStock}
                 className="h-8 w-8 sm:h-10 sm:w-10"
               >
