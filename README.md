@@ -28,14 +28,14 @@
   <table>
     <tr>
       <td align="center" width="300">
-        <img src="https://github.com/Leon2k909.png" width="120px" style="border-radius: 50%; border: 3px solid #00F7FF; box-shadow: 0 0 20px #00F7FF;" alt="Leon"/><br/>
+        <img src="https://github.com/Leon2k909.png" width="120px" style="border-radius: 50%; border: 3px solid #4A90E2; box-shadow: 0 0 20px #4A90E2;" alt="Leon"/><br/>
         <sub style="font-size: 16px;"><b>💡 Leon</b></sub><br/>
-        <sub style="color: #00F7FF;">Idea & Lead Developer</sub>
+        <sub style="color: #4A90E2;">Founder & Lead Developer</sub>
       </td>
-      <td align="center" width="300">
-        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sam&backgroundColor=00F7FF" width="120px" style="border-radius: 50%; border: 3px solid #00F7FF; box-shadow: 0 0 20px #00F7FF;" alt="Sam"/><br/>
+      <td align="center">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sam&backgroundColor=4A90E2" width="120px" style="border-radius: 50%; border: 3px solid #4A90E2; box-shadow: 0 0 20px #4A90E2;" alt="Sam"/><br/>
         <sub style="font-size: 16px;"><b>👨‍💻 Sam</b></sub><br/>
-        <sub style="color: #00F7FF;">Co-Developer & AI Specialist</sub>
+        <sub style="color: #4A90E2;">Founder & AI Specialist</sub>
       </td>
     </tr>
   </table>
@@ -631,7 +631,7 @@ This is commercial software. Unauthorized copying or distribution is prohibited.
 
 <div align="center">
 
-**Made with 💙 by Leon & Sam**
+**Made with 💙 by Leon & Sam (Co-Founders)**
 
 <br>
 
@@ -643,7 +643,7 @@ This is commercial software. Unauthorized copying or distribution is prohibited.
 
 <br>
 
-<sub>© 2025 Lumify • Built by Leon & Sam • All rights reserved</sub>
+<sub>© 2025 Lumify • Built by Leon & Sam (Co-Founders) • All rights reserved</sub>
 <br>
 <sub>💡 Domain: **lumify.store** • The most affordable & professional choice</sub>
 
