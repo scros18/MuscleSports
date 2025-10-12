@@ -487,7 +487,7 @@ export default function LayoutBuilderPage() {
 
         {/* Help Text */}
         <div className="mt-6 text-center text-sm text-muted-foreground">
-          <p>💡 Tip: Changes won't apply until you click "Save Layout"</p>
+          <p>💡 Tip: Changes won&apos;t apply until you click &quot;Save Layout&quot;</p>
         </div>
       </div>
     </AdminLayout>

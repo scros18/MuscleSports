@@ -80,8 +80,8 @@ export default function SiteBuilderPage() {
         primaryColor: contextSettings.primaryColor || '#e11d48',
         secondaryColor: contextSettings.secondaryColor || '#fda4af',
         theme: contextSettings.theme || 'ordify',
-        openingHours: contextSettings.openingHours || settings.openingHours,
-        socialMedia: contextSettings.socialMedia || settings.socialMedia
+  openingHours: contextSettings.openingHours ? { ...settings.openingHours, ...contextSettings.openingHours } : settings.openingHours,
+  socialMedia: contextSettings.socialMedia ? { ...settings.socialMedia, ...contextSettings.socialMedia } : settings.socialMedia
       });
     }
   }, [contextSettings, contextLoading]);
@@ -299,7 +299,7 @@ export default function SiteBuilderPage() {
                     Logo & Visual Identity
                   </CardTitle>
                   <CardDescription>
-                    Customize your brand's visual appearance
+                    Customize your brand&apos;s visual appearance
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">

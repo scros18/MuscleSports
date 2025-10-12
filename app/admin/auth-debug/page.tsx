@@ -209,9 +209,9 @@ export default function AuthDebugPage() {
 
         <Card className="p-6 bg-blue-50 dark:bg-blue-950">
           <h3 className="font-semibold mb-2">Quick Fixes</h3>
-          <div className="space-y-2 text-sm">
+            <div className="space-y-2 text-sm">
             <p>1. <strong>Log out and back in:</strong> Go to /login and sign in again</p>
-            <p>2. <strong>Check admin role:</strong> Verify your account has role = 'admin' in database</p>
+            <p>2. <strong>Check admin role:</strong> Verify your account has role = &apos;admin&apos; in database</p>
             <p>3. <strong>Clear localStorage:</strong> Open Console (F12) and run: localStorage.clear()</p>
             <p>4. <strong>Check JWT_SECRET:</strong> Verify environment variable is set correctly</p>
           </div>
