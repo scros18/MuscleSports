@@ -33,7 +33,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 
     // Parse request body
     const body = await request.json();
-    const { name, price, description, images, category, inStock, featured } = body;
+    const { name, price, description, images, category, inStock, featured, flavours } = body;
 
     // Check if product exists
     const existingProduct = await Database.getProductById(params.id);
@@ -50,6 +50,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     if (category !== undefined) updateData.category = category;
     if (inStock !== undefined) updateData.inStock = inStock;
     if (featured !== undefined) updateData.featured = featured;
+    if (flavours !== undefined) updateData.flavours = flavours;
 
     await Database.updateProduct(params.id, updateData);
 

@@ -109,6 +109,7 @@ export class Database {
             in_stock BOOLEAN DEFAULT TRUE,
             featured BOOLEAN DEFAULT FALSE,
             flavours JSON,
+            flavour_images JSON,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
           )
@@ -276,7 +277,8 @@ export class Database {
       images: safeJsonParseArray(product.images),
       inStock: product.in_stock,
       featured: product.featured,
-      flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined
+      flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined,
+      flavourImages: product.flavour_images ? safeJsonParse(product.flavour_images, {}) : undefined
     }));
   }
 
@@ -288,7 +290,8 @@ export class Database {
       images: safeJsonParseArray(product.images),
       inStock: product.in_stock,
       featured: product.featured,
-      flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined
+      flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined,
+      flavourImages: product.flavour_images ? safeJsonParse(product.flavour_images, {}) : undefined
     }));
   }
 
@@ -307,7 +310,8 @@ export class Database {
         images: safeJsonParseArray(product.images),
         inStock: product.in_stock,
         featured: product.featured,
-        flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined
+        flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined,
+        flavourImages: product.flavour_images ? safeJsonParse(product.flavour_images, {}) : undefined
       };
     }
     return null;
@@ -322,6 +326,7 @@ export class Database {
     inStock: boolean;
     featured: boolean;
     flavours: string[];
+    flavourImages: Record<string, string>;
   }>) {
     const fields = [];
     const values = [];
@@ -357,6 +362,10 @@ export class Database {
     if (productData.flavours !== undefined) {
       fields.push('flavours = ?');
       values.push(JSON.stringify(productData.flavours));
+    }
+    if (productData.flavourImages !== undefined) {
+      fields.push('flavour_images = ?');
+      values.push(JSON.stringify(productData.flavourImages));
     }
 
     if (fields.length === 0) return;

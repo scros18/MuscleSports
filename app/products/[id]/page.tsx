@@ -43,37 +43,19 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     ? (productFlavours as string[]) 
     : [];
 
-  // Map flavours to images if a match is present in product.images (by simple name match)
+  // Map flavours to images from the database
   const flavourImages = useMemo(() => {
-    const imgs = Array.isArray(product?.images) ? product.images : [];
-    // If there are many product.images (pack shot) and separate flavour images
-    // are not provided, prefer supplier flavour images (external) when known.
-    // We'll attempt to match flavour names to supplier image URLs by a small lookup.
-    const lookup: Record<string, string> = {
-      'blue raspberry ice': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-500758.png?v=1748617276',
-      'blue sour raspberry': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-933612.png?v=1748617276',
-      'classic menthol': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-489670.png?v=1748617254',
-      'double mango': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-871313.png?v=1748617251',
-      'fizzy cherry': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-384300.png?v=1748617253',
-      'fizzy strawberry': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-271657.png?v=1748617252',
-      'fresh menthol mojito': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-297006.png?v=1748617274',
-      'kiwi passionfruit guava': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-525411.png?v=1748617275',
-      'lemon lime': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-768531.png?v=1748617253',
-      'pineapple ice': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-320536.png?v=1748617255',
-      'pink lemonade': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-249073.png?v=1748617251',
-      'red sour raspberry': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-383507.png?v=1748617274',
-      'strawberry ice': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-310181.png?v=1748617254',
-      'strawberry raspberry cherry': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-411261.png?v=1748617255',
-      'strawberry watermelon': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-237675.png?v=1748617255'
-    };
-    // Return null when we don't have a specific flavour image so callers
-    // can decide whether to fall back to the pack shot or not.
-    return flavours.map((f) => {
-      if (typeof f === 'string') {
-        return lookup[f.toLowerCase()] ?? null;
-      }
-      return null;
-    });
+    // If product has flavourImages mapping from database, use it
+    if (product?.flavourImages && typeof product.flavourImages === 'object') {
+      return flavours.map((f) => {
+        if (typeof f === 'string') {
+          return product.flavourImages[f.toLowerCase()] ?? null;
+        }
+        return null;
+      });
+    }
+    // Otherwise return nulls (will use default product images)
+    return flavours.map(() => null);
   }, [hasFlavours, flavours, product]);
 
   const images: string[] = Array.isArray(product?.images) && product.images.length ? product.images : [product?.image || '/placeholder.svg'];

@@ -20,6 +20,7 @@ interface Product {
   category: string;
   inStock: boolean;
   featured: boolean;
+  flavours?: string[];
 }
 
 export default function EditProductPage() {
@@ -35,7 +36,8 @@ export default function EditProductPage() {
     images: [''],
     category: '',
     inStock: true,
-    featured: false
+    featured: false,
+    flavours: [] as string[]
   });
   const router = useRouter();
   const params = useParams();
@@ -123,7 +125,8 @@ export default function EditProductPage() {
           images: productData.images.length > 0 ? productData.images : [''],
           category: productData.category,
           inStock: productData.inStock,
-          featured: productData.featured
+          featured: productData.featured,
+          flavours: productData.flavours || []
         });
       } else {
         router.push('/admin/products');
@@ -172,6 +175,30 @@ export default function EditProductPage() {
     }
   };
 
+  const handleFlavourChange = (index: number, value: string) => {
+    const newFlavours = [...formData.flavours];
+    newFlavours[index] = value;
+    setFormData(prev => ({
+      ...prev,
+      flavours: newFlavours
+    }));
+  };
+
+  const addFlavourField = () => {
+    setFormData(prev => ({
+      ...prev,
+      flavours: [...prev.flavours, '']
+    }));
+  };
+
+  const removeFlavourField = (index: number) => {
+    const newFlavours = formData.flavours.filter((_, i) => i !== index);
+    setFormData(prev => ({
+      ...prev,
+      flavours: newFlavours
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -190,6 +217,7 @@ export default function EditProductPage() {
     setSaving(true);
     try {
       const filteredImages = formData.images.filter(img => img.trim() !== '');
+      const filteredFlavours = formData.flavours.filter(flavour => flavour.trim() !== '');
 
       const token = localStorage.getItem('auth_token');
       const headers: Record<string, string> = {
@@ -207,6 +235,7 @@ export default function EditProductPage() {
           ...formData,
           price,
           images: filteredImages,
+          flavours: filteredFlavours,
         }),
       });
 
@@ -415,6 +444,47 @@ export default function EditProductPage() {
                     className="inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   >
                     Add Image URL
+                  </button>
+                </div>
+
+                {/* Flavour Variations */}
+                <div className="col-span-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Flavour Variations
+                  </label>
+                  <p className="text-sm text-gray-500 mb-3">
+                    Add flavour variations for this product (e.g., &quot;Strawberry Ice&quot;, &quot;Blue Razz&quot;, etc.)
+                  </p>
+                  {formData.flavours.length > 0 ? (
+                    formData.flavours.map((flavour, index) => (
+                      <div key={index} className="flex items-center space-x-2 mb-2">
+                        <input
+                          type="text"
+                          value={flavour}
+                          onChange={(e) => handleFlavourChange(index, e.target.value)}
+                          className="flex-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          placeholder="Flavour name"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeFlavourField(index)}
+                          className="inline-flex items-center p-1 border border-transparent rounded-full text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                        >
+                          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-gray-400 mb-2">No flavour variations added yet.</p>
+                  )}
+                  <button
+                    type="button"
+                    onClick={addFlavourField}
+                    className="inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  >
+                    Add Flavour
                   </button>
                 </div>
               </div>
