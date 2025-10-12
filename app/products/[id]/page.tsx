@@ -172,13 +172,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         {/* Product Images */}
         <div className="space-y-4">
           <div className="relative h-80 sm:h-96 md:h-[600px] rounded-lg overflow-hidden bg-gray-100 w-full">
-            <Image
+            <img
               src={mainImage}
               alt={product.name}
-              fill
-              className="object-cover"
-              priority
-              onError={() => setMainImage('/placeholder.svg')}
+              className="object-cover w-full h-full"
+              onError={(e) => (e.currentTarget.src = '/placeholder.svg')}
             />
           </div>
 
@@ -197,13 +195,17 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                       selectedImage === index ? "border-primary" : "border-gray-200"
                     }`}
                   >
-                    <Image
+                  <div className="relative w-full h-full">
+                    <img
                       src={image}
                       alt={`${product.name} ${index + 1}`}
-                      fill
-                      className="object-cover"
-                      onError={() => setBrokenThumbs((prev) => new Set(prev).add(image))}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      onError={(e) => {
+                        setBrokenThumbs((prev) => new Set(prev).add(image));
+                        e.currentTarget.src = '/placeholder.svg'; // optional fallback
+                      }}
                     />
+                  </div>
                   </button>
                 ))}
             </div>
