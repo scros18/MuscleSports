@@ -184,59 +184,56 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-3 text-sm font-medium">
+        <nav className="hidden md:flex items-center space-x-2 text-sm font-medium">
           <Link
             href="/"
-            className={`relative px-4 py-2 rounded-full backdrop-blur-md bg-gradient-to-br from-white/80 via-white/60 to-white/40 dark:from-gray-800/80 dark:via-gray-800/60 dark:to-gray-800/40 border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl text-foreground hover:text-primary font-semibold overflow-hidden group ${
+            className={`relative px-5 py-2 rounded-lg bg-card/80 backdrop-blur-sm border border-border/60 shadow-sm hover:shadow-md text-foreground hover:text-primary hover:bg-card hover:border-primary/30 font-medium overflow-hidden group ${
               settings.animationsEnabled
-                ? 'transition-all duration-300 hover:scale-105 active:scale-95'
-                : 'transition-shadow duration-200'
+                ? 'transition-all duration-200 hover:scale-[1.02] active:scale-95'
+                : 'transition-all duration-200'
             }`}
           >
             <span className="relative z-10">Home</span>
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.4)] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)]"></div>
           </Link>
           <Link
             href="/products"
-            className={`relative px-4 py-2 rounded-full backdrop-blur-md bg-gradient-to-br from-white/80 via-white/60 to-white/40 dark:from-gray-800/80 dark:via-gray-800/60 dark:to-gray-800/40 border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl text-foreground hover:text-primary font-semibold overflow-hidden group ${
+            className={`relative px-5 py-2 rounded-lg bg-card/80 backdrop-blur-sm border border-border/60 shadow-sm hover:shadow-md text-foreground hover:text-primary hover:bg-card hover:border-primary/30 font-medium overflow-hidden group ${
               settings.animationsEnabled
-                ? 'transition-all duration-300 hover:scale-105 active:scale-95'
-                : 'transition-shadow duration-200'
+                ? 'transition-all duration-200 hover:scale-[1.02] active:scale-95'
+                : 'transition-all duration-200'
             }`}
           >
             <span className="relative z-10">Products</span>
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.4)] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)]"></div>
           </Link>
           <Link
             href="/categories"
-            className={`relative px-4 py-2 rounded-full backdrop-blur-md bg-gradient-to-br from-white/80 via-white/60 to-white/40 dark:from-gray-800/80 dark:via-gray-800/60 dark:to-gray-800/40 border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl text-foreground hover:text-primary font-semibold overflow-hidden group ${
+            className={`relative px-5 py-2 rounded-lg bg-card/80 backdrop-blur-sm border border-border/60 shadow-sm hover:shadow-md text-foreground hover:text-primary hover:bg-card hover:border-primary/30 font-medium overflow-hidden group ${
               settings.animationsEnabled
-                ? 'transition-all duration-300 hover:scale-105 active:scale-95'
-                : 'transition-shadow duration-200'
+                ? 'transition-all duration-200 hover:scale-[1.02] active:scale-95'
+                : 'transition-all duration-200'
             }`}
           >
             <span className="relative z-10">Categories</span>
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.4)] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)]"></div>
           </Link>
         </nav>
 
         {/* Desktop Search and Auth/Cart */}
-        <div className="hidden md:flex items-center space-x-4">
-          <div className="relative" ref={searchRef}>
-            <form onSubmit={handleSearchSubmit} className="flex items-center space-x-2">
-              <Input
-                type="search"
-                placeholder="Search products..."
-                className="w-64"
-                value={searchQuery}
-                onChange={handleSearchChange}
-              />
-              <Button type="submit" size="icon" variant="ghost">
-                <Search className="h-5 w-5" />
-              </Button>
+        <div className="hidden md:flex items-center space-x-3">
+          <div className="relative group" ref={searchRef}>
+            <form onSubmit={handleSearchSubmit} className="flex items-center">
+              <div className="relative flex items-center">
+                <Input
+                  type="search"
+                  placeholder="Search products..."
+                  className="w-10 group-hover:w-64 focus:w-64 transition-all duration-300 ease-in-out pr-10 rounded-lg"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  onFocus={() => setShowResults(true)}
+                />
+                <Button type="submit" size="icon" variant="ghost" className="absolute right-0 h-full px-2">
+                  <Search className="h-4 w-4" />
+                </Button>
+              </div>
             </form>
 
             {/* Search Results Dropdown (portal) */}
