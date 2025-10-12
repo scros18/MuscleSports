@@ -54,6 +54,10 @@ export function Footer() {
               width={currentTheme === 'musclesports' ? 240 : 120}
               height={currentTheme === 'musclesports' ? 80 : 40}
               className={currentTheme === 'musclesports' ? 'h-20 w-auto mb-4 mx-auto md:mx-0' : 'h-10 w-auto mb-4 mx-auto md:mx-0'}
+              style={currentTheme === 'musclesports' ? {
+                mixBlendMode: 'multiply',
+                filter: 'contrast(1.2) brightness(1.1)',
+              } : undefined}
             />
             <p className="text-sm text-muted-foreground">
               {currentTheme === 'musclesports' ? 'Premium Sports Nutrition' : currentTheme === 'vera' ? 'Serious FiveM Roleplay' : settings.tagline}

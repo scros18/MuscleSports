@@ -180,6 +180,10 @@ export function Header() {
             width={currentTheme === 'musclesports' ? 240 : 120}
             height={currentTheme === 'musclesports' ? 80 : 40}
             className={currentTheme === 'musclesports' ? 'h-20 w-auto' : 'h-10 w-auto'}
+            style={currentTheme === 'musclesports' ? {
+              mixBlendMode: 'multiply',
+              filter: 'contrast(1.2) brightness(1.1)',
+            } : undefined}
           />
         </Link>
 
