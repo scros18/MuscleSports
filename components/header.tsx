@@ -175,7 +175,7 @@ export function Header() {
         <Link href="/" className="flex items-center flex-shrink-0 min-w-0">
           <Image
             src={currentTheme === 'musclesports' 
-              ? '/ms.png'
+              ? '/musclesports-logo.png'
               : currentTheme === 'vera'
               ? 'https://i.imgur.com/verarp-logo.png'
               : siteSettings.logoUrl}

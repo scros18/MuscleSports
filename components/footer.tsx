@@ -46,7 +46,7 @@ export function Footer() {
           <div className="text-center md:text-left">
             <Image
               src={currentTheme === 'musclesports' 
-                ? '/ms.png'
+                ? '/musclesports-logo.png'
                 : currentTheme === 'vera'
                 ? 'https://i.imgur.com/verarp-logo.png'
                 : settings.logoUrl}

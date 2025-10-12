@@ -11,23 +11,37 @@ export function SaleBanner() {
   useEffect(() => {
     // Detect current theme from document classList
     const detectTheme = () => {
-      const classList = document.documentElement.classList;
-      if (classList.contains('ordify-theme')) setTheme('ordify');
-      else if (classList.contains('musclesports-theme')) setTheme('musclesports');
-      else if (classList.contains('verap-theme')) setTheme('verap');
-      else setTheme('lumify');
+      const htmlClasses = document.documentElement.classList;
+      const bodyClasses = document.body.classList;
+      if (htmlClasses.contains('theme-musclesports') || bodyClasses.contains('theme-musclesports')) {
+        setTheme('musclesports');
+      } else if (htmlClasses.contains('theme-vera') || bodyClasses.contains('theme-vera')) {
+        setTheme('verap');
+      } else if (htmlClasses.contains('theme-ordify') || bodyClasses.contains('theme-ordify')) {
+        setTheme('ordify');
+      } else {
+        setTheme('lumify');
+      }
     };
 
     detectTheme();
 
     // Watch for theme changes
-    const observer = new MutationObserver(detectTheme);
-    observer.observe(document.documentElement, {
+    const htmlObserver = new MutationObserver(detectTheme);
+    const bodyObserver = new MutationObserver(detectTheme);
+    htmlObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+    bodyObserver.observe(document.body, {
       attributes: true,
       attributeFilter: ['class']
     });
 
-    return () => observer.disconnect();
+    return () => {
+      htmlObserver.disconnect();
+      bodyObserver.disconnect();
+    };
   }, []);
 
   if (!isVisible) return null;
