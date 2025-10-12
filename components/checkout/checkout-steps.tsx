@@ -12,7 +12,7 @@ interface CheckoutStepsProps {
 
 export function CheckoutSteps({ currentStep, steps }: CheckoutStepsProps) {
   return (
-    <div className="flex items-center justify-between max-w-3xl mx-auto mt-2">
+    <div className="flex items-center justify-between max-w-3xl mx-auto">
       {steps.map((step, index) => (
         <div key={step.number} className="flex items-center flex-1">
           {/* Step Circle */}

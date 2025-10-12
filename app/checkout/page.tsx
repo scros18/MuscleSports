@@ -87,7 +87,7 @@ function CheckoutContent() {
 
       {/* Progress Steps */}
       <div className="border-b bg-card/50">
-        <div className="container py-8">
+        <div className="container py-10">
           <CheckoutSteps currentStep={currentStep} steps={steps} />
         </div>
       </div>
