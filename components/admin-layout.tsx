@@ -37,27 +37,27 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [productsExpanded, setProductsExpanded] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState<'lumify' | 'ordify' | 'musclesports' | 'vera'>('lumify');
+  const [currentTheme, setCurrentTheme] = useState<'lumify' | 'ordify' | 'musclesports' | 'vera' | 'blisshair'>('lumify');
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
     checkAdminAccess();
     // Load saved theme
-    const savedTheme = localStorage.getItem('admin_theme') as 'lumify' | 'ordify' | 'musclesports' | 'vera';
+    const savedTheme = localStorage.getItem('admin_theme') as 'lumify' | 'ordify' | 'musclesports' | 'vera' | 'blisshair';
     if (savedTheme) {
       setCurrentTheme(savedTheme);
       applyTheme(savedTheme);
     }
   }, []);
 
-  const applyTheme = (theme: 'lumify' | 'ordify' | 'musclesports' | 'vera') => {
+  const applyTheme = (theme: 'lumify' | 'ordify' | 'musclesports' | 'vera' | 'blisshair') => {
     const root = document.documentElement;
     const body = document.body;
     
     // Remove all theme classes first
-    root.classList.remove('theme-lumify', 'theme-musclesports', 'theme-vera');
-    body.classList.remove('theme-lumify', 'theme-musclesports', 'theme-vera');
+    root.classList.remove('theme-lumify', 'theme-musclesports', 'theme-vera', 'theme-blisshair');
+    body.classList.remove('theme-lumify', 'theme-musclesports', 'theme-vera', 'theme-blisshair');
     
     // Apply new theme
     if (theme === 'lumify') {
@@ -69,19 +69,24 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
     } else if (theme === 'vera') {
       root.classList.add('theme-vera');
       body.classList.add('theme-vera');
+    } else if (theme === 'blisshair') {
+      root.classList.add('theme-blisshair');
+      body.classList.add('theme-blisshair');
     }
     // ordify is default (no class needed)
   };
 
   const toggleTheme = () => {
-    // Cycle through: lumify -> ordify -> musclesports -> vera -> lumify
-    let newTheme: 'lumify' | 'ordify' | 'musclesports' | 'vera';
+    // Cycle through: lumify -> ordify -> musclesports -> vera -> blisshair -> lumify
+    let newTheme: 'lumify' | 'ordify' | 'musclesports' | 'vera' | 'blisshair';
     if (currentTheme === 'lumify') {
       newTheme = 'ordify';
     } else if (currentTheme === 'ordify') {
       newTheme = 'musclesports';
     } else if (currentTheme === 'musclesports') {
       newTheme = 'vera';
+    } else if (currentTheme === 'vera') {
+      newTheme = 'blisshair';
     } else {
       newTheme = 'lumify';
     }
@@ -149,12 +154,14 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
                 <span className="bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">MuscleSports</span>
               ) : currentTheme === 'vera' ? (
                 <span className="bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">VeraRP</span>
+              ) : currentTheme === 'blisshair' ? (
+                <span className="bg-gradient-to-r from-rose-600 to-pink-400 bg-clip-text text-transparent">Bliss Hair Studio</span>
               ) : (
                 <span className="text-gray-900">Ordify Admin</span>
               )}
             </Link>
             <span className="text-[10px] font-medium text-muted-foreground mt-0.5">
-              {currentTheme === 'lumify' ? 'Light Up Your Business' : currentTheme === 'musclesports' ? 'Leon\'s MuscleSports.co.uk' : currentTheme === 'vera' ? 'Serious FiveM Roleplay' : 'Direct E-commerce'}
+              {currentTheme === 'lumify' ? 'Light Up Your Business' : currentTheme === 'musclesports' ? 'Leon\'s MuscleSports.co.uk' : currentTheme === 'vera' ? 'Serious FiveM Roleplay' : currentTheme === 'blisshair' ? 'Maxine\'s Hair & Beauty' : 'Direct E-commerce'}
             </span>
           </div>
           <Button
@@ -306,7 +313,7 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
             className="flex items-center w-full px-4 py-3 text-sm font-medium rounded-lg transition-all duration-300 bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 text-foreground border border-primary/20 shadow-sm"
           >
             <Palette className="mr-3 h-5 w-5 text-primary" />
-            <span>Theme: {currentTheme === 'lumify' ? 'Lumify' : currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : 'Ordify'}</span>
+            <span>Theme: {currentTheme === 'lumify' ? 'Lumify' : currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : currentTheme === 'blisshair' ? 'Bliss Hair' : 'Ordify'}</span>
           </button>
           <p className="px-4 mt-2 text-xs text-muted-foreground">
             {currentTheme === 'lumify'
@@ -315,6 +322,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
               ? '🟢 Green sports nutrition theme'
               : currentTheme === 'vera'
               ? '🟣 Purple gaming/roleplay theme'
+              : currentTheme === 'blisshair'
+              ? '🌸 Rose/pink hair & beauty theme'
               : '🔵 Standard e-commerce theme'}
           </p>
         </div>

@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
-type Theme = 'ordify' | 'musclesports' | 'lumify' | 'verap';
+type Theme = 'ordify' | 'musclesports' | 'lumify' | 'verap' | 'blisshair';
 
 interface ProductThemeContextType {
   productTheme: Theme;
@@ -27,6 +27,8 @@ export function ProductThemeProvider({ children }: { children: ReactNode }) {
         setProductTheme('lumify');
       } else if (classList.contains('theme-vera')) {
         setProductTheme('verap');
+      } else if (classList.contains('theme-blisshair')) {
+        setProductTheme('blisshair');
       } else {
         setProductTheme('ordify');
       }

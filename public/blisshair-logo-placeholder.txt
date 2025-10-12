@@ -1,0 +1,26 @@
+BLISS HAIR STUDIO LOGO
+
+To complete the Bliss Hair Studio theme, please:
+
+1. Find the Bliss Hair Studio logo on Facebook
+   - Owner: Maxine Croston
+   - Search for "Bliss Hair Studio" on Facebook
+
+2. Download the logo image
+
+3. Save it as: blisshair-logo.png in the /public folder
+
+4. Recommended image specifications:
+   - Format: PNG with transparent background (preferred) or JPG
+   - Minimum size: 300x300 pixels
+   - Recommended size: 500x500 pixels or larger
+   - Aspect ratio: Square or horizontal rectangle
+
+5. Once added, the theme system will automatically use it in:
+   - Admin panel sidebar
+   - Site header (when theme is active)
+   - Footer
+   - Other branding locations
+
+The theme colors have been configured with a rose/pink color scheme (HSL: 340, 82%, 52%)
+suitable for a hair & beauty studio.

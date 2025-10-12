@@ -106,6 +106,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       if (classList.contains('theme-musclesports')) return 'musclesports';
       if (classList.contains('theme-lumify')) return 'lumify';
       if (classList.contains('theme-vera')) return 'vera';
+      if (classList.contains('theme-blisshair')) return 'blisshair';
       return 'ordify';
     };
     const theme = getCurrentTheme();

@@ -21,6 +21,7 @@ function getCurrentTheme(): string {
   if (classList.contains('theme-musclesports')) return 'musclesports';
   if (classList.contains('theme-lumify')) return 'lumify';
   if (classList.contains('theme-vera')) return 'verap';
+  if (classList.contains('theme-blisshair')) return 'blisshair';
   return 'ordify';
 }
 

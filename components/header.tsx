@@ -33,6 +33,8 @@ export function Header() {
         setCurrentTheme('musclesports');
       } else if (htmlClasses.contains('theme-vera') || bodyClasses.contains('theme-vera')) {
         setCurrentTheme('vera');
+      } else if (htmlClasses.contains('theme-blisshair') || bodyClasses.contains('theme-blisshair')) {
+        setCurrentTheme('blisshair');
       } else {
         setCurrentTheme('ordify');
       }

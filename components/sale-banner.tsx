@@ -17,6 +17,8 @@ export function SaleBanner() {
         setTheme('musclesports');
       } else if (htmlClasses.contains('theme-vera') || bodyClasses.contains('theme-vera')) {
         setTheme('verap');
+      } else if (htmlClasses.contains('theme-blisshair') || bodyClasses.contains('theme-blisshair')) {
+        setTheme('blisshair');
       } else if (htmlClasses.contains('theme-ordify') || bodyClasses.contains('theme-ordify')) {
         setTheme('ordify');
       } else {
