@@ -184,8 +184,8 @@ export function Header() {
             height={currentTheme === 'musclesports' ? 80 : 40}
             className={currentTheme === 'musclesports' ? 'h-14 md:h-20 w-auto' : 'h-10 w-auto'}
             style={currentTheme === 'musclesports' ? {
-              mixBlendMode: 'multiply',
-              filter: 'contrast(1.2) brightness(1.1)',
+              filter: 'brightness(1.15) contrast(1.3) saturate(1.1)',
+              backgroundColor: 'transparent'
             } : undefined}
           />
         </Link>

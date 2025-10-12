@@ -126,7 +126,7 @@ export function Footer() {
         <Separator className="my-8" />
 
         <div className="text-center text-sm text-muted-foreground">
-          <p>&copy; 2025 Ordify Direct Ltd. All rights reserved.</p>
+          <p>&copy; 2025 {currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : 'Ordify Direct Ltd'}. All rights reserved.</p>
         </div>
       </div>
     </footer>
