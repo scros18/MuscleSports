@@ -32,7 +32,12 @@ export const metadata: Metadata = generateSEO({
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' }
+  ],
 };
 
 export default function RootLayout({
@@ -44,8 +49,12 @@ export default function RootLayout({
   const websiteSchema = generateWebsiteSchema();
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="format-detection" content="telephone=no" />
+        <link rel="manifest" href="/manifest.json" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={getJsonLdScript(organizationSchema)}
@@ -56,6 +65,9 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100000] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:shadow-lg">
+          Skip to main content
+        </a>
         <ThemeLoader />
         <SiteSettingsProvider>
           <PerformanceProvider>
@@ -64,7 +76,7 @@ export default function RootLayout({
                 <ToastProvider>
                 <div className="flex min-h-screen flex-col">
                   <Header />
-                  <main className="flex-1 relative z-0">
+                  <main id="main-content" className="flex-1 relative z-0" role="main">
                     <PageTransition>{children}</PageTransition>
                   </main>
                   <Footer />

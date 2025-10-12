@@ -227,7 +227,8 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {displayedReviews.map((review) => (
-              <div key={review.id} className="bg-white dark:bg-card p-6 rounded-xl border shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">\n                <div className="flex items-center justify-between mb-4">
+              <div key={review.id} className="bg-white dark:bg-card p-6 rounded-xl border shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="flex items-center justify-between mb-4">
                   <div className="flex gap-0.5">
                     {[...Array(5)].map((_, i) => (
                       <Star
@@ -249,30 +250,39 @@ export default function Home() {
                 </p>
                 <div className="pt-4 border-t flex items-center justify-between">
                   <div>
-                    <p className="font-bold text-sm text-foreground">{review.reviewer}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{review.item}</p>
+                    <p className="font-bold text-sm text-foreground flex items-center gap-2">
+                      {review.author || review.reviewer}
+                      {review.verified && currentTheme === 'musclesports' && (
+                        <span className="text-green-600 dark:text-green-400 text-xs">✓ Verified</span>
+                      )}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {review.location || review.item}
+                    </p>
                   </div>
                   <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
-                    {review.reviewer.charAt(0)}
+                    {(review.author || review.reviewer).charAt(0).toUpperCase()}
                   </div>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="text-center mb-16">
-            <a
-              href="https://www.ebay.co.uk/fdbk/feedback_profile/ordifydirectltd"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-semibold text-base bg-primary/10 hover:bg-primary/20 px-6 py-3 rounded-xl transition-all duration-200"
-            >
-              View all reviews on eBay
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
-          </div>
+          {currentTheme !== 'musclesports' && (
+            <div className="text-center mb-16">
+              <a
+                href="https://www.ebay.co.uk/fdbk/feedback_profile/ordifydirectltd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-semibold text-base bg-primary/10 hover:bg-primary/20 px-6 py-3 rounded-xl transition-all duration-200"
+              >
+                View all reviews on eBay
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+            </div>
+          )}
         </section>
       )}
 

@@ -1,0 +1,26 @@
+{
+  "name": "Lumify - Premium E-Commerce Platform",
+  "short_name": "Lumify",
+  "description": "Multi-brand e-commerce platform with premium themes and fast checkout",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4A90E2",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/ordifydirectltd.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/ordifydirectltd.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "business"],
+  "prefer_related_applications": false
+}
