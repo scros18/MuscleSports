@@ -16,6 +16,7 @@ import {
   Menu,
   X,
   Palette,
+  Scissors,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -291,6 +292,22 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           <BarChart3 className="mr-3 h-5 w-5" />
           Analytics
         </Link>
+
+        {/* Salon Management (for salon-type businesses) */}
+        {currentTheme === 'blisshair' && (
+          <Link
+            href="/admin/salon"
+            onClick={closeSidebar}
+            className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ${
+              pathname === '/admin/salon'
+                ? 'bg-accent text-accent-foreground border-r-2 border-primary'
+                : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+            }`}
+          >
+            <Scissors className="mr-3 h-5 w-5" />
+            Salon Management
+          </Link>
+        )}
 
         {/* Settings */}
         <Link

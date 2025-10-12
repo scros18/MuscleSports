@@ -8,6 +8,7 @@ import HeroCarousel from '@/components/hero-carousel';
 import HomePanels from '@/components/home-panels';
 import { SkeletonLoader } from "@/components/skeleton-loader";
 import { Star } from "lucide-react";
+import { SalonHomepage } from "@/components/salon-homepage";
 
 // Force dynamic rendering to avoid long static generation during build
 export const dynamic = 'force-dynamic';
@@ -20,6 +21,7 @@ function getCurrentTheme(): string {
   if (classList.contains('theme-musclesports')) return 'musclesports';
   if (classList.contains('theme-lumify')) return 'lumify';
   if (classList.contains('theme-vera')) return 'vera';
+  if (classList.contains('theme-blisshair')) return 'blisshair';
   return 'ordify';
 }
 
@@ -53,6 +55,11 @@ export default function Home() {
     });
     return () => observer.disconnect();
   }, []);
+
+  // If Bliss Hair theme is active, show salon homepage
+  if (currentTheme === 'blisshair') {
+    return <SalonHomepage />;
+  }
 
   // Fetch products based on current theme
   useEffect(() => {

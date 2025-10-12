@@ -8,6 +8,7 @@ import { CartProvider } from "@/context/cart-context";
 import { AuthProvider } from "@/context/auth-context";
 import { PerformanceProvider } from "@/context/performance-context";
 import { SiteSettingsProvider } from "@/context/site-settings-context";
+import { BusinessSettingsProvider } from "@/context/business-settings-context";
 import { ToastProvider } from "@/components/toast";
 import { PageTransition } from "@/components/page-transition";
 import { generateSEO, generateOrganizationSchema, generateWebsiteSchema, getJsonLdScript } from "@/lib/seo";
@@ -69,23 +70,25 @@ export default function RootLayout({
           Skip to main content
         </a>
         <ThemeLoader />
-        <SiteSettingsProvider>
-          <PerformanceProvider>
-            <AuthProvider>
-              <CartProvider>
-                <ToastProvider>
-                <div className="flex min-h-screen flex-col">
-                  <Header />
-                  <main id="main-content" className="flex-1 relative z-0" role="main">
-                    <PageTransition>{children}</PageTransition>
-                  </main>
-                  <Footer />
-                </div>
-                </ToastProvider>
-              </CartProvider>
-            </AuthProvider>
-          </PerformanceProvider>
-        </SiteSettingsProvider>
+        <BusinessSettingsProvider>
+          <SiteSettingsProvider>
+            <PerformanceProvider>
+              <AuthProvider>
+                <CartProvider>
+                  <ToastProvider>
+                  <div className="flex min-h-screen flex-col">
+                    <Header />
+                    <main id="main-content" className="flex-1 relative z-0" role="main">
+                      <PageTransition>{children}</PageTransition>
+                    </main>
+                    <Footer />
+                  </div>
+                  </ToastProvider>
+                </CartProvider>
+              </AuthProvider>
+            </PerformanceProvider>
+          </SiteSettingsProvider>
+        </BusinessSettingsProvider>
       </body>
     </html>
   );
