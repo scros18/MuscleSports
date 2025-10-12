@@ -20,6 +20,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedFlavourIndex, setSelectedFlavourIndex] = useState<number | null>(null);
+  const [mainImage, setMainImage] = useState<string>('');
   const { addToCart } = useCart();
   const [product, setProduct] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
@@ -29,26 +30,60 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   const flavours: string[] = hasFlavours ? product.flavours : IVG_PRO_12_FLAVOURS;
 
   // Map flavours to images if a match is present in product.images (by simple name match)
+  // Run this mapping regardless of whether the product object includes flavours
+  // so the standalone IVG flavour list (IVG_PRO_12_FLAVOURS) can provide images.
   const flavourImages = useMemo(() => {
-    if (!hasFlavours) return [] as string[];
     const imgs = Array.isArray(product?.images) ? product.images : [];
     // If there are many product.images (pack shot) and separate flavour images
     // are not provided, prefer supplier flavour images (external) when known.
     // We'll attempt to match flavour names to supplier image URLs by a small lookup.
     const lookup: Record<string, string> = {
-      'blue raspberry ice': 'https://washington-vapes.co.uk/cdn/shop/files/IVG-Pro-12-Prefilled-Vape-KitWashington-Vapes-UK_-Blue-Raspberry-Ice-7.99-13487177.png?v=1757930425',
-      'fizzy strawberry': 'https://washington-vapes.co.uk/cdn/shop/files/IVG-Pro-12-Prefilled-Vape-KitWashington-Vapes-UK_-Fizzy-Strawberry-7.99-13487681.png?v=1757930425',
-      'blue raspberry': 'https://washington-vapes.co.uk/cdn/shop/files/IVG-Pro-12-Prefilled-Vape-KitWashington-Vapes-UK_-Blue-Raspberry-7.99.png?v=1757930425',
-      'classic menthol': 'https://washington-vapes.co.uk/cdn/shop/files/IVG-Pro-12-Prefilled-Vape-KitWashington-Vapes-UK_-Classic-Menthol-7.99.png?v=1757930425',
-      'fizzy cherry': 'https://washington-vapes.co.uk/cdn/shop/files/IVG-Pro-12-Prefilled-Vape-KitWashington-Vapes-UK_-Fizzy-Cherry-7.99.png?v=1757930425',
-      'double mango': 'https://washington-vapes.co.uk/cdn/shop/files/IVG-Pro-12-Prefilled-Vape-KitWashington-Vapes-UK_-Double-Mango-7.99.png?v=1757930425',
+      'blue raspberry ice': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-500758.png?v=1748617276',
+      'blue sour raspberry': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-933612.png?v=1748617276',
+      'classic menthol': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-489670.png?v=1748617254',
+      'double mango': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-871313.png?v=1748617251',
+      'fizzy cherry': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-384300.png?v=1748617253',
+      'fizzy strawberry': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-271657.png?v=1748617252',
+      'fresh menthol mojito': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-297006.png?v=1748617274',
+      'kiwi passionfruit guava': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-525411.png?v=1748617275',
+      'lemon lime': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-768531.png?v=1748617253',
+      'pineapple ice': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-320536.png?v=1748617255',
+      'pink lemonade': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-249073.png?v=1748617251',
+      'red sour raspberry': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-383507.png?v=1748617274',
+      'strawberry ice': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-310181.png?v=1748617254',
+      'strawberry raspberry cherry': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-411261.png?v=1748617255',
+      'strawberry watermelon': 'https://mcrvapedistro.co.uk/cdn/shop/files/ivg-pro-12-prefilled-vape-pods-box-of-10-mcr-vape-distro-237675.png?v=1748617255'
     };
-    return flavours.map((f: string) => lookup[f.toLowerCase()] ?? imgs[0] ?? '/placeholder.svg');
+    // Return null when we don't have a specific flavour image so callers
+    // can decide whether to fall back to the pack shot or not.
+    return flavours.map((f: string) => lookup[f.toLowerCase()] ?? null);
   }, [hasFlavours, flavours, product]);
 
-  const images: string[] = flavourImages.length > 0 ? flavourImages : (Array.isArray(product?.images) && product.images.length ? product.images : [product?.image || '/placeholder.svg']);
+  const images: string[] = Array.isArray(product?.images) && product.images.length ? product.images : [product?.image || '/placeholder.svg'];
 
-  const safeSelected = Math.min(Math.max(0, selectedImage), images.length - 1);
+  // Build the thumbnails list: start from product pack-shot images then append
+  // any flavour-specific images. Deduplicate and exclude placeholders.
+  const thumbnailImages = useMemo(() => {
+    const base = images.filter(Boolean) as string[];
+    const extras = flavourImages.filter(Boolean) as string[];
+    const merged = [...base, ...extras];
+    const deduped = Array.from(new Set(merged)).filter((u) => u && u !== '/placeholder.svg');
+    return deduped;
+  }, [images, flavourImages]);
+
+  // Track thumbnails that failed to load, so we can hide them from the gallery
+  const [brokenThumbs, setBrokenThumbs] = useState<Set<string>>(new Set());
+
+  const safeSelected = Math.min(Math.max(0, selectedImage), thumbnailImages.length - 1);
+
+  // Set main image when product loads
+  useEffect(() => {
+    if (product && images.length > 0) {
+      setMainImage(images[0]);
+      // ensure selected thumbnail index is valid for the thumbnails list
+      setSelectedImage(0);
+    }
+  }, [product, images]);
 
   useEffect(() => {
     let mounted = true;
@@ -116,31 +151,39 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         <div className="space-y-4">
           <div className="relative h-80 sm:h-96 md:h-[600px] rounded-lg overflow-hidden bg-gray-100 w-full">
             <Image
-              src={images[safeSelected]}
+              src={mainImage}
               alt={product.name}
               fill
               className="object-cover"
               priority
+              onError={() => setMainImage('/placeholder.svg')}
             />
           </div>
-          {images.length > 1 && (
+
+          {thumbnailImages.length > 1 && (
             <div className="flex gap-2 overflow-x-auto pb-2">
-              {images.map((image: string, index: number) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedImage(index)}
-                  className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-md overflow-hidden border-2 flex-shrink-0 ${
-                    selectedImage === index ? "border-primary" : "border-gray-200"
-                  }`}
-                >
-                  <Image
-                    src={image}
-                    alt={`${product.name} ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                </button>
-              ))}
+              {thumbnailImages
+                .filter((url) => !brokenThumbs.has(url))
+                .map((image: string, index: number) => (
+                  <button
+                    key={image}
+                    onClick={() => {
+                      setSelectedImage(index);
+                      setMainImage(image);
+                    }}
+                    className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-md overflow-hidden border-2 flex-shrink-0 ${
+                      selectedImage === index ? "border-primary" : "border-gray-200"
+                    }`}
+                  >
+                    <Image
+                      src={image}
+                      alt={`${product.name} ${index + 1}`}
+                      fill
+                      className="object-cover"
+                      onError={() => setBrokenThumbs((prev) => new Set(prev).add(image))}
+                    />
+                  </button>
+                ))}
             </div>
           )}
         </div>
@@ -194,10 +237,12 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                     const val = e.target.value;
                     if (val === "") {
                       setSelectedFlavourIndex(null);
+                      setMainImage(images[0]);
                     } else {
                       const idx = parseInt(val, 10);
                       setSelectedFlavourIndex(idx);
-                      setSelectedImage(idx);
+                      const flavourImg = flavourImages[idx];
+                      setMainImage(flavourImg || images[0]);
                     }
                   }}
                   className="h-9 px-3 rounded-md bg-background border text-sm"

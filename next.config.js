@@ -26,6 +26,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'washington-vapes.co.uk',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.shopify.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'mcrvapedistro.co.uk',
+      },
     ],
   },
 
