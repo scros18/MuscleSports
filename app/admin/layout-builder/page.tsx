@@ -100,12 +100,18 @@ export default function LayoutBuilderPage() {
       setSaving(true);
       const token = localStorage.getItem('auth_token');
       
+      console.log('🔍 Debug Info:');
+      console.log('Token exists:', !!token);
+      console.log('Token length:', token?.length);
+      console.log('Token preview:', token?.substring(0, 20) + '...');
+      
       if (!token) {
         alert('⚠️ Authentication token not found. Please log in again.');
         setSaving(false);
         return;
       }
 
+      console.log('Sending POST request to /api/site-layout');
       const response = await fetch('/api/site-layout', {
         method: 'POST',
         headers: {
@@ -118,10 +124,15 @@ export default function LayoutBuilderPage() {
         })
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response OK:', response.ok);
+
       if (response.ok) {
         alert('✅ Layout saved! Changes are now live on your site.');
       } else if (response.status === 401) {
-        alert('⚠️ Unauthorized. Please log in as admin and try again.');
+        const errorData = await response.json();
+        console.error('401 Error details:', errorData);
+        alert('⚠️ Unauthorized. Please log in as admin and try again.\n\nTip: Try logging out and logging back in.');
       } else {
         const errorText = await response.text();
         console.error('Save failed:', errorText);

@@ -8,20 +8,31 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 async function verifyAdmin(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
+    console.log('🔍 Auth Header:', authHeader?.substring(0, 30) + '...');
+    
     if (!authHeader?.startsWith('Bearer ')) {
+      console.log('❌ No Bearer token found');
       return null;
     }
 
     const token = authHeader.substring(7);
+    console.log('🔍 Token length:', token.length);
+    
     const decoded = jwt.verify(token, JWT_SECRET) as any;
+    console.log('✅ Token decoded:', { userId: decoded.userId, exp: decoded.exp });
     
     const user = await Database.findUserById(decoded.userId);
+    console.log('🔍 User found:', user ? `${user.email} (${user.role})` : 'null');
+    
     if (!user || user.role !== 'admin') {
+      console.log('❌ User not admin or not found');
       return null;
     }
 
+    console.log('✅ Admin verified:', user.email);
     return user;
   } catch (error) {
+    console.error('❌ verifyAdmin error:', error);
     return null;
   }
 }
@@ -54,15 +65,19 @@ export async function GET(request: NextRequest) {
 
 // POST/PUT site layout configuration (admin only)
 export async function POST(request: NextRequest) {
+  console.log('📝 POST /api/site-layout called');
+  
   try {
     const user = await verifyAdmin(request);
     if (!user) {
+      console.log('❌ Returning 401 - user not verified');
       return NextResponse.json(
-        { error: 'Unauthorized' },
+        { error: 'Unauthorized - Admin access required' },
         { status: 401 }
       );
     }
 
+    console.log('✅ User verified, processing request');
     const data = await request.json();
     const {
       businessId = 'default',
@@ -76,15 +91,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log('💾 Saving layout for business:', businessId);
     await Database.saveSiteLayout({
       businessId,
       layout
     });
 
     const updated = await Database.getSiteLayout(businessId);
+    console.log('✅ Layout saved successfully');
     return NextResponse.json(updated);
   } catch (error) {
-    console.error('Error updating site layout:', error);
+    console.error('❌ Error updating site layout:', error);
     return NextResponse.json(
       { error: 'Failed to update site layout' },
       { status: 500 }
