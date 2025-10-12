@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import { formatPrice } from "@/lib/utils";
 import { ShoppingCart, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { generateProductSchema, generateBreadcrumbSchema } from "@/lib/seo";
+import { IVG_PRO_12_FLAVOURS } from '@/data/ivg-pro-12-flavours';
 
 // Render this page dynamically so product fetch happens at request-time
 export const dynamic = 'force-dynamic';
@@ -18,9 +19,36 @@ export const dynamic = 'force-dynamic';
 export default function ProductPage({ params }: { params: { id: string } }) {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [selectedFlavourIndex, setSelectedFlavourIndex] = useState<number | null>(null);
   const { addToCart } = useCart();
   const [product, setProduct] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
+
+  // Use flavours from product data if present
+  const hasFlavours = Array.isArray(product?.flavours) && product.flavours.length > 0;
+  const flavours: string[] = hasFlavours ? product.flavours : IVG_PRO_12_FLAVOURS;
+
+  // Map flavours to images if a match is present in product.images (by simple name match)
+  const flavourImages = useMemo(() => {
+    if (!hasFlavours) return [] as string[];
+    const imgs = Array.isArray(product?.images) ? product.images : [];
+    // If there are many product.images (pack shot) and separate flavour images
+    // are not provided, prefer supplier flavour images (external) when known.
+    // We'll attempt to match flavour names to supplier image URLs by a small lookup.
+    const lookup: Record<string, string> = {
+      'blue raspberry ice': 'https://washington-vapes.co.uk/cdn/shop/files/IVG-Pro-12-Prefilled-Vape-KitWashington-Vapes-UK_-Blue-Raspberry-Ice-7.99-13487177.png?v=1757930425',
+      'fizzy strawberry': 'https://washington-vapes.co.uk/cdn/shop/files/IVG-Pro-12-Prefilled-Vape-KitWashington-Vapes-UK_-Fizzy-Strawberry-7.99-13487681.png?v=1757930425',
+      'blue raspberry': 'https://washington-vapes.co.uk/cdn/shop/files/IVG-Pro-12-Prefilled-Vape-KitWashington-Vapes-UK_-Blue-Raspberry-7.99.png?v=1757930425',
+      'classic menthol': 'https://washington-vapes.co.uk/cdn/shop/files/IVG-Pro-12-Prefilled-Vape-KitWashington-Vapes-UK_-Classic-Menthol-7.99.png?v=1757930425',
+      'fizzy cherry': 'https://washington-vapes.co.uk/cdn/shop/files/IVG-Pro-12-Prefilled-Vape-KitWashington-Vapes-UK_-Fizzy-Cherry-7.99.png?v=1757930425',
+      'double mango': 'https://washington-vapes.co.uk/cdn/shop/files/IVG-Pro-12-Prefilled-Vape-KitWashington-Vapes-UK_-Double-Mango-7.99.png?v=1757930425',
+    };
+    return flavours.map((f: string) => lookup[f.toLowerCase()] ?? imgs[0] ?? '/placeholder.svg');
+  }, [hasFlavours, flavours, product]);
+
+  const images: string[] = flavourImages.length > 0 ? flavourImages : (Array.isArray(product?.images) && product.images.length ? product.images : [product?.image || '/placeholder.svg']);
+
+  const safeSelected = Math.min(Math.max(0, selectedImage), images.length - 1);
 
   useEffect(() => {
     let mounted = true;
@@ -64,14 +92,13 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   if (loading) return <div className="container py-8">Loading…</div>;
   if (!product) return notFound();
 
-  const images: string[] = Array.isArray((product as any).images) && (product as any).images.length
-    ? (product as any).images
-    : [ (product as any).image || "/placeholder.svg" ];
-  const safeSelected = Math.min(Math.max(0, selectedImage), images.length - 1);
-
   const handleAddToCart = () => {
+    // Include selected flavour for IVG Pro 12 so cart/checkout can show it
+    const item = hasFlavours && selectedFlavourIndex !== null
+      ? { ...product, selectedFlavour: flavours[selectedFlavourIndex] }
+      : product;
     for (let i = 0; i < quantity; i++) {
-      addToCart(product);
+      addToCart(item);
     }
   };
 
@@ -155,6 +182,34 @@ export default function ProductPage({ params }: { params: { id: string } }) {
               )}
             </p>
           </div>
+
+          {/* Flavours dropdown */}
+          {hasFlavours && flavours.length > 0 && (
+            <div className="mb-4">
+              <label className="text-sm font-semibold mb-2 block">Flavour</label>
+              <div className="flex items-center gap-3">
+                <select
+                  value={selectedFlavourIndex !== null ? String(selectedFlavourIndex) : ""}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === "") {
+                      setSelectedFlavourIndex(null);
+                    } else {
+                      const idx = parseInt(val, 10);
+                      setSelectedFlavourIndex(idx);
+                      setSelectedImage(idx);
+                    }
+                  }}
+                  className="h-9 px-3 rounded-md bg-background border text-sm"
+                >
+                  <option value="">Select flavour</option>
+                  {flavours.map((f: string, i: number) => (
+                    <option key={f} value={String(i)}>{f}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
 
           {/* Quantity Selector */}
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-6">

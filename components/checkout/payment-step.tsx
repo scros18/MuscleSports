@@ -257,7 +257,7 @@ export function PaymentStep({ onNext, onBack }: PaymentStepProps) {
           {selectedMethod === "paypal" && (
             <div className="p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-900">
               <p className="text-sm text-blue-900 dark:text-blue-100">
-                You'll be redirected to PayPal to complete your purchase securely.
+                You&apos;ll be redirected to PayPal to complete your purchase securely.
               </p>
             </div>
           )}

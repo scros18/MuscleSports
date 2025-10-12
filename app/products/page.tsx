@@ -26,6 +26,7 @@ export default function ProductsPage() {
   const [total, setTotal] = useState(0);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const [sort, setSort] = useState<string>("best_match");
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   // Initialize search query from URL params
@@ -58,6 +59,7 @@ export default function ProductsPage() {
     const params = new URLSearchParams();
     params.set('page', String(currentPage));
     params.set('pageSize', String(PRODUCTS_PER_PAGE));
+    if (sort) params.set('sort', sort);
     if (selectedCategory && selectedCategory !== 'All') params.set('category', selectedCategory);
     if (searchQuery.trim()) params.set('search', searchQuery);
     if (minPrice.trim()) params.set('minPrice', minPrice);
@@ -77,7 +79,7 @@ export default function ProductsPage() {
       .finally(() => mounted && setLoading(false));
 
     return () => { mounted = false };
-  }, [currentPage, selectedCategory, searchQuery, minPrice, maxPrice]);
+  }, [currentPage, selectedCategory, searchQuery, minPrice, maxPrice, sort]);
 
   // Server returns already-filtered results; use total for pagination
   const totalPages = Math.ceil((total || 0) / PRODUCTS_PER_PAGE) || 1;
@@ -119,7 +121,7 @@ export default function ProductsPage() {
       <div className="border-b bg-card/50">
         <div className="container py-6">
           <h1 className="text-3xl font-bold mb-2">
-            {searchQuery ? `Search Results for "${searchQuery}"` : "All Products"}
+            {searchQuery ? <>Search Results for &quot;{searchQuery}&quot;</> : "All Products"}
           </h1>
           <p className="text-sm text-muted-foreground">
             {total.toLocaleString()} results
@@ -132,7 +134,7 @@ export default function ProductsPage() {
         <div className="border-b bg-blue-50/50 dark:bg-blue-950/20">
           <div className="container py-3 flex items-center justify-between">
             <span className="text-sm">
-              Found {total} product{total !== 1 ? 's' : ''} matching "{searchQuery}"
+              Found {total} product{total !== 1 ? 's' : ''} matching &quot;{searchQuery}&quot;
             </span>
             <Button variant="outline" size="sm" onClick={clearSearch}>
               Clear Search
@@ -206,6 +208,20 @@ export default function ProductsPage() {
                       />
                     </div>
                   </div>
+                </div>
+
+                {/* Sort (mobile) */}
+                <div className="mb-4">
+                  <Label className="text-sm font-semibold mb-3 block">Sort</Label>
+                  <select
+                    value={sort}
+                    onChange={(e) => { setSort(e.target.value); setCurrentPage(1); }}
+                    className="w-full h-9 px-2 rounded-md bg-background border text-sm"
+                  >
+                    <option value="best_match">Best Match</option>
+                    <option value="price_asc">Price: Low to High</option>
+                    <option value="price_desc">Price: High to Low</option>
+                  </select>
                 </div>
 
                 {/* Clear Filters (mobile) */}
@@ -299,10 +315,16 @@ export default function ProductsPage() {
                 <span className="font-bold text-foreground">{total.toLocaleString()}</span>
               </p>
               <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
-                <span>Sort by:</span>
-                <Button variant="ghost" size="sm" className="h-8 font-medium">
-                  Best Match
-                </Button>
+                <label className="text-sm">Sort by:</label>
+                <select
+                  value={sort}
+                  onChange={(e) => { setSort(e.target.value); setCurrentPage(1); }}
+                  className="h-8 px-3 rounded-md bg-background border text-sm"
+                >
+                  <option value="best_match">Best Match</option>
+                  <option value="price_asc">Price: Low to High</option>
+                  <option value="price_desc">Price: High to Low</option>
+                </select>
               </div>
             </div>
 

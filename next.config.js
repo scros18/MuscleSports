@@ -18,6 +18,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'img.aosomcdn.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.washingtonvapeswholesale.co.uk',
+      },
+      {
+        protocol: 'https',
+        hostname: 'washington-vapes.co.uk',
+      },
     ],
   },
 

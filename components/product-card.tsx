@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -20,12 +20,18 @@ export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
   const { settings } = usePerformance();
   const [quantity, setQuantity] = useState(1);
+  const [quantityInput, setQuantityInput] = useState(String(1));
   const [isAdded, setIsAdded] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
   const firstImage = Array.isArray((product as any).images) && (product as any).images.length
     ? (product as any).images[0]
     : (product as any).image || "/placeholder.svg";
   const description = (product as any).description || "";
+  
+  // keep input string in sync when quantity changes programmatically
+  useEffect(() => {
+    setQuantityInput(String(quantity));
+  }, [quantity]);
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
@@ -121,16 +127,46 @@ export function ProductCard({ product }: ProductCardProps) {
           >
             <Minus className="h-3 w-3" />
           </Button>
-          <span className={`px-3 py-1 min-w-[2.5rem] text-center font-bold text-sm ${settings.animationsEnabled ? 'transition-all duration-200 ease-spring' : ''}`}>
-            {quantity}
-          </span>
+          {/* Input allows typing - keep a string state to allow editing before commit */}
+          <input
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            aria-label={`Quantity for ${product.name}`}
+            value={quantityInput}
+            onClick={(e) => e.stopPropagation()}
+            onChange={(e) => {
+              // keep only digits in the input string
+              const cleaned = e.target.value.replace(/\D/g, "");
+              setQuantityInput(cleaned);
+            }}
+            onBlur={() => {
+              const n = parseInt(quantityInput, 10);
+              const final = Number.isNaN(n) || n < 1 ? 1 : n;
+              setQuantity(final);
+              setQuantityInput(String(final));
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                const n = parseInt(quantityInput, 10);
+                const final = Number.isNaN(n) || n < 1 ? 1 : n;
+                setQuantity(final);
+                setQuantityInput(String(final));
+                // prevent form submits or other handlers
+                e.currentTarget.blur();
+              }
+            }}
+            className={`px-3 py-1 min-w-[2.5rem] w-16 text-center font-bold text-sm appearance-none bg-transparent outline-none ${settings.animationsEnabled ? 'transition-all duration-200 ease-spring' : ''}`}
+          />
           <Button
             variant="ghost"
             size="icon"
             className={`h-8 w-8 rounded-none hover:bg-primary/10 ${settings.animationsEnabled ? 'active:scale-90 transition-transform duration-150 ease-spring' : 'transition-colors'}`}
             onClick={(e) => {
               e.stopPropagation();
-              setQuantity(quantity + 1);
+              const next = quantity + 1;
+              setQuantity(next);
+              setQuantityInput(String(next));
             }}
           >
             <Plus className="h-3 w-3" />

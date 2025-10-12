@@ -103,7 +103,7 @@ export function UpsellModal({ onClose }: UpsellModalProps) {
               </div>
               <div>
                 <h2 className="text-2xl font-bold mb-2">
-                  Wait! Don't Miss These Deals
+                  Wait! Don&apos;t Miss These Deals
                 </h2>
                 <p className="text-primary-foreground/90 text-sm">
                   Complete your order with these popular items. Limited time
@@ -116,7 +116,7 @@ export function UpsellModal({ onClose }: UpsellModalProps) {
               <div className="flex items-center gap-2 bg-white/10 rounded-lg px-4 py-2 mt-4">
                 <TrendingUp className="w-5 h-5" />
                 <span className="font-semibold">
-                  You're saving {formatPrice(totalSavings)} today!
+                  You&apos;re saving {formatPrice(totalSavings)} today!
                 </span>
               </div>
             )}
@@ -298,7 +298,7 @@ export function UpsellModal({ onClose }: UpsellModalProps) {
                 {selectedProducts.size > 0 ? (
                   <>
                     Add {selectedProducts.size} Item
-                    {selectedProducts.size > 1 ? "s" : ""} & Continue
+                    {selectedProducts.size > 1 ? "s" : ""} &amp; Continue
                   </>
                 ) : (
                   "Continue to Payment"

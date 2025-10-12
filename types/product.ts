@@ -13,6 +13,10 @@ export interface Product {
 
 export interface CartItem extends Product {
   quantity: number;
+  // optional unique id for this cart line (allows same product, different flavours)
+  cartItemId?: string;
+  // selected flavour/variant for this cart item
+  selectedFlavour?: string;
 }
 
 export interface User {

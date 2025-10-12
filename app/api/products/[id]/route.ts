@@ -83,14 +83,27 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const normalize = (s: any) => (s === undefined || s === null) ? '' : String(s).replace(/[^a-z0-9]/gi, '').toLowerCase();
     const idNorm = normalize(id);
     const product = products.find((p: any) => p.id === id || normalize(p.id) === idNorm);
-    if (!product) return new Response(null, { status: 404 });
+  if (!product) return new Response(null, { status: 404 });
     const pricing = await readPricingCsv();
     const override = pricing[id];
     const price = (override?.price !== undefined)
       ? override.price
       : (normalizePriceToPounds(product.price) ?? 0);
     const inStock = typeof override?.inStock === 'boolean' ? override.inStock : product.inStock;
-    return NextResponse.json({ ...product, price, inStock });
+
+    // sanitize name/description to remove bundle wording like 'pack of 5'
+    const sanitize = (s: any) => {
+      if (!s && s !== "") return s;
+      try {
+        return String(s).replace(/\(.*pack of 5.*\)/i, "").replace(/pack of 5/ig, "").replace(/\s+-\s+/g, " ").trim();
+      } catch (e) {
+        return s;
+      }
+    };
+
+    const cleaned = { ...product, name: sanitize(product.name), description: sanitize(product.description) };
+
+    return NextResponse.json({ ...cleaned, price, inStock });
   } catch (err: any) {
     console.error('Error in /api/products/[id]', err);
     return new Response(JSON.stringify({ error: 'Failed to load product' }), { status: 500 });

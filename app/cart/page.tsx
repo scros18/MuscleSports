@@ -46,7 +46,7 @@ export default function CartPage() {
         {/* Cart Items */}
         <div className="lg:col-span-2 space-y-4">
           {items.map((item) => (
-            <Card key={item.id}>
+            <Card key={item.cartItemId || item.id}>
               <CardContent className="p-6">
                 <div className="flex gap-4">
                   {/* Product Image */}
@@ -81,6 +81,12 @@ export default function CartPage() {
                         <p className="text-sm text-muted-foreground">
                           {item.category || "Uncategorized"}
                         </p>
+                        {/** show selected flavour if available */}
+                        {(item as any).selectedFlavour ? (
+                          <p className="text-sm text-muted-foreground mt-1">
+                            Flavour: <span className="font-medium">{(item as any).selectedFlavour}</span>
+                          </p>
+                        ) : null}
                       </div>
                       <Button
                         variant="ghost"
@@ -98,7 +104,7 @@ export default function CartPage() {
                           size="icon"
                           className="h-8 w-8"
                           onClick={() =>
-                            updateQuantity(item.id, item.quantity - 1)
+                            updateQuantity(item.cartItemId || item.id, item.quantity - 1)
                           }
                         >
                           <Minus className="h-3 w-3" />
@@ -111,7 +117,7 @@ export default function CartPage() {
                           size="icon"
                           className="h-8 w-8"
                           onClick={() =>
-                            updateQuantity(item.id, item.quantity + 1)
+                            updateQuantity(item.cartItemId || item.id, item.quantity + 1)
                           }
                         >
                           <Plus className="h-3 w-3" />
@@ -132,25 +138,21 @@ export default function CartPage() {
             </Card>
           ))}
 
-          <Button
-            variant="outline"
-            onClick={clearCart}
-            className="w-full"
-          >
+          <Button variant="outline" onClick={clearCart} className="w-full">
             Clear Cart
           </Button>
         </div>
 
-        {/* Order Summary */}
-        <div className="lg:col-span-1">
-          <Card className="sticky top-20">
-            <CardContent className="p-6">
+        {/* Order Summary (right column) */}
+        <div>
+          <Card>
+            <CardContent>
               <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
 
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">
-                    Subtotal ({items.reduce((sum, item) => sum + item.quantity, 0)} items)
+                    Subtotal ({items.reduce((sum, it) => sum + (it.quantity || 0), 0)} items)
                   </span>
                   <span className="font-medium">{formatPrice(totalPrice)}</span>
                 </div>
@@ -168,10 +170,7 @@ export default function CartPage() {
               </div>
 
               <Link href="/checkout" className="block">
-                <Button
-                  className="w-full"
-                  size="lg"
-                >
+                <Button className="w-full" size="lg">
                   Proceed to Checkout
                 </Button>
               </Link>

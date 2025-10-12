@@ -87,6 +87,12 @@ export function Header() {
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      // If click is inside the search portal (created via createPortal), treat it as inside
+      const portalEl = typeof document !== "undefined" ? document.querySelector('[data-debug="search-portal"]') : null;
+      if (portalEl && portalEl.contains(event.target as Node)) {
+        return;
+      }
+
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setShowResults(false);
       }
@@ -209,10 +215,14 @@ export function Header() {
                 ) : searchResults.length > 0 ? (
                   <div className="py-2">
                     {searchResults.map((product) => (
-                      <button
+                      <Link
                         key={product.id}
-                        onClick={() => handleResultClick(product.id)}
-                        className="w-full px-4 py-2 text-left hover:bg-muted flex items-center space-x-3"
+                        href={`/products/${product.id}`}
+                        onClick={() => {
+                          setShowResults(false);
+                          setSearchQuery("");
+                        }}
+                        className="w-full block px-4 py-2 text-left hover:bg-muted flex items-center space-x-3"
                       >
                         {product.image && (
                           <Image
@@ -227,7 +237,7 @@ export function Header() {
                           <p className="text-sm font-medium truncate">{product.name}</p>
                           <p className="text-sm text-muted-foreground">£{product.price?.toFixed(2)}</p>
                         </div>
-                      </button>
+                      </Link>
                     ))}
                     <div className="border-t px-4 py-2">
                       <button
@@ -434,13 +444,15 @@ export function Header() {
                   ) : searchResults.length > 0 ? (
                     <div className="py-2">
                       {searchResults.map((product) => (
-                        <button
+                        <Link
                           key={product.id}
+                          href={`/products/${product.id}`}
                           onClick={() => {
-                            handleResultClick(product.id);
+                            setShowResults(false);
                             setIsMobileMenuOpen(false);
+                            setSearchQuery("");
                           }}
-                          className="w-full px-4 py-2 text-left hover:bg-muted flex items-center space-x-3"
+                          className="w-full block px-4 py-2 text-left hover:bg-muted flex items-center space-x-3"
                         >
                           {product.image && (
                             <Image
@@ -455,7 +467,7 @@ export function Header() {
                             <p className="text-sm font-medium truncate">{product.name}</p>
                             <p className="text-sm text-muted-foreground">£{product.price?.toFixed(2)}</p>
                           </div>
-                        </button>
+                        </Link>
                       ))}
                       <div className="border-t px-4 py-2">
                         <button

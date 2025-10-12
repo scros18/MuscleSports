@@ -28,7 +28,7 @@ const slides: Slide[] = [
   {
     id: 3,
     title: "FREE SHIPPING",
-    subtitle: "Orders Over £50",
+    subtitle: "On all orders",
     image:
       "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=4c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f",
   },

@@ -53,7 +53,7 @@ export function ReviewStep({ onBack }: ReviewStepProps) {
           </div>
           <h2 className="text-3xl font-bold mb-3">Order Placed Successfully!</h2>
           <p className="text-muted-foreground mb-6">
-            Thank you for your purchase. We've sent a confirmation email to{" "}
+              Thank you for your purchase. We&apos;ve sent a confirmation email to{" "}
             <span className="font-medium text-foreground">
               {shippingInfo?.email}
             </span>

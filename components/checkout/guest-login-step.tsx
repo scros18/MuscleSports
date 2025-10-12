@@ -62,7 +62,7 @@ export function GuestLoginStep({ onNext }: GuestLoginStepProps) {
                 className="mt-1.5 h-11"
               />
               <p className="text-xs text-muted-foreground mt-1">
-                We'll send your order confirmation here
+                We&apos;ll send your order confirmation here
               </p>
             </div>
 
@@ -140,10 +140,10 @@ export function GuestLoginStep({ onNext }: GuestLoginStepProps) {
             </Button>
 
             <p className="text-center text-sm text-muted-foreground">
-              Don't have an account?{" "}
-              <button className="text-primary font-medium hover:underline">
-                Create one
-              </button>
+              Don&apos;t have an account?{" "}
+                <button className="text-primary font-medium hover:underline">
+                  Create one
+                </button>
             </p>
           </div>
         </CardContent>

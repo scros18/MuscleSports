@@ -149,11 +149,36 @@ export async function GET(request: Request) {
       });
     }
 
+    // Apply sorting if requested (use overridden price when available)
+    const sortParam = url.searchParams.get('sort') || 'best_match';
+    if (sortParam === 'price_asc') {
+      filtered.sort((a: any, b: any) => {
+        const pa = (pricing[a.id]?.price !== undefined) ? pricing[a.id].price : a.price;
+        const pb = (pricing[b.id]?.price !== undefined) ? pricing[b.id].price : b.price;
+        return (pa ?? 0) - (pb ?? 0);
+      });
+    } else if (sortParam === 'price_desc') {
+      filtered.sort((a: any, b: any) => {
+        const pa = (pricing[a.id]?.price !== undefined) ? pricing[a.id].price : a.price;
+        const pb = (pricing[b.id]?.price !== undefined) ? pricing[b.id].price : b.price;
+        return (pb ?? 0) - (pa ?? 0);
+      });
+    }
+
     const total = filtered.length;
 
     // Lightweight mapping and paging
     const start = (page - 1) * pageSize;
     const end = Math.min(start + pageSize, total);
+    const sanitize = (s: any) => {
+      if (!s && s !== "") return s;
+      try {
+        return String(s).replace(/\(.*pack of 5.*\)/i, "").replace(/pack of 5/ig, "").replace(/\s+-\s+/g, " ").trim();
+      } catch (e) {
+        return s;
+      }
+    };
+
     const pageItems = filtered.slice(start, end).map((p: any) => {
       const override = pricing[p.id];
       const price = (override?.price !== undefined)
@@ -162,13 +187,14 @@ export async function GET(request: Request) {
       const inStock = typeof override?.inStock === 'boolean' ? override.inStock : p.inStock;
       return {
         id: p.id,
-        name: p.name,
+        name: sanitize(p.name),
         price,
         image: Array.isArray(p.images) && p.images.length ? p.images[0] : null,
         images: p.images,
         category: p.category,
         inStock,
         featured: p.featured,
+        description: sanitize(p.description),
       };
     });
 

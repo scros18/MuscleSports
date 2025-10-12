@@ -35,7 +35,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             typeof item.quantity === 'number' &&
             item.quantity > 0
           );
-          setItems(validItems);
+          setItems(validItems as CartItem[]);
           if (validItems.length !== parsedCart.length) {
             console.warn("Some invalid cart items were removed during loading");
             localStorage.setItem("cart", JSON.stringify(validItems));
@@ -60,33 +60,46 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
+    // Allow multiple cart lines for same product if selectedFlavour differs
     setItems((currentItems) => {
-      const existingItem = currentItems.find((item) => item.id === product.id);
+      const prodAny: any = product;
+      const flavour = prodAny.selectedFlavour || null;
+
+      // try to find existing line with same product id and flavour
+      const existingItem = currentItems.find((item) => item.id === product.id && (item as any).selectedFlavour === flavour);
       if (existingItem) {
         return currentItems.map((item) =>
-          item.id === product.id
+          item.id === product.id && (item as any).selectedFlavour === flavour
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
-      return [...currentItems, { ...product, quantity: 1 }];
+
+      // create a unique cartItemId so the UI can distinguish lines
+      const cartItemId = `${product.id}-${flavour || 'default'}-${Date.now()}`;
+      const newItem: CartItem = { ...product, quantity: 1, cartItemId, selectedFlavour: flavour || undefined } as CartItem;
+      return [...currentItems, newItem];
     });
   };
 
-  const removeFromCart = (productId: string) => {
+  // remove by cartItemId if provided, else fallback to product id
+  const removeFromCart = (productIdOrCartItemId: string) => {
     setItems((currentItems) =>
-      currentItems.filter((item) => item.id !== productId)
+      currentItems.filter((item) => item.cartItemId !== productIdOrCartItemId && item.id !== productIdOrCartItemId)
     );
   };
 
-  const updateQuantity = (productId: string, quantity: number) => {
+  // update quantity by cartItemId if found, else by product id (first match)
+  const updateQuantity = (productIdOrCartItemId: string, quantity: number) => {
     if (quantity <= 0) {
-      removeFromCart(productId);
+      removeFromCart(productIdOrCartItemId);
       return;
     }
     setItems((currentItems) =>
       currentItems.map((item) =>
-        item.id === productId ? { ...item, quantity } : item
+        item.cartItemId === productIdOrCartItemId || item.id === productIdOrCartItemId
+          ? { ...item, quantity }
+          : item
       )
     );
   };

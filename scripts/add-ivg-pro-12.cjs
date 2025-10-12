@@ -13,9 +13,9 @@ if (idx === -1) {
 const newProduct = `,
  {
   "id": "IVG-PRO12",
-  "name": "IVG Pro 12 Vape (Pack of 5)",
+  "name": "IVG Pro 12 Vape",
   "price": 24.99,
-  "description": "IVG Pro 12 rechargeable vape kit - pack of 5. Portable, pre-filled pods with multiple flavours.",
+  "description": "IVG Pro 12 rechargeable vape kit. Portable, pre-filled pods with multiple flavours.",
   "images": [
    "https://www.washingtonvapeswholesale.co.uk/cdn/shop/files/ivg-pro-12-kit-pack-of-5-washington-vapes-wholesale-627386_1800x1800.webp?v=1741749726",
    "https://www.washingtonvapeswholesale.co.uk/cdn/shop/files/ivg-pro-12-kit-pack-of-5-washington-vapes-wholesale-627386_350x.webp?v=1741749726",
