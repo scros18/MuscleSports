@@ -182,7 +182,7 @@ export function Header() {
             alt={currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : siteSettings.siteName}
             width={currentTheme === 'musclesports' ? 240 : 120}
             height={currentTheme === 'musclesports' ? 80 : 40}
-            className={currentTheme === 'musclesports' ? 'h-20 w-auto' : 'h-10 w-auto'}
+            className={currentTheme === 'musclesports' ? 'h-14 md:h-20 w-auto' : 'h-10 w-auto'}
             style={currentTheme === 'musclesports' ? {
               mixBlendMode: 'multiply',
               filter: 'contrast(1.2) brightness(1.1)',
@@ -715,42 +715,90 @@ export function Header() {
             <nav className="space-y-3">
               <Link
                 href="/"
-                className={`relative block px-4 py-3 text-base font-semibold rounded-full backdrop-blur-md bg-gradient-to-br from-white/80 via-white/60 to-white/40 dark:from-gray-800/80 dark:via-gray-800/60 dark:to-gray-800/40 border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl text-center text-foreground hover:text-primary overflow-hidden group ${
+                className={`relative block px-5 py-3 text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
                   settings.animationsEnabled
-                    ? 'transition-all duration-300 active:scale-95'
-                    : 'transition-colors duration-200'
+                    ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                    : 'transition-all duration-300'
                 }`}
+                style={{
+                  background: currentTheme === 'musclesports' 
+                    ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
+                    : currentTheme === 'vera'
+                    ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
+                    : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))',
+                  borderColor: 'rgba(255, 255, 255, 0.2)'
+                }}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <span className="relative z-10">Home</span>
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.4)] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)]"></div>
+                <div 
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+                  style={{
+                    background: currentTheme === 'musclesports'
+                      ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
+                      : currentTheme === 'vera'
+                      ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
+                      : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
+                  }}
+                ></div>
               </Link>
               <Link
                 href="/products"
-                className={`relative block px-4 py-3 text-base font-semibold rounded-full backdrop-blur-md bg-gradient-to-br from-white/80 via-white/60 to-white/40 dark:from-gray-800/80 dark:via-gray-800/60 dark:to-gray-800/40 border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl text-center text-foreground hover:text-primary overflow-hidden group ${
+                className={`relative block px-5 py-3 text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
                   settings.animationsEnabled
-                    ? 'transition-all duration-300 active:scale-95'
-                    : 'transition-colors duration-200'
+                    ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                    : 'transition-all duration-300'
                 }`}
+                style={{
+                  background: currentTheme === 'musclesports' 
+                    ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
+                    : currentTheme === 'vera'
+                    ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
+                    : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))',
+                  borderColor: 'rgba(255, 255, 255, 0.2)'
+                }}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <span className="relative z-10">Products</span>
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.4)] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)]"></div>
+                <div 
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+                  style={{
+                    background: currentTheme === 'musclesports'
+                      ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
+                      : currentTheme === 'vera'
+                      ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
+                      : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
+                  }}
+                ></div>
               </Link>
               <Link
                 href="/categories"
-                className={`relative block px-4 py-3 text-base font-semibold rounded-full backdrop-blur-md bg-gradient-to-br from-white/80 via-white/60 to-white/40 dark:from-gray-800/80 dark:via-gray-800/60 dark:to-gray-800/40 border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl text-center text-foreground hover:text-primary overflow-hidden group ${
+                className={`relative block px-5 py-3 text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
                   settings.animationsEnabled
-                    ? 'transition-all duration-300 active:scale-95'
-                    : 'transition-colors duration-200'
+                    ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                    : 'transition-all duration-300'
                 }`}
+                style={{
+                  background: currentTheme === 'musclesports' 
+                    ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
+                    : currentTheme === 'vera'
+                    ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
+                    : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))',
+                  borderColor: 'rgba(255, 255, 255, 0.2)'
+                }}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <span className="relative z-10">Categories</span>
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_2px_rgba(255,255,255,0.4)] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)]"></div>
+                <div 
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+                  style={{
+                    background: currentTheme === 'musclesports'
+                      ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
+                      : currentTheme === 'vera'
+                      ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
+                      : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
+                  }}
+                ></div>
               </Link>
             </nav>
 
