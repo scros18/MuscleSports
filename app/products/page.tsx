@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
-import { LoadingSpinner } from "@/components/loading-spinner";
+import { SkeletonLoader } from "@/components/skeleton-loader";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { generateBreadcrumbSchema } from "@/lib/seo";
@@ -113,8 +113,6 @@ export default function ProductsPage() {
     setCurrentPage(1);
   };
   
-  if (loading) return <LoadingSpinner message="Loading products..." />;
-
   return (
     <div className="min-h-screen bg-background">
       {/* Header Section */}
@@ -124,13 +122,13 @@ export default function ProductsPage() {
             {searchQuery ? <>Search Results for &quot;{searchQuery}&quot;</> : "All Products"}
           </h1>
           <p className="text-sm text-muted-foreground">
-            {total.toLocaleString()} results
+            {loading ? "Loading..." : `${total.toLocaleString()} results`}
           </p>
         </div>
       </div>
 
       {/* Search Results Info */}
-      {searchQuery && (
+      {searchQuery && !loading && (
         <div className="border-b bg-blue-50/50 dark:bg-blue-950/20">
           <div className="container py-3 flex items-center justify-between">
             <span className="text-sm">
@@ -328,30 +326,43 @@ export default function ProductsPage() {
               </div>
             </div>
 
-            {/* Products Grid - Optimized for mobile */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5 mb-8">
-              {currentProducts.map((product) => (
-                <ProductCard key={product.id} product={product as any} />
-              ))}
-            </div>
-
-            {(!currentProducts || currentProducts.length === 0) && (
-              <div className="text-center py-20 border rounded-lg bg-muted/20">
-                <div className="max-w-md mx-auto">
-                  <svg className="mx-auto h-16 w-16 text-muted-foreground/50 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <h3 className="text-lg font-semibold mb-2">No products found</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Try adjusting your filters or search terms
-                  </p>
-                  {(selectedCategory !== "All" || minPrice || maxPrice || searchQuery) && (
-                    <Button variant="outline" onClick={clearFilters}>
-                      Clear Filters
-                    </Button>
-                  )}
+            {/* Products Grid - Optimized for mobile with smooth loading */}
+            {loading ? (
+              <SkeletonLoader type="product" count={12} />
+            ) : (
+              <>
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5 mb-8">
+                  {currentProducts.map((product, idx) => (
+                    <div 
+                      key={product.id}
+                      style={{
+                        animation: `slideInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${idx * 0.02}s backwards`
+                      }}
+                    >
+                      <ProductCard product={product as any} />
+                    </div>
+                  ))}
                 </div>
-              </div>
+
+                {(!currentProducts || currentProducts.length === 0) && (
+                  <div className="text-center py-20 border rounded-lg bg-muted/20">
+                    <div className="max-w-md mx-auto">
+                      <svg className="mx-auto h-16 w-16 text-muted-foreground/50 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <h3 className="text-lg font-semibold mb-2">No products found</h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Try adjusting your filters or search terms
+                      </p>
+                      {(selectedCategory !== "All" || minPrice || maxPrice || searchQuery) && (
+                        <Button variant="outline" onClick={clearFilters}>
+                          Clear Filters
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </>
             )}
 
             {/* Pagination */}

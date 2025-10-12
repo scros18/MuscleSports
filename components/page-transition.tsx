@@ -17,16 +17,21 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
       const timer = setTimeout(() => {
         setDisplayChildren(children);
         setTransitionStage("fadeIn");
-      }, 150);
+      }, 200);
       return () => clearTimeout(timer);
     }
   }, [transitionStage, children]);
 
   return (
     <div
-      className={`transition-opacity duration-150 ease-in-out ${
-        transitionStage === "fadeOut" ? "opacity-0" : "opacity-100"
+      className={`transition-all duration-300 ${
+        transitionStage === "fadeOut" 
+          ? "opacity-0 translate-y-2" 
+          : "opacity-100 translate-y-0"
       }`}
+      style={{
+        transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      }}
     >
       {displayChildren}
     </div>

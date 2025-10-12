@@ -6,7 +6,7 @@ import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import HeroCarousel from '@/components/hero-carousel';
 import HomePanels from '@/components/home-panels';
-import { LoadingSpinner } from "@/components/loading-spinner";
+import { SkeletonLoader } from "@/components/skeleton-loader";
 import { Star } from "lucide-react";
 
 // Force dynamic rendering to avoid long static generation during build
@@ -64,8 +64,6 @@ export default function Home() {
   const newStock = products.slice(5, isMobile ? 9 : 10);
   const displayedReviews = reviews.slice(0, isMobile ? 3 : 6);
 
-  if (loading) return <LoadingSpinner message="Loading products..." />;
-
   return (
     <div className="container py-8">
       {/* Hero carousel */}
@@ -89,11 +87,22 @@ export default function Home() {
           <p className="text-muted-foreground text-base font-medium">Most popular products flying off the shelves</p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-          {bestSellers.map((product) => (
-            <ProductCard key={product.id} product={product} hideDescription />
-          ))}
-        </div>
+        {loading ? (
+          <SkeletonLoader type="product" count={isMobile ? 4 : 5} />
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            {bestSellers.map((product, idx) => (
+              <div 
+                key={product.id}
+                style={{
+                  animation: `slideInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${idx * 0.05}s backwards`
+                }}
+              >
+                <ProductCard product={product} hideDescription />
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* New Stock */}
@@ -107,11 +116,22 @@ export default function Home() {
           <p className="text-muted-foreground text-base font-medium">Fresh products just added to our collection</p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-          {newStock.map((product) => (
-            <ProductCard key={product.id} product={product} hideDescription />
-          ))}
-        </div>
+        {loading ? (
+          <SkeletonLoader type="product" count={isMobile ? 4 : 5} />
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            {newStock.map((product, idx) => (
+              <div 
+                key={product.id}
+                style={{
+                  animation: `slideInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${idx * 0.05}s backwards`
+                }}
+              >
+                <ProductCard product={product} hideDescription />
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* eBay Reviews Section */}

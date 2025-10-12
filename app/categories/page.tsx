@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Package, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { SkeletonLoader } from '@/components/skeleton-loader';
 import { generateBreadcrumbSchema } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
@@ -57,9 +58,13 @@ export default function CategoriesPage() {
   if (loading) {
     return (
       <div className="container py-8">
-        <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-gray-900"></div>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold mb-2 sm:mb-4">Product Categories</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">
+            Browse our products by category to find exactly what you need.
+          </p>
         </div>
+        <SkeletonLoader type="category" count={8} />
       </div>
     );
   }
@@ -88,10 +93,13 @@ export default function CategoriesPage() {
         </Card>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-          {categories.map((category) => (
+          {categories.map((category, idx) => (
             <Link
               key={category.name}
               href={`/products?category=${encodeURIComponent(category.name)}`}
+              style={{
+                animation: `slideInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${idx * 0.05}s backwards`
+              }}
               className="group"
             >
               <Card className="h-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] border hover:border-primary/20 rounded-lg">
