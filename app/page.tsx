@@ -12,12 +12,24 @@ import { Star } from "lucide-react";
 // Force dynamic rendering to avoid long static generation during build
 export const dynamic = 'force-dynamic';
 
+// Helper function to detect current theme
+function getCurrentTheme(): string {
+  if (typeof window === 'undefined') return 'ordify';
+  
+  const classList = document.documentElement.classList;
+  if (classList.contains('theme-musclesports')) return 'musclesports';
+  if (classList.contains('theme-lumify')) return 'lumify';
+  if (classList.contains('theme-vera')) return 'vera';
+  return 'ordify';
+}
+
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
   const [reviews, setReviews] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [reviewsLoading, setReviewsLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState('ordify');
 
   // Detect mobile screen size
   useEffect(() => {
@@ -29,10 +41,24 @@ export default function Home() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Detect theme and watch for changes
+  useEffect(() => {
+    setCurrentTheme(getCurrentTheme());
+    const observer = new MutationObserver(() => {
+      setCurrentTheme(getCurrentTheme());
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  // Fetch products based on current theme
   useEffect(() => {
     let mounted = true;
     setLoading(true);
-    fetch('/api/products')
+    fetch(`/api/products?theme=${currentTheme}`)
       .then(r => r.json())
       .then((data) => {
         if (!mounted) return;
@@ -42,7 +68,7 @@ export default function Home() {
       .finally(() => mounted && setLoading(false));
 
     return () => { mounted = false };
-  }, []);
+  }, [currentTheme]);
 
   // Fetch eBay reviews
   useEffect(() => {

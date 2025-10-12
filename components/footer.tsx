@@ -51,9 +51,9 @@ export function Footer() {
                 ? 'https://i.imgur.com/verarp-logo.png'
                 : settings.logoUrl}
               alt={currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : settings.siteName}
-              width={120}
-              height={40}
-              className="h-10 w-auto mb-4 mx-auto md:mx-0"
+              width={currentTheme === 'musclesports' ? 240 : 120}
+              height={currentTheme === 'musclesports' ? 80 : 40}
+              className={currentTheme === 'musclesports' ? 'h-20 w-auto mb-4 mx-auto md:mx-0' : 'h-10 w-auto mb-4 mx-auto md:mx-0'}
             />
             <p className="text-sm text-muted-foreground">
               {currentTheme === 'musclesports' ? 'Premium Sports Nutrition' : currentTheme === 'vera' ? 'Serious FiveM Roleplay' : settings.tagline}

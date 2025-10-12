@@ -77,8 +77,21 @@ async function readPricingCsv(): Promise<PriceMap> {
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   const { id } = params;
   try {
-  const mod = await import('../../../../data/products');
-    const products = mod.products ?? [];
+    // Detect theme from query parameter or default to ordify
+    const url = new URL(request.url);
+    const themeParam = url.searchParams.get('theme') || 'ordify';
+    
+    // Load appropriate product catalog
+    let products: any[] = [];
+    if (themeParam === 'musclesports') {
+      // Load MuscleSports products from chunks
+      const { muscleSportsProductCatalog } = await import('../../../../data/product-loader');
+      products = muscleSportsProductCatalog;
+    } else {
+      // Load Ordify products
+      const mod = await import('../../../../data/products');
+      products = mod.products ?? [];
+    }
     // Allow tolerant matching: compare normalized ids (strip non-alphanumerics, lowercase)
     const normalize = (s: any) => (s === undefined || s === null) ? '' : String(s).replace(/[^a-z0-9]/gi, '').toLowerCase();
     const idNorm = normalize(id);

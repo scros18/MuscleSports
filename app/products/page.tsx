@@ -14,6 +14,16 @@ type P = { id: string; name: string; price: number; image?: string | null; categ
 // Ensure this page is dynamically rendered to prevent build-time stalls
 export const dynamic = 'force-dynamic';
 
+// Helper to detect current theme
+function getCurrentTheme(): string {
+  if (typeof window === 'undefined') return 'ordify';
+  const classList = document.documentElement.classList;
+  if (classList.contains('theme-musclesports')) return 'musclesports';
+  if (classList.contains('theme-lumify')) return 'lumify';
+  if (classList.contains('theme-vera')) return 'verap';
+  return 'ordify';
+}
+
 export default function ProductsPage() {
   const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -28,6 +38,7 @@ export default function ProductsPage() {
   const [maxPrice, setMaxPrice] = useState("");
   const [sort, setSort] = useState<string>("best_match");
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState('ordify');
 
   // Initialize search query from URL params
   useEffect(() => {
@@ -35,6 +46,16 @@ export default function ProductsPage() {
     if (searchParam) {
       setSearchQuery(searchParam);
     }
+
+    // Detect theme and watch for changes
+    setCurrentTheme(getCurrentTheme());
+    const observer = new MutationObserver(() => {
+      setCurrentTheme(getCurrentTheme());
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
 
     // Add structured data to page
     const breadcrumbSchema = generateBreadcrumbSchema([
@@ -48,17 +69,19 @@ export default function ProductsPage() {
     document.head.appendChild(script);
 
     return () => {
+      observer.disconnect();
       document.head.removeChild(script);
     };
   }, [searchParams]);
 
-  // Fetch products whenever page, category, search, or price filters change
+  // Fetch products whenever page, category, search, price filters, or THEME change
   useEffect(() => {
     let mounted = true;
     setLoading(true);
     const params = new URLSearchParams();
     params.set('page', String(currentPage));
     params.set('pageSize', String(PRODUCTS_PER_PAGE));
+    params.set('theme', currentTheme); // Add theme parameter
     if (sort) params.set('sort', sort);
     if (selectedCategory && selectedCategory !== 'All') params.set('category', selectedCategory);
     if (searchQuery.trim()) params.set('search', searchQuery);
@@ -79,7 +102,7 @@ export default function ProductsPage() {
       .finally(() => mounted && setLoading(false));
 
     return () => { mounted = false };
-  }, [currentPage, selectedCategory, searchQuery, minPrice, maxPrice, sort]);
+  }, [currentPage, selectedCategory, searchQuery, minPrice, maxPrice, sort, currentTheme]);
 
   // Server returns already-filtered results; use total for pagination
   const totalPages = Math.ceil((total || 0) / PRODUCTS_PER_PAGE) || 1;

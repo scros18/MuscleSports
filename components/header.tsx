@@ -177,9 +177,9 @@ export function Header() {
               ? 'https://i.imgur.com/verarp-logo.png'
               : siteSettings.logoUrl}
             alt={currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : siteSettings.siteName}
-            width={120}
-            height={40}
-            className="h-10 w-auto"
+            width={currentTheme === 'musclesports' ? 240 : 120}
+            height={currentTheme === 'musclesports' ? 80 : 40}
+            className={currentTheme === 'musclesports' ? 'h-20 w-auto' : 'h-10 w-auto'}
           />
         </Link>
 

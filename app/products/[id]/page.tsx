@@ -99,7 +99,17 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     let mounted = true;
     setLoading(true);
-    fetch(`/api/products/${params.id}`)
+    // Detect current theme
+    const getCurrentTheme = () => {
+      if (typeof window === 'undefined') return 'ordify';
+      const classList = document.documentElement.classList;
+      if (classList.contains('theme-musclesports')) return 'musclesports';
+      if (classList.contains('theme-lumify')) return 'lumify';
+      if (classList.contains('theme-vera')) return 'vera';
+      return 'ordify';
+    };
+    const theme = getCurrentTheme();
+    fetch(`/api/products/${params.id}?theme=${theme}`)
       .then((r) => {
         if (!r.ok) throw new Error('Not found');
         return r.json();

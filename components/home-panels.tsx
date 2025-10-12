@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { usePerformance } from "@/context/performance-context";
+import { useState, useEffect } from "react";
 
 interface PanelItem {
   title: string;
@@ -21,8 +22,112 @@ interface Panel {
 
 export default function HomePanels() {
   const { settings } = usePerformance();
+  const [currentTheme, setCurrentTheme] = useState<string>('ordify');
+
+  // Detect theme changes
+  useEffect(() => {
+    const detectTheme = () => {
+      const htmlClasses = document.documentElement.classList;
+      if (htmlClasses.contains('theme-musclesports')) {
+        setCurrentTheme('musclesports');
+      } else if (htmlClasses.contains('theme-vera')) {
+        setCurrentTheme('vera');
+      } else {
+        setCurrentTheme('ordify');
+      }
+    };
+
+    detectTheme();
+    const observer = new MutationObserver(detectTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+    return () => observer.disconnect();
+  }, []);
   
-  const panels: Panel[] = [
+  // MuscleSports panels for Tropicana Wholesale
+  const muscleSportsPanels: Panel[] = [
+    {
+      key: 'protein',
+      title: 'Protein Powders',
+      link: '/products?category=Protein',
+      items: [
+        { 
+          title: 'Whey Protein', 
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/OPT073.png',
+          category: 'Protein',
+          link: '/products?category=Protein'
+        },
+        { 
+          title: 'Vegan Protein', 
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/10X004.png',
+          category: 'Protein',
+          link: '/products?category=Protein'
+        },
+      ],
+    },
+    {
+      key: 'supplements',
+      title: 'Supplements',
+      link: '/products?category=Amino+Acids',
+      items: [
+        { 
+          title: 'Amino Acids', 
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/TPG005.png',
+          category: 'Amino Acids',
+          link: '/products?category=Amino+Acids'
+        },
+        { 
+          title: 'Pre-Workout', 
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/10X014.png',
+          category: 'Pre-Workout',
+          link: '/products?category=Pre-Workout'
+        },
+      ],
+    },
+    {
+      key: 'vitamins',
+      title: 'Vitamins & Minerals',
+      link: '/products?category=Vitamins',
+      items: [
+        { 
+          title: 'Multivitamins', 
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/HIM008.png',
+          category: 'Vitamins',
+          link: '/products?category=Vitamins'
+        },
+        { 
+          title: 'Minerals', 
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/HIM016.png',
+          category: 'Minerals',
+          link: '/products?category=Minerals'
+        },
+      ],
+    },
+    {
+      key: 'nutrition',
+      title: 'Sports Nutrition',
+      link: '/products?category=Sports+Nutrition',
+      items: [
+        { 
+          title: 'Energy Bars', 
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/MAX020.png',
+          category: 'Sports Nutrition',
+          link: '/products?category=Sports+Nutrition'
+        },
+        { 
+          title: 'Mass Gainers', 
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/BN236.png',
+          category: 'All-In-One Gainer',
+          link: '/products?category=All-In-One+Gainer'
+        },
+      ],
+    },
+  ];
+
+  // Ordify panels
+  const ordifyPanels: Panel[] = [
     {
       key: 'top-offers',
       title: 'Top offers',
@@ -100,6 +205,9 @@ export default function HomePanels() {
       ],
     },
   ];
+
+  // Choose panels based on theme
+  const panels = currentTheme === 'musclesports' ? muscleSportsPanels : ordifyPanels;
 
   return (
     <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
