@@ -197,9 +197,6 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     return { mainDescription, features, specifications, packageIncludes };
   }, [product?.description]);
 
-  if (loading) return <div className="container py-8">Loading…</div>;
-  if (!product) return notFound();
-
   // Calculate the current price based on selected flavor
   const currentPrice = useMemo(() => {
     if (hasFlavours && selectedFlavourIndex !== null && flavours[selectedFlavourIndex]?.price !== undefined) {
@@ -207,6 +204,9 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     }
     return product?.price || 0;
   }, [hasFlavours, selectedFlavourIndex, flavours, product]);
+
+  if (loading) return <div className="container py-8">Loading…</div>;
+  if (!product) return notFound();
 
   const handleAddToCart = () => {
     // Include selected flavour for IVG Pro 12 so cart/checkout can show it

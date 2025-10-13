@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/cart-context";
+import { useAuth } from "@/context/auth-context";
 import { CheckoutSteps } from "@/components/checkout/checkout-steps";
 import { CheckoutSummary } from "@/components/checkout/checkout-summary";
 import { GuestLoginStep } from "@/components/checkout/guest-login-step";
@@ -34,8 +35,17 @@ export default function CheckoutPage() {
 }
 
 function CheckoutContent() {
+  const { user, loading } = useAuth();
+  // If user is logged in, skip to step 2 (Shipping), otherwise start at step 1 (Account)
   const [currentStep, setCurrentStep] = useState(1);
   const [showUpsell, setShowUpsell] = useState(false);
+
+  // Update currentStep when auth state is loaded
+  useEffect(() => {
+    if (!loading && user) {
+      setCurrentStep(2); // Skip to shipping if logged in
+    }
+  }, [loading, user]);
 
   const steps = [
     { number: 1, title: "Account", component: GuestLoginStep },
@@ -65,6 +75,18 @@ function CheckoutContent() {
     setShowUpsell(false);
     setCurrentStep(3); // Move to payment step
   };
+
+  // Show loading state while checking authentication
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-background to-muted/20 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading checkout...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
