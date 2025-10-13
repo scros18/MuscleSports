@@ -141,6 +141,46 @@ export default function SettingsPage() {
               <p className="text-xs text-muted-foreground">A short description of your site</p>
             </div>
 
+            {/* Sale Banner Toggle */}
+            <div className="flex items-center justify-between p-4 rounded-lg border-2 bg-gradient-to-br from-background to-muted/30">
+              <div className="flex items-start gap-3 flex-1">
+                <div className="mt-1">
+                  <Sparkles className={`h-5 w-5 ${localSiteSettings.showSaleBanner !== false ? 'text-primary' : 'text-muted-foreground'}`} />
+                </div>
+                <div className="flex-1">
+                  <Label htmlFor="saleBanner" className="text-base font-semibold cursor-pointer flex items-center gap-2">
+                    Special Offer Banner
+                    {localSiteSettings.showSaleBanner !== false && (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-950 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800">
+                        <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1 animate-pulse"></span>
+                        Active
+                      </span>
+                    )}
+                  </Label>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Show the &quot;Save 15% on all items&quot; banner at the top of the site
+                  </p>
+                </div>
+              </div>
+              <div className="ml-4">
+                <button
+                  id="saleBanner"
+                  onClick={() => setLocalSiteSettings({ ...localSiteSettings, showSaleBanner: localSiteSettings.showSaleBanner === false ? true : false })}
+                  className={`relative inline-flex h-7 w-14 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+                    localSiteSettings.showSaleBanner !== false ? 'bg-primary' : 'bg-gray-200 dark:bg-gray-700'
+                  }`}
+                  role="switch"
+                  aria-checked={localSiteSettings.showSaleBanner !== false}
+                >
+                  <span
+                    className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-lg ring-0 transition-transform duration-300 ease-spring ${
+                      localSiteSettings.showSaleBanner !== false ? 'translate-x-7' : 'translate-x-0'
+                    }`}
+                  />
+                </button>
+              </div>
+            </div>
+
             {/* Action Buttons */}
             <div className="flex gap-3 pt-4 border-t">
               <Button onClick={handleSaveSiteSettings} className="flex-1">

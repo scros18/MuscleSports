@@ -20,7 +20,7 @@ let pricingCache: { map: PriceMap; mtimeMs: number } | null = null;
 
 async function readPricingCsv(): Promise<PriceMap> {
   try {
-    const filePath = path.join(process.cwd(), 'stockandprice.csv');
+    const filePath = path.join(process.cwd(), 'aosomstockandprice.csv');
     const stat = fs.statSync(filePath);
     if (pricingCache && pricingCache.mtimeMs === stat.mtimeMs) {
       return pricingCache.map;

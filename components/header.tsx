@@ -192,130 +192,22 @@ export function Header() {
           />
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-2 text-sm font-medium transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
-          <Link
-            href="/"
-            className={`relative px-5 py-2.5 rounded-xl backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary font-medium overflow-hidden group ${
-              settings.animationsEnabled
-                ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
-                : 'transition-all duration-300'
-            }`}
-            style={{
-              background: currentTheme === 'musclesports' 
-                ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
-                : currentTheme === 'vera'
-                ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
-                : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))'
-            }}
-          >
-            <span className="relative z-10">Home</span>
-            <div 
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
-              style={{
-                background: currentTheme === 'musclesports'
-                  ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
-                  : currentTheme === 'vera'
-                  ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
-                  : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
-              }}
-            ></div>
-          </Link>
-          <Link
-            href="/products"
-            className={`relative px-5 py-2.5 rounded-xl backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary font-medium overflow-hidden group ${
-              settings.animationsEnabled
-                ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
-                : 'transition-all duration-300'
-            }`}
-            style={{
-              background: currentTheme === 'musclesports' 
-                ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
-                : currentTheme === 'vera'
-                ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
-                : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))'
-            }}
-          >
-            <span className="relative z-10">Products</span>
-            <div 
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
-              style={{
-                background: currentTheme === 'musclesports'
-                  ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
-                  : currentTheme === 'vera'
-                  ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
-                  : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
-              }}
-            ></div>
-          </Link>
-          <Link
-            href="/categories"
-            className={`relative px-5 py-2.5 rounded-xl backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary font-medium overflow-hidden group ${
-              settings.animationsEnabled
-                ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
-                : 'transition-all duration-300'
-            }`}
-            style={{
-              background: currentTheme === 'musclesports' 
-                ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
-                : currentTheme === 'vera'
-                ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
-                : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))'
-            }}
-          >
-            <span className="relative z-10">Categories</span>
-            <div 
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
-              style={{
-                background: currentTheme === 'musclesports'
-                  ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
-                  : currentTheme === 'vera'
-                  ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
-                  : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
-              }}
-            ></div>
-          </Link>
-        </nav>
-
-        {/* Desktop Search and Auth/Cart */}
-        <div className="hidden md:flex items-center space-x-3">
-          <div className="relative group" ref={searchRef}>
-            <form onSubmit={handleSearchSubmit} className="flex items-center">
-              <div className="relative flex items-center">
-                <div className="relative">
+        {/* Desktop Search - Always expanded Amazon-style */}
+        <div className="hidden md:flex items-center flex-1 max-w-3xl mx-4">
+          <div className="relative w-full" ref={searchRef}>
+            <form onSubmit={handleSearchSubmit} className="flex items-center w-full">
+              <div className="relative flex items-center w-full">
+                <div className="relative w-full">
                   <Input
                     type="text"
                     placeholder="Search products..."
-                    className="h-10 w-10 group-hover:w-64 focus:w-64 transition-[width] duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)] rounded-xl backdrop-blur-xl bg-background/50 border placeholder:opacity-0 group-hover:placeholder:opacity-100 focus:placeholder:opacity-100 placeholder:transition-opacity placeholder:duration-500 placeholder:delay-200 pr-10"
-                    style={{
-                      borderColor: searchQuery ? (
-                        currentTheme === 'musclesports' 
-                          ? 'rgba(0, 179, 65, 0.4)'
-                          : currentTheme === 'vera'
-                          ? 'rgba(255, 107, 0, 0.4)'
-                          : 'rgba(56, 142, 233, 0.4)'
-                      ) : 'rgba(255, 255, 255, 0.2)',
-                      borderWidth: '1px',
-                      boxShadow: searchQuery ? (
-                        currentTheme === 'musclesports' 
-                          ? '0 0 15px rgba(0, 179, 65, 0.15)'
-                          : currentTheme === 'vera'
-                          ? '0 0 15px rgba(255, 107, 0, 0.15)'
-                          : '0 0 15px rgba(56, 142, 233, 0.15)'
-                      ) : 'none'
-                    }}
+                    className="h-10 w-full rounded-lg bg-background border border-input pr-20 pl-4"
                     value={searchQuery}
                     onChange={handleSearchChange}
                     onFocus={() => setShowResults(true)}
                   />
-                  {/* Search Icon - Show when collapsed (no text) OR when typing (with text, on the right) */}
-                  {!searchQuery && (
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-100 group-hover:opacity-0 group-focus-within:opacity-0 transition-opacity duration-300">
-                      <Search className="h-4 w-4 text-muted-foreground" />
-                    </div>
-                  )}
-                  {/* Right side buttons - Clear (X) and Search icon when expanded */}
-                  <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                  {/* Right side buttons - Clear (X) and Search button */}
+                  <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
                     {searchQuery && (
                       <button
                         type="button"
@@ -324,47 +216,19 @@ export function Header() {
                           setSearchResults([]);
                           setShowResults(false);
                         }}
-                        className="h-7 w-7 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
-                        style={{
-                          background: currentTheme === 'musclesports'
-                            ? 'rgba(0, 179, 65, 0.1)'
-                            : currentTheme === 'vera'
-                            ? 'rgba(255, 107, 0, 0.1)'
-                            : 'rgba(56, 142, 233, 0.1)',
-                        }}
+                        className="h-7 w-7 rounded-lg flex items-center justify-center hover:bg-muted transition-colors"
                       >
-                        <X className="h-3.5 w-3.5" style={{
-                          color: currentTheme === 'musclesports'
-                            ? '#00B341'
-                            : currentTheme === 'vera'
-                            ? '#FF6B00'
-                            : '#388EE9'
-                        }} />
+                        <X className="h-4 w-4 text-muted-foreground" />
                       </button>
                     )}
-                    {/* Search Submit Button - Always visible when expanded or has text */}
+                    {/* Search Submit Button */}
                     <Button 
                       type="submit" 
-                      size="icon" 
-                      variant="ghost" 
-                      className={`h-7 w-7 rounded-lg transition-all duration-300 ${
-                        searchQuery ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'
-                      }`}
-                      style={{
-                        background: currentTheme === 'musclesports'
-                          ? 'rgba(0, 179, 65, 0.1)'
-                          : currentTheme === 'vera'
-                          ? 'rgba(255, 107, 0, 0.1)'
-                          : 'rgba(56, 142, 233, 0.1)',
-                      }}
+                      size="sm"
+                      className="h-7 px-3 text-xs"
                     >
-                      <Search className="h-4 w-4" style={{
-                        color: currentTheme === 'musclesports'
-                          ? '#00B341'
-                          : currentTheme === 'vera'
-                          ? '#FF6B00'
-                          : '#388EE9'
-                      }} />
+                      <Search className="h-3.5 w-3.5 mr-1" />
+                      Search
                     </Button>
                   </div>
                 </div>
@@ -423,7 +287,10 @@ export function Header() {
               document.body
             )}
           </div>
+        </div>
 
+        {/* Auth and Cart buttons */}
+        <div className="hidden md:flex items-center space-x-3">
           {user ? (
             <div className="flex items-center space-x-2">
               <Link href="/account">
@@ -576,6 +443,42 @@ export function Header() {
               className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
             >
               Pet Supplies
+            </Link>
+            <Link
+              href="/products?category=Health+%26+Beauty"
+              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+            >
+              Health & Beauty
+            </Link>
+            <Link
+              href="/products?category=Toys+%26+Games"
+              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+            >
+              Toys & Games
+            </Link>
+            <Link
+              href="/products?category=Automotive"
+              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+            >
+              Automotive
+            </Link>
+            <Link
+              href="/products?category=Baby+%26+Kids"
+              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+            >
+              Baby & Kids
+            </Link>
+            <Link
+              href="/products?category=Food+%26+Drink"
+              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+            >
+              Food & Drink
+            </Link>
+            <Link
+              href="/products?category=Books+%26+Media"
+              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+            >
+              Books & Media
             </Link>
           </nav>
         </div>
@@ -943,8 +846,8 @@ export function Header() {
       )}
     </header>
     
-    {/* Sale Banner */}
-    <SaleBanner />
+    {/* Sale Banner - only show if enabled in settings */}
+    {siteSettings.showSaleBanner !== false && <SaleBanner />}
     </>
   );
 }

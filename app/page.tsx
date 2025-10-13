@@ -278,6 +278,24 @@ export default function Home() {
 
             case 'partners':
             default:
+              const partners = [
+                {
+                  image: '/avasam-logo.webp',
+                  name: 'Avasam',
+                  description: 'Connect with our extensive product catalog through Avasam\'s dropshipping platform.'
+                },
+                {
+                  image: '/syncee-banner.png',
+                  name: 'Syncee',
+                  description: 'Access thousands of products from our catalog via Syncee\'s seamless integration.'
+                },
+                {
+                  image: '/cropped-Logo-600.png',
+                  name: 'Direct Partnership',
+                  description: 'Browse our comprehensive product range and grow your business with direct API access.'
+                }
+              ];
+              
               return (
                 <section key={key} className="mb-12">
                   <div className="text-center mb-10">
@@ -289,17 +307,19 @@ export default function Home() {
                     <p className="text-muted-foreground text-lg">{section.description ?? 'Partner with Ordify Direct Ltd for seamless dropshipping solutions'}</p>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {['blue','purple','emerald'].map((color, idx) => (
+                    {partners.map((partner, idx) => (
                       <div key={idx} className={`group text-center p-8 bg-gradient-to-br from-white to-gray-50 dark:from-card dark:to-card/50 rounded-2xl hover:shadow-2xl transition-all duration-300 border-2 hover:border-primary/30 hover:-translate-y-2`}>
                         <div className="mb-6 flex justify-center">
-                          <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br from-${color}-500 to-${color}-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                            <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                            </svg>
+                          <div className="w-48 h-48 rounded-2xl bg-white dark:bg-gray-800 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300 p-6">
+                            <img 
+                              src={partner.image} 
+                              alt={partner.name} 
+                              className="w-full h-full object-contain"
+                            />
                           </div>
                         </div>
-                        <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">Avasam</h3>
-                        <p className="text-muted-foreground leading-relaxed">Connect with our extensive product catalog through Avasam&apos;s dropshipping platform.</p>
+                        <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">{partner.name}</h3>
+                        <p className="text-muted-foreground leading-relaxed">{partner.description}</p>
                       </div>
                     ))}
                   </div>

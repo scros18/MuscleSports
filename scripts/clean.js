@@ -29,7 +29,7 @@ const unusedFilesToDelete = [
   'test-products.ts',
   'import-all-products.js',
   'aosom.csv',
-  'stockandprice.csv',
+  'aosomstockandprice.csv',
   'nginx-config',
   'deploy-admin.sh',
   'DEPLOYMENT-COMPLETE.md',

@@ -40,12 +40,18 @@ export default function ProductsPage() {
   const [sort, setSort] = useState<string>("best_match");
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [currentTheme, setCurrentTheme] = useState('ordify');
+  const [stockFilter, setStockFilter] = useState<"all" | "inStock" | "outOfStock">("inStock");
 
-  // Initialize search query from URL params
+  // Initialize search query and category from URL params
   useEffect(() => {
     const searchParam = searchParams.get('search');
     if (searchParam) {
       setSearchQuery(searchParam);
+    }
+
+    const categoryParam = searchParams.get('category');
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
     }
 
     // Detect theme and watch for changes
@@ -88,6 +94,7 @@ export default function ProductsPage() {
     if (searchQuery.trim()) params.set('search', searchQuery);
     if (minPrice.trim()) params.set('minPrice', minPrice);
     if (maxPrice.trim()) params.set('maxPrice', maxPrice);
+    if (stockFilter !== 'all') params.set('stockFilter', stockFilter);
 
     fetch(`/api/products?${params.toString()}`)
       .then(res => res.json())
@@ -103,7 +110,7 @@ export default function ProductsPage() {
       .finally(() => mounted && setLoading(false));
 
     return () => { mounted = false };
-  }, [currentPage, selectedCategory, searchQuery, minPrice, maxPrice, sort, currentTheme]);
+  }, [currentPage, selectedCategory, searchQuery, minPrice, maxPrice, sort, currentTheme, stockFilter]);
 
   // Server returns already-filtered results; use total for pagination
   const totalPages = Math.ceil((total || 0) / PRODUCTS_PER_PAGE) || 1;
@@ -134,6 +141,7 @@ export default function ProductsPage() {
     setSelectedCategory("All");
     setMinPrice("");
     setMaxPrice("");
+    setStockFilter("inStock");
     setCurrentPage(1);
   };
   
@@ -176,12 +184,52 @@ export default function ProductsPage() {
             >
               <span className="font-medium">Filters</span>
               <span className="text-xs text-muted-foreground">
-                {selectedCategory !== "All" || minPrice || maxPrice ? "Active" : "None"}
+                {selectedCategory !== "All" || minPrice || maxPrice || stockFilter !== "inStock" ? "Active" : "None"}
               </span>
             </Button>
 
             {mobileFiltersOpen && (
               <div className="mt-3 border rounded-lg bg-card p-4 shadow-lg">
+                {/* Stock Filter (mobile) */}
+                <div className="mb-4">
+                  <Label className="text-sm font-semibold mb-3 block">Stock Status</Label>
+                  <div className="grid grid-cols-3 gap-2">
+                    <Button
+                      variant={stockFilter === "inStock" ? "default" : "outline"}
+                      size="sm"
+                      className="h-9 text-xs"
+                      onClick={() => {
+                        setStockFilter("inStock");
+                        setCurrentPage(1);
+                      }}
+                    >
+                      In Stock
+                    </Button>
+                    <Button
+                      variant={stockFilter === "outOfStock" ? "default" : "outline"}
+                      size="sm"
+                      className="h-9 text-xs"
+                      onClick={() => {
+                        setStockFilter("outOfStock");
+                        setCurrentPage(1);
+                      }}
+                    >
+                      Out of Stock
+                    </Button>
+                    <Button
+                      variant={stockFilter === "all" ? "default" : "outline"}
+                      size="sm"
+                      className="h-9 text-xs"
+                      onClick={() => {
+                        setStockFilter("all");
+                        setCurrentPage(1);
+                      }}
+                    >
+                      All
+                    </Button>
+                  </div>
+                </div>
+
                 {/* Category Filter (mobile) */}
                 <div className="mb-4">
                   <Label className="text-sm font-semibold mb-3 block">Category</Label>
@@ -247,7 +295,7 @@ export default function ProductsPage() {
                 </div>
 
                 {/* Clear Filters (mobile) */}
-                {(selectedCategory !== "All" || minPrice || maxPrice) && (
+                {(selectedCategory !== "All" || minPrice || maxPrice || stockFilter !== "inStock") && (
                   <Button variant="ghost" size="sm" onClick={clearFilters} className="w-full text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20">
                     Clear All Filters
                   </Button>
@@ -261,6 +309,46 @@ export default function ProductsPage() {
             <div className="sticky top-6 border rounded-lg bg-card p-5 shadow-sm">
               <h2 className="text-lg font-bold mb-5 pb-3 border-b">Filters</h2>
               
+              {/* Stock Filter */}
+              <div className="mb-5">
+                <Label className="text-sm font-semibold mb-3 block">Stock Status</Label>
+                <div className="space-y-1.5">
+                  <Button
+                    variant={stockFilter === "inStock" ? "default" : "ghost"}
+                    size="sm"
+                    className="w-full justify-start h-9 text-sm font-medium"
+                    onClick={() => {
+                      setStockFilter("inStock");
+                      setCurrentPage(1);
+                    }}
+                  >
+                    In Stock
+                  </Button>
+                  <Button
+                    variant={stockFilter === "outOfStock" ? "default" : "ghost"}
+                    size="sm"
+                    className="w-full justify-start h-9 text-sm font-medium"
+                    onClick={() => {
+                      setStockFilter("outOfStock");
+                      setCurrentPage(1);
+                    }}
+                  >
+                    Out of Stock
+                  </Button>
+                  <Button
+                    variant={stockFilter === "all" ? "default" : "ghost"}
+                    size="sm"
+                    className="w-full justify-start h-9 text-sm font-medium"
+                    onClick={() => {
+                      setStockFilter("all");
+                      setCurrentPage(1);
+                    }}
+                  >
+                    All
+                  </Button>
+                </div>
+              </div>
+
               {/* Category Filter */}
               <div className="mb-5">
                 <Label className="text-sm font-semibold mb-3 block">Category</Label>
@@ -318,7 +406,7 @@ export default function ProductsPage() {
               </div>
 
               {/* Clear Filters */}
-              {(selectedCategory !== "All" || minPrice || maxPrice) && (
+              {(selectedCategory !== "All" || minPrice || maxPrice || stockFilter !== "inStock") && (
                 <Button variant="ghost" size="sm" onClick={clearFilters} className="w-full text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20">
                   Clear All Filters
                 </Button>

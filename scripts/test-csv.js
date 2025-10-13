@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const csv = require('csv-parser');
 
-const filePath = path.join(process.cwd(), 'stockandprice.csv');
+const filePath = path.join(process.cwd(), 'aosomstockandprice.csv');
 const map = {};
 fs.createReadStream(filePath)
   .pipe(csv())

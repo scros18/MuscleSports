@@ -7,6 +7,7 @@ interface SiteSettings {
   siteUrl: string;
   logoUrl: string;
   tagline: string;
+  showSaleBanner?: boolean;
 }
 
 interface SiteSettingsContextType {
@@ -22,7 +23,8 @@ const DEFAULT_SETTINGS: SiteSettings = {
   siteName: "Ordify Direct Ltd",
   siteUrl: "https://ordifydirect.com",
   logoUrl: "/ordifydirectltd.png",
-  tagline: "Premium E-Commerce Platform"
+  tagline: "Premium E-Commerce Platform",
+  showSaleBanner: true
 };
 
 export function SiteSettingsProvider({ children }: { children: React.ReactNode }) {

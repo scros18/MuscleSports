@@ -24,7 +24,7 @@ function normalizePriceToPounds(v: any): number | undefined {
 
 async function readPricingCsv(): Promise<PriceMap> {
   try {
-    const filePath = path.join(process.cwd(), 'stockandprice.csv');
+    const filePath = path.join(process.cwd(), 'aosomstockandprice.csv');
     const stat = fs.statSync(filePath);
     if (pricingCache && pricingCache.mtimeMs === stat.mtimeMs) {
       return pricingCache.map;
@@ -93,6 +93,7 @@ export async function GET(request: Request) {
     const searchParam = url.searchParams.get('search') || '';
     const minPriceParam = url.searchParams.get('minPrice') || '';
     const maxPriceParam = url.searchParams.get('maxPrice') || '';
+    const stockFilterParam = url.searchParams.get('stockFilter') || '';
 
     const page = Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
     const pageSize = Number.isFinite(pageSizeParam) && pageSizeParam > 0 && pageSizeParam <= 200 ? pageSizeParam : 48;
@@ -134,6 +135,23 @@ export async function GET(request: Request) {
         if (minPrice !== undefined && price < minPrice) return false;
         if (maxPrice !== undefined && price > maxPrice) return false;
         
+        return true;
+      });
+    }
+
+    // Apply stock filtering
+    if (stockFilterParam && stockFilterParam !== 'all') {
+      filtered = filtered.filter((p: any) => {
+        const override = pricing[p.id];
+        const inStock = typeof override?.inStock === 'boolean' ? override.inStock : p.inStock;
+        
+        if (stockFilterParam === 'inStock') {
+          // Show products that are in stock (true) or undefined/null (default to available)
+          return inStock !== false;
+        } else if (stockFilterParam === 'outOfStock') {
+          // Only show products explicitly marked as out of stock
+          return inStock === false;
+        }
         return true;
       });
     }
