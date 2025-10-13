@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
     if (!settings) {
       return NextResponse.json({
         id: 'default',
-        theme: 'ordify',
+        theme: 'musclesports',
         businessType: 'ecommerce'
       });
     }

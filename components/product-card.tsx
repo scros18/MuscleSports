@@ -27,6 +27,12 @@ export function ProductCard({ product, hideDescription = false, sectionType = 'd
   const [isPressed, setIsPressed] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [showFlyingIcon, setShowFlyingIcon] = useState(false);
+  
+  // Urgency indicators
+  const stock = (product as any).stock || 0;
+  const isLowStock = stock > 0 && stock <= 10;
+  const isOutOfStock = stock === 0;
+  const viewingNow = Math.floor(Math.random() * 12) + 3;
   const firstImage = Array.isArray((product as any).images) && (product as any).images.length
     ? (product as any).images[0]
     : (product as any).image || "/placeholder.svg";
@@ -111,8 +117,9 @@ export function ProductCard({ product, hideDescription = false, sectionType = 'd
             }}
           />
           
-          {Boolean(product.featured) && (
-            <div className="absolute top-2.5 right-2.5 z-10">
+          {/* Urgency Badges */}
+          <div className="absolute top-2.5 right-2.5 z-10 flex flex-col gap-1.5 items-end">
+            {Boolean(product.featured) && (
               <div className="relative backdrop-blur-sm bg-gradient-to-br from-blue-500/95 via-indigo-500/95 to-purple-500/95 text-white px-2.5 py-1 rounded-lg shadow-lg border border-white/20 font-semibold text-[10px]">
                 <span className="relative z-10 flex items-center gap-1">
                   <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
@@ -120,6 +127,22 @@ export function ProductCard({ product, hideDescription = false, sectionType = 'd
                   </svg>
                   Featured
                 </span>
+              </div>
+            )}
+            
+            {isLowStock && !isOutOfStock && (
+              <div className="backdrop-blur-sm bg-red-600/95 text-white px-2.5 py-1 rounded-lg shadow-lg border border-white/20 font-bold text-[10px] animate-pulse">
+                🔥 Only {stock} left!
+              </div>
+            )}
+          </div>
+          
+          {/* Viewing Counter - bottom left */}
+          {!isOutOfStock && (
+            <div className="absolute bottom-2.5 left-2.5 z-10">
+              <div className="backdrop-blur-sm bg-black/70 text-white px-2.5 py-1 rounded-lg shadow-lg text-[10px] flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                {viewingNow} viewing
               </div>
             </div>
           )}

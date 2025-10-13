@@ -202,9 +202,9 @@ export default function Home() {
                 if (currentTheme === 'musclesports') {
                   if (filter === 'best-sellers') {
                     return {
-                      bgGradient: 'bg-gradient-to-br from-green-500 via-emerald-500 to-green-600',
-                      iconGradient: 'bg-gradient-to-br from-green-500 to-emerald-600',
-                      textGradient: 'bg-gradient-to-r from-green-600 via-emerald-500 to-green-700 bg-clip-text text-transparent',
+                      bgGradient: 'bg-gradient-to-br from-amber-600 via-orange-500 to-red-500',
+                      iconGradient: 'bg-gradient-to-br from-amber-700 to-red-600',
+                      textGradient: 'bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent',
                       icon: (
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
@@ -213,9 +213,9 @@ export default function Home() {
                     };
                   } else if (filter === 'new') {
                     return {
-                      bgGradient: 'bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500',
-                      iconGradient: 'bg-gradient-to-br from-emerald-500 to-teal-600',
-                      textGradient: 'bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-700 bg-clip-text text-transparent',
+                      bgGradient: 'bg-gradient-to-br from-emerald-600 via-green-500 to-teal-500',
+                      iconGradient: 'bg-gradient-to-br from-emerald-700 to-teal-600',
+                      textGradient: 'bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 bg-clip-text text-transparent',
                       icon: (
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -224,9 +224,9 @@ export default function Home() {
                     };
                   } else {
                     return {
-                      bgGradient: 'bg-gradient-to-br from-green-500 via-emerald-500 to-green-600',
-                      iconGradient: 'bg-gradient-to-br from-green-500 to-emerald-600',
-                      textGradient: 'bg-gradient-to-r from-green-600 via-emerald-500 to-green-700 bg-clip-text text-transparent',
+                      bgGradient: 'bg-gradient-to-br from-emerald-600 via-green-500 to-teal-500',
+                      iconGradient: 'bg-gradient-to-br from-emerald-700 to-teal-600',
+                      textGradient: 'bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 bg-clip-text text-transparent',
                       icon: (
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -236,9 +236,9 @@ export default function Home() {
                   }
                 } else if (currentTheme === 'vera') {
                   return {
-                    bgGradient: 'bg-gradient-to-br from-orange-500 via-red-500 to-amber-600',
-                    iconGradient: 'bg-gradient-to-br from-orange-500 to-red-600',
-                    textGradient: 'bg-gradient-to-r from-orange-600 via-red-500 to-amber-700 bg-clip-text text-transparent',
+                    bgGradient: 'bg-gradient-to-br from-violet-600 via-purple-500 to-fuchsia-500',
+                    iconGradient: 'bg-gradient-to-br from-violet-700 to-fuchsia-600',
+                    textGradient: 'bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent',
                     icon: (
                       <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -303,66 +303,142 @@ export default function Home() {
 
             case 'reviews':
               if (reviewsLoading || reviews.length === 0) return null;
+              
+              // Consistent color scheme for all review tiles
+              const reviewColors = [
+                { 
+                  bg: 'bg-gradient-to-br from-blue-600 via-indigo-500 to-violet-500',
+                  icon: 'bg-gradient-to-br from-blue-700 to-violet-600',
+                  star: 'text-blue-400 fill-blue-400',
+                  text: 'text-blue-100',
+                  border: 'border-blue-300/30'
+                },
+                { 
+                  bg: 'bg-gradient-to-br from-blue-600 via-indigo-500 to-violet-500',
+                  icon: 'bg-gradient-to-br from-blue-700 to-violet-600',
+                  star: 'text-indigo-400 fill-indigo-400',
+                  text: 'text-indigo-100',
+                  border: 'border-indigo-300/30'
+                },
+                { 
+                  bg: 'bg-gradient-to-br from-blue-600 via-indigo-500 to-violet-500',
+                  icon: 'bg-gradient-to-br from-blue-700 to-violet-600',
+                  star: 'text-violet-400 fill-violet-400',
+                  text: 'text-violet-100',
+                  border: 'border-violet-300/30'
+                },
+                { 
+                  bg: 'bg-gradient-to-br from-blue-600 via-indigo-500 to-violet-500',
+                  icon: 'bg-gradient-to-br from-blue-700 to-violet-600',
+                  star: 'text-blue-400 fill-blue-400',
+                  text: 'text-blue-100',
+                  border: 'border-blue-300/30'
+                },
+                { 
+                  bg: 'bg-gradient-to-br from-blue-600 via-indigo-500 to-violet-500',
+                  icon: 'bg-gradient-to-br from-blue-700 to-violet-600',
+                  star: 'text-indigo-400 fill-indigo-400',
+                  text: 'text-indigo-100',
+                  border: 'border-indigo-300/30'
+                },
+                { 
+                  bg: 'bg-gradient-to-br from-blue-600 via-indigo-500 to-violet-500',
+                  icon: 'bg-gradient-to-br from-blue-700 to-violet-600',
+                  star: 'text-violet-400 fill-violet-400',
+                  text: 'text-violet-100',
+                  border: 'border-violet-300/30'
+                },
+              ];
+
               return (
-                <section key={key} className="mb-16">
-                  <div className="text-center mb-12">
-                    <div className={`inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full mb-4 bg-blue-100 dark:bg-blue-900/30`}>
-                        <Star className={`h-5 w-5 text-blue-600 fill-blue-600`} />
-                        <span className={`font-semibold text-blue-700 dark:text-blue-400`}>Customer Reviews</span>
-                      </div>
-                    <h2 className="text-4xl font-bold mb-3 font-saira">{section.title ?? 'What Our Customers Say'}</h2>
-                    <p className="text-muted-foreground text-lg">{section.description ?? (currentTheme === 'musclesports' ? 'Real reviews from verified MuscleSports customers' : 'Real reviews from real customers on eBay')}</p>
+                <section key={key} className="mb-20 relative">
+                  {/* Abstract background shapes */}
+                  <div className="absolute inset-0 -z-10 overflow-hidden">
+                    <div className="absolute top-0 left-1/4 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+                    <div className="absolute top-0 right-1/4 w-72 h-72 bg-violet-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+                    <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-cyan-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
                   </div>
 
-                  <div className="flex flex-wrap justify-center gap-6 max-w-6xl mx-auto mb-12">
-                    {displayedReviews.map((review) => (
-                      <div 
-                        key={review.id} 
-                        className={`bg-white dark:bg-card p-6 rounded-2xl border-2 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] min-w-[280px] max-w-[400px] border-gray-200 dark:border-gray-700 hover:border-primary`}
-                      >
-                        {/* Header with stars and date */}
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex gap-1">
-                            {[...Array(5)].map((_, i) => (
-                              <Star key={i} className={`h-4 w-4 ${
-                                i < review.rating 
-                                  ? 'text-blue-500 fill-blue-500'
-                                  : 'text-gray-300 fill-gray-300'
-                              }`} />
-                            ))}
-                          </div>
-                          <span className="text-xs text-muted-foreground font-medium">{review.date}</span>
-                        </div>
+                  <div className="text-center mb-16">
+                    <div className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full mb-6 bg-gradient-to-r from-blue-600 via-violet-600 to-purple-600 text-white shadow-lg">
+                      <Star className="h-5 w-5 fill-white animate-pulse" />
+                      <span className="font-bold text-sm">CUSTOMER REVIEWS</span>
+                    </div>
+                    <h2 className="text-4xl md:text-5xl font-bold mb-4 font-saira bg-gradient-to-r from-blue-600 via-violet-600 to-purple-600 bg-clip-text text-transparent">
+                      {section.title ?? 'What Our Customers Say'}
+                    </h2>
+                    <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                      {section.description ?? (currentTheme === 'musclesports' ? 'Real reviews from verified MuscleSports customers 🏋️‍♂️' : 'Real reviews from real customers on eBay')}
+                    </p>
+                  </div>
 
-                        {/* Review comment */}
-                        <div className={`mb-4 p-4 rounded-xl bg-gray-50 dark:bg-gray-900/30 border border-gray-100 dark:border-gray-800`}>
-                          <p className="text-sm leading-relaxed text-foreground/90 italic">&quot;{review.comment}&quot;</p>
-                        </div>
-
-                        {/* Author info */}
-                        <div className="flex items-center gap-3">
-                          <img 
-                            src={'/placeholder.svg'} 
-                            alt={(review.author || review.reviewer) + ' avatar'} 
-                            className="w-12 h-12 rounded-full shadow-md object-cover bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
-                          />
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2">
-                              <p className="font-bold text-sm text-foreground">{review.author || review.reviewer}</p>
-                              {review.verified && (
-                                <span className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-950/50 px-2 py-0.5 rounded-full">
-                                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                  </svg>
-                                  Verified
-                                </span>
-                              )}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12">
+                    {displayedReviews.map((review, index) => {
+                      const colors = reviewColors[index % reviewColors.length];
+                      
+                      return (
+                        <div 
+                          key={review.id} 
+                          className={`group relative overflow-hidden rounded-3xl ${colors.bg} p-[2px] hover:scale-105 transition-all duration-500 hover:shadow-2xl`}
+                        >
+                          {/* Abstract decorative elements */}
+                          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500"></div>
+                          <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12 group-hover:scale-150 transition-transform duration-500"></div>
+                          
+                          <div className="relative bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm rounded-3xl p-6 h-full">
+                            {/* Star rating */}
+                            <div className="flex items-center justify-between mb-4">
+                              <div className="flex gap-1">
+                                {[...Array(5)].map((_, i) => (
+                                  <Star 
+                                    key={i} 
+                                    className={`h-5 w-5 transition-all duration-300 ${
+                                      i < review.rating 
+                                        ? colors.star
+                                        : 'text-gray-300 fill-gray-300'
+                                    }`} 
+                                  />
+                                ))}
+                              </div>
+                              <div className={`px-3 py-1 rounded-full text-xs font-bold text-white ${colors.icon}`}>
+                                {review.rating}.0
+                              </div>
                             </div>
-                            <p className="text-xs text-muted-foreground mt-0.5">{review.location || review.item}</p>
+
+                            {/* Review comment with quote icon */}
+                            <div className="relative mb-6">
+                              <svg className="absolute -top-2 -left-2 w-8 h-8 text-gray-200 dark:text-gray-700" fill="currentColor" viewBox="0 0 32 32">
+                                <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-1.1.9-2 2-2h2V8h-2zm14 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-1.1.9-2 2-2h2V8h-2z"/>
+                              </svg>
+                              <p className="text-foreground/90 leading-relaxed pl-6 pt-2 italic">
+                                {review.comment}
+                              </p>
+                            </div>
+
+                            {/* Author info with gradient accent */}
+                            <div className="flex items-center gap-4 pt-4 border-t-2 border-gray-100 dark:border-gray-800">
+                              <div className={`w-12 h-12 rounded-full ${colors.icon} flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
+                                {(review.author || review.reviewer)?.charAt(0).toUpperCase()}
+                              </div>
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2">
+                                  <p className="font-bold text-sm text-foreground">{review.author || review.reviewer}</p>
+                                  {review.verified && (
+                                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-950/50 px-2 py-0.5 rounded-full">
+                                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                      </svg>
+                                      Verified
+                                    </span>
+                                  )}
+                                </div>
+                                <p className="text-xs text-muted-foreground mt-0.5">{review.location || review.item}</p>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
 
                   {currentTheme !== 'musclesports' && (
@@ -482,6 +558,84 @@ export default function Home() {
                           <div className="flex flex-col items-center gap-1">
                             <div className="text-green-600 dark:text-green-400 font-bold text-lg">14 Days</div>
                             <div className="text-xs text-muted-foreground">Returns</div>
+                          </div>
+                        </div>
+
+                        {/* New Features Section - Enhanced with Abstract Colors */}
+                        <div className="mt-8 pt-6 border-t border-green-200 dark:border-green-800 relative overflow-hidden">
+                          {/* Abstract background blobs */}
+                          <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
+                          <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-br from-violet-400 to-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
+                          
+                          <div className="relative text-center mb-8">
+                            <div className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full mb-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 text-white shadow-lg">
+                              <svg className="w-4 h-4 fill-white" viewBox="0 0 20 20">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
+                              </svg>
+                              <span className="font-bold text-sm">NUTRITION TOOLS</span>
+                            </div>
+                            <h3 className="text-2xl font-bold mb-2 font-saira bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 bg-clip-text text-transparent">
+                              AI-Powered Nutrition Planning
+                            </h3>
+                            <p className="text-sm text-muted-foreground max-w-lg mx-auto">
+                              AI-powered tools designed by nutrition experts to help you achieve your fitness goals faster
+                            </p>
+                          </div>
+
+                          <div className="relative grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <a
+                              href="/nutrition-calculator"
+                              className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-500 to-violet-500 p-[2px] hover:scale-[1.02] transition-all duration-300 hover:shadow-2xl"
+                            >
+                              {/* Abstract shapes */}
+                              <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform duration-500"></div>
+                              
+                              <div className="relative flex items-center gap-4 p-5 bg-white dark:bg-gray-800 rounded-2xl h-full">
+                                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                  </svg>
+                                </div>
+                                <div className="flex-1">
+                                  <div className="font-bold text-blue-700 dark:text-blue-300 mb-1 text-lg">
+                                    Nutrition Calculator
+                                  </div>
+                                  <div className="text-xs text-muted-foreground">
+                                    AI macro planning & meal timing
+                                  </div>
+                                </div>
+                                <svg className="w-5 h-5 text-blue-600 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                              </div>
+                            </a>
+
+                            <a
+                              href="/recipe-generator"
+                              className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-violet-600 via-purple-500 to-fuchsia-500 p-[2px] hover:scale-[1.02] transition-all duration-300 hover:shadow-2xl"
+                            >
+                              {/* Abstract shapes */}
+                              <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12 group-hover:scale-150 transition-transform duration-500"></div>
+                              
+                              <div className="relative flex items-center gap-4 p-5 bg-white dark:bg-gray-800 rounded-2xl h-full">
+                                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                  </svg>
+                                </div>
+                                <div className="flex-1">
+                                  <div className="font-bold text-violet-700 dark:text-violet-300 mb-1 text-lg">
+                                    Recipe Generator
+                                  </div>
+                                  <div className="text-xs text-muted-foreground">
+                                    Macro-optimized meal recipes
+                                  </div>
+                                </div>
+                                <svg className="w-5 h-5 text-violet-600 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                              </div>
+                            </a>
                           </div>
                         </div>
                       </div>

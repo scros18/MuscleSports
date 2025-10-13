@@ -27,15 +27,20 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { isMaintenanceMode, maintenanceMessage, estimatedTime } = body;
     
+    // Get existing settings first to preserve other fields
+    const existingSettings = await Database.getBusinessSettings('default');
+    
     await Database.createOrUpdateBusinessSettings({
-      id: 'maintenance',
-      isMaintenanceMode: isMaintenanceMode || false,
+      id: 'default',
+      theme: existingSettings?.theme || 'musclesports',
+      isMaintenanceMode: isMaintenanceMode ?? false,
       maintenanceMessage: maintenanceMessage || 'We are currently performing scheduled maintenance. Please check back soon!',
       estimatedTime: estimatedTime || null
     });
     
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    console.error('Maintenance mode error:', error);
+    return NextResponse.json({ error: 'Failed to update maintenance mode' }, { status: 500 });
   }
 }

@@ -37,7 +37,7 @@ interface BusinessSettingsContextType {
 
 const defaultSettings: BusinessSettings = {
   id: 'default',
-  theme: 'ordify',
+  theme: 'musclesports',
   businessType: 'ecommerce'
 };
 

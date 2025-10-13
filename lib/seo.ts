@@ -70,6 +70,11 @@ export function generateSEO({
     creator: seoConfig.siteName,
     publisher: seoConfig.siteName,
     robots: noIndex ? 'noindex,nofollow' : 'index,follow',
+    icons: {
+      icon: '/favicon.ico',
+      shortcut: '/favicon-16x16.png',
+      apple: '/apple-touch-icon.png',
+    },
     alternates: {
       canonical: url,
     },
