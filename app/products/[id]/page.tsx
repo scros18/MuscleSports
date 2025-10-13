@@ -31,7 +31,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     setQuantityInput(String(quantity));
   }, [quantity]);
 
-  // Normalize flavours: accept either `flavours: string[]` or a single `flavour: string`
+  // Normalize flavours: support string[], FlavourVariation[], or single flavour string
   const productFlavours = Array.isArray(product?.flavours)
     ? product?.flavours
     : product?.flavour
@@ -40,24 +40,39 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     ? [product.flavor]
     : undefined;
   const hasFlavours = Array.isArray(productFlavours) && productFlavours.length > 0;
-  const flavours: string[] = hasFlavours 
-    ? (productFlavours as string[]) 
-    : [];
+  
+  // Convert flavours to a consistent format with name, price, and image
+  interface FlavourData {
+    name: string;
+    price?: number;
+    image?: string;
+  }
+  
+  const flavours: FlavourData[] = useMemo(() => {
+    if (!hasFlavours) return [];
+    
+    return productFlavours.map((f: any) => {
+      if (typeof f === 'string') {
+        // Old format: just a string name
+        // Check if there's an image in the flavourImages mapping
+        const image = product?.flavourImages?.[f.toLowerCase()] ?? undefined;
+        return { name: f, price: undefined, image };
+      } else if (typeof f === 'object' && f.name) {
+        // New format: object with name, price, and image
+        return {
+          name: f.name,
+          price: f.price,
+          image: f.image
+        };
+      }
+      return { name: String(f), price: undefined, image: undefined };
+    });
+  }, [hasFlavours, productFlavours, product]);
 
-  // Map flavours to images from the database
+  // Map flavours to images
   const flavourImages = useMemo(() => {
-    // If product has flavourImages mapping from database, use it
-    if (product?.flavourImages && typeof product.flavourImages === 'object') {
-      return flavours.map((f) => {
-        if (typeof f === 'string') {
-          return product.flavourImages[f.toLowerCase()] ?? null;
-        }
-        return null;
-      });
-    }
-    // Otherwise return nulls (will use default product images)
-    return flavours.map(() => null);
-  }, [hasFlavours, flavours, product]);
+    return flavours.map((f) => f.image ?? null);
+  }, [flavours]);
 
   const images: string[] = Array.isArray(product?.images) && product.images.length ? product.images : [product?.image || '/placeholder.svg'];
 
@@ -137,14 +152,74 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     return () => { mounted = false };
   }, [params.id]);
 
+  // Extract Features, Specifications, and Package Includes from description
+  const { mainDescription, features, specifications, packageIncludes } = useMemo(() => {
+    if (!product?.description) {
+      return { mainDescription: '', features: '', specifications: '', packageIncludes: '' };
+    }
+
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = product.description;
+    
+    let mainDescription = '';
+    let features = '';
+    let specifications = '';
+    let packageIncludes = '';
+    let currentSection = 'main';
+    
+    const children = Array.from(tempDiv.children);
+    
+    children.forEach((child) => {
+      const text = child.textContent?.trim() || '';
+      
+      if (child.tagName === 'H3') {
+        if (text.toLowerCase().includes('feature')) {
+          currentSection = 'features';
+          features += child.outerHTML;
+        } else if (text.toLowerCase().includes('specification')) {
+          currentSection = 'specifications';
+          specifications += child.outerHTML;
+        } else if (text.toLowerCase().includes('package')) {
+          currentSection = 'packageIncludes';
+          packageIncludes += child.outerHTML;
+        }
+      } else if (currentSection === 'main') {
+        mainDescription += child.outerHTML;
+      } else if (currentSection === 'features') {
+        features += child.outerHTML;
+      } else if (currentSection === 'specifications') {
+        specifications += child.outerHTML;
+      } else if (currentSection === 'packageIncludes') {
+        packageIncludes += child.outerHTML;
+      }
+    });
+    
+    return { mainDescription, features, specifications, packageIncludes };
+  }, [product?.description]);
+
   if (loading) return <div className="container py-8">Loading…</div>;
   if (!product) return notFound();
 
+  // Calculate the current price based on selected flavor
+  const currentPrice = useMemo(() => {
+    if (hasFlavours && selectedFlavourIndex !== null && flavours[selectedFlavourIndex]?.price !== undefined) {
+      return flavours[selectedFlavourIndex].price!;
+    }
+    return product?.price || 0;
+  }, [hasFlavours, selectedFlavourIndex, flavours, product]);
+
   const handleAddToCart = () => {
     // Include selected flavour for IVG Pro 12 so cart/checkout can show it
-    const item = hasFlavours && selectedFlavourIndex !== null
-      ? { ...product, selectedFlavour: String(flavours[selectedFlavourIndex]) }
-      : product;
+    let item = product;
+    if (hasFlavours && selectedFlavourIndex !== null) {
+      const selectedFlavour = flavours[selectedFlavourIndex];
+      item = { 
+        ...product, 
+        selectedFlavour: selectedFlavour.name,
+        // Override price if the flavor has a custom price
+        price: selectedFlavour.price !== undefined ? selectedFlavour.price : product.price
+      };
+    }
     for (let i = 0; i < quantity; i++) {
       addToCart(item);
     }
@@ -224,7 +299,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           </div>
 
           <div className="text-2xl sm:text-3xl font-bold mb-6">
-            {formatPrice(product.price)}
+            {formatPrice(currentPrice)}
           </div>
 
           <Separator className="mb-6" />
@@ -236,7 +311,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 [&_p]:mb-4 [&_h3]:font-semibold [&_h3]:text-base [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:text-foreground
                 [&_ul]:list-disc [&_ul]:ml-6 [&_ul]:mb-4 [&_ul]:space-y-1
                 [&_li]:text-muted-foreground [&_li]:leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: product.description }}
+              dangerouslySetInnerHTML={{ __html: mainDescription || product.description }}
             />
           </div>
 
@@ -272,11 +347,13 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                       setMainImage(flavourImg || images[0]);
                     }
                   }}
-                  className="h-9 px-3 rounded-md bg-background border text-sm"
+                  className="h-9 px-3 rounded-md bg-background border text-sm flex-1"
                 >
                   <option value="">Select flavour</option>
                   {flavours.map((f, i: number) => (
-                    <option key={String(i)} value={String(i)}>{String(f)}</option>
+                    <option key={String(i)} value={String(i)}>
+                      {f.name}{f.price !== undefined ? ` - ${formatPrice(f.price)}` : ''}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -367,15 +444,18 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             )}
           </Button>
 
-          <div className="mt-8 p-3 sm:p-4 bg-muted rounded-lg">
-            <h3 className="font-semibold mb-2 text-sm sm:text-base">Product Features:</h3>
-            <ul className="list-disc list-inside text-xs sm:text-sm text-muted-foreground space-y-1">
-              <li>Premium quality materials</li>
-              <li>Fast and secure shipping</li>
-              <li>30-day return policy</li>
-              <li>1-year warranty included</li>
-            </ul>
-          </div>
+          {(features || specifications || packageIncludes) && (
+            <div className="mt-8 p-3 sm:p-4 bg-muted rounded-lg">
+              <h3 className="font-semibold mb-3 text-sm sm:text-base">Product Features:</h3>
+              <div 
+                className="text-muted-foreground leading-relaxed text-xs sm:text-sm prose prose-sm max-w-none
+                  [&_h3]:font-semibold [&_h3]:text-sm [&_h3]:mt-4 [&_h3]:mb-2 [&_h3]:text-foreground [&_h3:first-child]:mt-0
+                  [&_ul]:list-disc [&_ul]:ml-6 [&_ul]:mb-3 [&_ul]:space-y-1
+                  [&_li]:text-muted-foreground [&_li]:leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: features + specifications + packageIncludes }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

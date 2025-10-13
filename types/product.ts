@@ -1,3 +1,9 @@
+export interface FlavourVariation {
+  name: string;
+  price?: number;
+  image?: string;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -8,7 +14,8 @@ export interface Product {
   inStock: boolean;
   featured: boolean;
   // optional array of flavour/variant names (some products include flavour lists)
-  flavours?: string[];
+  // can be either string[] for backwards compatibility or FlavourVariation[] for full support
+  flavours?: string[] | FlavourVariation[];
 }
 
 export interface CartItem extends Product {

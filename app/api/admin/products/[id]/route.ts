@@ -50,7 +50,24 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     if (category !== undefined) updateData.category = category;
     if (inStock !== undefined) updateData.inStock = inStock;
     if (featured !== undefined) updateData.featured = featured;
-    if (flavours !== undefined) updateData.flavours = flavours;
+    if (flavours !== undefined) {
+      updateData.flavours = flavours;
+      
+      // Build flavourImages mapping from the new flavor variation structure
+      // This maintains backwards compatibility with existing code that expects flavourImages
+      if (Array.isArray(flavours) && flavours.length > 0) {
+        const flavourImages: Record<string, string> = {};
+        flavours.forEach((flavour: any) => {
+          if (flavour.image && flavour.name) {
+            // Store by lowercase name for case-insensitive lookup
+            flavourImages[flavour.name.toLowerCase()] = flavour.image;
+          }
+        });
+        if (Object.keys(flavourImages).length > 0) {
+          updateData.flavourImages = flavourImages;
+        }
+      }
+    }
 
     await Database.updateProduct(params.id, updateData);
 

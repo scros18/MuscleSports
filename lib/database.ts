@@ -292,11 +292,12 @@ export class Database {
     inStock: boolean;
     featured: boolean;
     flavours?: string[];
+    strengths?: string[];
   }) {
-    const { id, name, price, description, images, category, inStock, featured, flavours } = productData;
+    const { id, name, price, description, images, category, inStock, featured, flavours, strengths } = productData;
     await this.query(
-      'INSERT INTO products (id, name, price, description, images, category, in_stock, featured, flavours) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [id, name, price, description, JSON.stringify(images), category, inStock, featured, flavours ? JSON.stringify(flavours) : null]
+      'INSERT INTO products (id, name, price, description, images, category, in_stock, featured, flavours, strengths) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [id, name, price, description, JSON.stringify(images), category, inStock, featured, flavours ? JSON.stringify(flavours) : null, strengths ? JSON.stringify(strengths) : null]
     );
   }
 
@@ -309,7 +310,8 @@ export class Database {
       inStock: product.in_stock,
       featured: product.featured,
       flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined,
-      flavourImages: product.flavour_images ? safeJsonParse(product.flavour_images, {}) : undefined
+      flavourImages: product.flavour_images ? safeJsonParse(product.flavour_images, {}) : undefined,
+      strengths: product.strengths ? safeJsonParseArray(product.strengths) : undefined
     }));
   }
 
@@ -322,7 +324,8 @@ export class Database {
       inStock: product.in_stock,
       featured: product.featured,
       flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined,
-      flavourImages: product.flavour_images ? safeJsonParse(product.flavour_images, {}) : undefined
+      flavourImages: product.flavour_images ? safeJsonParse(product.flavour_images, {}) : undefined,
+      strengths: product.strengths ? safeJsonParseArray(product.strengths) : undefined
     }));
   }
 
@@ -342,7 +345,8 @@ export class Database {
         inStock: product.in_stock,
         featured: product.featured,
         flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined,
-        flavourImages: product.flavour_images ? safeJsonParse(product.flavour_images, {}) : undefined
+        flavourImages: product.flavour_images ? safeJsonParse(product.flavour_images, {}) : undefined,
+        strengths: product.strengths ? safeJsonParseArray(product.strengths) : undefined
       };
     }
     return null;
@@ -358,6 +362,7 @@ export class Database {
     featured: boolean;
     flavours: string[];
     flavourImages: Record<string, string>;
+    strengths: string[];
   }>) {
     const fields = [];
     const values = [];
@@ -397,6 +402,10 @@ export class Database {
     if (productData.flavourImages !== undefined) {
       fields.push('flavour_images = ?');
       values.push(JSON.stringify(productData.flavourImages));
+    }
+    if (productData.strengths !== undefined) {
+      fields.push('strengths = ?');
+      values.push(JSON.stringify(productData.strengths));
     }
 
     if (fields.length === 0) return;
