@@ -1,15 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/components/theme-provider';
+import { Providers } from '@/components/providers';
 import { Toaster } from '@/components/ui/toaster';
-import { CartProvider } from '@/context/cart-context';
-import { AuthProvider } from '@/context/auth-context';
-import { PerformanceProvider } from '@/context/performance-context';
-import { BusinessSettingsProvider } from '@/context/business-settings-context';
-import { SiteSettingsProvider } from '@/context/site-settings-context';
-import { DynamicMetadata } from '@/components/dynamic-metadata';
-import { DynamicPageTitle } from '@/components/dynamic-page-title';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -126,27 +119,10 @@ export default function RootLayout({
         }} />
       </head>
       <body className={inter.className} suppressHydrationWarning>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <AuthProvider>
-            <PerformanceProvider>
-              <BusinessSettingsProvider>
-                <SiteSettingsProvider>
-                  <CartProvider>
-                    {children}
-                    <Toaster />
-                    <DynamicMetadata />
-                    <DynamicPageTitle />
-                  </CartProvider>
-                </SiteSettingsProvider>
-              </BusinessSettingsProvider>
-            </PerformanceProvider>
-          </AuthProvider>
-        </ThemeProvider>
+        <Providers>
+          {children}
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );

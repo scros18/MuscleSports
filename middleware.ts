@@ -4,15 +4,21 @@ import type { NextRequest } from 'next/server';
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Skip maintenance check for admin routes and API routes
+  // Skip middleware for specific paths
   if (pathname.startsWith('/admin') || 
       pathname.startsWith('/api') || 
       pathname.startsWith('/_next') ||
       pathname.startsWith('/favicon') ||
+      pathname.startsWith('/public') ||
+      pathname.startsWith('/images') ||
+      pathname.includes('.') || // Skip files with extensions
       pathname === '/maintenance') {
     return NextResponse.next();
   }
 
+  // Temporarily disable maintenance check to prevent blank pages
+  // Uncomment below to enable maintenance mode checking
+  /*
   try {
     // Check maintenance mode via public API endpoint
     // Use HTTP for local development, HTTPS for production
@@ -39,6 +45,7 @@ export async function middleware(request: NextRequest) {
     // If there's an error checking maintenance mode, continue normally
     console.error('Error checking maintenance mode:', error);
   }
+  */
 
   return NextResponse.next();
 }
