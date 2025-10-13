@@ -163,7 +163,24 @@ export default function Home() {
       {currentTheme === 'blisshair' ? (
         <SalonHomepage />
       ) : (
-        <div className="container py-8">
+        <div className="container py-8 relative">
+          {/* Subtle minimalist background accents */}
+          <div className="pointer-events-none absolute inset-0 -z-10 select-none">
+            {/* Soft top fade */}
+            <div className="absolute inset-x-0 top-0 h-64 opacity-[0.06] dark:opacity-[0.05] bg-[linear-gradient(to_bottom,rgba(0,0,0,0.6),transparent_60%)]"></div>
+            {/* Radial glow top-right (primary tint) */}
+            <div className={`absolute -top-12 -right-16 w-[42rem] h-[22rem] rounded-full blur-3xl opacity-[0.08] dark:opacity-[0.06] ${
+              currentTheme === 'musclesports'
+                ? 'bg-[radial-gradient(55%_55%_at_50%_50%,rgba(16,185,129,0.9),transparent_70%)]'
+                : 'bg-[radial-gradient(55%_55%_at_50%_50%,rgba(59,130,246,0.9),transparent_70%)]'
+            }`}></div>
+            {/* Radial glow bottom-left (indigo tint) */}
+            <div className={`absolute -bottom-20 -left-24 w-[36rem] h-[18rem] rounded-full blur-3xl opacity-[0.07] dark:opacity-[0.05] ${
+              currentTheme === 'musclesports'
+                ? 'bg-[radial-gradient(55%_55%_at_50%_50%,rgba(5,150,105,0.9),transparent_70%)]'
+                : 'bg-[radial-gradient(55%_55%_at_50%_50%,rgba(99,102,241,0.9),transparent_70%)]'
+            }`}></div>
+          </div>
           {homepageSections.map((section: any, idx: number) => {
           if (!section.enabled) return null;
           const key = section.id || `${section.type}-${idx}`;
@@ -185,9 +202,9 @@ export default function Home() {
                 if (currentTheme === 'musclesports') {
                   if (filter === 'best-sellers') {
                     return {
-                      bgGradient: 'bg-gradient-to-br from-yellow-400 via-amber-400 to-yellow-500',
-                      iconGradient: 'bg-gradient-to-br from-yellow-500 to-amber-600',
-                      textGradient: 'bg-gradient-to-r from-yellow-600 via-amber-500 to-yellow-700 bg-clip-text text-transparent',
+                      bgGradient: 'bg-gradient-to-br from-green-500 via-emerald-500 to-green-600',
+                      iconGradient: 'bg-gradient-to-br from-green-500 to-emerald-600',
+                      textGradient: 'bg-gradient-to-r from-green-600 via-emerald-500 to-green-700 bg-clip-text text-transparent',
                       icon: (
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
@@ -196,9 +213,9 @@ export default function Home() {
                     };
                   } else if (filter === 'new') {
                     return {
-                      bgGradient: 'bg-gradient-to-br from-teal-400 via-cyan-400 to-sky-500',
-                      iconGradient: 'bg-gradient-to-br from-teal-500 to-cyan-600',
-                      textGradient: 'bg-gradient-to-r from-teal-600 via-cyan-500 to-sky-700 bg-clip-text text-transparent',
+                      bgGradient: 'bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500',
+                      iconGradient: 'bg-gradient-to-br from-emerald-500 to-teal-600',
+                      textGradient: 'bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-700 bg-clip-text text-transparent',
                       icon: (
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -289,21 +306,9 @@ export default function Home() {
               return (
                 <section key={key} className="mb-16">
                   <div className="text-center mb-12">
-                    <div className={`inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full mb-4 ${
-                        currentTheme === 'musclesports'
-                          ? 'bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/15 dark:to-emerald-900/10 border border-green-200'
-                          : 'bg-yellow-100 dark:bg-yellow-900/30'
-                      }`}>
-                        <Star className={`h-5 w-5 ${
-                          currentTheme === 'musclesports'
-                            ? 'text-green-800 fill-green-800'
-                            : 'text-yellow-600 fill-yellow-600'
-                        }`} />
-                        <span className={`font-semibold ${
-                          currentTheme === 'musclesports'
-                            ? 'text-green-900 dark:text-green-200'
-                            : 'text-yellow-700 dark:text-yellow-400'
-                        }`}>Customer Reviews</span>
+                    <div className={`inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full mb-4 bg-blue-100 dark:bg-blue-900/30`}>
+                        <Star className={`h-5 w-5 text-blue-600 fill-blue-600`} />
+                        <span className={`font-semibold text-blue-700 dark:text-blue-400`}>Customer Reviews</span>
                       </div>
                     <h2 className="text-4xl font-bold mb-3 font-saira">{section.title ?? 'What Our Customers Say'}</h2>
                     <p className="text-muted-foreground text-lg">{section.description ?? (currentTheme === 'musclesports' ? 'Real reviews from verified MuscleSports customers' : 'Real reviews from real customers on eBay')}</p>
@@ -313,11 +318,7 @@ export default function Home() {
                     {displayedReviews.map((review) => (
                       <div 
                         key={review.id} 
-                        className={`bg-white dark:bg-card p-6 rounded-2xl border-2 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] min-w-[280px] max-w-[400px] ${
-                          currentTheme === 'musclesports'
-                            ? 'border-green-200 dark:border-green-800 hover:border-green-400 dark:hover:border-green-600'
-                            : 'border-gray-200 dark:border-gray-700 hover:border-primary'
-                        }`}
+                        className={`bg-white dark:bg-card p-6 rounded-2xl border-2 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] min-w-[280px] max-w-[400px] border-gray-200 dark:border-gray-700 hover:border-primary`}
                       >
                         {/* Header with stars and date */}
                         <div className="flex items-center justify-between mb-4">
@@ -325,9 +326,7 @@ export default function Home() {
                             {[...Array(5)].map((_, i) => (
                               <Star key={i} className={`h-4 w-4 ${
                                 i < review.rating 
-                                  ? currentTheme === 'musclesports'
-                                    ? 'text-green-500 fill-green-500'
-                                    : 'text-yellow-400 fill-yellow-400'
+                                  ? 'text-blue-500 fill-blue-500'
                                   : 'text-gray-300 fill-gray-300'
                               }`} />
                             ))}
@@ -336,28 +335,22 @@ export default function Home() {
                         </div>
 
                         {/* Review comment */}
-                        <div className={`mb-4 p-4 rounded-xl ${
-                            currentTheme === 'musclesports'
-                              ? 'bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800'
-                              : 'bg-gray-50 dark:bg-gray-900/30'
-                          }`}>
+                        <div className={`mb-4 p-4 rounded-xl bg-gray-50 dark:bg-gray-900/30 border border-gray-100 dark:border-gray-800`}>
                           <p className="text-sm leading-relaxed text-foreground/90 italic">&quot;{review.comment}&quot;</p>
                         </div>
 
                         {/* Author info */}
                         <div className="flex items-center gap-3">
-                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md ${
-              currentTheme === 'musclesports'
-                ? 'bg-gradient-to-br from-green-700 to-emerald-800'
-                : 'bg-gradient-to-br from-blue-500 to-purple-600'
-                          }`}>
-                            {(review.author || review.reviewer).charAt(0).toUpperCase()}
-                          </div>
+                          <img 
+                            src={'/placeholder.svg'} 
+                            alt={(review.author || review.reviewer) + ' avatar'} 
+                            className="w-12 h-12 rounded-full shadow-md object-cover bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+                          />
                           <div className="flex-1">
                             <div className="flex items-center gap-2">
                               <p className="font-bold text-sm text-foreground">{review.author || review.reviewer}</p>
-                              {review.verified && currentTheme === 'musclesports' && (
-                                <span className="inline-flex items-center gap-1 text-xs font-semibold text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-950/50 px-2 py-0.5 rounded-full">
+                              {review.verified && (
+                                <span className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-950/50 px-2 py-0.5 rounded-full">
                                   <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                                   </svg>

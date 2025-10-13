@@ -199,6 +199,9 @@ export class Database {
             secondary_color VARCHAR(20),
             description TEXT,
             social_media JSON,
+            is_maintenance_mode BOOLEAN DEFAULT FALSE,
+            maintenance_message TEXT,
+            estimated_time VARCHAR(100),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
           )

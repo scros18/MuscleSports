@@ -10,11 +10,11 @@ export interface SEOConfig {
 
 // Default SEO configuration - can be customized per branding
 const defaultConfig: Required<SEOConfig> = {
-  siteName: 'Ordify',
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://ordify.com',
-  defaultTitle: 'Ordify | Premium E-Commerce Platform',
-  defaultDescription: 'Discover amazing products at unbeatable prices. Fast shipping, secure checkout, and exceptional customer service.',
-  twitterHandle: '@ordify',
+  siteName: 'MuscleSports',
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://musclesports.co.uk',
+  defaultTitle: 'MuscleSports | Premium Sports Nutrition & Supplements',
+  defaultDescription: 'Premium sports nutrition and supplements. Quality products for athletes and fitness enthusiasts. Fast shipping, secure checkout.',
+  twitterHandle: '@musclesports',
 };
 
 let seoConfig: Required<SEOConfig> = { ...defaultConfig };

@@ -112,6 +112,6 @@ export function generateDynamicMetadata(options: DynamicMetadataOptions): Metada
  * Helper to get business name for client-side title updates
  */
 export function getPageTitle(pageTitle: string, businessName?: string): string {
-  const siteName = businessName || 'Ordify Direct';
+  const siteName = businessName || 'MuscleSports';
   return pageTitle ? `${pageTitle} | ${siteName}` : siteName;
 }

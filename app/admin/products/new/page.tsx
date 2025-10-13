@@ -211,8 +211,8 @@ export default function NewProductPage() {
       <main className="max-w-3xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="bg-white shadow px-4 py-5 sm:p-6">
-              <div className="grid grid-cols-6 gap-6">
+            <div className="bg-white shadow px-4 py-5 sm:p-6 rounded-xl border">
+              <div className="grid grid-cols-6 gap-4 sm:gap-6">
                 {/* Product ID */}
                 <div className="col-span-6 sm:col-span-3">
                   <label htmlFor="id" className="block text-sm font-medium text-gray-700">
@@ -253,7 +253,7 @@ export default function NewProductPage() {
                   </label>
                   <div className="mt-1 relative rounded-md shadow-sm">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <span className="text-gray-500 sm:text-sm">$</span>
+                      <span className="text-gray-500 sm:text-sm">£</span>
                     </div>
                     <input
                       type="number"
@@ -344,7 +344,15 @@ export default function NewProductPage() {
                     Product Images
                   </label>
                   {formData.images.map((image, index) => (
-                    <div key={index} className="flex items-center space-x-2 mb-2">
+                    <div key={index} className="flex items-center gap-2 mb-2">
+                      {image?.trim() ? (
+                        <div className="h-14 w-14 flex-shrink-0 rounded-md overflow-hidden border bg-gray-50">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={image} alt={`Preview ${index+1}`} className="h-full w-full object-cover" onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }} />
+                        </div>
+                      ) : (
+                        <div className="h-14 w-14 flex-shrink-0 rounded-md overflow-hidden border bg-gray-50 flex items-center justify-center text-xs text-gray-400">No image</div>
+                      )}
                       <input
                         type="url"
                         value={image}
@@ -356,9 +364,10 @@ export default function NewProductPage() {
                         <button
                           type="button"
                           onClick={() => removeImageField(index)}
-                          className="inline-flex items-center p-1 border border-transparent rounded-full text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                          className="inline-flex items-center p-1.5 border border-gray-200 rounded-md text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                          aria-label="Remove image"
                         >
-                          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                           </svg>
                         </button>
@@ -368,7 +377,7 @@ export default function NewProductPage() {
                   <button
                     type="button"
                     onClick={addImageField}
-                    className="inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   >
                     Add Image URL
                   </button>
@@ -377,7 +386,7 @@ export default function NewProductPage() {
             </div>
 
             {/* Submit Buttons */}
-            <div className="flex justify-end space-x-3">
+            <div className="hidden sm:flex justify-end space-x-3">
               <Link
                 href="/admin/products"
                 className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
@@ -395,6 +404,23 @@ export default function NewProductPage() {
           </form>
         </div>
       </main>
+
+      {/* Mobile sticky action bar */}
+      <div className="sm:hidden fixed inset-x-0 bottom-0 z-50 border-t bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/75 p-3 flex items-center justify-between gap-2">
+        <Link
+          href="/admin/products"
+          className="flex-1 text-center py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white"
+        >
+          Cancel
+        </Link>
+        <button
+          onClick={(e) => { e.preventDefault(); const form = document.querySelector('form'); if (form) form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); }}
+          disabled={saving}
+          className="flex-1 text-center py-2 rounded-md text-sm font-semibold text-white bg-blue-600 disabled:opacity-50"
+        >
+          {saving ? 'Creating…' : 'Create Product'}
+        </button>
+      </div>
     </div>
   );
 }

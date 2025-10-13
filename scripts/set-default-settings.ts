@@ -7,16 +7,16 @@ async function setDefaultSettings() {
   try {
     console.log('Setting default business settings...');
 
-    // Set Ordify as the default theme and ensure settings exist
+    // Set MuscleSports as the default theme and ensure settings exist
     await Database.createOrUpdateBusinessSettings({
       id: 'default',
-      theme: 'ordify',
-      businessName: 'Ordify Direct Ltd',
+      theme: 'musclesports',
+      businessName: 'MuscleSports',
       businessType: 'ecommerce',
     });
 
     console.log('✓ Default settings configured successfully!');
-    console.log('  - Theme: Ordify');
+    console.log('  - Theme: MuscleSports');
     console.log('  - Business Name: Ordify Direct Ltd');
     console.log('  - Business Type: E-commerce');
 

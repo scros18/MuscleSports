@@ -178,7 +178,7 @@ export function ProductCard({ product, hideDescription = false, sectionType = 'd
             <Minus className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
           </Button>
           {/* Input allows typing - keep a string state to allow editing before commit */}
-          <div className="flex items-center justify-center min-w-[2rem] sm:min-w-[2.5rem] w-12 sm:w-16 h-full">
+          <div className="flex-1 flex items-center justify-center min-w-[2.5rem] h-full relative">
             <input
               type="text"
               inputMode="numeric"
@@ -213,7 +213,7 @@ export function ProductCard({ product, hideDescription = false, sectionType = 'd
                   e.currentTarget.blur();
                 }
               }}
-              className={`w-full h-full text-center font-bold text-xs sm:text-sm appearance-none bg-transparent outline-none border-none ${settings.animationsEnabled ? 'transition-all duration-200 ease-spring' : ''}`}
+              className={`w-full h-full text-center font-bold text-xs sm:text-sm appearance-none bg-transparent outline-none border-none absolute inset-0 flex items-center justify-center ${settings.animationsEnabled ? 'transition-all duration-200 ease-spring' : ''}`}
             />
           </div>
           <Button
