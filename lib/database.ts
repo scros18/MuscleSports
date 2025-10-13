@@ -251,11 +251,29 @@ export class Database {
     );
   }
 
-  static async createOrder(orderData: { id: string; userId: string; items: any[]; total: number; shippingAddress?: any }) {
-    const { id, userId, items, total, shippingAddress } = orderData;
+  static async createOrder(orderData: { 
+    id: string; 
+    userId: string; 
+    items: any[]; 
+    total: number; 
+    shippingAddress?: any;
+    paymentMethod?: string;
+    paymentId?: string;
+    status?: string;
+  }) {
+    const { id, userId, items, total, shippingAddress, paymentMethod, paymentId, status } = orderData;
     await this.query(
-      'INSERT INTO orders (id, user_id, items, total, shipping_address) VALUES (?, ?, ?, ?, ?)',
-      [id, userId, JSON.stringify(items), total, shippingAddress ? JSON.stringify(shippingAddress) : null]
+      'INSERT INTO orders (id, user_id, items, total, shipping_address, payment_method, payment_id, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [
+        id, 
+        userId, 
+        JSON.stringify(items), 
+        total, 
+        shippingAddress ? JSON.stringify(shippingAddress) : null,
+        paymentMethod || null,
+        paymentId || null,
+        status || 'pending'
+      ]
     );
   }
 
