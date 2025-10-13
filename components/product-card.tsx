@@ -122,11 +122,11 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
         </div>
 
         {/* Quantity controls */}
-        <div className={`flex items-center border rounded-md overflow-hidden shadow-sm bg-background mb-1.5 sm:mb-2 ${settings.animationsEnabled ? 'transition-all duration-200' : ''}`}>
+        <div className={`flex items-center h-8 sm:h-9 border rounded-md overflow-hidden shadow-sm bg-background mb-1.5 sm:mb-2 ${settings.animationsEnabled ? 'transition-all duration-200' : ''}`}>
           <Button
             variant="ghost"
             size="icon"
-            className={`h-7 w-7 sm:h-8 sm:w-8 rounded-none hover:bg-primary/10 ${settings.animationsEnabled ? 'active:scale-90 transition-transform duration-150 ease-spring' : 'transition-colors'}`}
+            className={`h-full w-8 sm:w-9 rounded-none hover:bg-primary/10 ${settings.animationsEnabled ? 'active:scale-90 transition-transform duration-150 ease-spring' : 'transition-colors'}`}
             onClick={(e) => {
               e.stopPropagation();
               setQuantity(Math.max(1, quantity - 1));
@@ -136,46 +136,48 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
             <Minus className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
           </Button>
           {/* Input allows typing - keep a string state to allow editing before commit */}
-          <input
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            aria-label={`Quantity for ${product.name}`}
-            value={quantityInput}
-            onClick={(e) => e.stopPropagation()}
-            onChange={(e) => {
-              // keep only digits in the input string
-              const cleaned = e.target.value.replace(/\D/g, "");
-              // Prevent empty string or "0" from being set
-              if (cleaned === "" || cleaned === "0") {
-                setQuantityInput("1");
-                setQuantity(1);
-              } else {
-                setQuantityInput(cleaned);
-              }
-            }}
-            onBlur={() => {
-              const n = parseInt(quantityInput, 10);
-              const final = Number.isNaN(n) || n < 1 ? 1 : n;
-              setQuantity(final);
-              setQuantityInput(String(final));
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
+          <div className="flex items-center justify-center min-w-[2rem] sm:min-w-[2.5rem] w-12 sm:w-16 h-full">
+            <input
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              aria-label={`Quantity for ${product.name}`}
+              value={quantityInput}
+              onClick={(e) => e.stopPropagation()}
+              onChange={(e) => {
+                // keep only digits in the input string
+                const cleaned = e.target.value.replace(/\D/g, "");
+                // Prevent empty string or "0" from being set
+                if (cleaned === "" || cleaned === "0") {
+                  setQuantityInput("1");
+                  setQuantity(1);
+                } else {
+                  setQuantityInput(cleaned);
+                }
+              }}
+              onBlur={() => {
                 const n = parseInt(quantityInput, 10);
                 const final = Number.isNaN(n) || n < 1 ? 1 : n;
                 setQuantity(final);
                 setQuantityInput(String(final));
-                // prevent form submits or other handlers
-                e.currentTarget.blur();
-              }
-            }}
-            className={`px-2 sm:px-3 py-1 min-w-[2rem] sm:min-w-[2.5rem] w-12 sm:w-16 text-center font-bold text-xs sm:text-sm appearance-none bg-transparent outline-none ${settings.animationsEnabled ? 'transition-all duration-200 ease-spring' : ''}`}
-          />
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  const n = parseInt(quantityInput, 10);
+                  const final = Number.isNaN(n) || n < 1 ? 1 : n;
+                  setQuantity(final);
+                  setQuantityInput(String(final));
+                  // prevent form submits or other handlers
+                  e.currentTarget.blur();
+                }
+              }}
+              className={`w-full h-full text-center font-bold text-xs sm:text-sm appearance-none bg-transparent outline-none border-none ${settings.animationsEnabled ? 'transition-all duration-200 ease-spring' : ''}`}
+            />
+          </div>
           <Button
             variant="ghost"
             size="icon"
-            className={`h-7 w-7 sm:h-8 sm:w-8 rounded-none hover:bg-primary/10 ${settings.animationsEnabled ? 'active:scale-90 transition-transform duration-150 ease-spring' : 'transition-colors'}`}
+            className={`h-full w-8 sm:w-9 rounded-none hover:bg-primary/10 ${settings.animationsEnabled ? 'active:scale-90 transition-transform duration-150 ease-spring' : 'transition-colors'}`}
             onClick={(e) => {
               e.stopPropagation();
               const next = quantity + 1;

@@ -109,9 +109,9 @@ export default function CartPage() {
                         >
                           <Minus className="h-3 w-3" />
                         </Button>
-                        <span className="w-12 text-center font-medium">
+                        <div className="w-12 flex items-center justify-center font-medium">
                           {item.quantity}
-                        </span>
+                        </div>
                         <Button
                           variant="outline"
                           size="icon"
@@ -146,7 +146,7 @@ export default function CartPage() {
         {/* Order Summary (right column) */}
         <div>
           <Card>
-            <CardContent>
+            <CardContent className="p-6">
               <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
 
               <div className="space-y-4 mb-6">

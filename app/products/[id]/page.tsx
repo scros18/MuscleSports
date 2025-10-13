@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/context/cart-context";
 import { formatPrice } from "@/lib/utils";
-import { ShoppingCart, ArrowLeft } from "lucide-react";
+import { ShoppingCart, ArrowLeft, Check } from "lucide-react";
 import Link from "next/link";
 import { generateProductSchema, generateBreadcrumbSchema } from "@/lib/seo";
 
@@ -21,6 +21,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedFlavourIndex, setSelectedFlavourIndex] = useState<number | null>(null);
   const [mainImage, setMainImage] = useState<string>('/placeholder.svg');
+  const [isAdded, setIsAdded] = useState(false);
   const { addToCart } = useCart();
   const [product, setProduct] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
@@ -147,6 +148,10 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     for (let i = 0; i < quantity; i++) {
       addToCart(item);
     }
+    setIsAdded(true);
+    setTimeout(() => {
+      setIsAdded(false);
+    }, 2000);
   };
 
   return (
@@ -343,12 +348,23 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           {/* Add to Cart Button */}
           <Button
             size="lg"
-            className="w-full sm:w-auto px-6 py-3 text-base font-semibold"
+            className={`w-full sm:w-auto px-6 py-3 text-base font-semibold transition-all duration-300 ${
+              isAdded ? "bg-green-600 hover:bg-green-700" : ""
+            }`}
             onClick={handleAddToCart}
-            disabled={!product.inStock}
+            disabled={!product.inStock || isAdded}
           >
-            <ShoppingCart className="mr-2 h-5 w-5" />
-            Add to Cart
+            {isAdded ? (
+              <>
+                <Check className="mr-2 h-5 w-5 animate-in zoom-in" />
+                Added to Cart!
+              </>
+            ) : (
+              <>
+                <ShoppingCart className="mr-2 h-5 w-5" />
+                Add to Cart
+              </>
+            )}
           </Button>
 
           <div className="mt-8 p-3 sm:p-4 bg-muted rounded-lg">
