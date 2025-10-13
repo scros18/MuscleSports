@@ -12,6 +12,7 @@ import Image from "next/image";
 
 // Force dynamic rendering to avoid long static generation during build
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 // Helper function to detect current theme
 function getCurrentTheme(): string {

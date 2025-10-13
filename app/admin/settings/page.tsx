@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";

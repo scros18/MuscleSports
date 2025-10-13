@@ -4,6 +4,10 @@ import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import { CartProvider } from '@/context/cart-context';
+import { AuthProvider } from '@/context/auth-context';
+import { PerformanceProvider } from '@/context/performance-context';
+import { BusinessSettingsProvider } from '@/context/business-settings-context';
+import { SiteSettingsProvider } from '@/context/site-settings-context';
 import { DynamicMetadata } from '@/components/dynamic-metadata';
 import { DynamicPageTitle } from '@/components/dynamic-page-title';
 
@@ -128,12 +132,20 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <CartProvider>
-            {children}
-            <Toaster />
-            <DynamicMetadata />
-            <DynamicPageTitle />
-          </CartProvider>
+          <AuthProvider>
+            <PerformanceProvider>
+              <BusinessSettingsProvider>
+                <SiteSettingsProvider>
+                  <CartProvider>
+                    {children}
+                    <Toaster />
+                    <DynamicMetadata />
+                    <DynamicPageTitle />
+                  </CartProvider>
+                </SiteSettingsProvider>
+              </BusinessSettingsProvider>
+            </PerformanceProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
