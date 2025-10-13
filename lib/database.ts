@@ -21,6 +21,59 @@ const pool = mysql.createPool(dbConfig);
 // Track if tables have been initialized
 let tablesInitialized = false;
 
+// Test products for local development without database
+const TEST_PRODUCTS = [
+  {
+    id: 'test-whey-protein-1',
+    name: 'MuscleSports Premium Whey Protein',
+    price: 39.99,
+    description: 'High-quality whey protein isolate with 25g of protein per serving. Perfect for muscle recovery and growth. Available in delicious chocolate and vanilla flavors.',
+    images: [
+      'https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?w=800&q=80',
+      'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=800&q=80'
+    ],
+    category: 'Protein',
+    in_stock: true,
+    inStock: true,
+    featured: true,
+    flavours: ['Chocolate', 'Vanilla', 'Strawberry'],
+    strengths: ['1kg', '2kg', '5kg'],
+    created_at: new Date(),
+    updated_at: new Date()
+  },
+  {
+    id: 'test-pre-workout-2',
+    name: 'Extreme Energy Pre-Workout',
+    price: 29.99,
+    description: 'Explosive energy and focus for intense workouts. Contains caffeine, beta-alanine, and citrulline for maximum performance.',
+    images: [
+      'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80'
+    ],
+    category: 'Pre-Workout',
+    in_stock: true,
+    inStock: true,
+    featured: true,
+    flavours: ['Blue Raspberry', 'Fruit Punch'],
+    created_at: new Date(),
+    updated_at: new Date()
+  },
+  {
+    id: 'test-creatine-3',
+    name: 'Micronized Creatine Monohydrate',
+    price: 19.99,
+    description: 'Pure creatine monohydrate for strength and power. Supports muscle growth and athletic performance.',
+    images: [
+      'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80'
+    ],
+    category: 'Creatine',
+    in_stock: true,
+    inStock: true,
+    featured: false,
+    created_at: new Date(),
+    updated_at: new Date()
+  }
+];
+
 // Helper to safely parse JSON fields returned from DB. mysql2 may return
 // JSON columns as already-parsed objects or as strings depending on driver/config.
 function safeJsonParse<T = any>(value: any, fallback: T | null = null): T | null {
@@ -320,17 +373,22 @@ export class Database {
   }
 
   static async getAllProducts() {
-    const rows = await this.query('SELECT * FROM products ORDER BY created_at DESC');
-    return (rows as any[]).map(product => ({
-      ...product,
-      price: parseFloat(product.price),
-      images: safeJsonParseArray(product.images),
-      inStock: product.in_stock,
-      featured: product.featured,
-      flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined,
-      flavourImages: product.flavour_images ? safeJsonParse(product.flavour_images, {}) : undefined,
-      strengths: product.strengths ? safeJsonParseArray(product.strengths) : undefined
-    }));
+    try {
+      const rows = await this.query('SELECT * FROM products ORDER BY created_at DESC');
+      return (rows as any[]).map(product => ({
+        ...product,
+        price: parseFloat(product.price),
+        images: safeJsonParseArray(product.images),
+        inStock: product.in_stock,
+        featured: product.featured,
+        flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined,
+        flavourImages: product.flavour_images ? safeJsonParse(product.flavour_images, {}) : undefined,
+        strengths: product.strengths ? safeJsonParseArray(product.strengths) : undefined
+      }));
+    } catch (error) {
+      console.log('📦 Database unavailable, using test products');
+      return TEST_PRODUCTS;
+    }
   }
 
   static async getProductsPaginated(limit: number, offset: number) {
@@ -353,21 +411,26 @@ export class Database {
   }
 
   static async getProductById(id: string) {
-    const rows = await this.query('SELECT * FROM products WHERE id = ?', [id]);
-    const product = (rows as any[])[0];
-    if (product) {
-      return {
-        ...product,
-        price: parseFloat(product.price),
-        images: safeJsonParseArray(product.images),
-        inStock: product.in_stock,
-        featured: product.featured,
-        flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined,
-        flavourImages: product.flavour_images ? safeJsonParse(product.flavour_images, {}) : undefined,
-        strengths: product.strengths ? safeJsonParseArray(product.strengths) : undefined
-      };
+    try {
+      const rows = await this.query('SELECT * FROM products WHERE id = ?', [id]);
+      const product = (rows as any[])[0];
+      if (product) {
+        return {
+          ...product,
+          price: parseFloat(product.price),
+          images: safeJsonParseArray(product.images),
+          inStock: product.in_stock,
+          featured: product.featured,
+          flavours: product.flavours ? safeJsonParseArray(product.flavours) : undefined,
+          flavourImages: product.flavour_images ? safeJsonParse(product.flavour_images, {}) : undefined,
+          strengths: product.strengths ? safeJsonParseArray(product.strengths) : undefined
+        };
+      }
+      return null;
+    } catch (error) {
+      console.log('📦 Database unavailable, checking test products');
+      return TEST_PRODUCTS.find(p => p.id === id) || null;
     }
-    return null;
   }
 
   static async updateProduct(id: string, productData: Partial<{

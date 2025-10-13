@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Saira } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
@@ -15,6 +15,11 @@ import { DynamicMetadata } from "@/components/dynamic-metadata";
 import { generateSEO, generateOrganizationSchema, generateWebsiteSchema, getJsonLdScript } from "@/lib/seo";
 
 const inter = Inter({ subsets: ["latin"] });
+const saira = Saira({ 
+  subsets: ["latin"],
+  variable: "--font-saira",
+  weight: ["300", "400", "500", "600", "700", "800"]
+});
 
 export const metadata: Metadata = generateSEO({
   title: undefined, // Use default
@@ -66,7 +71,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={getJsonLdScript(websiteSchema)}
         />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} ${saira.variable}`}>
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100000] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:shadow-lg">
           Skip to main content
         </a>

@@ -21,19 +21,37 @@ export function Header() {
   const { settings } = usePerformance();
   const { settings: siteSettings } = useSiteSettings();
   const router = useRouter();
-  const [currentTheme, setCurrentTheme] = useState<string>('ordify');
+  
+  // Initialize theme from localStorage to prevent flash
+  const [currentTheme, setCurrentTheme] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('admin_theme');
+      console.log('Header init - savedTheme:', savedTheme);
+      return savedTheme || 'ordify';
+    }
+    return 'ordify';
+  });
 
   // Detect theme from documentElement class or localStorage
   useEffect(() => {
     const detectTheme = () => {
-      // Check both documentElement and body
+      // First priority: check localStorage
+      const savedTheme = localStorage.getItem('admin_theme');
+      console.log('Header detectTheme - savedTheme:', savedTheme);
+      
+      if (savedTheme) {
+        setCurrentTheme(savedTheme);
+        return;
+      }
+      
+      // Second priority: check DOM classes
       const htmlClasses = document.documentElement.classList;
-      const bodyClasses = document.body.classList;
-      if (htmlClasses.contains('theme-musclesports') || bodyClasses.contains('theme-musclesports')) {
+      
+      if (htmlClasses.contains('theme-musclesports')) {
         setCurrentTheme('musclesports');
-      } else if (htmlClasses.contains('theme-vera') || bodyClasses.contains('theme-vera')) {
+      } else if (htmlClasses.contains('theme-vera')) {
         setCurrentTheme('vera');
-      } else if (htmlClasses.contains('theme-blisshair') || bodyClasses.contains('theme-blisshair')) {
+      } else if (htmlClasses.contains('theme-blisshair')) {
         setCurrentTheme('blisshair');
       } else {
         setCurrentTheme('ordify');
@@ -42,15 +60,12 @@ export function Header() {
 
     detectTheme();
     
-    // Watch for theme changes on both elements
+    // Watch for theme changes
     const htmlObserver = new MutationObserver(detectTheme);
-    const bodyObserver = new MutationObserver(detectTheme);
     htmlObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
     
     return () => {
       htmlObserver.disconnect();
-      bodyObserver.disconnect();
     };
   }, []);
   const [searchQuery, setSearchQuery] = useState("");
@@ -184,7 +199,7 @@ export function Header() {
             alt={currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : siteSettings.siteName}
             width={currentTheme === 'musclesports' ? 280 : 120}
             height={currentTheme === 'musclesports' ? 100 : 40}
-            className={currentTheme === 'musclesports' ? 'h-16 md:h-20 lg:h-24 w-auto' : 'h-8 md:h-10 w-auto'}
+            className={currentTheme === 'musclesports' ? 'h-24 md:h-24 lg:h-28 w-auto' : 'h-10 md:h-10 w-auto'}
             style={currentTheme === 'musclesports' ? {
               filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1)) brightness(1.05)',
               imageRendering: 'crisp-edges'

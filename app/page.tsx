@@ -217,9 +217,11 @@ export default function Home() {
                   {loading ? (
                     <SkeletonLoader type="product" count={isMobile ? 4 : 5} />
                   ) : (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 ${
+                      list.length < 5 ? 'justify-items-center lg:flex lg:justify-center lg:flex-wrap lg:max-w-4xl lg:mx-auto' : ''
+                    }`}>
                       {list.slice(0, limit).map((product) => (
-                        <div key={product.id}>
+                        <div key={product.id} className={list.length < 5 ? 'lg:w-[calc(20%-0.8rem)]' : ''}>
                           <ProductCard product={product} hideDescription />
                         </div>
                       ))}

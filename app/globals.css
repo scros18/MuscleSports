@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent theme flash on load with smooth transition */
+html {
+  opacity: 0;
+  transition: opacity 0.05s ease-in;
+}
+
+html.hydrated {
+  opacity: 1;
+}
+
 @layer utilities {
   /* Mobile-first responsive utilities */
   @media (max-width: 640px) {
@@ -738,6 +748,23 @@ button:active, .btn:active {
   transform: scale(0.97);
 }
 
+/* Shake animation for clear button */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+.hover-shake:hover {
+  animation: shake 0.3s ease-in-out;
+}
+
+/* Saira font utility for buttons and headings */
+.font-saira {
+  font-family: var(--font-saira), system-ui, -apple-system, sans-serif;
+}
+
+
 /* Loading states */
 .loading-shimmer {
   background: linear-gradient(90deg, 
@@ -747,5 +774,25 @@ button:active, .btn:active {
   );
   background-size: 200% 100%;
   animation: shimmerGradient 1.5s ease-in-out infinite;
+}
+
+/* Custom scrollbar for category list */
+.category-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.category-scroll::-webkit-scrollbar-track {
+  background: hsl(var(--muted) / 0.3);
+  border-radius: 3px;
+}
+
+.category-scroll::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.5);
+  border-radius: 3px;
+  transition: background 0.2s;
+}
+
+.category-scroll::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.8);
 }
 
