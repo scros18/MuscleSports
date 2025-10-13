@@ -119,7 +119,10 @@ export default function RootLayout({
         }} />
       </head>
       <body className={inter.className} suppressHydrationWarning>
-        {children}
+        <Providers>
+          {children}
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );
