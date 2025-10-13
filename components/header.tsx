@@ -367,12 +367,117 @@ export function Header() {
       <div className="border-t bg-muted/30 hidden md:block">
         <div className="container px-4">
           <nav className="flex items-center space-x-6 py-2 text-sm" ref={dropdownRef}>
-            <Link
-              href="/products?category=Vapes"
-              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
-            >
-              Vapes
-            </Link>
+            {/* Vapes Mega Menu */}
+            <div className="relative">
+              <button
+                onClick={() => setOpenDropdown(openDropdown === 'vapes' ? null : 'vapes')}
+                onMouseEnter={() => setOpenDropdown('vapes')}
+                className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground flex items-center gap-1"
+              >
+                Vapes
+                <ChevronDown className="h-3 w-3" />
+              </button>
+              {openDropdown === 'vapes' && (
+                <div
+                  onMouseEnter={() => setOpenDropdown('vapes')}
+                  onMouseLeave={() => setOpenDropdown(null)}
+                  className="absolute left-0 top-full pt-2 z-[9999]"
+                >
+                  <div className="bg-background border rounded-lg shadow-xl p-6 min-w-[600px]">
+                    <div className="grid grid-cols-2 gap-6">
+                      {/* E-Liquids & Nic Salts Column */}
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3 pb-2 border-b">E-Liquids & Nic Salts</h3>
+                        <div className="space-y-2">
+                          <Link
+                            href="/products?category=Vapes&subcategory=E-Liquids"
+                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
+                            onClick={() => setOpenDropdown(null)}
+                          >
+                            E-Liquids
+                          </Link>
+                          <Link
+                            href="/products?category=Vapes&subcategory=Nic+Salts"
+                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
+                            onClick={() => setOpenDropdown(null)}
+                          >
+                            Nic Salts
+                          </Link>
+                          <Link
+                            href="/products?category=Vapes&subcategory=Shortfills"
+                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
+                            onClick={() => setOpenDropdown(null)}
+                          >
+                            Shortfills
+                          </Link>
+                          <Link
+                            href="/products?category=Vapes&subcategory=50-50"
+                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
+                            onClick={() => setOpenDropdown(null)}
+                          >
+                            50/50 E-Liquids
+                          </Link>
+                        </div>
+                      </div>
+
+                      {/* Vape Devices Column */}
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3 pb-2 border-b">Vape Devices</h3>
+                        <div className="space-y-2">
+                          <Link
+                            href="/products?category=Vapes&subcategory=Disposable+Vapes"
+                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
+                            onClick={() => setOpenDropdown(null)}
+                          >
+                            Disposable Vapes
+                          </Link>
+                          <Link
+                            href="/products?category=Vapes&subcategory=Reusable+Vapes"
+                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
+                            onClick={() => setOpenDropdown(null)}
+                          >
+                            Reusable Vapes
+                          </Link>
+                          <Link
+                            href="/products?category=Vapes&subcategory=Refillable+Pods"
+                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
+                            onClick={() => setOpenDropdown(null)}
+                          >
+                            Refillable Pods
+                          </Link>
+                          <Link
+                            href="/products?category=Vapes&subcategory=Starter+Kits"
+                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
+                            onClick={() => setOpenDropdown(null)}
+                          >
+                            Starter Kits
+                          </Link>
+                          <Link
+                            href="/products?category=Vapes&subcategory=Coils+%26+Pods"
+                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
+                            onClick={() => setOpenDropdown(null)}
+                          >
+                            Coils & Pods
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* View All Link */}
+                    <div className="mt-4 pt-4 border-t">
+                      <Link
+                        href="/products?category=Vapes"
+                        className="text-primary hover:text-primary/80 font-medium text-sm flex items-center gap-1"
+                        onClick={() => setOpenDropdown(null)}
+                      >
+                        View All Vapes
+                        <ChevronDown className="h-3 w-3 rotate-[-90deg]" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
             <Link
               href="/products?category=Computers+%26+Electronics"
               className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"

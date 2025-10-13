@@ -36,7 +36,8 @@ export default function SettingsPage() {
       siteName: "Ordify Direct Ltd",
       siteUrl: "https://ordifydirect.com",
       logoUrl: "/ordifydirectltd.png",
-      tagline: "Premium E-Commerce Platform"
+      tagline: "Premium E-Commerce Platform",
+      showSaleBanner: false
     };
     setLocalSiteSettings(defaults);
     updateSiteSettings(defaults);

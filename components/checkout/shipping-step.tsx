@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCheckout } from "@/context/checkout-context";
+import { useAuth } from "@/context/auth-context";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +26,7 @@ interface ShippingStepProps {
 
 export function ShippingStep({ onNext, onBack }: ShippingStepProps) {
   const { shippingInfo, setShippingInfo } = useCheckout();
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     email: shippingInfo?.email || "",
     firstName: shippingInfo?.firstName || "",
@@ -37,10 +39,84 @@ export function ShippingStep({ onNext, onBack }: ShippingStepProps) {
     phone: shippingInfo?.phone || "",
   });
   const [saveInfo, setSaveInfo] = useState(false);
+  const [loadedSavedAddress, setLoadedSavedAddress] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Load saved shipping address if user is logged in
+  useEffect(() => {
+    const loadSavedAddress = async () => {
+      if (!user || loadedSavedAddress) return;
+      
+      try {
+        const token = localStorage.getItem("auth_token");
+        if (!token) return;
+
+        const response = await fetch("/api/user/shipping-address", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.shippingAddress) {
+            const saved = data.shippingAddress;
+            // Only load if form is empty
+            if (!formData.firstName && !formData.address) {
+              setFormData({
+                email: user.email || "",
+                firstName: saved.firstName || "",
+                lastName: saved.lastName || "",
+                address: saved.address || "",
+                apartment: saved.apartment || "",
+                city: saved.city || "",
+                postalCode: saved.postalCode || "",
+                country: saved.country || "GB",
+                phone: saved.phone || "",
+              });
+            }
+            setLoadedSavedAddress(true);
+          }
+        }
+      } catch (error) {
+        console.error("Error loading saved address:", error);
+      }
+    };
+
+    loadSavedAddress();
+  }, [user, loadedSavedAddress, formData.firstName, formData.address]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setShippingInfo(formData as any);
+    
+    // Save to user account if checkbox is checked and user is logged in
+    if (saveInfo && user) {
+      try {
+        const token = localStorage.getItem("auth_token");
+        if (token) {
+          await fetch('/api/user/shipping-address', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              firstName: formData.firstName,
+              lastName: formData.lastName,
+              address: formData.address,
+              apartment: formData.apartment,
+              city: formData.city,
+              postalCode: formData.postalCode,
+              country: formData.country,
+              phone: formData.phone,
+            }),
+          });
+        }
+      } catch (error) {
+        console.error('Error saving shipping address:', error);
+      }
+    }
+    
     onNext();
   };
 
@@ -222,20 +298,22 @@ export function ShippingStep({ onNext, onBack }: ShippingStepProps) {
               </div>
             </div>
 
-            {/* Save Info Checkbox */}
-            <div className="flex items-center space-x-2 pt-2">
-              <Checkbox
-                id="saveInfo"
-                checked={saveInfo}
-                onCheckedChange={(checked) => setSaveInfo(checked as boolean)}
-              />
-              <label
-                htmlFor="saveInfo"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Save this information for next time
-              </label>
-            </div>
+            {/* Save Info Checkbox - only show if user is logged in */}
+            {user && (
+              <div className="flex items-center space-x-2 pt-2">
+                <Checkbox
+                  id="saveInfo"
+                  checked={saveInfo}
+                  onCheckedChange={(checked) => setSaveInfo(checked as boolean)}
+                />
+                <label
+                  htmlFor="saveInfo"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Save this information to my account for next time
+                </label>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>

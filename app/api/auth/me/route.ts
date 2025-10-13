@@ -31,7 +31,8 @@ export async function GET(request: NextRequest) {
               name: ADMIN_CREDS.name,
               email: ADMIN_CREDS.email,
               role: 'admin',
-              isAdmin: true
+              isAdmin: true,
+              createdAt: new Date().toISOString()
             };
           } else {
             const Database = require('@/lib/database').default;
@@ -42,7 +43,8 @@ export async function GET(request: NextRequest) {
                 id: dbUser.id,
                 name: dbUser.name,
                 email: dbUser.email,
-                role: dbUser.role || 'user'
+                role: dbUser.role || 'user',
+                createdAt: dbUser.created_at ? (dbUser.created_at instanceof Date ? dbUser.created_at.toISOString() : new Date(dbUser.created_at).toISOString()) : new Date().toISOString()
               };
             }
           }

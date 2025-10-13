@@ -24,7 +24,7 @@ const DEFAULT_SETTINGS: SiteSettings = {
   siteUrl: "https://ordifydirect.com",
   logoUrl: "/ordifydirectltd.png",
   tagline: "Premium E-Commerce Platform",
-  showSaleBanner: true
+  showSaleBanner: false
 };
 
 export function SiteSettingsProvider({ children }: { children: React.ReactNode }) {

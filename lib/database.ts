@@ -77,6 +77,7 @@ export class Database {
             email VARCHAR(255) UNIQUE NOT NULL,
             password VARCHAR(255) NOT NULL,
             role ENUM('user', 'admin') DEFAULT 'user',
+            shipping_address JSON,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
           )
@@ -218,6 +219,36 @@ export class Database {
 
   static async deleteUser(userId: string) {
     await this.query('DELETE FROM users WHERE id = ?', [userId]);
+  }
+
+  static async updateUserShippingAddress(userId: string, shippingAddress: any) {
+    await this.query(
+      'UPDATE users SET shipping_address = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+      [JSON.stringify(shippingAddress), userId]
+    );
+  }
+
+  static async getUserShippingAddress(userId: string) {
+    const rows = await this.query('SELECT shipping_address FROM users WHERE id = ?', [userId]);
+    const user = (rows as any[])[0];
+    return user ? safeJsonParse(user.shipping_address, null) : null;
+  }
+
+  static async updateUserPassword(userId: string, hashedPassword: string) {
+    await this.query(
+      'UPDATE users SET password = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+      [hashedPassword, userId]
+    );
+  }
+
+  static async deleteUserData(userId: string) {
+    // Delete user's orders but keep the user account
+    await this.query('DELETE FROM orders WHERE user_id = ?', [userId]);
+    // Clear shipping address
+    await this.query(
+      'UPDATE users SET shipping_address = NULL, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+      [userId]
+    );
   }
 
   static async createOrder(orderData: { id: string; userId: string; items: any[]; total: number; shippingAddress?: any }) {

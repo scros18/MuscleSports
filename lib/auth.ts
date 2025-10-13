@@ -8,6 +8,7 @@ export interface AuthUser {
   email: string;
   role: 'user' | 'admin';
   isAdmin?: boolean;
+  createdAt?: string;
 }
 
 // Obfuscated admin credentials (server-side only)
