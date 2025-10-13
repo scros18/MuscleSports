@@ -8,6 +8,7 @@ import { SkeletonLoader } from "@/components/skeleton-loader";
 import { Star } from "lucide-react";
 import { SalonHomepage } from "@/components/salon-homepage";
 import { DynamicPageTitle } from "@/components/dynamic-page-title";
+import Image from "next/image";
 
 // Force dynamic rendering to avoid long static generation during build
 export const dynamic = 'force-dynamic';

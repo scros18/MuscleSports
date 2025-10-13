@@ -2,8 +2,12 @@
 User-agent: *
 Allow: /
 
+# Disallow admin and API routes
+Disallow: /admin/
+Disallow: /api/
+
 # Sitemap location
-Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://musclesports.co.uk/sitemap.xml
 
 # Crawl delay (optional - adjust as needed)
 Crawl-delay: 1

@@ -15,7 +15,9 @@ export async function middleware(request: NextRequest) {
 
   try {
     // Check maintenance mode via public API endpoint
-    const maintenanceResponse = await fetch(`${request.nextUrl.origin}/api/maintenance-status`);
+    // Use HTTP for local development, HTTPS for production
+    const protocol = request.nextUrl.hostname === 'localhost' ? 'http' : 'https';
+    const maintenanceResponse = await fetch(`${protocol}://${request.nextUrl.host}/api/maintenance-status`);
 
     if (maintenanceResponse.ok) {
       const maintenanceData = await maintenanceResponse.json();
