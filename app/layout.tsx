@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
-import { CartProvider } from '@/contexts/cart-context';
+import { CartProvider } from '@/context/cart-context';
 import { DynamicMetadata } from '@/components/dynamic-metadata';
 import { DynamicPageTitle } from '@/components/dynamic-page-title';
 

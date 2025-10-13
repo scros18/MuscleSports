@@ -624,6 +624,9 @@ export class Database {
     secondaryColor?: string;
     description?: string;
     socialMedia?: any;
+    isMaintenanceMode?: boolean;
+    maintenanceMessage?: string;
+    estimatedTime?: string;
   }) {
     const {
       id,
@@ -641,7 +644,10 @@ export class Database {
       primaryColor,
       secondaryColor,
       description,
-      socialMedia
+      socialMedia,
+      isMaintenanceMode,
+      maintenanceMessage,
+      estimatedTime,
     } = settingsData;
 
     // Check if settings exist
@@ -667,6 +673,9 @@ export class Database {
       if (secondaryColor !== undefined) { fields.push('secondary_color = ?'); values.push(secondaryColor); }
       if (description !== undefined) { fields.push('description = ?'); values.push(description); }
       if (socialMedia !== undefined) { fields.push('social_media = ?'); values.push(JSON.stringify(socialMedia)); }
+      if (isMaintenanceMode !== undefined) { fields.push('is_maintenance_mode = ?'); values.push(isMaintenanceMode); }
+      if (maintenanceMessage !== undefined) { fields.push('maintenance_message = ?'); values.push(maintenanceMessage); }
+      if (estimatedTime !== undefined) { fields.push('estimated_time = ?'); values.push(estimatedTime); }
 
       if (fields.length > 0) {
         const sql = `UPDATE business_settings SET ${fields.join(', ')}, updated_at = CURRENT_TIMESTAMP WHERE id = ?`;
@@ -679,15 +688,17 @@ export class Database {
         `INSERT INTO business_settings (
           id, theme, business_name, business_type, logo_url, address, phone, email,
           opening_hours, google_maps_embed, latitude, longitude, primary_color,
-          secondary_color, description, social_media
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          secondary_color, description, social_media, is_maintenance_mode, 
+          maintenance_message, estimated_time
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           id, theme, businessName || null, businessType || 'ecommerce', logoUrl || null,
           address || null, phone || null, email || null,
           openingHours ? JSON.stringify(openingHours) : null,
           googleMapsEmbed || null, latitude || null, longitude || null,
           primaryColor || null, secondaryColor || null, description || null,
-          socialMedia ? JSON.stringify(socialMedia) : null
+          socialMedia ? JSON.stringify(socialMedia) : null,
+          isMaintenanceMode || false, maintenanceMessage || null, estimatedTime || null
         ]
       );
     }

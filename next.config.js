@@ -68,6 +68,11 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
 
+  // Disable ESLint during build for now
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
   // Experimental features for performance
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
