@@ -29,7 +29,6 @@ export async function POST(request: NextRequest) {
     
     await Database.createOrUpdateBusinessSettings({
       id: 'maintenance',
-      theme: 'musclesports',
       isMaintenanceMode: isMaintenanceMode || false,
       maintenanceMessage: maintenanceMessage || 'We are currently performing scheduled maintenance. Please check back soon!',
       estimatedTime: estimatedTime || null

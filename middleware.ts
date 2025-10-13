@@ -4,26 +4,18 @@ import type { NextRequest } from 'next/server';
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Skip middleware for specific paths
+  // Skip maintenance check for admin routes and API routes
   if (pathname.startsWith('/admin') || 
       pathname.startsWith('/api') || 
       pathname.startsWith('/_next') ||
       pathname.startsWith('/favicon') ||
-      pathname.startsWith('/public') ||
-      pathname.startsWith('/images') ||
-      pathname.includes('.') || // Skip files with extensions
       pathname === '/maintenance') {
     return NextResponse.next();
   }
 
-  // Temporarily disable maintenance check to prevent blank pages
-  // Uncomment below to enable maintenance mode checking
-  /*
   try {
     // Check maintenance mode via public API endpoint
-    // Use HTTP for local development, HTTPS for production
-    const protocol = request.nextUrl.hostname === 'localhost' ? 'http' : 'https';
-    const maintenanceResponse = await fetch(`${protocol}://${request.nextUrl.host}/api/maintenance-status`);
+    const maintenanceResponse = await fetch(`${request.nextUrl.origin}/api/maintenance-status`);
 
     if (maintenanceResponse.ok) {
       const maintenanceData = await maintenanceResponse.json();
@@ -45,7 +37,6 @@ export async function middleware(request: NextRequest) {
     // If there's an error checking maintenance mode, continue normally
     console.error('Error checking maintenance mode:', error);
   }
-  */
 
   return NextResponse.next();
 }

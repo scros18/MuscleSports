@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,7 @@ interface ProductCardProps {
   sectionType?: 'best-sellers' | 'new' | 'default';
 }
 
-export const ProductCard = memo(function ProductCard({ product, hideDescription = false, sectionType = 'default' }: ProductCardProps) {
+export function ProductCard({ product, hideDescription = false, sectionType = 'default' }: ProductCardProps) {
   const { addToCart } = useCart();
   const { settings } = usePerformance();
   const [quantity, setQuantity] = useState(1);
@@ -100,16 +100,11 @@ export const ProductCard = memo(function ProductCard({ product, hideDescription 
       
       <Link href={`/products/${product.id}`}>
         <div className="relative aspect-square w-full overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-          <Image
+          <img
             src={imageError ? "/placeholder.svg" : firstImage}
             alt={product.name}
-            fill
-            className="object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
-            loading={sectionType === 'best-sellers' ? 'eager' : 'lazy'}
-            priority={sectionType === 'best-sellers'}
-            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-            placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
+            loading="lazy"
             onError={() => {
               console.log('ProductCard image failed to load:', firstImage);
               setImageError(true);
@@ -268,4 +263,4 @@ export const ProductCard = memo(function ProductCard({ product, hideDescription 
       </CardContent>
     </Card>
   );
-});
+}
