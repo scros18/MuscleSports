@@ -796,3 +796,31 @@ button:active, .btn:active {
   background: hsl(var(--primary) / 0.8);
 }
 
+/* Flying cart animation */
+@keyframes flyToCart {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  60% {
+    opacity: 0.95;
+    transform: translate(calc(60vw - 60px), -60vh) scale(0.7);
+  }
+  80% {
+    opacity: 0.7;
+    transform: translate(calc(80vw - 80px), -80vh) scale(0.45);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(90vw - 60px), -90vh) scale(0.25);
+  }
+}
+
+.animate-fly-to-cart {
+  animation: flyToCart 1.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}

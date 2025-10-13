@@ -22,46 +22,50 @@ export function Header() {
   const { settings: siteSettings } = useSiteSettings();
   const router = useRouter();
   
-  // Initialize theme from localStorage to prevent flash
-  const [currentTheme, setCurrentTheme] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('admin_theme');
-      console.log('Header init - savedTheme:', savedTheme);
-      return savedTheme || 'ordify';
-    }
-    return 'ordify';
-  });
+  // Start with null to force client-side only rendering of the logo
+  const [currentTheme, setCurrentTheme] = useState<string | null>(null);
 
-  // Detect theme from documentElement class or localStorage
+  // Detect theme from localStorage FIRST, then DOM
   useEffect(() => {
     const detectTheme = () => {
-      // First priority: check localStorage
+      // ALWAYS prioritize localStorage
       const savedTheme = localStorage.getItem('admin_theme');
-      console.log('Header detectTheme - savedTheme:', savedTheme);
+      console.log('Header detectTheme - localStorage:', savedTheme);
       
       if (savedTheme) {
+        console.log('Header setting theme from localStorage:', savedTheme);
         setCurrentTheme(savedTheme);
         return;
       }
       
-      // Second priority: check DOM classes
+      // Only check DOM if no localStorage value exists
       const htmlClasses = document.documentElement.classList;
       
       if (htmlClasses.contains('theme-musclesports')) {
+        console.log('Header setting theme from DOM: musclesports');
         setCurrentTheme('musclesports');
       } else if (htmlClasses.contains('theme-vera')) {
         setCurrentTheme('vera');
       } else if (htmlClasses.contains('theme-blisshair')) {
         setCurrentTheme('blisshair');
       } else {
+        console.log('Header setting theme to default: ordify');
         setCurrentTheme('ordify');
       }
     };
 
+    // Run immediately on mount
     detectTheme();
     
     // Watch for theme changes
-    const htmlObserver = new MutationObserver(detectTheme);
+    const htmlObserver = new MutationObserver(() => {
+      const savedTheme = localStorage.getItem('admin_theme');
+      if (savedTheme) {
+        setCurrentTheme(savedTheme);
+      } else {
+        detectTheme();
+      }
+    });
     htmlObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     
     return () => {
@@ -190,21 +194,25 @@ export function Header() {
       <header className="sticky top-0 z-[99999] w-full max-w-full bg-background/70 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/60 overflow-visible border-b border-white/10 dark:border-white/5 shadow-lg shadow-black/5">
       <div className="container mx-auto flex h-16 items-center justify-between px-3 sm:px-4 gap-2 sm:gap-4">
         <Link href="/" className="flex items-center flex-shrink-0 min-w-0">
-          <Image
-            src={currentTheme === 'musclesports' 
-              ? '/musclesports-logo.png'
-              : currentTheme === 'vera'
-              ? 'https://i.imgur.com/verarp-logo.png'
-              : siteSettings.logoUrl}
-            alt={currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : siteSettings.siteName}
-            width={currentTheme === 'musclesports' ? 280 : 120}
-            height={currentTheme === 'musclesports' ? 100 : 40}
-            className={currentTheme === 'musclesports' ? 'h-24 md:h-24 lg:h-28 w-auto' : 'h-10 md:h-10 w-auto'}
-            style={currentTheme === 'musclesports' ? {
-              filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1)) brightness(1.05)',
-              imageRendering: 'crisp-edges'
-            } : undefined}
-          />
+          {currentTheme !== null && (
+            <Image
+              key={`logo-${currentTheme}`}
+              src={currentTheme === 'musclesports' 
+                ? '/musclesports-logo.png'
+                : currentTheme === 'vera'
+                ? 'https://i.imgur.com/verarp-logo.png'
+                : siteSettings.logoUrl}
+              alt={currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : siteSettings.siteName}
+              width={currentTheme === 'musclesports' ? 280 : 120}
+              height={currentTheme === 'musclesports' ? 100 : 40}
+              className={currentTheme === 'musclesports' ? 'h-24 md:h-24 lg:h-28 w-auto' : 'h-10 md:h-10 w-auto'}
+              style={currentTheme === 'musclesports' ? {
+                filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1)) brightness(1.05)',
+                imageRendering: 'crisp-edges'
+              } : undefined}
+              priority
+            />
+          )}
         </Link>
 
         {/* Desktop Search - Always expanded Amazon-style */}
@@ -381,224 +389,94 @@ export function Header() {
       {/* Category Navigation Bar - Hidden on mobile */}
       <div className="border-t bg-muted/30 hidden md:block">
         <div className="container px-4">
-          <nav className="flex items-center space-x-6 py-2 text-sm" ref={dropdownRef}>
-            {/* Vapes Mega Menu */}
-            <div className="relative">
+          <nav
+            className="flex justify-center items-center gap-4 md:gap-6 py-2 text-sm"
+            ref={dropdownRef}
+          >
+            {/* Custom MuscleSports Categories with Animated Dropdowns */}
+            <Link
+              href="/products?category=Protein+Powders"
+              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+            >
+              Protein Powders
+            </Link>
+            <div className="relative group">
               <button
-                onClick={() => setOpenDropdown(openDropdown === 'vapes' ? null : 'vapes')}
-                onMouseEnter={() => setOpenDropdown('vapes')}
+                onClick={() => setOpenDropdown(openDropdown === 'preworkout' ? null : 'preworkout')}
+                onMouseEnter={() => setOpenDropdown('preworkout')}
                 className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground flex items-center gap-1"
               >
-                Vapes
-                <ChevronDown className="h-3 w-3" />
+                Pre-Workout
+                <ChevronDown className="h-3 w-3 transition-transform duration-300" style={{ transform: openDropdown === 'preworkout' ? 'rotate(180deg)' : 'rotate(0deg)' }} />
               </button>
-              {openDropdown === 'vapes' && (
-                <div
-                  onMouseEnter={() => setOpenDropdown('vapes')}
-                  onMouseLeave={() => setOpenDropdown(null)}
-                  className="absolute left-0 top-full pt-2 z-[9999]"
-                >
-                  <div className="bg-background border rounded-lg shadow-xl p-6 min-w-[600px]">
-                    <div className="grid grid-cols-2 gap-6">
-                      {/* E-Liquids & Nic Salts Column */}
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-3 pb-2 border-b">E-Liquids & Nic Salts</h3>
-                        <div className="space-y-2">
-                          <Link
-                            href="/products?category=Vapes&subcategory=E-Liquids"
-                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
-                            onClick={() => setOpenDropdown(null)}
-                          >
-                            E-Liquids
-                          </Link>
-                          <Link
-                            href="/products?category=Vapes&subcategory=Nic+Salts"
-                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
-                            onClick={() => setOpenDropdown(null)}
-                          >
-                            Nic Salts
-                          </Link>
-                          <Link
-                            href="/products?category=Vapes&subcategory=Shortfills"
-                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
-                            onClick={() => setOpenDropdown(null)}
-                          >
-                            Shortfills
-                          </Link>
-                          <Link
-                            href="/products?category=Vapes&subcategory=50-50"
-                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
-                            onClick={() => setOpenDropdown(null)}
-                          >
-                            50/50 E-Liquids
-                          </Link>
-                        </div>
-                      </div>
-
-                      {/* Vape Devices Column */}
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-3 pb-2 border-b">Vape Devices</h3>
-                        <div className="space-y-2">
-                          <Link
-                            href="/products?category=Vapes&subcategory=Disposable+Vapes"
-                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
-                            onClick={() => setOpenDropdown(null)}
-                          >
-                            Disposable Vapes
-                          </Link>
-                          <Link
-                            href="/products?category=Vapes&subcategory=Reusable+Vapes"
-                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
-                            onClick={() => setOpenDropdown(null)}
-                          >
-                            Reusable Vapes
-                          </Link>
-                          <Link
-                            href="/products?category=Vapes&subcategory=Refillable+Pods"
-                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
-                            onClick={() => setOpenDropdown(null)}
-                          >
-                            Refillable Pods
-                          </Link>
-                          <Link
-                            href="/products?category=Vapes&subcategory=Starter+Kits"
-                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
-                            onClick={() => setOpenDropdown(null)}
-                          >
-                            Starter Kits
-                          </Link>
-                          <Link
-                            href="/products?category=Vapes&subcategory=Coils+%26+Pods"
-                            className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors"
-                            onClick={() => setOpenDropdown(null)}
-                          >
-                            Coils & Pods
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* View All Link */}
-                    <div className="mt-4 pt-4 border-t">
-                      <Link
-                        href="/products?category=Vapes"
-                        className="text-primary hover:text-primary/80 font-medium text-sm flex items-center gap-1"
-                        onClick={() => setOpenDropdown(null)}
-                      >
-                        View All Vapes
-                        <ChevronDown className="h-3 w-3 rotate-[-90deg]" />
-                      </Link>
-                    </div>
-                  </div>
+              <div
+                className={`absolute left-0 top-full pt-2 z-[9999] transition-all duration-300 ease-spring ${openDropdown === 'preworkout' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}
+                onMouseEnter={() => setOpenDropdown('preworkout')}
+                onMouseLeave={() => setOpenDropdown(null)}
+              >
+                <div className="bg-background border rounded-lg shadow-xl p-4 min-w-[220px] animate-slide-in-up">
+                  <Link href="/products?category=Pre-Workout&subcategory=Powders" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>Powders</Link>
+                  <Link href="/products?category=Pre-Workout&subcategory=Shots" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>Shots</Link>
+                  <Link href="/products?category=Pre-Workout&subcategory=Tablets" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>Tablets</Link>
                 </div>
-              )}
+              </div>
             </div>
             <Link
-              href="/products?category=Computers+%26+Electronics"
+              href="/products?category=Creatine"
               className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
             >
-              Computers & Electronics
+              Creatine
             </Link>
-            
-            {/* Home & Office Dropdown */}
-            <div className="relative">
+            <Link
+              href="/products?category=Protein+Bars"
+              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+            >
+              Protein Bars
+            </Link>
+            <div className="relative group">
               <button
-                onClick={() => setOpenDropdown(openDropdown === 'home-office' ? null : 'home-office')}
+                onClick={() => setOpenDropdown(openDropdown === 'accessories' ? null : 'accessories')}
+                onMouseEnter={() => setOpenDropdown('accessories')}
                 className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground flex items-center gap-1"
               >
-                Home & Office
-                <ChevronDown className="h-3 w-3" />
+                Accessories
+                <ChevronDown className="h-3 w-3 transition-transform duration-300" style={{ transform: openDropdown === 'accessories' ? 'rotate(180deg)' : 'rotate(0deg)' }} />
               </button>
-              {openDropdown === 'home-office' && (
-                <div className="absolute top-full left-0 mt-1 bg-background border rounded-md shadow-lg z-[1000000] min-w-48 py-2">
-                  <Link
-                    href="/products?category=Home+Goods"
-                    className="block px-4 py-2 text-sm hover:bg-muted transition-colors"
-                    onClick={() => setOpenDropdown(null)}
-                  >
-                    Home Goods
-                  </Link>
-                  <Link
-                    href="/products?category=Office"
-                    className="block px-4 py-2 text-sm hover:bg-muted transition-colors"
-                    onClick={() => setOpenDropdown(null)}
-                  >
-                    Office
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* Garden & Outdoor Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => setOpenDropdown(openDropdown === 'garden-outdoor' ? null : 'garden-outdoor')}
-                className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground flex items-center gap-1"
+              <div
+                className={`absolute left-0 top-full pt-2 z-[9999] transition-all duration-300 ease-spring ${openDropdown === 'accessories' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}
+                onMouseEnter={() => setOpenDropdown('accessories')}
+                onMouseLeave={() => setOpenDropdown(null)}
               >
-                Garden & Outdoor
-                <ChevronDown className="h-3 w-3" />
-              </button>
-              {openDropdown === 'garden-outdoor' && (
-                <div className="absolute top-full left-0 mt-1 bg-background border rounded-md shadow-lg z-[1000000] min-w-48 py-2">
-                  <Link
-                    href="/products?category=Garden+%26+Outdoor"
-                    className="block px-4 py-2 text-sm hover:bg-muted transition-colors"
-                    onClick={() => setOpenDropdown(null)}
-                  >
-                    Garden & Outdoor
-                  </Link>
-                  <Link
-                    href="/products?category=Sports+%26+Leisure"
-                    className="block px-4 py-2 text-sm hover:bg-muted transition-colors"
-                    onClick={() => setOpenDropdown(null)}
-                  >
-                    Sports & Leisure
-                  </Link>
+                <div className="bg-background border rounded-lg shadow-xl p-4 min-w-[220px] animate-slide-in-up">
+                  <Link href="/products?category=Accessories&subcategory=Shakers" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>Shakers</Link>
+                  <Link href="/products?category=Accessories&subcategory=Bottles" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>Bottles</Link>
+                  <Link href="/products?category=Accessories&subcategory=Apparel" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>Apparel</Link>
                 </div>
-              )}
+              </div>
             </div>
-
             <Link
-              href="/products?category=Pet+Supplies"
+              href="/products?category=Vitamins+%26+Supplements"
               className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
             >
-              Pet Supplies
+              Vitamins & Supplements
             </Link>
             <Link
-              href="/products?category=Health+%26+Beauty"
+              href="/products?category=Snacks"
               className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
             >
-              Health & Beauty
+              Snacks
             </Link>
             <Link
-              href="/products?category=Toys+%26+Games"
+              href="/products?category=Bundles"
               className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
             >
-              Toys & Games
+              Bundles
             </Link>
             <Link
-              href="/products?category=Automotive"
+              href="/about"
               className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
             >
-              Automotive
-            </Link>
-            <Link
-              href="/products?category=Baby+%26+Kids"
-              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
-            >
-              Baby & Kids
-            </Link>
-            <Link
-              href="/products?category=Food+%26+Drink"
-              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
-            >
-              Food & Drink
-            </Link>
-            <Link
-              href="/products?category=Books+%26+Media"
-              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
-            >
-              Books & Media
+              About Us
             </Link>
           </nav>
         </div>

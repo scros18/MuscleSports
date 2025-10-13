@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { usePerformance } from "@/context/performance-context";
+import { Button } from "@/components/ui/button";
 
 type Slide = {
   id: number;
@@ -162,8 +164,8 @@ export default function HeroCarousel() {
       {slides.map((s, i) => (
         <div
           key={s.id}
-          className={`pointer-events-none w-full h-64 md:h-96 bg-center bg-cover absolute inset-0 transition-opacity duration-700 ease-in-out ${
-            i === index ? "opacity-100 z-10" : "opacity-0 z-0"
+          className={`w-full h-64 md:h-96 bg-center bg-cover absolute inset-0 transition-opacity duration-700 ease-in-out ${
+            i === index ? "opacity-100 z-10 pointer-events-auto" : "opacity-0 z-0 pointer-events-none"
           }`}
           style={{ backgroundImage: `url(${s.image})` }}
           aria-hidden={i !== index}
@@ -195,44 +197,19 @@ export default function HeroCarousel() {
                   </div>
                 )}
                 
-                {/* Shop Now CTA */}
-                <button 
-                  className={`mt-5 md:mt-6 bg-white text-black px-6 md:px-10 py-2.5 md:py-3.5 rounded-full font-black text-xs md:text-sm uppercase tracking-wider shadow-2xl ${
-                    settings.animationsEnabled
-                      ? 'transition-all duration-500 hover:scale-105 active:scale-95'
-                      : 'transition-colors duration-200'
-                  }`}
-                  style={{
-                    ...(settings.animationsEnabled && {
-                      background: 'white',
-                    }),
-                  }}
-                  onMouseEnter={(e) => {
-                    if (settings.animationsEnabled) {
-                      const gradients = {
-                        musclesports: 'linear-gradient(to right, #00B341, #00E050)',
-                        vera: 'linear-gradient(to right, #FF6B00, #FF8C00)',
-                        ordify: 'linear-gradient(to right, #388EE9, #8B5CF6)',
-                      };
-                      e.currentTarget.style.background = gradients[currentTheme as keyof typeof gradients] || gradients.ordify;
-                      e.currentTarget.style.color = 'white';
-                      e.currentTarget.style.boxShadow = currentTheme === 'musclesports' 
-                        ? '0 20px 50px rgba(0, 179, 65, 0.5)' 
-                        : currentTheme === 'vera'
-                        ? '0 20px 50px rgba(255, 107, 0, 0.5)'
-                        : '0 20px 50px rgba(56, 142, 233, 0.5)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (settings.animationsEnabled) {
-                      e.currentTarget.style.background = 'white';
-                      e.currentTarget.style.color = 'black';
-                      e.currentTarget.style.boxShadow = '0 25px 50px -12px rgb(0 0 0 / 0.25)';
-                    }
-                  }}
-                >
-                  Shop Now
-                </button>
+                {/* Shop Now CTA - use the site's Button and Link for consistent styling and correct navigation */}
+                <Link href={s.category ? `/products?category=${encodeURIComponent(s.category)}` : '/products'}>
+                  <Button
+                    className={`${
+                      settings.animationsEnabled
+                        ? 'mt-5 md:mt-6 rounded-full font-black text-xs md:text-sm uppercase tracking-wider shadow-2xl px-6 md:px-10 py-2.5 md:py-3.5 transition-all duration-500 hover:scale-105 active:scale-95'
+                        : 'mt-5 md:mt-6 rounded-full font-black text-xs md:text-sm uppercase tracking-wider shadow-2xl px-6 md:px-10 py-2.5 md:py-3.5 transition-colors duration-200'
+                    }`}
+                    aria-label={s.title + ' - Shop Now'}
+                  >
+                    Shop Now
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

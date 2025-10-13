@@ -15,9 +15,10 @@ import Link from "next/link";
 interface ProductCardProps {
   product: Product;
   hideDescription?: boolean;
+  sectionType?: 'best-sellers' | 'new' | 'default';
 }
 
-export function ProductCard({ product, hideDescription = false }: ProductCardProps) {
+export function ProductCard({ product, hideDescription = false, sectionType = 'default' }: ProductCardProps) {
   const { addToCart } = useCart();
   const { settings } = usePerformance();
   const [quantity, setQuantity] = useState(1);
@@ -25,6 +26,7 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
   const [isAdded, setIsAdded] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [showFlyingIcon, setShowFlyingIcon] = useState(false);
   const firstImage = Array.isArray((product as any).images) && (product as any).images.length
     ? (product as any).images[0]
     : (product as any).image || "/placeholder.svg";
@@ -44,6 +46,11 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
     for (let i = 0; i < quantity; i++) {
       addToCart(product);
     }
+    
+    // Trigger flying animation
+    setShowFlyingIcon(true);
+    setTimeout(() => setShowFlyingIcon(false), 1000);
+    
     setIsAdded(true);
     setTimeout(() => {
       setIsAdded(false);
@@ -54,8 +61,43 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
     ? "hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ease-out"
     : "transition-shadow duration-200";
 
+  // Section-specific styling
+  const getSectionStyles = () => {
+    if (sectionType === 'best-sellers') {
+      return {
+        buttonClass: 'bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 text-white',
+        titleGradient: 'hover:bg-gradient-to-r hover:from-yellow-600 hover:via-amber-500 hover:to-yellow-700 hover:bg-clip-text hover:text-transparent',
+        priceGradient: 'bg-gradient-to-r from-yellow-600 to-amber-600 bg-clip-text text-transparent'
+      };
+    } else if (sectionType === 'new') {
+      return {
+        buttonClass: 'bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white',
+        titleGradient: 'hover:bg-gradient-to-r hover:from-teal-600 hover:via-cyan-500 hover:to-sky-700 hover:bg-clip-text hover:text-transparent',
+        priceGradient: 'bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent'
+      };
+    } else {
+      return {
+        buttonClass: '',
+        titleGradient: 'hover:text-primary',
+        priceGradient: 'bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent'
+      };
+    }
+  };
+
+  const sectionStyles = getSectionStyles();
+
+
   return (
     <Card className={`overflow-hidden hover:shadow-2xl flex flex-col h-full group border hover:border-primary/30 rounded-lg premium-card ${animationClass}`}>
+      {/* Flying cart icon animation */}
+      {showFlyingIcon && (
+        <div className="fixed z-50 pointer-events-none animate-fly-to-cart">
+          <div className="bg-red-500 text-white rounded-full p-2 shadow-2xl">
+            <ShoppingCart className="h-4 w-4" />
+          </div>
+        </div>
+      )}
+      
       <Link href={`/products/${product.id}`}>
         <div className="relative aspect-square w-full overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
           <img
@@ -92,7 +134,7 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
 
       <CardContent className="p-2.5 sm:p-3 md:p-3.5 flex-grow flex flex-col">
         <Link href={`/products/${product.id}`} className="flex-grow">
-          <h3 className="font-semibold text-xs sm:text-sm mb-1 sm:mb-1.5 hover:text-primary transition-colors line-clamp-2 min-h-[2.2rem] sm:min-h-[2.5rem] leading-tight sm:leading-snug">
+          <h3 className={`font-semibold text-xs sm:text-sm mb-1 sm:mb-1.5 transition-colors line-clamp-2 min-h-[2.2rem] sm:min-h-[2.5rem] leading-tight sm:leading-snug ${sectionStyles.titleGradient}`}>
             {product.name}
           </h3>
         </Link>
@@ -104,7 +146,7 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
         
         {/* Price prominently displayed */}
         <div className="mt-auto mb-2 sm:mb-3">
-          <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+          <span className={`text-lg sm:text-xl font-bold ${sectionStyles.priceGradient}`}>
             {formatPrice(product.price)}
           </span>
         </div>
@@ -192,7 +234,7 @@ export function ProductCard({ product, hideDescription = false }: ProductCardPro
         {/* Add to cart button */}
         <Button
           className={`w-full font-semibold shadow-sm hover:shadow-md text-xs sm:text-sm h-8 sm:h-9 ${
-            isAdded ? "bg-green-600 hover:bg-green-700" : ""
+            isAdded ? "bg-green-600 hover:bg-green-700" : sectionStyles.buttonClass
           } ${
             settings.animationsEnabled
               ? "transition-all duration-300 active:scale-[0.98] hover:scale-[1.01]"
