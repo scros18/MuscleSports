@@ -40,6 +40,7 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [productsExpanded, setProductsExpanded] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<'lumify' | 'ordify' | 'musclesports' | 'vera' | 'blisshair'>('lumify');
+  const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -51,7 +52,24 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
       setCurrentTheme(savedTheme);
       applyTheme(savedTheme);
     }
+    // Check maintenance mode status
+    checkMaintenanceMode();
+    // Poll every 10 seconds
+    const interval = setInterval(checkMaintenanceMode, 10000);
+    return () => clearInterval(interval);
   }, []);
+
+  const checkMaintenanceMode = async () => {
+    try {
+      const response = await fetch('/api/maintenance-status');
+      if (response.ok) {
+        const data = await response.json();
+        setIsMaintenanceMode(data.isMaintenanceMode || false);
+      }
+    } catch (error) {
+      console.error('Failed to check maintenance mode:', error);
+    }
+  };
 
   const applyTheme = (theme: 'lumify' | 'ordify' | 'musclesports' | 'vera' | 'blisshair') => {
     const root = document.documentElement;
@@ -427,6 +445,17 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Maintenance Mode Warning Banner */}
+        {isMaintenanceMode && (
+          <div className="bg-orange-600 text-white px-4 py-3 flex items-center justify-center gap-3 sticky top-0 z-50 shadow-lg">
+            <Wrench className="h-5 w-5 animate-pulse" />
+            <div className="font-semibold text-sm sm:text-base">
+              🚧 MAINTENANCE MODE ACTIVE - Site is down for all customers. Only you can access /admin
+            </div>
+            <Wrench className="h-5 w-5 animate-pulse" />
+          </div>
+        )}
+
         {/* Header */}
         <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-30">
           <div className="px-4 sm:px-6 py-4">

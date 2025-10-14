@@ -4,12 +4,20 @@ import type { NextRequest } from 'next/server';
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Skip maintenance check for admin routes and API routes
-  if (pathname.startsWith('/admin') || 
-      pathname.startsWith('/api') || 
-      pathname.startsWith('/_next') ||
-      pathname.startsWith('/favicon') ||
-      pathname === '/maintenance') {
+  // ONLY allow these paths during maintenance mode:
+  // - /admin/* (admin panel access)
+  // - /api/* (API routes needed for admin)
+  // - /_next/* (Next.js assets)
+  // - /favicon.ico (favicon)
+  // - /maintenance (the maintenance page itself)
+  const isAdminPath = pathname.startsWith('/admin');
+  const isApiPath = pathname.startsWith('/api');
+  const isNextAsset = pathname.startsWith('/_next');
+  const isFavicon = pathname.startsWith('/favicon');
+  const isMaintenancePage = pathname === '/maintenance';
+  
+  // Skip maintenance check for admin, API, and system routes
+  if (isAdminPath || isApiPath || isNextAsset || isFavicon || isMaintenancePage) {
     return NextResponse.next();
   }
 
@@ -21,7 +29,6 @@ export async function middleware(request: NextRequest) {
     const apiUrl = `${protocol}://${host}/api/maintenance-status`;
     
     const maintenanceResponse = await fetch(apiUrl, {
-      // Disable SSL verification for internal requests
       headers: request.headers,
     });
 
@@ -29,7 +36,7 @@ export async function middleware(request: NextRequest) {
       const maintenanceData = await maintenanceResponse.json();
       
       if (maintenanceData.isMaintenanceMode) {
-        // Redirect to maintenance page
+        // BLOCK EVERYONE - redirect to maintenance page
         const maintenanceUrl = new URL('/maintenance', request.url);
         if (maintenanceData.maintenanceMessage) {
           maintenanceUrl.searchParams.set('message', maintenanceData.maintenanceMessage);
@@ -52,13 +59,9 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - admin (admin routes)
+     * Match ALL request paths
+     * Maintenance mode will block everything except /admin
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|admin).*)',
+    '/(.*)',
   ],
 };
