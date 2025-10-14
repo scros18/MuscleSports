@@ -56,7 +56,7 @@ export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4" suppressHydrationWarning>
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-green-500/10 rounded-full blur-3xl animate-pulse"></div>
@@ -101,7 +101,7 @@ export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps
               <Clock className="w-6 h-6 text-blue-400" />
             </div>
             <h3 className="text-white font-semibold mb-2">Current Time</h3>
-            <p className="text-gray-400 text-sm font-mono">
+            <p className="text-gray-400 text-sm font-mono" suppressHydrationWarning>
               {currentTime ? currentTime.toLocaleTimeString() : '--:--:--'}
             </p>
           </div>

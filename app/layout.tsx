@@ -80,25 +80,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={getJsonLdScript(websiteSchema)}
         />
       </head>
-      <body className={`${inter.className} ${saira.variable}`}>
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100000] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:shadow-lg">
-          Skip to main content
-        </a>
-        <ThemeLoader />
-        <BusinessSettingsProvider>
-          <DynamicMetadata />
-          <SiteSettingsProvider>
-            <PerformanceProvider>
-              <AuthProvider>
-                <CartProvider>
-                  <ToastProvider>
-                  {children}
-                  </ToastProvider>
-                </CartProvider>
-              </AuthProvider>
-            </PerformanceProvider>
-          </SiteSettingsProvider>
-        </BusinessSettingsProvider>
+      <body className={`${inter.className} ${saira.variable}`} suppressHydrationWarning>
+        {children}
       </body>
     </html>
   );
