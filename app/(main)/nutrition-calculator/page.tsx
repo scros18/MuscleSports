@@ -171,7 +171,15 @@ export default function NutritionCalculatorPage() {
       name: 'Whey Protein Isolate',
       timing: 'Post-workout & breakfast',
       reason: `Essential for hitting ${protein}g daily protein target`,
-      product: '/products?category=Protein+Powders'
+      product: '/products'
+    });
+
+    // Protein bar recommendations for convenience
+    supplements.push({
+      name: 'High-Protein Bars',
+      timing: 'On-the-go or between meals',
+      reason: 'Convenient way to boost protein intake without meal prep',
+      product: '/products?search=Protein%20Bar'
     });
 
     if (formData.goal === 'gain' || formData.workoutIntensity === 'high') {
@@ -179,7 +187,7 @@ export default function NutritionCalculatorPage() {
         name: 'Creatine Monohydrate',
         timing: 'Post-workout (5g daily)',
         reason: 'Increase strength & muscle mass by 8-14%',
-        product: '/products?category=Creatine'
+        product: '/products'
       });
     }
 
@@ -188,7 +196,14 @@ export default function NutritionCalculatorPage() {
         name: 'L-Carnitine',
         timing: 'Pre-workout',
         reason: 'Enhanced fat oxidation during training',
-        product: '/products?category=Weight+Loss'
+        product: '/products'
+      });
+      
+      supplements.push({
+        name: 'Protein Bars (Low Sugar)',
+        timing: 'Snack replacement',
+        reason: 'Satisfy cravings while maintaining calorie deficit',
+        product: '/products?search=Protein%20Bar'
       });
     }
 
@@ -197,14 +212,14 @@ export default function NutritionCalculatorPage() {
         name: 'Pre-Workout Complex',
         timing: '30min before training',
         reason: 'Maximize performance & training intensity',
-        product: '/products?category=Pre-Workout'
+        product: '/products'
       });
 
       supplements.push({
         name: 'BCAA + EAA',
         timing: 'Intra-workout',
         reason: 'Prevent muscle breakdown during intense sessions',
-        product: '/products?category=Amino+Acids'
+        product: '/products'
       });
     }
 
@@ -212,7 +227,7 @@ export default function NutritionCalculatorPage() {
       name: 'Multivitamin + Omega-3',
       timing: 'With breakfast',
       reason: 'Fill micronutrient gaps & reduce inflammation',
-      product: '/products?category=Vitamins+%26+Supplements'
+      product: '/products'
     });
 
     // Water intake calculation
@@ -628,7 +643,7 @@ export default function NutritionCalculatorPage() {
                               href={supplement.product}
                               className="text-xs bg-green-600 text-white px-3 py-1 rounded-full hover:bg-green-700 transition-colors"
                             >
-                              Shop
+                              View
                             </a>
                           )}
                         </div>
@@ -705,14 +720,14 @@ export default function NutritionCalculatorPage() {
 
                 {/* CTA */}
                 <div className="bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl p-6 text-white text-center">
-                  <h3 className="text-xl font-bold mb-2">Ready to Transform?</h3>
-                  <p className="text-sm opacity-90 mb-4">Get premium supplements to match your plan</p>
+                  <h3 className="text-xl font-bold mb-2">Fuel Your Plan</h3>
+                  <p className="text-sm opacity-90 mb-4">Convenient high-protein bars to hit your macros on-the-go</p>
                   <a
-                    href="/products"
+                    href="/products?search=Protein%20Bar"
                     className="inline-flex items-center gap-2 px-6 py-3 bg-white text-green-600 font-bold rounded-xl hover:bg-gray-100 transition-all"
                   >
                     <Sparkles className="w-4 h-4" />
-                    Shop Supplements
+                    Shop Protein Bars
                   </a>
                   <div className="mt-4 pt-4 border-t border-white/20">
                     <p className="text-xs opacity-90">🚚 FREE shipping on orders over £50</p>

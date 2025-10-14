@@ -672,13 +672,13 @@ export default function RecipeGeneratorPage() {
 
                 {/* CTA */}
                 <div className="p-6 bg-gradient-to-r from-emerald-600 to-green-600 text-white">
-                  <p className="text-sm mb-3">Need ingredients or supplements?</p>
+                  <p className="text-sm mb-3">Need a convenient protein boost?</p>
                   <a
-                    href="/products"
+                    href="/products?search=Protein%20Bar"
                     className="inline-flex items-center gap-2 px-6 py-3 bg-white text-emerald-600 font-bold rounded-xl hover:bg-gray-100 transition-all"
                   >
                     <ShoppingCart className="w-4 h-4" />
-                    Shop Now
+                    Shop Protein Bars
                   </a>
                 </div>
               </div>
