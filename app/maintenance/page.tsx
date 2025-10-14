@@ -3,6 +3,7 @@ export default function Maintenance() {
     <>
       <style dangerouslySetInnerHTML={{
         __html: `
+          body { display: block !important; visibility: visible !important; }
           body * { display: none !important; }
           body::before { 
             content: "TEST MAINTENANCE PAGE - IF YOU SEE THIS IT WORKS!";
@@ -19,6 +20,7 @@ export default function Maintenance() {
             z-index: 999999 !important;
             text-align: center !important;
             line-height: 1.2 !important;
+            visibility: visible !important;
           }
         `
       }} />
