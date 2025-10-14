@@ -55,7 +55,7 @@ export async function sendVerificationEmail(
         }
         .header {
           background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-          padding: 80px 40px 100px 40px;
+          padding: 50px 40px 70px 40px;
           text-align: center;
           position: relative;
           overflow: hidden;
@@ -197,7 +197,7 @@ export async function sendVerificationEmail(
             <div class="wave"></div>
           </div>
           <div class="content">
-            <h2>Welcome, <span class="name">${name}</span>!</h2>
+            <h2>Welcome, <span class="name">${name}!</span></h2>
             <p>Thank you for registering at <strong>MuscleSports</strong>. We're excited to have you join our community of athletes and fitness enthusiasts!</p>
             <p>To complete your registration and activate your account, please verify your email address by clicking the button below:</p>
             <div class="button-container">
@@ -288,7 +288,7 @@ export async function sendWelcomeEmail(email: string, name: string) {
         }
         .header {
           background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-          padding: 80px 40px 100px 40px;
+          padding: 50px 40px 70px 40px;
           text-align: center;
           position: relative;
           overflow: hidden;
@@ -469,7 +469,7 @@ export async function sendWelcomeEmail(email: string, name: string) {
             <div class="wave"></div>
           </div>
           <div class="content">
-            <h2>Your account is verified, <span class="name">${name}</span>!</h2>
+            <h2>Your account is verified, <span class="name">${name}!</span></h2>
             <p>Thank you for verifying your email. You now have full access to all MuscleSports features and can start building your perfect supplement stack!</p>
             
             <div class="offer">
