@@ -145,7 +145,7 @@ export default function RegisterPage() {
                     <div>
                       <p className="font-semibold text-green-900 dark:text-green-100">Registration Successful!</p>
                       <p className="text-green-700 dark:text-green-300 mt-1">
-                        We've sent a verification email to <strong>{email}</strong>
+                        We&apos;ve sent a verification email to <strong>{email}</strong>
                       </p>
                       <p className="text-green-700 dark:text-green-300 mt-1">
                         Please check your inbox and click the verification link to activate your account.
