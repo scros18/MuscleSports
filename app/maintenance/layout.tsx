@@ -15,20 +15,12 @@ export const metadata: Metadata = {
   robots: "noindex,nofollow",
 };
 
+// Completely override the root layout - don't inherit anything
 export default function MaintenanceLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en" suppressHydrationWarning className="theme-musclesports">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-      </head>
-      <body className={`${inter.className} ${saira.variable} antialiased theme-musclesports`} suppressHydrationWarning>
-        {children}
-      </body>
-    </html>
-  );
+  return children;
 }
 
