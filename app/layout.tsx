@@ -92,13 +92,7 @@ export default function RootLayout({
               <AuthProvider>
                 <CartProvider>
                   <ToastProvider>
-                  <div className="flex min-h-screen flex-col">
-                    <Header />
-                    <main id="main-content" className="flex-1 relative z-0" role="main">
-                      <PageTransition>{children}</PageTransition>
-                    </main>
-                    <Footer />
-                  </div>
+                  {children}
                   </ToastProvider>
                 </CartProvider>
               </AuthProvider>
