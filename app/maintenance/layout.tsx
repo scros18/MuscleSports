@@ -12,35 +12,33 @@ export default function MaintenanceLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="noindex, nofollow" />
-        <style dangerouslySetInnerHTML={{
-          __html: `
-            * { margin: 0; padding: 0; box-sizing: border-box; }
-            html, body { height: 100%; }
-            body { 
-              font-family: Arial, sans-serif;
-              background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
-              color: white;
-              display: block !important;
-              visibility: visible !important;
-              overflow-x: hidden;
-            }
-          `
-        }} />
-      </head>
-      <body style={{
+    <>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          * { margin: 0; padding: 0; box-sizing: border-box; }
+          html, body { height: 100%; }
+          body { 
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%) !important;
+            color: white !important;
+            display: block !important;
+            visibility: visible !important;
+            overflow-x: hidden;
+          }
+          body * { display: block !important; visibility: visible !important; }
+        `
+      }} />
+      <div style={{
         display: 'block !important',
         visibility: 'visible !important',
         minHeight: '100vh',
         margin: 0,
-        padding: 0
+        padding: 0,
+        background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%)',
+        color: 'white'
       }}>
         {children}
-      </body>
-    </html>
+      </div>
+    </>
   );
 }
