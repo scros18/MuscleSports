@@ -70,6 +70,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check if email is verified
+    if (!user.email_verified) {
+      return NextResponse.json(
+        { error: "Please verify your email address before logging in. Check your inbox for the verification link." },
+        { status: 403 }
+      );
+    }
+
     // Create JWT token
     const token = jwt.sign(
       { userId: user.id, email: user.email },

@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 import { Database } from '@/lib/database';
+import { sendVerificationEmail } from '@/lib/email';
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
@@ -31,8 +33,9 @@ export async function POST(request: NextRequest) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create user
+    const userId = Date.now().toString();
     const user = {
-      id: Date.now().toString(),
+      id: userId,
       name,
       email,
       password: hashedPassword,
@@ -41,32 +44,27 @@ export async function POST(request: NextRequest) {
     await Database.createUser(user);
     console.log('User registered successfully:', email);
 
-    // Get the created user from database to include created_at
-    const createdUser = await Database.findUserByEmail(email);
+    // Generate verification token
+    const verificationToken = crypto.randomBytes(32).toString('hex');
+    const tokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours from now
 
-    // Create JWT token
-    const token = jwt.sign(
-      { userId: createdUser.id, email: createdUser.email },
-      JWT_SECRET,
-      { expiresIn: "7d" }
-    );
+    // Save verification token to database
+    await Database.updateUserVerificationToken(userId, verificationToken, tokenExpires);
 
-    // Return user data (without password) and map created_at to createdAt
-    const createdAtDate = createdUser.created_at;
-    console.log('created_at raw:', createdAtDate, typeof createdAtDate);
-    const createdAtISO = createdAtDate instanceof Date ? createdAtDate.toISOString() : new Date(createdAtDate).toISOString();
-    console.log('createdAtISO:', createdAtISO);
+    // Send verification email
+    try {
+      await sendVerificationEmail(email, name, verificationToken);
+      console.log('Verification email sent to:', email);
+    } catch (emailError) {
+      console.error('Failed to send verification email:', emailError);
+      // Don't fail registration if email fails
+    }
 
-    const userData = {
-      id: createdUser.id,
-      name: createdUser.name,
-      email: createdUser.email,
-      createdAt: createdAtISO
-    };
-
+    // Return success message (no auto-login until verified)
     return NextResponse.json({
-      user: userData,
-      token,
+      message: 'Registration successful! Please check your email to verify your account.',
+      email: email,
+      requiresVerification: true
     });
   } catch (error) {
     console.error("Register error:", error);

@@ -15,6 +15,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const { register } = useAuth();
@@ -37,11 +38,25 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      const success = await register(name, email, password);
-      if (success) {
+      // Call register API directly to get verification response
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.requiresVerification) {
+        setSuccess(true);
+        setError("");
+      } else if (res.ok) {
+        // Old flow - shouldn't happen but handle it
         router.push("/account");
       } else {
-        setError("Registration failed. Please try again.");
+        setError(data.error || "Registration failed. Please try again.");
       }
     } catch (err) {
       setError("An error occurred. Please try again.");
@@ -57,7 +72,7 @@ export default function RegisterPage() {
           <CardHeader>
             <CardTitle>Register</CardTitle>
             <CardDescription>
-              Create your account to get started
+              {success ? "Check your email!" : "Create your account to get started"}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -117,13 +132,31 @@ export default function RegisterPage() {
                 />
               </div>
               {error && (
-                <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded">
+                <div className="p-3 text-sm text-red-600 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded">
                   {error}
                 </div>
               )}
-              <Button type="submit" className="w-full" disabled={loading}>
+              {success && (
+                <div className="p-4 text-sm bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded space-y-2">
+                  <div className="flex items-start gap-2">
+                    <svg className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                      <p className="font-semibold text-green-900 dark:text-green-100">Registration Successful!</p>
+                      <p className="text-green-700 dark:text-green-300 mt-1">
+                        We've sent a verification email to <strong>{email}</strong>
+                      </p>
+                      <p className="text-green-700 dark:text-green-300 mt-1">
+                        Please check your inbox and click the verification link to activate your account.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <Button type="submit" className="w-full" disabled={loading || success}>
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Register
+                {success ? "Check Your Email" : "Register"}
               </Button>
             </form>
           </CardContent>

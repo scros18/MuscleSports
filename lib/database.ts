@@ -265,6 +265,28 @@ export class Database {
     return (rows as any[])[0] || null;
   }
 
+  static async findUserByVerificationToken(token: string) {
+    const rows = await this.query(
+      'SELECT * FROM users WHERE verification_token = ? AND verification_token_expires > NOW()',
+      [token]
+    );
+    return (rows as any[])[0] || null;
+  }
+
+  static async updateUserVerificationToken(userId: string, token: string, expiresAt: Date) {
+    await this.query(
+      'UPDATE users SET verification_token = ?, verification_token_expires = ? WHERE id = ?',
+      [token, expiresAt, userId]
+    );
+  }
+
+  static async verifyUserEmail(userId: string) {
+    await this.query(
+      'UPDATE users SET email_verified = TRUE, verification_token = NULL, verification_token_expires = NULL WHERE id = ?',
+      [userId]
+    );
+  }
+
   static async getAllUsers() {
     return await this.query('SELECT id, name, email, role, created_at FROM users ORDER BY created_at DESC');
   }
