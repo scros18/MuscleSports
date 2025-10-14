@@ -492,6 +492,12 @@ export function Header() {
             >
               Recipe Generator
             </Link>
+            <Link
+              href="/testosterone-guide"
+              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+            >
+              Testosterone Guide
+            </Link>
           </nav>
         </div>
       </div>
@@ -764,6 +770,35 @@ export function Header() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <span className="relative z-10">Recipe Generator</span>
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+                  style={{
+                    background: currentTheme === 'musclesports'
+                      ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
+                      : currentTheme === 'vera'
+                      ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
+                      : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
+                  }}
+                ></div>
+              </Link>
+              <Link
+                href="/testosterone-guide"
+                className={`relative block px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
+                  settings.animationsEnabled
+                    ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                    : 'transition-all duration-300'
+                }`}
+                style={{
+                  background: currentTheme === 'musclesports'
+                    ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
+                    : currentTheme === 'vera'
+                    ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
+                    : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))',
+                  borderColor: 'rgba(255, 255, 255, 0.2)'
+                }}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span className="relative z-10">Testosterone Guide</span>
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
                   style={{
