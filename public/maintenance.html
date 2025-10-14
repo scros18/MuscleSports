@@ -233,6 +233,17 @@
             image-rendering: crisp-edges;
         }
         
+        .admin-link {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .admin-link:hover {
+            color: var(--primary);
+        }
+        
         .current-time {
             color: var(--primary);
             font-weight: 700;
@@ -322,7 +333,7 @@
                     </div>
                     <p>Current Time: <span class="current-time" id="current-time"></span></p>
                     <p class="footer-text">
-                        Thank you for your patience. We'll be back stronger than ever! 
+                        Thank you for your patience. We'll be back <a href="/admin" class="admin-link">stronger</a> than ever! 
                         <svg style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-left: 0.25rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M6.5 6.5h11l1 6-6 6-6-6 1-6z"/>
                             <path d="M9 12l2 2 4-4"/>
