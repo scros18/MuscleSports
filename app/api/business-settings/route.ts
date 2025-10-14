@@ -80,7 +80,10 @@ export async function POST(request: NextRequest) {
       primaryColor,
       secondaryColor,
       description,
-      socialMedia
+      socialMedia,
+      isMaintenanceMode,
+      maintenanceMessage,
+      estimatedTime
     } = data;
 
     await Database.createOrUpdateBusinessSettings({
@@ -99,7 +102,10 @@ export async function POST(request: NextRequest) {
       primaryColor,
       secondaryColor,
       description,
-      socialMedia
+      socialMedia,
+      isMaintenanceMode,
+      maintenanceMessage,
+      estimatedTime
     });
 
     const updated = await Database.getBusinessSettings(id);
