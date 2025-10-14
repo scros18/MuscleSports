@@ -1,11 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme-musclesports">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site Under Maintenance - MuscleSports</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --background: #ffffff;
+            --foreground: #0f172a;
+            --card: #ffffff;
+            --card-foreground: #0f172a;
+            --popover: #ffffff;
+            --popover-foreground: #0f172a;
+            --primary: #10b981;
+            --primary-foreground: #ffffff;
+            --secondary: #f1f5f9;
+            --secondary-foreground: #0f172a;
+            --muted: #f1f5f9;
+            --muted-foreground: #64748b;
+            --accent: #f1f5f9;
+            --accent-foreground: #0f172a;
+            --destructive: #ef4444;
+            --destructive-foreground: #ffffff;
+            --border: #e2e8f0;
+            --input: #e2e8f0;
+            --ring: #10b981;
+            --radius: 0.5rem;
+        }
+        
+        .theme-musclesports {
+            --primary: #10b981;
+            --primary-foreground: #ffffff;
+            --ring: #10b981;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -14,332 +43,249 @@
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #1e293b 75%, #0f172a 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-            color: white;
+            background-color: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            overflow-x: hidden;
         }
         
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .flex {
+            display: flex;
+        }
+        
+        .flex-col {
+            flex-direction: column;
+        }
+        
+        .min-h-screen {
+            min-height: 100vh;
+        }
+        
+        .flex-1 {
+            flex: 1 1 0%;
+        }
+        
+        .relative {
+            position: relative;
+        }
+        
+        .z-0 {
+            z-index: 0;
         }
         
         .container {
-            max-width: 900px;
-            width: 100%;
-            text-align: center;
-            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
         }
         
-        .floating-shapes {
-            position: absolute;
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
+            z-index: 50;
         }
         
-        .shape {
-            position: absolute;
-            background: linear-gradient(45deg, #10b981, #34d399);
-            border-radius: 50%;
-            opacity: 0.1;
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        .shape:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-        
-        .shape:nth-child(2) {
-            width: 120px;
-            height: 120px;
-            top: 20%;
-            right: 15%;
-            animation-delay: 2s;
-        }
-        
-        .shape:nth-child(3) {
-            width: 60px;
-            height: 60px;
-            bottom: 20%;
-            left: 20%;
-            animation-delay: 4s;
-        }
-        
-        .shape:nth-child(4) {
-            width: 100px;
-            height: 100px;
-            bottom: 30%;
-            right: 25%;
-            animation-delay: 1s;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-        
-        .content {
-            position: relative;
-            z-index: 2;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 60px 40px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-        }
-        
-        .logo-section {
-            margin-bottom: 50px;
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         
         .logo {
-            font-size: 4.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #10b981 0%, #34d399 50%, #6ee7b7 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 16px;
-            text-shadow: 0 0 40px rgba(16, 185, 129, 0.3);
-            letter-spacing: -0.02em;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
-        .subtitle {
-            font-size: 1.4rem;
-            color: #94a3b8;
-            font-weight: 400;
-            margin-bottom: 0;
+        .main-content {
+            padding: 4rem 0;
+            text-align: center;
         }
         
-        .maintenance-card {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .maintenance-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.1), transparent);
-            animation: shimmer 3s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
+        .maintenance-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
         }
         
         .maintenance-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
+            font-size: 4rem;
+            margin-bottom: 2rem;
             display: block;
         }
         
         .maintenance-title {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #10b981;
-            letter-spacing: -0.01em;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .maintenance-subtitle {
+            font-size: 1.25rem;
+            color: var(--muted-foreground);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+        
+        .maintenance-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         
         .maintenance-message {
-            font-size: 1.3rem;
+            font-size: 1.125rem;
+            color: var(--foreground);
+            margin-bottom: 2rem;
             line-height: 1.7;
-            margin-bottom: 24px;
-            color: #e2e8f0;
-            font-weight: 400;
         }
         
         .estimated-time {
-            font-size: 1.2rem;
-            color: #94a3b8;
-            font-weight: 500;
+            font-size: 1.25rem;
+            color: var(--muted-foreground);
+            font-weight: 600;
         }
         
         .estimated-time strong {
-            color: #10b981;
-            font-weight: 700;
+            color: var(--primary);
         }
         
         .discount-banner {
-            background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .discount-banner::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: rotate 10s linear infinite;
-        }
-        
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .discount-content {
-            position: relative;
-            z-index: 2;
+            background: linear-gradient(135deg, var(--primary) 0%, #059669 100%);
+            border-radius: var(--radius);
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+            color: white;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
         }
         
         .discount-title {
-            font-size: 2.2rem;
-            margin-bottom: 16px;
-            color: white;
+            font-size: 1.5rem;
             font-weight: 700;
-            letter-spacing: -0.01em;
+            margin-bottom: 1rem;
         }
         
         .discount-amount {
-            font-size: 4.5rem;
+            font-size: 4rem;
             font-weight: 900;
-            margin-bottom: 16px;
-            color: white;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .discount-text {
-            font-size: 1.6rem;
-            margin-bottom: 24px;
-            color: white;
+            font-size: 1.25rem;
             font-weight: 600;
+            margin-bottom: 2rem;
         }
         
         .discount-code {
             background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            padding: 16px 32px;
-            border-radius: 16px;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
             display: inline-block;
-            font-size: 1.4rem;
-            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            font-size: 1.25rem;
             font-weight: 700;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.3);
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            margin-bottom: 1rem;
             letter-spacing: 0.1em;
         }
         
         .discount-note {
-            font-size: 1.1rem;
-            color: rgba(255,255,255,0.9);
-            font-weight: 500;
+            font-size: 1rem;
+            opacity: 0.9;
         }
         
         .contact-section {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            backdrop-filter: blur(10px);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
         }
         
         .contact-title {
-            font-size: 2rem;
-            margin-bottom: 24px;
-            color: #10b981;
+            font-size: 1.5rem;
             font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
         }
         
         .contact-links {
             display: flex;
             justify-content: center;
-            gap: 24px;
+            gap: 1rem;
             flex-wrap: wrap;
         }
         
         .contact-link {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            padding: 18px 32px;
-            border-radius: 16px;
+            background: var(--primary);
+            color: var(--primary-foreground);
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
             text-decoration: none;
-            font-size: 1.2rem;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s;
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
-            border: 1px solid rgba(255,255,255,0.1);
+            gap: 0.5rem;
         }
         
         .contact-link:hover {
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(16, 185, 129, 0.4);
+            background: #059669;
+            transform: translateY(-2px);
         }
         
         .footer {
-            font-size: 1rem;
-            color: #94a3b8;
-            line-height: 1.6;
+            background: var(--muted);
+            border-top: 1px solid var(--border);
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            text-align: center;
+            color: var(--muted-foreground);
         }
         
         .current-time {
-            color: #10b981;
+            color: var(--primary);
             font-weight: 700;
-            font-size: 1.1rem;
         }
         
-        .footer p:last-child {
-            margin-top: 16px;
+        .footer-text {
+            margin-top: 1rem;
             font-weight: 500;
         }
         
         @media (max-width: 768px) {
-            .content {
-                padding: 40px 24px;
-                margin: 0 16px;
-            }
-            
-            .logo {
-                font-size: 3.5rem;
-            }
-            
             .maintenance-title {
-                font-size: 2.2rem;
+                font-size: 2rem;
+            }
+            
+            .maintenance-subtitle {
+                font-size: 1rem;
+            }
+            
+            .maintenance-card,
+            .discount-banner,
+            .contact-section {
+                padding: 2rem 1rem;
             }
             
             .discount-amount {
-                font-size: 3.5rem;
+                font-size: 3rem;
             }
             
             .contact-links {
@@ -356,63 +302,71 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="floating-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
-        </div>
+    <div class="flex min-h-screen flex-col">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <a href="/" class="logo">
+                        💪 MuscleSports
+                    </a>
+                </div>
+            </div>
+        </header>
         
-        <div class="content">
-            <!-- Logo Section -->
-            <div class="logo-section">
-                <div class="logo">💪 MuscleSports</div>
-                <div class="subtitle">Your Premier Sports Nutrition Destination</div>
-            </div>
-            
-            <!-- Maintenance Card -->
-            <div class="maintenance-card">
-                <span class="maintenance-icon">🔧</span>
-                <h2 class="maintenance-title">Site Under Maintenance</h2>
-                <p class="maintenance-message">
-                    We're upgrading our systems to bring you an even better experience. Our team is working hard to get everything back online as quickly as possible.
-                </p>
-                <p class="estimated-time">
-                    Estimated completion: <strong>2 hours</strong>
-                </p>
-            </div>
-            
-            <!-- Discount Banner -->
-            <div class="discount-banner">
-                <div class="discount-content">
-                    <h3 class="discount-title">🎉 EXCLUSIVE LAUNCH OFFER</h3>
-                    <p class="discount-amount">10% OFF</p>
-                    <p class="discount-text">YOUR FIRST ORDER!</p>
-                    <div class="discount-code">CODE: WELCOME10</div>
-                    <p class="discount-note">Use this code when we're back online! 💪</p>
+        <!-- Main Content -->
+        <main class="flex-1 relative z-0">
+            <div class="main-content">
+                <div class="maintenance-container">
+                    <span class="maintenance-icon">🔧</span>
+                    <h1 class="maintenance-title">Site Under Maintenance</h1>
+                    <p class="maintenance-subtitle">We're upgrading our systems to bring you an even better experience</p>
+                    
+                    <!-- Maintenance Card -->
+                    <div class="maintenance-card">
+                        <p class="maintenance-message">
+                            Our team is working hard to get everything back online as quickly as possible. 
+                            We're implementing new features and improvements to enhance your shopping experience.
+                        </p>
+                        <p class="estimated-time">
+                            Estimated completion: <strong>2 hours</strong>
+                        </p>
+                    </div>
+                    
+                    <!-- Discount Banner -->
+                    <div class="discount-banner">
+                        <h3 class="discount-title">🎉 EXCLUSIVE LAUNCH OFFER</h3>
+                        <p class="discount-amount">10% OFF</p>
+                        <p class="discount-text">YOUR FIRST ORDER!</p>
+                        <div class="discount-code">CODE: WELCOME10</div>
+                        <p class="discount-note">Use this code when we're back online! 💪</p>
+                    </div>
+                    
+                    <!-- Contact Section -->
+                    <div class="contact-section">
+                        <h3 class="contact-title">📞 Need Immediate Assistance?</h3>
+                        <div class="contact-links">
+                            <a href="mailto:support@musclesports.co.uk" class="contact-link">
+                                📧 support@musclesports.co.uk
+                            </a>
+                            <a href="tel:+441234567890" class="contact-link">
+                                📞 +44 123 456 7890
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Contact Section -->
-            <div class="contact-section">
-                <h3 class="contact-title">📞 Need Immediate Assistance?</h3>
-                <div class="contact-links">
-                    <a href="mailto:support@musclesports.co.uk" class="contact-link">
-                        📧 support@musclesports.co.uk
-                    </a>
-                    <a href="tel:+441234567890" class="contact-link">
-                        📞 +44 123 456 7890
-                    </a>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <p>Current Time: <span class="current-time" id="current-time"></span></p>
+                    <p class="footer-text">Thank you for your patience. We'll be back stronger than ever! 💪</p>
                 </div>
             </div>
-            
-            <!-- Footer -->
-            <div class="footer">
-                <p>Current Time: <span class="current-time" id="current-time"></span></p>
-                <p>Thank you for your patience. We'll be back stronger than ever! 💪</p>
-            </div>
-        </div>
+        </footer>
     </div>
     
     <script>
