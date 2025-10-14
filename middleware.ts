@@ -6,18 +6,21 @@ export async function middleware(request: NextRequest) {
   
   // ONLY allow these paths during maintenance mode:
   // - /admin/* (admin panel access)
+  // - /login (for admin login)
   // - /api/* (API routes needed for admin)
   // - /_next/* (Next.js assets)
   // - /favicon.ico (favicon)
   // - /maintenance (the maintenance page itself)
   const isAdminPath = pathname.startsWith('/admin');
+  const isLoginPath = pathname.startsWith('/login');
   const isApiPath = pathname.startsWith('/api');
   const isNextAsset = pathname.startsWith('/_next');
+  const isPublicAsset = pathname.startsWith('/public') || pathname.match(/\.(png|jpg|jpeg|gif|svg|webp|ico|css|js)$/);
   const isFavicon = pathname.startsWith('/favicon');
   const isMaintenancePage = pathname === '/maintenance' || pathname === '/maintenance.html';
   
-  // Skip maintenance check for admin, API, and system routes
-  if (isAdminPath || isApiPath || isNextAsset || isFavicon || isMaintenancePage) {
+  // Skip maintenance check for admin, login, API, and system routes
+  if (isAdminPath || isLoginPath || isApiPath || isNextAsset || isPublicAsset || isFavicon || isMaintenancePage) {
     return NextResponse.next();
   }
 
