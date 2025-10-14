@@ -80,7 +80,7 @@
         }
         
         .main-content {
-            padding: 1rem 0;
+            padding: 2rem 0;
             text-align: center;
             min-height: 100vh;
             display: flex;
@@ -89,9 +89,9 @@
         }
         
         .maintenance-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 2rem;
             width: 100%;
         }
         
@@ -105,6 +105,15 @@
             margin-right: 0.5rem;
         }
         
+        
+        .maintenance-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem auto;
+            display: block;
+            color: var(--primary);
+            opacity: 0.8;
+        }
         
         .maintenance-title {
             font-size: 3rem;
@@ -150,10 +159,33 @@
         .discount-banner {
             background: linear-gradient(135deg, var(--primary) 0%, #059669 100%);
             border-radius: var(--radius);
-            padding: 3rem 2rem;
+            padding: 4rem 3rem;
             margin-bottom: 3rem;
             color: white;
             box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .discount-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .discount-content {
+            position: relative;
+            z-index: 2;
         }
         
         .discount-title {
@@ -233,50 +265,56 @@
             }
             
             .maintenance-container {
-                padding: 0 0.5rem;
+                padding: 0 1rem;
+            }
+            
+            .maintenance-icon {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 1.5rem;
             }
             
             .maintenance-title {
-                font-size: 2rem;
+                font-size: 2.5rem;
                 line-height: 1.1;
-                margin-bottom: 0.75rem;
+                margin-bottom: 1rem;
             }
             
             .maintenance-subtitle {
-                font-size: 1rem;
-                margin-bottom: 2rem;
+                font-size: 1.125rem;
+                margin-bottom: 2.5rem;
             }
             
             .maintenance-card {
-                padding: 2rem 1.5rem;
-                margin-bottom: 2rem;
+                padding: 2.5rem 2rem;
+                margin-bottom: 2.5rem;
             }
             
             .maintenance-message {
-                font-size: 1rem;
-                line-height: 1.6;
+                font-size: 1.125rem;
+                line-height: 1.7;
             }
             
             .discount-banner {
-                padding: 2rem 1.5rem;
-                margin-bottom: 2rem;
+                padding: 3rem 2rem;
+                margin-bottom: 2.5rem;
             }
             
             .discount-title {
-                font-size: 1.25rem;
+                font-size: 1.375rem;
             }
             
             .discount-amount {
-                font-size: 3rem;
+                font-size: 3.5rem;
             }
             
             .discount-text {
-                font-size: 1.125rem;
+                font-size: 1.25rem;
             }
             
             .discount-code {
-                font-size: 1.125rem;
-                padding: 0.75rem 1.5rem;
+                font-size: 1.25rem;
+                padding: 1rem 2rem;
             }
             
             .footer {
@@ -311,7 +349,10 @@
         <main class="flex-1 relative z-0">
             <div class="main-content">
                 <div class="maintenance-container">
-
+                    <!-- Custom Maintenance Icon -->
+                    <svg class="maintenance-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                    </svg>
                     
                     <h1 class="maintenance-title">Site Under Maintenance</h1>
                     <p class="maintenance-subtitle">We're upgrading our systems to bring you an even better experience</p>
@@ -329,18 +370,20 @@
                     
                     <!-- Discount Banner -->
                     <div class="discount-banner">
-                        <h3 class="discount-title">
-                            <svg class="discount-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            EXCLUSIVE LAUNCH OFFER
-                        </h3>
-                        <p class="discount-amount">10% OFF</p>
-                        <p class="discount-text">YOUR FIRST ORDER!</p>
-                        <div class="discount-code">CODE: WELCOME10</div>
-                        <p class="discount-note">
-                            Use this code when we're back online!
-                        </p>
+                        <div class="discount-content">
+                            <h3 class="discount-title">
+                                <svg class="discount-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                EXCLUSIVE LAUNCH OFFER
+                            </h3>
+                            <p class="discount-amount">10% OFF</p>
+                            <p class="discount-text">YOUR FIRST ORDER!</p>
+                            <div class="discount-code">CODE: WELCOME10</div>
+                            <p class="discount-note">
+                                Use this code when we're back online!
+                            </p>
+                        </div>
                     </div>
                     
                 </div>
