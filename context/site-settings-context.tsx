@@ -20,10 +20,10 @@ const SiteSettingsContext = createContext<SiteSettingsContextType | undefined>(u
 const STORAGE_KEY = "ordify-site-settings";
 
 const DEFAULT_SETTINGS: SiteSettings = {
-  siteName: "Ordify Direct Ltd",
-  siteUrl: "https://ordifydirect.com",
-  logoUrl: "/ordifydirectltd.png",
-  tagline: "Premium E-Commerce Platform",
+  siteName: "MuscleSports",
+  siteUrl: "https://musclesports.co.uk",
+  logoUrl: "/MuscleSports.png",
+  tagline: "Your Premier Sports Nutrition Destination",
   showSaleBanner: false
 };
 
