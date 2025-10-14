@@ -35,7 +35,8 @@ export async function middleware(request: NextRequest) {
     if (maintenanceResponse.ok) {
       const maintenanceData = await maintenanceResponse.json();
       
-      if (maintenanceData.isMaintenanceMode) {
+      // TEMPORARY TEST - ALWAYS REDIRECT TO MAINTENANCE PAGE
+      if (true) {
         // BLOCK EVERYONE - redirect to static maintenance HTML
         const maintenanceUrl = new URL('/maintenance.html', request.url);
         
