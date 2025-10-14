@@ -10,6 +10,7 @@ interface MaintenancePageProps {
 
 export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps) {
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -19,27 +20,38 @@ export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps
     return () => clearInterval(timer);
   }, []);
 
-  // Auto-refresh to check if maintenance mode is over
+  // Check if maintenance mode is actually active
   useEffect(() => {
     const checkMaintenance = async () => {
       try {
         const response = await fetch('/api/maintenance-status');
         const data = await response.json();
         
-        // If maintenance is no longer active, reload the page
+        // If maintenance is no longer active, redirect to home immediately
         if (!data.isMaintenanceMode) {
           window.location.href = '/';
+          setIsActive(false);
+        } else {
+          setIsActive(true);
         }
       } catch (error) {
         console.error('Error checking maintenance status:', error);
       }
     };
 
-    // Check every 10 seconds
-    const interval = setInterval(checkMaintenance, 10000);
+    // Check immediately on mount
+    checkMaintenance();
+    
+    // Check every 5 seconds
+    const interval = setInterval(checkMaintenance, 5000);
     
     return () => clearInterval(interval);
   }, []);
+
+  // Don't render if not active
+  if (!isActive) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 z-[9999] min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
