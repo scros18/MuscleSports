@@ -203,9 +203,9 @@ export function Header() {
                 ? 'https://i.imgur.com/verarp-logo.png'
                 : siteSettings.logoUrl}
               alt={currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : siteSettings.siteName}
-              width={currentTheme === 'musclesports' ? 280 : 120}
-              height={currentTheme === 'musclesports' ? 100 : 40}
-              className={currentTheme === 'musclesports' ? 'h-24 md:h-24 lg:h-28 w-auto' : 'h-10 md:h-10 w-auto'}
+              width={currentTheme === 'musclesports' ? 200 : 120}
+              height={currentTheme === 'musclesports' ? 80 : 40}
+              className={currentTheme === 'musclesports' ? 'h-20 md:h-20 lg:h-24 w-auto' : 'h-10 md:h-10 w-auto'}
               style={currentTheme === 'musclesports' ? {
                 filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1)) brightness(1.05)',
                 imageRendering: 'crisp-edges'

@@ -51,22 +51,22 @@ export function Footer() {
                 ? 'https://i.imgur.com/verarp-logo.png'
                 : settings.logoUrl}
               alt={currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : settings.siteName}
-              width={currentTheme === 'musclesports' ? 280 : 120}
-              height={currentTheme === 'musclesports' ? 100 : 40}
-              className={currentTheme === 'musclesports' ? 'h-24 w-auto mb-4 mx-auto md:mx-0' : 'h-10 w-auto mb-4 mx-auto md:mx-0'}
+              width={currentTheme === 'musclesports' ? 200 : 120}
+              height={currentTheme === 'musclesports' ? 80 : 40}
+              className={currentTheme === 'musclesports' ? 'h-20 w-auto mb-4 mx-auto md:mx-0' : 'h-10 w-auto mb-4 mx-auto md:mx-0'}
               style={currentTheme === 'musclesports' ? {
                 filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1)) brightness(1.05)',
                 imageRendering: 'crisp-edges'
               } : undefined}
             />
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-foreground/80">
               {currentTheme === 'musclesports' ? 'Premium Sports Nutrition' : currentTheme === 'vera' ? 'Serious FiveM Roleplay' : settings.tagline}
             </p>
           </div>
 
           <div className="text-center md:text-left">
-            <h4 className="font-semibold mb-4">Shop</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <h3 className="font-semibold mb-4">Shop</h3>
+            <ul className="space-y-2 text-sm text-foreground/70">
               <li>
                 <Link href="/products" className="hover:text-foreground transition-all duration-200 hover:translate-x-1 inline-block">
                   All Products
@@ -86,8 +86,8 @@ export function Footer() {
           </div>
 
           <div className="text-center md:text-left">
-            <h4 className="font-semibold mb-4">Support</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <h3 className="font-semibold mb-4">Support</h3>
+            <ul className="space-y-2 text-sm text-foreground/70">
               <li>
                 <Link href="/contact" className="hover:text-foreground transition-all duration-200 hover:translate-x-1 inline-block">
                   Contact Us
@@ -107,8 +107,8 @@ export function Footer() {
           </div>
 
           <div className="text-center md:text-left">
-            <h4 className="font-semibold mb-4">Legal</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <h3 className="font-semibold mb-4">Legal</h3>
+            <ul className="space-y-2 text-sm text-foreground/70">
               <li>
                 <Link href="/privacy" className="hover:text-foreground">
                   Privacy Policy
@@ -125,7 +125,7 @@ export function Footer() {
 
         <Separator className="my-8" />
 
-        <div className="text-center text-sm text-muted-foreground">
+        <div className="text-center text-sm text-foreground/70">
           <p>&copy; 2025 {currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : 'Ordify Direct Ltd'}. All rights reserved.</p>
         </div>
       </div>
