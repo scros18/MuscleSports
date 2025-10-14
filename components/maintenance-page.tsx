@@ -10,7 +10,6 @@ interface MaintenancePageProps {
 
 export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps) {
   const [currentTime, setCurrentTime] = useState<Date | null>(null);
-  const [isActive, setIsActive] = useState(true);
 
   // Initialize time on client only to avoid hydration mismatch
   useEffect(() => {
@@ -32,9 +31,6 @@ export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps
         // If maintenance is no longer active, redirect to home immediately
         if (!data.isMaintenanceMode) {
           window.location.href = '/';
-          setIsActive(false);
-        } else {
-          setIsActive(true);
         }
       } catch (error) {
         console.error('Error checking maintenance status:', error);
@@ -49,11 +45,6 @@ export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps
     
     return () => clearInterval(interval);
   }, []);
-
-  // Don't render if not active
-  if (!isActive) {
-    return null;
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4" suppressHydrationWarning>
