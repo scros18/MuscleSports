@@ -342,7 +342,7 @@ export function Header() {
             </div>
           )}
 
-          <Link href="/cart">
+          <Link href="/cart" aria-label="Shopping cart">
             <Button variant="outline" size="icon" className="relative">
               <ShoppingCart className="h-5 w-5" />
               {totalItems > 0 && (
@@ -353,13 +353,14 @@ export function Header() {
                   {totalItems}
                 </Badge>
               )}
+              <span className="sr-only">Shopping cart{totalItems > 0 ? ` (${totalItems} items)` : ''}</span>
             </Button>
           </Link>
         </div>
 
         {/* Mobile menu button and cart - always visible on mobile */}
         <div className="md:hidden flex items-center gap-1.5 sm:gap-2 flex-shrink-0 ml-auto">
-          <Link href="/cart">
+          <Link href="/cart" aria-label="Shopping cart">
             <Button variant="outline" size="icon" className="relative h-9 w-9 sm:h-10 sm:w-10">
               <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
               {totalItems > 0 && (
@@ -370,6 +371,7 @@ export function Header() {
                   {totalItems}
                 </Badge>
               )}
+              <span className="sr-only">Shopping cart{totalItems > 0 ? ` (${totalItems} items)` : ''}</span>
             </Button>
           </Link>
           <button

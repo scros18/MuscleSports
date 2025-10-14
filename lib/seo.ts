@@ -12,8 +12,8 @@ export interface SEOConfig {
 const defaultConfig: Required<SEOConfig> = {
   siteName: 'MuscleSports',
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://musclesports.co.uk',
-  defaultTitle: 'MuscleSports | Premium Sports Nutrition & Supplements',
-  defaultDescription: 'Premium sports nutrition and supplements. Quality products for athletes and fitness enthusiasts. Fast shipping, secure checkout.',
+  defaultTitle: 'MuscleSports | Premium Sports Nutrition & Supplements UK | Protein, Pre-Workout & More',
+  defaultDescription: 'Shop premium sports nutrition and supplements at MuscleSports UK. Wide range of protein powders, pre-workout, creatine, BCAAs, and vitamins. Fast free UK delivery. Expert advice. Trusted by athletes.',
   twitterHandle: '@musclesports',
 };
 
@@ -59,12 +59,18 @@ export function generateSEO({
     title: pageTitle,
     description: pageDescription,
     keywords: keywords.length > 0 ? keywords : [
-      'e-commerce',
-      'online shopping',
-      'products',
-      'buy online',
-      'fast shipping',
-      seoConfig.siteName.toLowerCase(),
+      'sports nutrition uk',
+      'protein powder',
+      'pre workout supplements',
+      'creatine monohydrate',
+      'bcaa supplements',
+      'fitness supplements',
+      'bodybuilding supplements',
+      'whey protein',
+      'muscle building',
+      'sports supplements online',
+      'buy supplements uk',
+      'musclesports',
     ],
     authors: [{ name: seoConfig.siteName }],
     creator: seoConfig.siteName,
@@ -207,6 +213,106 @@ export function generateBreadcrumbSchema(breadcrumbs: Array<{ name: string; url:
       name: crumb.name,
       item: `${seoConfig.siteUrl}${crumb.url}`,
     })),
+  };
+}
+
+/**
+ * Generate JSON-LD structured data for FAQPage
+ */
+export function generateFAQSchema(faqs: Array<{ question: string; answer: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
+/**
+ * Generate JSON-LD structured data for LocalBusiness
+ */
+export function generateLocalBusinessSchema({
+  name,
+  address,
+  phone,
+  priceRange = '££',
+  openingHours = ['Mo-Fr 09:00-17:00'],
+}: {
+  name?: string;
+  address?: string;
+  phone?: string;
+  priceRange?: string;
+  openingHours?: string[];
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: name || seoConfig.siteName,
+    image: `${seoConfig.siteUrl}/logo.png`,
+    '@id': seoConfig.siteUrl,
+    url: seoConfig.siteUrl,
+    telephone: phone,
+    address: address ? {
+      '@type': 'PostalAddress',
+      streetAddress: address,
+      addressCountry: 'GB',
+    } : undefined,
+    priceRange,
+    openingHoursSpecification: openingHours.map((hours) => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: hours.split(' ')[0].split('-'),
+      opens: hours.split(' ')[1]?.split('-')[0],
+      closes: hours.split(' ')[1]?.split('-')[1],
+    })),
+  };
+}
+
+/**
+ * Generate JSON-LD structured data for ItemList (Product Category)
+ */
+export function generateItemListSchema(items: Array<{ name: string; url: string; image?: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      url: item.url,
+      image: item.image,
+    })),
+  };
+}
+
+/**
+ * Generate JSON-LD structured data for Review Aggregate
+ */
+export function generateAggregateRatingSchema({
+  itemName,
+  ratingValue,
+  reviewCount,
+  bestRating = 5,
+}: {
+  itemName: string;
+  ratingValue: number;
+  reviewCount: number;
+  bestRating?: number;
+}) {
+  return {
+    '@type': 'AggregateRating',
+    itemReviewed: {
+      '@type': 'Product',
+      name: itemName,
+    },
+    ratingValue,
+    reviewCount,
+    bestRating,
   };
 }
 

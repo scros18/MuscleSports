@@ -198,7 +198,10 @@ export default function HeroCarousel() {
                 )}
                 
                 {/* Shop Now CTA - use the site's Button and Link for consistent styling and correct navigation */}
-                <Link href={s.category ? `/products?category=${encodeURIComponent(s.category)}` : '/products'}>
+                <Link 
+                  href={s.category ? `/products?category=${encodeURIComponent(s.category)}` : '/products'}
+                  tabIndex={i !== index ? -1 : undefined}
+                >
                   <Button
                     className={`${
                       settings.animationsEnabled
@@ -206,6 +209,7 @@ export default function HeroCarousel() {
                         : 'mt-5 md:mt-6 rounded-full font-black text-xs md:text-sm uppercase tracking-wider shadow-2xl px-6 md:px-10 py-2.5 md:py-3.5 transition-colors duration-200'
                     }`}
                     aria-label={s.title + ' - Shop Now'}
+                    tabIndex={i !== index ? -1 : undefined}
                   >
                     Shop Now
                   </Button>

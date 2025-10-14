@@ -197,6 +197,7 @@ export function ProductCard({ product, hideDescription = false, sectionType = 'd
               setQuantity(Math.max(1, quantity - 1));
             }}
             disabled={quantity <= 1}
+            aria-label="Decrease quantity"
           >
             <Minus className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
           </Button>
@@ -249,6 +250,7 @@ export function ProductCard({ product, hideDescription = false, sectionType = 'd
               setQuantity(next);
               setQuantityInput(String(next));
             }}
+            aria-label="Increase quantity"
           >
             <Plus className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
           </Button>
