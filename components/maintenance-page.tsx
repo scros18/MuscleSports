@@ -9,10 +9,12 @@ interface MaintenancePageProps {
 }
 
 export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps) {
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [currentTime, setCurrentTime] = useState<Date | null>(null);
   const [isActive, setIsActive] = useState(true);
 
+  // Initialize time on client only to avoid hydration mismatch
   useEffect(() => {
+    setCurrentTime(new Date());
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
@@ -100,7 +102,7 @@ export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps
             </div>
             <h3 className="text-white font-semibold mb-2">Current Time</h3>
             <p className="text-gray-400 text-sm font-mono">
-              {currentTime.toLocaleTimeString()}
+              {currentTime ? currentTime.toLocaleTimeString() : '--:--:--'}
             </p>
           </div>
 
