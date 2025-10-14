@@ -13,8 +13,10 @@ async function addMaintenanceColumns() {
       AND COLUMN_NAME IN ('is_maintenance_mode', 'maintenance_message', 'estimated_time')
     `;
     
-    const existingColumns = await Database.query(checkSql);
-    const existingColumnNames = existingColumns.map((row: any) => row.COLUMN_NAME);
+    const existingColumns = await Database.query(checkSql) as any[];
+    const existingColumnNames = Array.isArray(existingColumns) 
+      ? existingColumns.map((row: any) => row.COLUMN_NAME)
+      : [];
     
     // Add is_maintenance_mode column if it doesn't exist
     if (!existingColumnNames.includes('is_maintenance_mode')) {
