@@ -14,7 +14,7 @@ export async function middleware(request: NextRequest) {
   const isApiPath = pathname.startsWith('/api');
   const isNextAsset = pathname.startsWith('/_next');
   const isFavicon = pathname.startsWith('/favicon');
-  const isMaintenancePage = pathname === '/maintenance';
+  const isMaintenancePage = pathname === '/maintenance' || pathname === '/maintenance.html';
   
   // Skip maintenance check for admin, API, and system routes
   if (isAdminPath || isApiPath || isNextAsset || isFavicon || isMaintenancePage) {
@@ -35,8 +35,7 @@ export async function middleware(request: NextRequest) {
     if (maintenanceResponse.ok) {
       const maintenanceData = await maintenanceResponse.json();
       
-      // TEMPORARY TEST - ALWAYS REDIRECT TO MAINTENANCE PAGE
-      if (true) {
+      if (maintenanceData.isMaintenanceMode) {
         // BLOCK EVERYONE - redirect to static maintenance HTML
         const maintenanceUrl = new URL('/maintenance.html', request.url);
         
