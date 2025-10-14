@@ -5,6 +5,11 @@ import Script from 'next/script';
 
 export function ThemeLoader() {
   useEffect(() => {
+    // Skip theme loading on maintenance page
+    if (typeof window !== 'undefined' && window.location.pathname.startsWith('/maintenance')) {
+      return;
+    }
+
     // Fetch theme from database and apply it
     async function loadTheme() {
       try {
@@ -53,6 +58,11 @@ export function ThemeLoader() {
           __html: `
             (function() {
               try {
+                // Skip on maintenance page
+                if (window.location.pathname.startsWith('/maintenance')) {
+                  return;
+                }
+                
                 // Default to musclesports theme
                 var defaultTheme = 'musclesports';
                 var themes = ['theme-lumify', 'theme-musclesports', 'theme-vera', 'theme-blisshair', 'theme-ordify'];
