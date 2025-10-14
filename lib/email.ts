@@ -39,16 +39,17 @@ export async function sendVerificationEmail(
         .header {
           background: linear-gradient(135deg, #10b981 0%, #059669 100%);
           color: white;
-          padding: 30px;
+          padding: 40px 30px;
           text-align: center;
           border-radius: 10px 10px 0 0;
         }
         .logo {
-          max-width: 250px;
+          max-width: 200px;
           height: auto;
-          margin-bottom: 10px;
+          margin: 0 auto 20px auto;
+          display: block;
           background: white;
-          padding: 15px;
+          padding: 20px 30px;
           border-radius: 10px;
         }
         .content {
@@ -78,7 +79,7 @@ export async function sendVerificationEmail(
     <body>
       <div class="container">
         <div class="header">
-          <img src="${process.env.NEXT_PUBLIC_SITE_URL || 'https://musclesports.co.uk'}/MuscleSports.png" alt="MuscleSports" class="logo" />
+          <img src="${process.env.NEXT_PUBLIC_SITE_URL || 'https://musclesports.co.uk'}/email-logo.png" alt="MuscleSports" class="logo" />
           <p style="margin-top: 15px; font-size: 16px;">Premium Sports Nutrition</p>
         </div>
         <div class="content">
@@ -154,16 +155,17 @@ export async function sendWelcomeEmail(email: string, name: string) {
         .header {
           background: linear-gradient(135deg, #10b981 0%, #059669 100%);
           color: white;
-          padding: 30px;
+          padding: 40px 30px;
           text-align: center;
           border-radius: 10px 10px 0 0;
         }
         .logo {
-          max-width: 250px;
+          max-width: 200px;
           height: auto;
-          margin-bottom: 10px;
+          margin: 0 auto 20px auto;
+          display: block;
           background: white;
-          padding: 15px;
+          padding: 20px 30px;
           border-radius: 10px;
         }
         .content {
@@ -195,7 +197,7 @@ export async function sendWelcomeEmail(email: string, name: string) {
     <body>
       <div class="container">
         <div class="header">
-          <img src="${process.env.NEXT_PUBLIC_SITE_URL || 'https://musclesports.co.uk'}/MuscleSports.png" alt="MuscleSports" class="logo" />
+          <img src="${process.env.NEXT_PUBLIC_SITE_URL || 'https://musclesports.co.uk'}/email-logo.png" alt="MuscleSports" class="logo" />
           <h1 style="margin-top: 15px;">Welcome to MuscleSports!</h1>
         </div>
         <div class="content">
