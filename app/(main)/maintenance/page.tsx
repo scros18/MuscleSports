@@ -1,71 +1,137 @@
-import { Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
-
-function MaintenanceContent() {
-  const searchParams = useSearchParams();
-  const message = searchParams.get('message') || 'We are currently performing scheduled maintenance. Please check back soon!';
-  const estimatedTime = searchParams.get('estimatedTime') || '';
-
+export default function Maintenance() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
-      <div className="max-w-4xl mx-auto text-center">
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%)',
+      color: 'white',
+      padding: '20px',
+      fontFamily: 'Arial, sans-serif'
+    }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
         {/* Logo */}
-        <div className="mb-8">
-          <h1 className="text-6xl font-bold text-green-400 mb-4">
+        <div style={{ marginBottom: '40px' }}>
+          <h1 style={{ 
+            fontSize: '4rem', 
+            fontWeight: 'bold', 
+            color: '#10b981', 
+            marginBottom: '10px',
+            textShadow: '0 0 20px rgba(16, 185, 129, 0.5)'
+          }}>
             💪 MuscleSports
           </h1>
-          <div className="w-24 h-1 bg-green-400 mx-auto rounded-full"></div>
+          <div style={{
+            width: '100px',
+            height: '4px',
+            background: '#10b981',
+            margin: '0 auto',
+            borderRadius: '2px'
+          }}></div>
         </div>
 
         {/* Maintenance Message */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 mb-8 border border-white/20">
-          <div className="text-4xl font-bold text-white mb-4">
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.1)',
+          backdropFilter: 'blur(10px)',
+          borderRadius: '20px',
+          padding: '40px',
+          marginBottom: '40px',
+          border: '1px solid rgba(255, 255, 255, 0.2)'
+        }}>
+          <div style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '20px' }}>
             🔧 System Maintenance
           </div>
-          <p className="text-xl text-gray-300 mb-6 leading-relaxed">
-            {message}
+          <p style={{ 
+            fontSize: '1.25rem', 
+            color: '#d1d5db', 
+            marginBottom: '20px',
+            lineHeight: '1.6'
+          }}>
+            We are currently performing scheduled maintenance. Please check back soon!
           </p>
-          {estimatedTime && (
-            <div className="text-lg text-green-400 font-semibold">
-              Estimated time: {estimatedTime}
-            </div>
-          )}
         </div>
 
         {/* 10% Welcome Discount Banner */}
-        <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-2xl p-8 mb-8 shadow-2xl">
-          <div className="text-2xl font-bold text-white mb-3">
+        <div style={{
+          background: 'linear-gradient(90deg, #10b981 0%, #059669 100%)',
+          borderRadius: '20px',
+          padding: '40px',
+          marginBottom: '40px',
+          boxShadow: '0 20px 40px rgba(16, 185, 129, 0.3)'
+        }}>
+          <div style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '10px' }}>
             🎉 EXCLUSIVE LAUNCH OFFER 🎉
           </div>
-          <div className="text-7xl font-black text-white mb-3 drop-shadow-lg">
+          <div style={{ 
+            fontSize: '5rem', 
+            fontWeight: '900', 
+            marginBottom: '10px',
+            textShadow: '0 0 20px rgba(0,0,0,0.5)'
+          }}>
             10% OFF
           </div>
-          <div className="text-3xl font-bold text-white mb-6">
+          <div style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '20px' }}>
             YOUR FIRST ORDER!
           </div>
-          <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 mb-4 inline-block">
-            <div className="text-2xl font-bold text-white">
-              CODE: <span className="text-yellow-300">WELCOME10</span>
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.2)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '10px',
+            padding: '20px',
+            marginBottom: '15px',
+            display: 'inline-block'
+          }}>
+            <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
+              CODE: <span style={{ color: '#fbbf24' }}>WELCOME10</span>
             </div>
           </div>
-          <div className="text-lg text-white">
+          <div style={{ fontSize: '1.25rem' }}>
             Use this code when we&apos;re back online! 💪
           </div>
         </div>
 
         {/* Contact Information */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-          <h3 className="text-2xl font-bold text-white mb-4">Need Immediate Assistance?</h3>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.1)',
+          backdropFilter: 'blur(10px)',
+          borderRadius: '20px',
+          padding: '30px',
+          border: '1px solid rgba(255, 255, 255, 0.2)'
+        }}>
+          <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '20px' }}>
+            Need Immediate Assistance?
+          </h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', alignItems: 'center' }}>
             <a 
               href="mailto:support@musclesports.co.uk" 
-              className="bg-white/20 hover:bg-white/30 transition-all duration-300 rounded-lg px-6 py-3 text-white font-semibold flex items-center justify-center gap-2"
+              style={{
+                background: 'rgba(255, 255, 255, 0.2)',
+                color: 'white',
+                textDecoration: 'none',
+                padding: '15px 30px',
+                borderRadius: '10px',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                transition: 'background 0.3s ease'
+              }}
             >
               📧 support@musclesports.co.uk
             </a>
             <a 
               href="tel:+441234567890" 
-              className="bg-white/20 hover:bg-white/30 transition-all duration-300 rounded-lg px-6 py-3 text-white font-semibold flex items-center justify-center gap-2"
+              style={{
+                background: 'rgba(255, 255, 255, 0.2)',
+                color: 'white',
+                textDecoration: 'none',
+                padding: '15px 30px',
+                borderRadius: '10px',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                transition: 'background 0.3s ease'
+              }}
             >
               📞 +44 123 456 7890
             </a>
@@ -73,22 +139,10 @@ function MaintenanceContent() {
         </div>
 
         {/* Current Time */}
-        <div className="mt-8 text-gray-400">
+        <div style={{ marginTop: '40px', color: '#9ca3af', fontSize: '1rem' }}>
           <p>Current time: {new Date().toLocaleString()}</p>
         </div>
       </div>
     </div>
-  );
-}
-
-export default function Maintenance() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
-      </div>
-    }>
-      <MaintenanceContent />
-    </Suspense>
   );
 }
