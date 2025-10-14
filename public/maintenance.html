@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site Under Maintenance - MuscleSports</title>
+    <title>Site Under Maintenance</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -80,7 +80,7 @@
         }
         
         .main-content {
-            padding: 2rem 0;
+            padding: 1rem 0;
             text-align: center;
             min-height: 100vh;
             display: flex;
@@ -92,16 +92,9 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 0 1rem;
+            width: 100%;
         }
         
-        .maintenance-logo {
-            height: 120px;
-            width: auto;
-            margin: 0 auto 2rem auto;
-            display: block;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)) brightness(1.05);
-            image-rendering: crisp-edges;
-        }
         
         .logo-icon {
             width: 60px;
@@ -243,22 +236,79 @@
         }
         
         @media (max-width: 768px) {
+            .main-content {
+                padding: 0.5rem 0;
+            }
+            
+            .maintenance-container {
+                padding: 0 0.5rem;
+            }
+            
             .maintenance-title {
                 font-size: 2rem;
+                line-height: 1.1;
+                margin-bottom: 0.75rem;
             }
             
             .maintenance-subtitle {
                 font-size: 1rem;
+                margin-bottom: 2rem;
             }
             
-            .maintenance-card,
-            .discount-banner,
-            .contact-section {
-                padding: 2rem 1rem;
+            .maintenance-card {
+                padding: 2rem 1.5rem;
+                margin-bottom: 2rem;
+            }
+            
+            .maintenance-message {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+            
+            .discount-banner {
+                padding: 2rem 1.5rem;
+                margin-bottom: 2rem;
+            }
+            
+            .discount-title {
+                font-size: 1.25rem;
             }
             
             .discount-amount {
                 font-size: 3rem;
+            }
+            
+            .discount-text {
+                font-size: 1.125rem;
+            }
+            
+            .discount-code {
+                font-size: 1.125rem;
+                padding: 0.75rem 1.5rem;
+            }
+            
+            .footer {
+                padding: 1.5rem 0;
+                margin-top: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .maintenance-container {
+                padding: 0 0.25rem;
+            }
+            
+            .maintenance-title {
+                font-size: 1.75rem;
+            }
+            
+            .maintenance-card,
+            .discount-banner {
+                padding: 1.5rem 1rem;
+            }
+            
+            .discount-amount {
+                font-size: 2.5rem;
             }
         }
     </style>
@@ -269,8 +319,7 @@
         <main class="flex-1 relative z-0">
             <div class="main-content">
                 <div class="maintenance-container">
-                    <!-- MuscleSports Logo -->
-                    <img src="/musclesports-logo.png" alt="MuscleSports" class="maintenance-logo" />
+
                     
                     <h1 class="maintenance-title">Site Under Maintenance</h1>
                     <p class="maintenance-subtitle">We're upgrading our systems to bring you an even better experience</p>
