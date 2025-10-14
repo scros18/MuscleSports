@@ -360,15 +360,23 @@ export default function Home() {
                   </div>
 
                   <div className="text-center mb-16">
-                    <div className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full mb-6 bg-gradient-to-r from-blue-600 via-violet-600 to-purple-600 text-white shadow-lg">
-                      <Star className="h-5 w-5 fill-white animate-pulse" />
-                      <span className="font-bold text-sm">CUSTOMER REVIEWS</span>
+                    <div className="inline-flex items-center justify-center gap-3 px-6 py-3 rounded-full mb-6 bg-white dark:bg-gray-900 shadow-xl border-2 border-gray-100 dark:border-gray-800">
+                      <div className="flex items-center gap-2 bg-[#00B67A] px-3 py-1.5 rounded-md">
+                        <Star className="h-4 w-4 fill-white text-white" />
+                        <span className="font-bold text-sm text-white">Trustpilot</span>
+                      </div>
+                      <div className="flex gap-0.5">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="h-4 w-4 fill-[#00B67A] text-[#00B67A]" />
+                        ))}
+                      </div>
+                      <span className="font-bold text-sm text-foreground">4.8/5</span>
                     </div>
                     <h2 className="text-4xl md:text-5xl font-bold mb-4 font-saira bg-gradient-to-r from-blue-600 via-violet-600 to-purple-600 bg-clip-text text-transparent">
                       {section.title ?? 'What Our Customers Say'}
                     </h2>
                     <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                      {section.description ?? (currentTheme === 'musclesports' ? 'Real reviews from verified MuscleSports customers 🏋️‍♂️' : 'Real reviews from real customers on eBay')}
+                      {section.description ?? (currentTheme === 'musclesports' ? 'Real reviews from verified MuscleSports customers on Trustpilot' : 'Real reviews from real customers')}
                     </p>
                   </div>
 
