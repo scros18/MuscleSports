@@ -43,6 +43,14 @@ export async function sendVerificationEmail(
           text-align: center;
           border-radius: 10px 10px 0 0;
         }
+        .logo {
+          max-width: 250px;
+          height: auto;
+          margin-bottom: 10px;
+          background: white;
+          padding: 15px;
+          border-radius: 10px;
+        }
         .content {
           background: #ffffff;
           padding: 30px;
@@ -70,8 +78,8 @@ export async function sendVerificationEmail(
     <body>
       <div class="container">
         <div class="header">
-          <h1>💪 MuscleSports</h1>
-          <p>Premium Sports Nutrition</p>
+          <img src="${process.env.NEXT_PUBLIC_SITE_URL || 'https://musclesports.co.uk'}/MuscleSports.png" alt="MuscleSports" class="logo" />
+          <p style="margin-top: 15px; font-size: 16px;">Premium Sports Nutrition</p>
         </div>
         <div class="content">
           <h2>Welcome, ${name}!</h2>
@@ -115,7 +123,7 @@ export async function sendVerificationEmail(
       from: `"MuscleSports" <noreply@musclesports.co.uk>`,
       replyTo: 'support@musclesports.co.uk',
       to: email,
-      subject: '✅ Verify your MuscleSports account',
+      subject: 'Verify your MuscleSports account',
       text: textContent,
       html: htmlContent,
     });
@@ -150,6 +158,14 @@ export async function sendWelcomeEmail(email: string, name: string) {
           text-align: center;
           border-radius: 10px 10px 0 0;
         }
+        .logo {
+          max-width: 250px;
+          height: auto;
+          margin-bottom: 10px;
+          background: white;
+          padding: 15px;
+          border-radius: 10px;
+        }
         .content {
           background: #ffffff;
           padding: 30px;
@@ -179,14 +195,15 @@ export async function sendWelcomeEmail(email: string, name: string) {
     <body>
       <div class="container">
         <div class="header">
-          <h1>🎉 Welcome to MuscleSports!</h1>
+          <img src="${process.env.NEXT_PUBLIC_SITE_URL || 'https://musclesports.co.uk'}/MuscleSports.png" alt="MuscleSports" class="logo" />
+          <h1 style="margin-top: 15px;">Welcome to MuscleSports!</h1>
         </div>
         <div class="content">
           <h2>Your account is now verified, ${name}!</h2>
           <p>Thank you for verifying your email. You now have full access to all MuscleSports features!</p>
           
           <div class="offer">
-            <h3>🎁 EXCLUSIVE WELCOME OFFER</h3>
+            <h3>EXCLUSIVE WELCOME OFFER</h3>
             <h2 style="color: #10b981; margin: 10px 0;">10% OFF YOUR FIRST ORDER</h2>
             <p style="margin: 10px 0;">Use code: <strong style="font-size: 18px; color: #059669;">WELCOME10</strong></p>
           </div>
@@ -218,7 +235,7 @@ export async function sendWelcomeEmail(email: string, name: string) {
       from: `"MuscleSports" <noreply@musclesports.co.uk>`,
       replyTo: 'support@musclesports.co.uk',
       to: email,
-      subject: '🎉 Welcome to MuscleSports - Your Account is Verified!',
+      subject: 'Welcome to MuscleSports - Your Account is Verified!',
       html: htmlContent,
     });
     return true;
