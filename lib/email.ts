@@ -34,10 +34,12 @@ export async function sendVerificationEmail(
           box-sizing: border-box;
         }
         body {
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-          line-height: 1.6;
+          font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+          line-height: 1.7;
           color: #1f2937;
           background: #f9fafb;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
         }
         .email-wrapper {
           background: #f9fafb;
@@ -53,7 +55,7 @@ export async function sendVerificationEmail(
         }
         .header {
           background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-          padding: 60px 40px 80px 40px;
+          padding: 80px 40px 100px 40px;
           text-align: center;
           position: relative;
           overflow: hidden;
@@ -123,6 +125,10 @@ export async function sendVerificationEmail(
           margin-bottom: 20px;
           letter-spacing: -0.5px;
         }
+        .name {
+          color: #059669;
+          font-weight: 800;
+        }
         p {
           color: #4b5563;
           font-size: 16px;
@@ -135,15 +141,17 @@ export async function sendVerificationEmail(
         }
         .button {
           display: inline-block;
-          padding: 16px 40px;
-          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-          color: white;
+          padding: 18px 50px;
+          background: #10b981;
+          color: white !important;
           text-decoration: none;
-          border-radius: 8px;
-          font-weight: 600;
-          font-size: 16px;
-          transition: transform 0.2s;
-          box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+          border-radius: 10px;
+          font-weight: 700;
+          font-size: 17px;
+          transition: all 0.2s;
+          box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+          border: 2px solid #10b981;
+          letter-spacing: 0.5px;
         }
         .link-box {
           background: #f3f4f6;
@@ -189,7 +197,7 @@ export async function sendVerificationEmail(
             <div class="wave"></div>
           </div>
           <div class="content">
-            <h2>Welcome, ${name}!</h2>
+            <h2>Welcome, <span class="name">${name}</span>!</h2>
             <p>Thank you for registering at <strong>MuscleSports</strong>. We're excited to have you join our community of athletes and fitness enthusiasts!</p>
             <p>To complete your registration and activate your account, please verify your email address by clicking the button below:</p>
             <div class="button-container">
@@ -259,10 +267,12 @@ export async function sendWelcomeEmail(email: string, name: string) {
           box-sizing: border-box;
         }
         body {
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-          line-height: 1.6;
+          font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+          line-height: 1.7;
           color: #1f2937;
           background: #f9fafb;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
         }
         .email-wrapper {
           background: #f9fafb;
@@ -278,7 +288,7 @@ export async function sendWelcomeEmail(email: string, name: string) {
         }
         .header {
           background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-          padding: 60px 40px 80px 40px;
+          padding: 80px 40px 100px 40px;
           text-align: center;
           position: relative;
           overflow: hidden;
@@ -347,6 +357,10 @@ export async function sendWelcomeEmail(email: string, name: string) {
           margin-bottom: 20px;
           letter-spacing: -0.5px;
         }
+        .name {
+          color: #059669;
+          font-weight: 800;
+        }
         h3 {
           color: #111827;
           font-size: 20px;
@@ -401,14 +415,17 @@ export async function sendWelcomeEmail(email: string, name: string) {
         }
         .button {
           display: inline-block;
-          padding: 16px 40px;
-          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-          color: white;
+          padding: 18px 50px;
+          background: #10b981;
+          color: white !important;
           text-decoration: none;
-          border-radius: 8px;
-          font-weight: 600;
-          font-size: 16px;
-          box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+          border-radius: 10px;
+          font-weight: 700;
+          font-size: 17px;
+          transition: all 0.2s;
+          box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+          border: 2px solid #10b981;
+          letter-spacing: 0.5px;
         }
         ul {
           list-style: none;
@@ -452,7 +469,7 @@ export async function sendWelcomeEmail(email: string, name: string) {
             <div class="wave"></div>
           </div>
           <div class="content">
-            <h2>Your account is verified, ${name}!</h2>
+            <h2>Your account is verified, <span class="name">${name}</span>!</h2>
             <p>Thank you for verifying your email. You now have full access to all MuscleSports features and can start building your perfect supplement stack!</p>
             
             <div class="offer">
