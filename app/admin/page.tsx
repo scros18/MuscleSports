@@ -387,7 +387,13 @@ function MaintenanceToggle() {
 
   useEffect(() => {
     // Fetch current maintenance status
-    fetch('/api/admin/maintenance')
+    const authToken = localStorage.getItem('auth_token');
+    fetch('/api/admin/maintenance', {
+      credentials: 'include',
+      headers: {
+        ...(authToken && { 'Authorization': `Bearer ${authToken}` })
+      }
+    })
       .then(res => res.json())
       .then(data => {
         setIsMaintenanceMode(data.isMaintenanceMode || false);
