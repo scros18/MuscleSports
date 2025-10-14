@@ -112,6 +112,47 @@ export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps
           </div>
         )}
 
+        {/* WELCOME DISCOUNT - 10% OFF */}
+        <div className="mb-8 relative overflow-hidden">
+          {/* Animated shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer"></div>
+          
+          <div className="relative bg-gradient-to-r from-green-600 via-emerald-500 to-green-600 rounded-2xl p-8 border-4 border-green-400/50 shadow-2xl">
+            {/* Sparkle decorations */}
+            <div className="absolute top-2 right-2 text-yellow-300 text-2xl animate-pulse">✨</div>
+            <div className="absolute bottom-2 left-2 text-yellow-300 text-2xl animate-pulse delay-500">✨</div>
+            
+            <div className="text-center">
+              <div className="inline-block bg-yellow-400 text-gray-900 px-4 py-1 rounded-full text-sm font-bold mb-4 animate-bounce">
+                🎉 EXCLUSIVE LAUNCH OFFER 🎉
+              </div>
+              
+              <h3 className="text-4xl md:text-5xl font-black text-white mb-3 font-saira">
+                10% OFF
+              </h3>
+              
+              <p className="text-xl md:text-2xl font-bold text-white mb-4">
+                YOUR FIRST ORDER!
+              </p>
+              
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg px-6 py-4 inline-block mb-3">
+                <p className="text-white font-mono text-lg md:text-xl font-bold tracking-wider">
+                  CODE: <span className="text-yellow-300">WELCOME10</span>
+                </p>
+              </div>
+              
+              <p className="text-green-100 text-sm md:text-base">
+                Use this code when we&apos;re back online! 💪
+              </p>
+              
+              <div className="mt-4 flex items-center justify-center gap-2 text-white/80 text-xs">
+                <Clock className="w-4 h-4" />
+                <span>Valid for your first purchase after launch</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Contact info */}
         <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
           <h3 className="text-white font-semibold mb-4">Need Immediate Assistance?</h3>
