@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 import { Wrench, Clock, Mail, Phone, ArrowLeft } from 'lucide-react';
