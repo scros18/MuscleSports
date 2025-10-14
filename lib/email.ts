@@ -92,7 +92,7 @@ export async function sendVerificationEmail(
         .logo-container {
           position: relative;
           z-index: 10;
-          margin-bottom: 20px;
+          margin-bottom: 10px;
         }
         .logo {
           max-width: 200px;
@@ -111,7 +111,7 @@ export async function sendVerificationEmail(
           font-size: 15px;
           font-weight: 500;
           letter-spacing: 0.5px;
-          margin-top: 20px;
+          margin-top: 8px;
           opacity: 0.95;
         }
         .content {
@@ -325,7 +325,7 @@ export async function sendWelcomeEmail(email: string, name: string) {
         .logo-container {
           position: relative;
           z-index: 10;
-          margin-bottom: 20px;
+          margin-bottom: 10px;
         }
         .logo {
           max-width: 200px;
@@ -343,7 +343,7 @@ export async function sendWelcomeEmail(email: string, name: string) {
           color: white;
           font-size: 28px;
           font-weight: 700;
-          margin-top: 25px;
+          margin-top: 12px;
           letter-spacing: -0.5px;
         }
         .content {
