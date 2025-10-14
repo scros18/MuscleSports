@@ -198,7 +198,7 @@ export default function TestosteroneGuidePage() {
 
                     <div className="bg-red-100 dark:bg-red-900/30 rounded-xl p-4 border-l-4 border-red-600">
                       <p className="text-sm font-semibold text-red-900 dark:text-red-400">
-                        ⚠️ Avoid: Excessive cardio (>60min) and overtraining - both LOWER testosterone significantly
+                        ⚠️ Avoid: Excessive cardio (&gt;60min) and overtraining - both LOWER testosterone significantly
                       </p>
                     </div>
                   </div>
@@ -207,7 +207,7 @@ export default function TestosteroneGuidePage() {
                 {section.id === 'sleep' && (
                   <div className="space-y-4">
                     <p className="text-muted-foreground leading-relaxed">
-                      Sleep is when 70% of your daily testosterone is produced. Sleeping less than 7 hours reduces testosterone by up to 15% and increases cortisol (testosterone's enemy).
+                      Sleep is when 70% of your daily testosterone is produced. Sleeping less than 7 hours reduces testosterone by up to 15% and increases cortisol (testosterone&apos;s enemy).
                     </p>
 
                     <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-6 text-white shadow-xl">
