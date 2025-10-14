@@ -15,7 +15,15 @@ export async function middleware(request: NextRequest) {
 
   try {
     // Check maintenance mode via public API endpoint
-    const maintenanceResponse = await fetch(`${request.nextUrl.origin}/api/maintenance-status`);
+    // Use HTTP for internal server requests to avoid SSL issues
+    const protocol = process.env.NODE_ENV === 'production' ? 'http' : 'http';
+    const host = request.headers.get('host') || 'localhost:3000';
+    const apiUrl = `${protocol}://${host}/api/maintenance-status`;
+    
+    const maintenanceResponse = await fetch(apiUrl, {
+      // Disable SSL verification for internal requests
+      headers: request.headers,
+    });
 
     if (maintenanceResponse.ok) {
       const maintenanceData = await maintenanceResponse.json();

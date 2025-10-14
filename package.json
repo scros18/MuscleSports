@@ -13,6 +13,7 @@
     "db:migrate": "tsx scripts/migrate-products.ts",
     "db:test": "tsx scripts/test-db-connection.ts",
     "db:seed": "tsx scripts/migrate-products.ts",
+    "db:maintenance": "tsx scripts/add-maintenance-columns.ts",
     "make:admin": "tsx scripts/make-admin.ts",
     "optimize": "node scripts/optimize.js",
     "deploy:prod": "npm run clean && npm run build:obfuscated && npm start"
