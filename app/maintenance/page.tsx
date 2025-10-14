@@ -1,17 +1,17 @@
+'use client';
+
 import { MaintenancePage } from '@/components/maintenance-page';
+import { useSearchParams } from 'next/navigation';
 
-interface MaintenancePageProps {
-  searchParams: {
-    message?: string;
-    estimatedTime?: string;
-  };
-}
+export default function Maintenance() {
+  const searchParams = useSearchParams();
+  const message = searchParams.get('message') || undefined;
+  const estimatedTime = searchParams.get('estimatedTime') || undefined;
 
-export default function Maintenance({ searchParams }: MaintenancePageProps) {
   return (
     <MaintenancePage 
-      message={searchParams.message} 
-      estimatedTime={searchParams.estimatedTime} 
+      message={message} 
+      estimatedTime={estimatedTime} 
     />
   );
 }
