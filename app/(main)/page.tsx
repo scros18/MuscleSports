@@ -304,49 +304,49 @@ export default function Home() {
             case 'reviews':
               if (reviewsLoading || reviews.length === 0) return null;
               
-              // Consistent color scheme for all review tiles
+              // MuscleSports green color scheme for all review tiles
               const reviewColors = [
                 { 
-                  bg: 'bg-gradient-to-br from-blue-600 via-indigo-500 to-violet-500',
-                  icon: 'bg-gradient-to-br from-blue-700 to-violet-600',
-                  star: 'text-blue-400 fill-blue-400',
-                  text: 'text-blue-100',
-                  border: 'border-blue-300/30'
+                  bg: 'bg-gradient-to-br from-green-700 via-emerald-600 to-teal-600',
+                  icon: 'bg-gradient-to-br from-green-800 to-emerald-700',
+                  star: 'text-green-300 fill-green-300',
+                  text: 'text-green-100',
+                  border: 'border-green-300/30'
                 },
                 { 
-                  bg: 'bg-gradient-to-br from-blue-600 via-indigo-500 to-violet-500',
-                  icon: 'bg-gradient-to-br from-blue-700 to-violet-600',
-                  star: 'text-indigo-400 fill-indigo-400',
-                  text: 'text-indigo-100',
-                  border: 'border-indigo-300/30'
+                  bg: 'bg-gradient-to-br from-emerald-700 via-green-600 to-teal-600',
+                  icon: 'bg-gradient-to-br from-emerald-800 to-green-700',
+                  star: 'text-emerald-300 fill-emerald-300',
+                  text: 'text-emerald-100',
+                  border: 'border-emerald-300/30'
                 },
                 { 
-                  bg: 'bg-gradient-to-br from-blue-600 via-indigo-500 to-violet-500',
-                  icon: 'bg-gradient-to-br from-blue-700 to-violet-600',
-                  star: 'text-violet-400 fill-violet-400',
-                  text: 'text-violet-100',
-                  border: 'border-violet-300/30'
+                  bg: 'bg-gradient-to-br from-teal-700 via-emerald-600 to-green-600',
+                  icon: 'bg-gradient-to-br from-teal-800 to-emerald-700',
+                  star: 'text-teal-300 fill-teal-300',
+                  text: 'text-teal-100',
+                  border: 'border-teal-300/30'
                 },
                 { 
-                  bg: 'bg-gradient-to-br from-blue-600 via-indigo-500 to-violet-500',
-                  icon: 'bg-gradient-to-br from-blue-700 to-violet-600',
-                  star: 'text-blue-400 fill-blue-400',
-                  text: 'text-blue-100',
-                  border: 'border-blue-300/30'
+                  bg: 'bg-gradient-to-br from-green-700 via-emerald-600 to-teal-600',
+                  icon: 'bg-gradient-to-br from-green-800 to-emerald-700',
+                  star: 'text-green-300 fill-green-300',
+                  text: 'text-green-100',
+                  border: 'border-green-300/30'
                 },
                 { 
-                  bg: 'bg-gradient-to-br from-blue-600 via-indigo-500 to-violet-500',
-                  icon: 'bg-gradient-to-br from-blue-700 to-violet-600',
-                  star: 'text-indigo-400 fill-indigo-400',
-                  text: 'text-indigo-100',
-                  border: 'border-indigo-300/30'
+                  bg: 'bg-gradient-to-br from-emerald-700 via-teal-600 to-green-600',
+                  icon: 'bg-gradient-to-br from-emerald-800 to-teal-700',
+                  star: 'text-emerald-300 fill-emerald-300',
+                  text: 'text-emerald-100',
+                  border: 'border-emerald-300/30'
                 },
                 { 
-                  bg: 'bg-gradient-to-br from-blue-600 via-indigo-500 to-violet-500',
-                  icon: 'bg-gradient-to-br from-blue-700 to-violet-600',
-                  star: 'text-violet-400 fill-violet-400',
-                  text: 'text-violet-100',
-                  border: 'border-violet-300/30'
+                  bg: 'bg-gradient-to-br from-teal-700 via-green-600 to-emerald-600',
+                  icon: 'bg-gradient-to-br from-teal-800 to-green-700',
+                  star: 'text-teal-300 fill-teal-300',
+                  text: 'text-teal-100',
+                  border: 'border-teal-300/30'
                 },
               ];
 
@@ -354,25 +354,31 @@ export default function Home() {
                 <section key={key} className="mb-20 relative">
                   {/* Abstract background shapes */}
                   <div className="absolute inset-0 -z-10 overflow-hidden">
-                    <div className="absolute top-0 left-1/4 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-                    <div className="absolute top-0 right-1/4 w-72 h-72 bg-violet-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-                    <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-cyan-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+                    <div className="absolute top-0 left-1/4 w-72 h-72 bg-green-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+                    <div className="absolute top-0 right-1/4 w-72 h-72 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+                    <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-teal-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
                   </div>
 
                   <div className="text-center mb-16">
-                    <div className="inline-flex items-center justify-center gap-3 px-6 py-3 rounded-full mb-6 bg-white dark:bg-gray-900 shadow-xl border-2 border-gray-100 dark:border-gray-800">
-                      <div className="flex items-center gap-2 bg-[#00B67A] px-3 py-1.5 rounded-md">
-                        <Star className="h-4 w-4 fill-white text-white" />
-                        <span className="font-bold text-sm text-white">Trustpilot</span>
+                    {/* MuscleSports x Trustpilot Badge */}
+                    <div className="inline-flex items-center justify-center gap-4 px-8 py-4 rounded-2xl mb-6 bg-gradient-to-r from-green-700 to-emerald-700 shadow-2xl border-2 border-green-600">
+                      <div className="flex items-center gap-2">
+                        <div className="bg-white px-3 py-1.5 rounded-lg flex items-center gap-2">
+                          <Star className="h-5 w-5 fill-[#00B67A] text-[#00B67A]" />
+                          <span className="font-bold text-base text-[#00B67A]">Trustpilot</span>
+                        </div>
                       </div>
-                      <div className="flex gap-0.5">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 fill-[#00B67A] text-[#00B67A]" />
-                        ))}
+                      <div className="h-8 w-px bg-white/30"></div>
+                      <div className="flex flex-col items-start">
+                        <div className="flex gap-1 mb-1">
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} className="h-5 w-5 fill-white text-white" />
+                          ))}
+                        </div>
+                        <span className="text-white font-bold text-sm">4.8 out of 5 stars</span>
                       </div>
-                      <span className="font-bold text-sm text-foreground">4.8/5</span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4 font-saira bg-gradient-to-r from-blue-600 via-violet-600 to-purple-600 bg-clip-text text-transparent">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-4 font-saira bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent">
                       {section.title ?? 'What Our Customers Say'}
                     </h2>
                     <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -432,7 +438,7 @@ export default function Home() {
                                 <div className="flex items-center gap-2">
                                   <p className="font-bold text-sm text-foreground">{review.author || review.reviewer}</p>
                                   {review.verified && (
-                                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-950/50 px-2 py-0.5 rounded-full">
+                                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-950/50 px-2 py-0.5 rounded-full">
                                       <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                                       </svg>
