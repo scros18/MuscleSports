@@ -415,6 +415,38 @@ html.hydrated {
     -webkit-touch-callout: none;
   }
 
+  /* Prevent zoom on input focus for iOS - ensure minimum 16px font size */
+  input, textarea, select, button {
+    font-size: 16px;
+  }
+
+  @media (min-width: 640px) {
+    input, textarea, select, button {
+      font-size: inherit;
+    }
+  }
+
+  /* Prevent double-tap zoom on iOS */
+  a, button, input, select, textarea {
+    touch-action: manipulation;
+  }
+
+  /* Disable lazy loading appearance - preload all images */
+  img {
+    content-visibility: auto;
+  }
+
+  /* Force eager loading for all images to prevent scroll loading */
+  img[loading="lazy"] {
+    loading: eager;
+  }
+
+  /* Prevent layout shift from images loading */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
   /* Smooth scroll behavior */
   html {
     scroll-behavior: smooth;

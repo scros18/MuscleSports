@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
   try {
     await requireAdmin(request);
     
-    const settings = await Database.getBusinessSettings('maintenance');
+    const settings = await Database.getBusinessSettings('default');
     const isMaintenanceMode = settings?.isMaintenanceMode || false;
     const maintenanceMessage = settings?.maintenanceMessage || 'We are currently performing scheduled maintenance. Please check back soon!';
     

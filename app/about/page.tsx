@@ -47,12 +47,12 @@ export default function AboutPage() {
           {/* Main Content */}
           <div className="prose prose-lg dark:prose-invert max-w-none mb-16">
             <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-              MuscleSports isn't just a supplement store—it's heritage in motion. Originally built by my father, it grew into a trusted destination for results-driven athletes and health enthusiasts. We're bringing it back—sharper, faster, and more focused—with a new generation of products and purpose.
+              MuscleSports isn&apos;t just a supplement store—it&apos;s heritage in motion. Originally built by my father, it grew into a trusted destination for results-driven athletes and health enthusiasts. We&apos;re bringing it back—sharper, faster, and more focused—with a new generation of products and purpose.
             </p>
 
             <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 rounded-2xl p-8 mb-8 border border-green-200 dark:border-green-800">
               <p className="text-foreground leading-relaxed mb-4">
-                <strong>We're dialled in on the formulas that matter:</strong>
+                <strong>We&apos;re dialled in on the formulas that matter:</strong>
               </p>
               <p className="text-foreground leading-relaxed">
                 Nootropics for next-level mental clarity, Gut Health for sustained performance, Premium Sports supplements with verified ingredients.
@@ -60,7 +60,7 @@ export default function AboutPage() {
             </div>
 
             <p className="text-lg text-muted-foreground italic border-l-4 border-green-600 pl-6 py-2 mb-12">
-              If it's on our shelves, it's been vetted, tested, and earned its place.
+              If it&apos;s on our shelves, it&apos;s been vetted, tested, and earned its place.
             </p>
           </div>
 
@@ -165,7 +165,7 @@ export default function AboutPage() {
           
           <h2 className="text-2xl font-bold mb-4 mt-8">Our Story</h2>
           <p className="text-muted-foreground leading-relaxed mb-6">
-            Founded with a passion for excellence, we've built our business on trust, quality, and customer satisfaction. 
+            Founded with a passion for excellence, we&apos;ve built our business on trust, quality, and customer satisfaction. 
             Our team works tirelessly to source the best products and deliver them to your doorstep.
           </p>
           

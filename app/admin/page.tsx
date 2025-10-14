@@ -383,6 +383,7 @@ function MaintenanceToggle() {
   const [maintenanceMessage, setMaintenanceMessage] = useState('');
   const [estimatedTime, setEstimatedTime] = useState('');
   const [loading, setLoading] = useState(false);
+  const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
     // Fetch current maintenance status
@@ -399,34 +400,70 @@ function MaintenanceToggle() {
   const toggleMaintenance = async () => {
     setLoading(true);
     try {
+      const authToken = localStorage.getItem('auth_token');
       const response = await fetch('/api/admin/maintenance', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+          ...(authToken && { 'Authorization': `Bearer ${authToken}` })
         },
+        credentials: 'include', // Include cookies for authentication
         body: JSON.stringify({
           isMaintenanceMode: !isMaintenanceMode,
-          maintenanceMessage,
-          estimatedTime
+          maintenanceMessage: maintenanceMessage || 'We are currently performing scheduled maintenance. Please check back soon!',
+          estimatedTime: estimatedTime || null
         })
       });
 
       if (response.ok) {
-        setIsMaintenanceMode(!isMaintenanceMode);
-        if (!isMaintenanceMode) {
-          alert('Maintenance mode enabled! All users will see the maintenance page.');
+        const newMode = !isMaintenanceMode;
+        setIsMaintenanceMode(newMode);
+        if (newMode) {
+          alert('✅ Maintenance mode enabled! All users will see the maintenance page.\n\nThe site is now in maintenance mode.');
         } else {
-          alert('Maintenance mode disabled! Site is now live.');
+          alert('✅ Maintenance mode disabled! Site is now live.\n\nCustomers can now access the site normally.');
         }
       } else {
-        alert('Failed to update maintenance mode');
+        const errorData = await response.json().catch(() => ({}));
+        alert(`Failed to update maintenance mode: ${errorData.error || 'Unknown error'}`);
       }
     } catch (error) {
       console.error('Error toggling maintenance mode:', error);
-      alert('Error updating maintenance mode');
+      alert('Error updating maintenance mode. Please try again.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const updateMessage = async () => {
+    setUpdating(true);
+    try {
+      const authToken = localStorage.getItem('auth_token');
+      const response = await fetch('/api/admin/maintenance', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(authToken && { 'Authorization': `Bearer ${authToken}` })
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          isMaintenanceMode,
+          maintenanceMessage: maintenanceMessage || 'We are currently performing scheduled maintenance. Please check back soon!',
+          estimatedTime: estimatedTime || null
+        })
+      });
+
+      if (response.ok) {
+        alert('✅ Maintenance message updated successfully!');
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        alert(`Failed to update message: ${errorData.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error updating message:', error);
+      alert('Error updating message. Please try again.');
+    } finally {
+      setUpdating(false);
     }
   };
 
@@ -478,6 +515,14 @@ function MaintenanceToggle() {
                 placeholder="e.g., 2 hours, Tomorrow 9 AM"
               />
             </div>
+            <Button 
+              onClick={updateMessage} 
+              disabled={updating}
+              variant="outline"
+              className="w-full"
+            >
+              {updating ? 'Updating...' : 'Update Message & Time'}
+            </Button>
           </div>
         )}
       </CardContent>

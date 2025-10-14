@@ -19,6 +19,28 @@ export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps
     return () => clearInterval(timer);
   }, []);
 
+  // Auto-refresh to check if maintenance mode is over
+  useEffect(() => {
+    const checkMaintenance = async () => {
+      try {
+        const response = await fetch('/api/maintenance-status');
+        const data = await response.json();
+        
+        // If maintenance is no longer active, reload the page
+        if (!data.isMaintenanceMode) {
+          window.location.href = '/';
+        }
+      } catch (error) {
+        console.error('Error checking maintenance status:', error);
+      }
+    };
+
+    // Check every 10 seconds
+    const interval = setInterval(checkMaintenance, 10000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
       {/* Animated background elements */}
@@ -43,7 +65,7 @@ export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps
         {/* Main message */}
         <div className="mb-8">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-            We're Upgrading Our System
+            We&apos;re Upgrading Our System
           </h2>
           <p className="text-gray-300 text-lg leading-relaxed mb-6">
             {message || "We are currently performing scheduled maintenance to improve your experience. Please check back soon!"}
@@ -75,7 +97,7 @@ export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps
               <ArrowLeft className="w-6 h-6 text-green-400" />
             </div>
             <h3 className="text-white font-semibold mb-2">Status</h3>
-            <p className="text-gray-400 text-sm">We'll be back soon</p>
+            <p className="text-gray-400 text-sm">We&apos;ll be back soon</p>
           </div>
         </div>
 
@@ -113,7 +135,7 @@ export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps
 
         {/* Auto-refresh notice */}
         <div className="mt-8 text-gray-500 text-sm">
-          <p>This page will automatically refresh when maintenance is complete.</p>
+          <p>This page checks for updates every 10 seconds and will automatically redirect when maintenance is complete.</p>
         </div>
       </div>
 

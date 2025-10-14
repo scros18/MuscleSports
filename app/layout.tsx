@@ -39,8 +39,8 @@ export const metadata: Metadata = generateSEO({
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 5,
-  userScalable: true,
+  maximumScale: 1,
+  userScalable: false,
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
     { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' }
@@ -62,6 +62,15 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="format-detection" content="telephone=no" />
         <link rel="manifest" href="/manifest.json" />
+        
+        {/* Preconnect to image CDNs for faster loading */}
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="preconnect" href="https://img.aosomcdn.com" />
+        <link rel="preconnect" href="https://musclesports.co.uk" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="https://img.aosomcdn.com" />
+        <link rel="dns-prefetch" href="https://musclesports.co.uk" />
+        
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={getJsonLdScript(organizationSchema)}

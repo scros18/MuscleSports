@@ -3,7 +3,7 @@ import { Database } from '@/lib/database';
 
 export async function GET() {
   try {
-    const settings = await Database.getBusinessSettings('maintenance');
+    const settings = await Database.getBusinessSettings('default');
     const isMaintenanceMode = settings?.isMaintenanceMode || false;
     const maintenanceMessage = settings?.maintenanceMessage || '';
     const estimatedTime = settings?.estimatedTime || '';

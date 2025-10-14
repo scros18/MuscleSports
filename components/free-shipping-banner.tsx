@@ -5,12 +5,12 @@ import { useCart } from "@/context/cart-context";
 import { Truck, X } from "lucide-react";
 
 export function FreeShippingBanner() {
-  const { cartItems } = useCart();
+  const { items } = useCart();
   const [isVisible, setIsVisible] = useState(true);
   const [progress, setProgress] = useState(0);
   
   const FREE_SHIPPING_THRESHOLD = 50;
-  const cartTotal = cartItems.reduce((total, item) => total + item.price, 0);
+  const cartTotal = items.reduce((total, item) => total + (item.price * item.quantity), 0);
   const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD - cartTotal);
   const progressPercent = Math.min(100, (cartTotal / FREE_SHIPPING_THRESHOLD) * 100);
 
@@ -49,7 +49,7 @@ export function FreeShippingBanner() {
             ) : (
               <p className="text-sm font-semibold flex items-center gap-2">
                 <span className="animate-bounce">🎉</span>
-                You've unlocked FREE shipping!
+                You&apos;ve unlocked FREE shipping!
               </p>
             )}
           </div>

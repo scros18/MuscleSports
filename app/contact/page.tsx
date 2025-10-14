@@ -10,7 +10,7 @@ export default function ContactPage() {
           </span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Have questions about our premium sports nutrition products? Need advice on supplements? We're here to help you achieve your fitness goals.
+          Have questions about our premium sports nutrition products? Need advice on supplements? We&apos;re here to help you achieve your fitness goals.
         </p>
       </div>
 
