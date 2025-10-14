@@ -3,6 +3,13 @@
 import { useState, useEffect } from 'react';
 import { Wrench, Clock, Mail, Phone, ArrowLeft } from 'lucide-react';
 
+// Prevent any parent layout interference
+if (typeof window !== 'undefined') {
+  // Remove any theme classes that might be applied by root layout
+  document.documentElement.className = 'theme-musclesports';
+  document.body.className = '';
+}
+
 interface MaintenancePageProps {
   message?: string;
   estimatedTime?: string;
@@ -112,7 +119,7 @@ export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps
           </div>
         )}
 
-        {/* WELCOME DISCOUNT - 10% OFF */}
+          {/* WELCOME DISCOUNT - 10% OFF */}
         <div className="mb-8 relative overflow-hidden">
           {/* Animated shimmer effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer"></div>
