@@ -36,14 +36,8 @@ export async function middleware(request: NextRequest) {
       const maintenanceData = await maintenanceResponse.json();
       
       if (maintenanceData.isMaintenanceMode) {
-        // BLOCK EVERYONE - redirect to maintenance page
-        const maintenanceUrl = new URL('/maintenance', request.url);
-        if (maintenanceData.maintenanceMessage) {
-          maintenanceUrl.searchParams.set('message', maintenanceData.maintenanceMessage);
-        }
-        if (maintenanceData.estimatedTime) {
-          maintenanceUrl.searchParams.set('estimatedTime', maintenanceData.estimatedTime);
-        }
+        // BLOCK EVERYONE - redirect to static maintenance HTML
+        const maintenanceUrl = new URL('/maintenance.html', request.url);
         
         return NextResponse.redirect(maintenanceUrl);
       }
