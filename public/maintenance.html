@@ -79,34 +79,13 @@
             padding: 0 1rem;
         }
         
-        .header {
-            background: white;
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-        
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
         .main-content {
-            padding: 4rem 0;
+            padding: 2rem 0;
             text-align: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .maintenance-container {
@@ -116,9 +95,29 @@
         }
         
         .maintenance-icon {
-            font-size: 4rem;
-            margin-bottom: 2rem;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem auto;
             display: block;
+            color: var(--primary);
+        }
+        
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            color: var(--primary);
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 0.5rem;
+        }
+        
+        .discount-icon {
+            width: 32px;
+            height: 32px;
+            color: white;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 0.5rem;
         }
         
         .maintenance-title {
@@ -207,45 +206,6 @@
             opacity: 0.9;
         }
         
-        .contact-section {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 3rem 2rem;
-            margin-bottom: 3rem;
-        }
-        
-        .contact-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 2rem;
-        }
-        
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .contact-link {
-            background: var(--primary);
-            color: var(--primary-foreground);
-            padding: 1rem 2rem;
-            border-radius: var(--radius);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .contact-link:hover {
-            background: #059669;
-            transform: translateY(-2px);
-        }
         
         .footer {
             background: var(--muted);
@@ -287,17 +247,6 @@
             .discount-amount {
                 font-size: 3rem;
             }
-            
-            .contact-links {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .contact-link {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
-            }
         }
     </style>
 </head>
@@ -308,7 +257,14 @@
             <div class="container">
                 <div class="header-content">
                     <a href="/" class="logo">
-                        💪 MuscleSports
+                        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6.5 6.5h11l1 6-6 6-6-6 1-6z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                            <circle cx="12" cy="8" r="1"/>
+                            <circle cx="8" cy="16" r="1"/>
+                            <circle cx="16" cy="16" r="1"/>
+                        </svg>
+                        MuscleSports
                     </a>
                 </div>
             </div>
@@ -318,7 +274,11 @@
         <main class="flex-1 relative z-0">
             <div class="main-content">
                 <div class="maintenance-container">
-                    <span class="maintenance-icon">🔧</span>
+                    <!-- Maintenance Icon -->
+                    <svg class="maintenance-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                    </svg>
+                    
                     <h1 class="maintenance-title">Site Under Maintenance</h1>
                     <p class="maintenance-subtitle">We're upgrading our systems to bring you an even better experience</p>
                     
@@ -335,25 +295,24 @@
                     
                     <!-- Discount Banner -->
                     <div class="discount-banner">
-                        <h3 class="discount-title">🎉 EXCLUSIVE LAUNCH OFFER</h3>
+                        <h3 class="discount-title">
+                            <svg class="discount-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            EXCLUSIVE LAUNCH OFFER
+                        </h3>
                         <p class="discount-amount">10% OFF</p>
                         <p class="discount-text">YOUR FIRST ORDER!</p>
                         <div class="discount-code">CODE: WELCOME10</div>
-                        <p class="discount-note">Use this code when we're back online! 💪</p>
+                        <p class="discount-note">
+                            Use this code when we're back online! 
+                            <svg class="discount-icon" style="width: 20px; height: 20px; margin-left: 0.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6.5 6.5h11l1 6-6 6-6-6 1-6z"/>
+                                <path d="M9 12l2 2 4-4"/>
+                            </svg>
+                        </p>
                     </div>
                     
-                    <!-- Contact Section -->
-                    <div class="contact-section">
-                        <h3 class="contact-title">📞 Need Immediate Assistance?</h3>
-                        <div class="contact-links">
-                            <a href="mailto:support@musclesports.co.uk" class="contact-link">
-                                📧 support@musclesports.co.uk
-                            </a>
-                            <a href="tel:+441234567890" class="contact-link">
-                                📞 +44 123 456 7890
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </main>
@@ -363,7 +322,13 @@
             <div class="container">
                 <div class="footer-content">
                     <p>Current Time: <span class="current-time" id="current-time"></span></p>
-                    <p class="footer-text">Thank you for your patience. We'll be back stronger than ever! 💪</p>
+                    <p class="footer-text">
+                        Thank you for your patience. We'll be back stronger than ever! 
+                        <svg style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-left: 0.25rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6.5 6.5h11l1 6-6 6-6-6 1-6z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                    </p>
                 </div>
             </div>
         </footer>
