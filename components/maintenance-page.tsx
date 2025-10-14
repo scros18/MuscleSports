@@ -3,13 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Wrench, Clock, Mail, Phone, ArrowLeft } from 'lucide-react';
 
-// Prevent any parent layout interference
-if (typeof window !== 'undefined') {
-  // Remove any theme classes that might be applied by root layout
-  document.documentElement.className = 'theme-musclesports';
-  document.body.className = '';
-}
-
 interface MaintenancePageProps {
   message?: string;
   estimatedTime?: string;
@@ -49,7 +42,7 @@ export function MaintenancePage({ message, estimatedTime }: MaintenancePageProps
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[9999] min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-green-500/10 rounded-full blur-3xl animate-pulse"></div>
