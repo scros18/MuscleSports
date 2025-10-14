@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
   const isNextAsset = pathname.startsWith('/_next');
   const isPublicAsset = pathname.startsWith('/public') || pathname.match(/\.(png|jpg|jpeg|gif|svg|webp|ico|css|js)$/);
   const isFavicon = pathname.startsWith('/favicon');
-  const isMaintenancePage = pathname === '/maintenance' || pathname === '/maintenance.html';
+  const isMaintenancePage = pathname.startsWith('/maintenance');
   
   // Skip maintenance check for admin, login, API, and system routes
   if (isAdminPath || isLoginPath || isApiPath || isNextAsset || isPublicAsset || isFavicon || isMaintenancePage) {
@@ -33,14 +33,16 @@ export async function middleware(request: NextRequest) {
     
     const maintenanceResponse = await fetch(apiUrl, {
       headers: request.headers,
+      cache: 'no-store', // Prevent caching
+      next: { revalidate: 0 } // Always fetch fresh data
     });
 
     if (maintenanceResponse.ok) {
       const maintenanceData = await maintenanceResponse.json();
       
       if (maintenanceData.isMaintenanceMode) {
-        // BLOCK EVERYONE - redirect to static maintenance HTML
-        const maintenanceUrl = new URL('/maintenance.html', request.url);
+        // BLOCK EVERYONE - redirect to maintenance page
+        const maintenanceUrl = new URL('/maintenance', request.url);
         
         return NextResponse.redirect(maintenanceUrl);
       }

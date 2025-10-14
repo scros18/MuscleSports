@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { Database } from '@/lib/database';
 
+// Disable caching for this route
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   try {
     const settings = await Database.getBusinessSettings('default');
@@ -12,6 +16,12 @@ export async function GET() {
       isMaintenanceMode,
       maintenanceMessage,
       estimatedTime
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
     });
   } catch (error) {
     // If there's an error, assume maintenance mode is off
@@ -19,6 +29,12 @@ export async function GET() {
       isMaintenanceMode: false,
       maintenanceMessage: '',
       estimatedTime: ''
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
     });
   }
 }
