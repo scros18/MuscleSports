@@ -10,8 +10,8 @@ export default function MaintenancePage() {
         background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%)',
         color: 'white',
         fontFamily: 'Arial, sans-serif',
-        display: 'block !important',
-        visibility: 'visible !important',
+        display: 'block',
+        visibility: 'visible',
         zIndex: 9999,
         overflow: 'auto',
         padding: '20px',
@@ -21,8 +21,8 @@ export default function MaintenancePage() {
           maxWidth: '800px', 
           margin: '0 auto', 
           textAlign: 'center',
-          display: 'block !important',
-          visibility: 'visible !important'
+          display: 'block',
+          visibility: 'visible'
         }}>
           {/* Logo */}
           <div style={{ marginBottom: '40px' }}>
@@ -32,8 +32,8 @@ export default function MaintenancePage() {
               color: '#10b981', 
               marginBottom: '10px',
               textShadow: '0 0 20px rgba(16, 185, 129, 0.5)',
-              display: 'block !important',
-              visibility: 'visible !important'
+              display: 'block',
+              visibility: 'visible'
             }}>
               💪 MuscleSports
             </h1>
@@ -41,8 +41,8 @@ export default function MaintenancePage() {
               fontSize: '1.2rem', 
               color: '#9ca3af',
               marginBottom: '0',
-              display: 'block !important',
-              visibility: 'visible !important'
+              display: 'block',
+              visibility: 'visible'
             }}>
               Your Premier Sports Nutrition Destination
             </p>
@@ -55,15 +55,15 @@ export default function MaintenancePage() {
             borderRadius: '20px',
             marginBottom: '40px',
             border: '2px solid #10b981',
-            display: 'block !important',
-            visibility: 'visible !important'
+            display: 'block',
+            visibility: 'visible'
           }}>
             <h2 style={{ 
               fontSize: '2.5rem', 
               marginBottom: '20px',
               color: '#10b981',
-              display: 'block !important',
-              visibility: 'visible !important'
+              display: 'block',
+              visibility: 'visible'
             }}>
               🔧 Site Under Maintenance
             </h2>
@@ -71,16 +71,16 @@ export default function MaintenancePage() {
               fontSize: '1.3rem', 
               lineHeight: '1.6',
               marginBottom: '20px',
-              display: 'block !important',
-              visibility: 'visible !important'
+              display: 'block',
+              visibility: 'visible'
             }}>
               We are currently performing scheduled maintenance to improve your experience. Please check back soon!
             </p>
             <p style={{ 
               fontSize: '1.1rem', 
               color: '#9ca3af',
-              display: 'block !important',
-              visibility: 'visible !important'
+              display: 'block',
+              visibility: 'visible'
             }}>
               Estimated completion: <strong style={{ color: '#10b981' }}>2 hours</strong>
             </p>
@@ -93,15 +93,15 @@ export default function MaintenancePage() {
             borderRadius: '15px',
             marginBottom: '40px',
             boxShadow: '0 10px 30px rgba(16, 185, 129, 0.3)',
-            display: 'block !important',
-            visibility: 'visible !important'
+            display: 'block',
+            visibility: 'visible'
           }}>
             <h3 style={{ 
               fontSize: '2rem', 
               marginBottom: '10px',
               color: 'white',
-              display: 'block !important',
-              visibility: 'visible !important'
+              display: 'block',
+              visibility: 'visible'
             }}>
               🎉 EXCLUSIVE LAUNCH OFFER
             </h3>
@@ -111,8 +111,8 @@ export default function MaintenancePage() {
               marginBottom: '10px',
               color: 'white',
               textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
-              display: 'block !important',
-              visibility: 'visible !important'
+              display: 'block',
+              visibility: 'visible'
             }}>
               10% OFF
             </p>
@@ -120,8 +120,8 @@ export default function MaintenancePage() {
               fontSize: '1.5rem', 
               marginBottom: '15px',
               color: 'white',
-              display: 'block !important',
-              visibility: 'visible !important'
+              display: 'block',
+              visibility: 'visible'
             }}>
               YOUR FIRST ORDER!
             </p>
@@ -133,7 +133,7 @@ export default function MaintenancePage() {
               fontSize: '1.2rem',
               fontFamily: 'monospace',
               fontWeight: 'bold',
-              visibility: 'visible !important'
+              visibility: 'visible'
             }}>
               CODE: WELCOME10
             </div>
@@ -141,10 +141,10 @@ export default function MaintenancePage() {
               marginTop: '15px',
               fontSize: '1rem',
               color: 'rgba(255,255,255,0.9)',
-              display: 'block !important',
-              visibility: 'visible !important'
+              display: 'block',
+              visibility: 'visible'
             }}>
-              Use this code when we're back online! 💪
+              Use this code when we&apos;re back online! 💪
             </p>
           </div>
 
@@ -154,15 +154,15 @@ export default function MaintenancePage() {
             padding: '30px', 
             borderRadius: '15px',
             marginBottom: '30px',
-            display: 'block !important',
-            visibility: 'visible !important'
+            display: 'block',
+            visibility: 'visible'
           }}>
             <h3 style={{ 
               fontSize: '1.8rem', 
               marginBottom: '20px',
               color: '#10b981',
-              display: 'block !important',
-              visibility: 'visible !important'
+              display: 'block',
+              visibility: 'visible'
             }}>
               📞 Need Immediate Assistance?
             </h3>
@@ -184,7 +184,7 @@ export default function MaintenancePage() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                visibility: 'visible !important'
+                visibility: 'visible'
               }}>
                 📧 support@musclesports.co.uk
               </a>
@@ -200,7 +200,7 @@ export default function MaintenancePage() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                visibility: 'visible !important'
+                visibility: 'visible'
               }}>
                 📞 +44 123 456 7890
               </a>
@@ -212,18 +212,18 @@ export default function MaintenancePage() {
             fontSize: '0.9rem', 
             color: '#6b7280',
             marginTop: '40px',
-            display: 'block !important',
-            visibility: 'visible !important'
+            display: 'block',
+            visibility: 'visible'
           }}>
-            <p style={{ display: 'block !important', visibility: 'visible !important' }}>
+            <p style={{ display: 'block', visibility: 'visible' }}>
               Current Time: <span style={{ color: '#10b981', fontWeight: 'bold' }}>{new Date().toLocaleTimeString()}</span>
             </p>
             <p style={{ 
               marginTop: '10px',
-              display: 'block !important',
-              visibility: 'visible !important'
+              display: 'block',
+              visibility: 'visible'
             }}>
-              Thank you for your patience. We'll be back stronger than ever! 💪
+              Thank you for your patience. We&apos;ll be back stronger than ever! 💪
             </p>
           </div>
         </div>

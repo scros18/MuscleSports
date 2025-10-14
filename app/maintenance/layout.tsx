@@ -29,8 +29,8 @@ export default function MaintenanceLayout({
         `
       }} />
       <div style={{
-        display: 'block !important',
-        visibility: 'visible !important',
+        display: 'block',
+        visibility: 'visible',
         minHeight: '100vh',
         margin: 0,
         padding: 0,
