@@ -492,12 +492,32 @@ export function Header() {
             >
               Recipe Generator
             </Link>
-            <Link
-              href="/testosterone-guide"
-              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
-            >
-              Testosterone Guide
-            </Link>
+            <div className="relative group">
+              <button
+                onClick={() => setOpenDropdown(openDropdown === 'guides' ? null : 'guides')}
+                onMouseEnter={() => setOpenDropdown('guides')}
+                className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground flex items-center gap-1"
+              >
+                Fitness Guides
+                <ChevronDown className="h-3 w-3 transition-transform duration-300" style={{ transform: openDropdown === 'guides' ? 'rotate(180deg)' : 'rotate(0deg)' }} />
+              </button>
+              <div
+                className={`absolute left-0 top-full pt-2 z-[9999] transition-all duration-300 ease-spring ${openDropdown === 'guides' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}
+                onMouseEnter={() => setOpenDropdown('guides')}
+                onMouseLeave={() => setOpenDropdown(null)}
+              >
+                <div className="bg-background border rounded-lg shadow-xl p-4 min-w-[280px] animate-slide-in-up">
+                  <Link href="/guides/muscle-building" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>💪 Muscle Building Guide</Link>
+                  <Link href="/guides/weight-loss" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>📉 Weight Loss Guide</Link>
+                  <Link href="/guides/protein-guide" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>🥩 Complete Protein Guide</Link>
+                  <Link href="/guides/creatine-benefits" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>⚡ Creatine Benefits</Link>
+                  <Link href="/guides/pre-workout-benefits" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>🔥 Pre-Workout Guide</Link>
+                  <Link href="/guides/post-workout-nutrition" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>🍗 Post-Workout Nutrition</Link>
+                  <div className="border-t my-2"></div>
+                  <Link href="/testosterone-guide" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors font-semibold" onClick={() => setOpenDropdown(null)}>🧬 Testosterone Guide</Link>
+                </div>
+              </div>
+            </div>
           </nav>
         </div>
       </div>
@@ -781,35 +801,17 @@ export function Header() {
                   }}
                 ></div>
               </Link>
-              <Link
-                href="/testosterone-guide"
-                className={`relative block px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
-                  settings.animationsEnabled
-                    ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
-                    : 'transition-all duration-300'
-                }`}
-                style={{
-                  background: currentTheme === 'musclesports'
-                    ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
-                    : currentTheme === 'vera'
-                    ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
-                    : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))',
-                  borderColor: 'rgba(255, 255, 255, 0.2)'
-                }}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <span className="relative z-10">Testosterone Guide</span>
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
-                  style={{
-                    background: currentTheme === 'musclesports'
-                      ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
-                      : currentTheme === 'vera'
-                      ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
-                      : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
-                  }}
-                ></div>
-              </Link>
+              {/* Fitness Guides Dropdown */}
+              <div className="space-y-2">
+                <div className="text-xs font-semibold text-muted-foreground px-4 mb-2">FITNESS GUIDES</div>
+                <Link href="/guides/muscle-building" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">💪 Muscle Building Guide</Link>
+                <Link href="/guides/weight-loss" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">📉 Weight Loss Guide</Link>
+                <Link href="/guides/protein-guide" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">🥩 Protein Guide</Link>
+                <Link href="/guides/creatine-benefits" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">⚡ Creatine Benefits</Link>
+                <Link href="/guides/pre-workout-benefits" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">🔥 Pre-Workout Guide</Link>
+                <Link href="/guides/post-workout-nutrition" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">🍗 Post-Workout Nutrition</Link>
+                <Link href="/testosterone-guide" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md font-semibold">🧬 Testosterone Guide</Link>
+              </div>
             </nav>
 
             {/* Mobile Auth */}
