@@ -167,9 +167,12 @@ export function ReviewStep({ onBack }: ReviewStepProps) {
 
           {paymentInfo && (
             <div className="space-y-2">
-              {paymentInfo.method === "card" && (
+              {paymentInfo.method === "paypal" && (
+                <p className="font-medium">PayPal Checkout</p>
+              )}
+              {paymentInfo.method === "paypal_card" && (
                 <>
-                  <p className="font-medium">Credit/Debit Card</p>
+                  <p className="font-medium">PayPal Debit & Credit</p>
                   <p className="text-sm text-muted-foreground">
                     •••• •••• •••• {paymentInfo.cardNumber?.slice(-4)}
                   </p>
@@ -177,18 +180,6 @@ export function ReviewStep({ onBack }: ReviewStepProps) {
                     {paymentInfo.cardName}
                   </p>
                 </>
-              )}
-              {paymentInfo.method === "paypal" && (
-                <p className="font-medium">PayPal</p>
-              )}
-              {paymentInfo.method === "apple_pay" && (
-                <p className="font-medium">Apple Pay</p>
-              )}
-              {paymentInfo.method === "google_pay" && (
-                <p className="font-medium">Google Pay</p>
-              )}
-              {paymentInfo.method === "klarna" && (
-                <p className="font-medium">Klarna - Pay in 3</p>
               )}
             </div>
           )}

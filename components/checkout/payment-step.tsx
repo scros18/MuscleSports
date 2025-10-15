@@ -25,7 +25,7 @@ interface PaymentStepProps {
 export function PaymentStep({ onNext, onBack }: PaymentStepProps) {
   const { paymentInfo, setPaymentInfo } = useCheckout();
   const [selectedMethod, setSelectedMethod] = useState<string>(
-    paymentInfo?.method || "card"
+    paymentInfo?.method || "paypal"
   );
   const [cardInfo, setCardInfo] = useState({
     cardNumber: paymentInfo?.cardNumber || "",
@@ -45,39 +45,18 @@ export function PaymentStep({ onNext, onBack }: PaymentStepProps) {
 
   const paymentMethods = [
     {
-      id: "card",
-      name: "Credit or Debit Card",
-      icon: CreditCard,
-      description: "Visa, Mastercard, Amex",
-      popular: true,
-    },
-    {
       id: "paypal",
-      name: "PayPal",
+      name: "PayPal Checkout",
       icon: Wallet,
       description: "Pay with your PayPal account",
       popular: true,
     },
     {
-      id: "apple_pay",
-      name: "Apple Pay",
-      icon: Smartphone,
-      description: "Quick and secure",
-      popular: false,
-    },
-    {
-      id: "google_pay",
-      name: "Google Pay",
-      icon: Smartphone,
-      description: "Fast checkout with Google",
-      popular: false,
-    },
-    {
-      id: "klarna",
-      name: "Klarna",
-      icon: Wallet,
-      description: "Pay in 3 interest-free installments",
-      popular: false,
+      id: "paypal_card",
+      name: "PayPal Debit & Credit",
+      icon: CreditCard,
+      description: "PayPal powered card processing",
+      popular: true,
     },
   ];
 
@@ -153,8 +132,8 @@ export function PaymentStep({ onNext, onBack }: PaymentStepProps) {
             })}
           </div>
 
-          {/* Card Form (Only shown when card is selected) */}
-          {selectedMethod === "card" && (
+          {/* Card Form (Only shown when PayPal Debit & Credit is selected) */}
+          {selectedMethod === "paypal_card" && (
             <div className="space-y-4 p-4 bg-muted/30 rounded-lg border">
               <div>
                 <Label htmlFor="cardNumber">Card Number *</Label>
@@ -253,7 +232,7 @@ export function PaymentStep({ onNext, onBack }: PaymentStepProps) {
             </div>
           )}
 
-          {/* PayPal Message */}
+          {/* PayPal Checkout Message */}
           {selectedMethod === "paypal" && (
             <div className="p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-900">
               <p className="text-sm text-blue-900 dark:text-blue-100">
@@ -262,32 +241,11 @@ export function PaymentStep({ onNext, onBack }: PaymentStepProps) {
             </div>
           )}
 
-          {/* Apple Pay Message */}
-          {selectedMethod === "apple_pay" && (
-            <div className="p-4 bg-gray-50 dark:bg-gray-900/20 rounded-lg border">
-              <p className="text-sm">
-                Complete your purchase using Touch ID or Face ID.
-              </p>
-            </div>
-          )}
-
-          {/* Google Pay Message */}
-          {selectedMethod === "google_pay" && (
-            <div className="p-4 bg-gray-50 dark:bg-gray-900/20 rounded-lg border">
-              <p className="text-sm">
-                Complete your purchase with your saved Google Pay payment method.
-              </p>
-            </div>
-          )}
-
-          {/* Klarna Message */}
-          {selectedMethod === "klarna" && (
-            <div className="p-4 bg-pink-50 dark:bg-pink-950/20 rounded-lg border border-pink-200 dark:border-pink-900">
-              <p className="text-sm text-pink-900 dark:text-pink-100 font-medium mb-1">
-                Buy now, pay later with Klarna
-              </p>
-              <p className="text-xs text-muted-foreground">
-                Split your payment into 3 interest-free installments. No fees when you pay on time.
+          {/* PayPal Debit & Credit Message */}
+          {selectedMethod === "paypal_card" && (
+            <div className="p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-900">
+              <p className="text-sm text-blue-900 dark:text-blue-100">
+                Your card information is processed securely through PayPal&apos;s payment infrastructure.
               </p>
             </div>
           )}

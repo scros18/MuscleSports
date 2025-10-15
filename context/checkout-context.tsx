@@ -15,7 +15,7 @@ interface ShippingInfo {
 }
 
 interface PaymentInfo {
-  method: "card" | "paypal" | "apple_pay" | "google_pay" | "klarna";
+  method: "paypal" | "paypal_card";
   cardNumber?: string;
   cardName?: string;
   expiryDate?: string;
