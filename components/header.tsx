@@ -78,6 +78,7 @@ export function Header() {
   const [showResults, setShowResults] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [isFitnessGuidesOpen, setIsFitnessGuidesOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties | null>(null);
@@ -398,7 +399,7 @@ export function Header() {
             {/* Custom MuscleSports Categories with Animated Dropdowns */}
             <Link
               href="/products?category=Protein+Powders"
-              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+              className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground"
             >
               Protein Powders
             </Link>
@@ -406,7 +407,7 @@ export function Header() {
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'preworkout' ? null : 'preworkout')}
                 onMouseEnter={() => setOpenDropdown('preworkout')}
-                className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground flex items-center gap-1"
+                className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground flex items-center gap-1"
               >
                 Pre-Workout
                 <ChevronDown className="h-3 w-3 transition-transform duration-300" style={{ transform: openDropdown === 'preworkout' ? 'rotate(180deg)' : 'rotate(0deg)' }} />
@@ -425,13 +426,13 @@ export function Header() {
             </div>
             <Link
               href="/products?category=Creatine"
-              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+              className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground"
             >
               Creatine
             </Link>
             <Link
               href="/products?category=Protein+Bars"
-              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+              className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground"
             >
               Protein Bars
             </Link>
@@ -439,7 +440,7 @@ export function Header() {
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'accessories' ? null : 'accessories')}
                 onMouseEnter={() => setOpenDropdown('accessories')}
-                className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground flex items-center gap-1"
+                className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground flex items-center gap-1"
               >
                 Accessories
                 <ChevronDown className="h-3 w-3 transition-transform duration-300" style={{ transform: openDropdown === 'accessories' ? 'rotate(180deg)' : 'rotate(0deg)' }} />
@@ -458,37 +459,37 @@ export function Header() {
             </div>
             <Link
               href="/products?category=Vitamins+%26+Supplements"
-              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+              className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground"
             >
               Vitamins & Supplements
             </Link>
             <Link
               href="/products?category=Snacks"
-              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+              className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground"
             >
               Snacks
             </Link>
             <Link
               href="/products?category=Bundles"
-              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+              className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground"
             >
               Bundles
             </Link>
             <Link
               href="/about"
-              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+              className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground"
             >
               About Us
             </Link>
             <Link
               href="/nutrition-calculator"
-              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+              className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground"
             >
               Nutrition Calculator
             </Link>
             <Link
               href="/recipe-generator"
-              className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground"
+              className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground"
             >
               Recipe Generator
             </Link>
@@ -496,17 +497,17 @@ export function Header() {
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'guides' ? null : 'guides')}
                 onMouseEnter={() => setOpenDropdown('guides')}
-                className="whitespace-nowrap hover:text-primary transition-colors text-muted-foreground hover:text-foreground flex items-center gap-1"
+                className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground flex items-center gap-1"
               >
                 Fitness Guides
                 <ChevronDown className="h-3 w-3 transition-transform duration-300" style={{ transform: openDropdown === 'guides' ? 'rotate(180deg)' : 'rotate(0deg)' }} />
               </button>
               <div
-                className={`absolute left-0 top-full pt-2 z-[9999] transition-all duration-300 ease-spring ${openDropdown === 'guides' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}
+                className={`absolute left-1/2 -translate-x-1/2 top-full pt-2 z-[9999] transition-all duration-300 ease-spring ${openDropdown === 'guides' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}
                 onMouseEnter={() => setOpenDropdown('guides')}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
-                <div className="bg-background border rounded-lg shadow-xl p-4 min-w-[280px] animate-slide-in-up">
+                <div className="bg-background border rounded-lg shadow-xl p-4 min-w-[320px] animate-slide-in-up">
                   <Link href="/guides/muscle-building" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>💪 Muscle Building Guide</Link>
                   <Link href="/guides/weight-loss" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>📉 Weight Loss Guide</Link>
                   <Link href="/guides/protein-guide" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>🥩 Complete Protein Guide</Link>
@@ -803,14 +804,24 @@ export function Header() {
               </Link>
               {/* Fitness Guides Dropdown */}
               <div className="space-y-2">
-                <div className="text-xs font-semibold text-muted-foreground px-4 mb-2">FITNESS GUIDES</div>
-                <Link href="/guides/muscle-building" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">💪 Muscle Building Guide</Link>
-                <Link href="/guides/weight-loss" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">📉 Weight Loss Guide</Link>
-                <Link href="/guides/protein-guide" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">🥩 Protein Guide</Link>
-                <Link href="/guides/creatine-benefits" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">⚡ Creatine Benefits</Link>
-                <Link href="/guides/pre-workout-benefits" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">🔥 Pre-Workout Guide</Link>
-                <Link href="/guides/post-workout-nutrition" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">🍗 Post-Workout Nutrition</Link>
-                <Link href="/testosterone-guide" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md font-semibold">🧬 Testosterone Guide</Link>
+                <button
+                  onClick={() => setIsFitnessGuidesOpen(!isFitnessGuidesOpen)}
+                  className="flex items-center justify-between w-full px-4 py-2 text-xs font-semibold text-foreground/90 hover:text-foreground hover:bg-accent rounded-md transition-colors"
+                >
+                  <span>FITNESS GUIDES</span>
+                  <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${isFitnessGuidesOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {isFitnessGuidesOpen && (
+                  <div className="space-y-1 pl-4 border-l-2 border-muted">
+                    <Link href="/guides/muscle-building" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">💪 Muscle Building Guide</Link>
+                    <Link href="/guides/weight-loss" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">📉 Weight Loss Guide</Link>
+                    <Link href="/guides/protein-guide" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">🥩 Protein Guide</Link>
+                    <Link href="/guides/creatine-benefits" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">⚡ Creatine Benefits</Link>
+                    <Link href="/guides/pre-workout-benefits" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">🔥 Pre-Workout Guide</Link>
+                    <Link href="/guides/post-workout-nutrition" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md">🍗 Post-Workout Nutrition</Link>
+                    <Link href="/testosterone-guide" onClick={() => setIsMobileMenuOpen(false)} className="block px-4 py-2 text-sm hover:bg-accent rounded-md font-semibold">🧬 Testosterone Guide</Link>
+                  </div>
+                )}
               </div>
             </nav>
 

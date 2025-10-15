@@ -20,6 +20,57 @@ import {
   Zap,
 } from "lucide-react";
 
+// Card brand detection function
+const getCardBrand = (cardNumber: string) => {
+  const number = cardNumber.replace(/\s/g, '');
+  if (number.startsWith('4')) return 'visa';
+  if (number.startsWith('5') || number.startsWith('2')) return 'mastercard';
+  if (number.startsWith('3')) return 'amex';
+  return 'generic';
+};
+
+// Card brand icon component
+const CardBrandIcon = ({ cardNumber }: { cardNumber: string }) => {
+  const brand = getCardBrand(cardNumber);
+  
+  if (brand === 'visa') {
+    return (
+      <div className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center">
+        <svg viewBox="0 0 24 24" className="w-5 h-5">
+          <path fill="#1434CB" d="M9.04 8.04h5.93v7.92H9.04z"/>
+          <path fill="#1434CB" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2.15 5.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v3c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5v-3z"/>
+        </svg>
+      </div>
+    );
+  }
+  
+  if (brand === 'mastercard') {
+    return (
+      <div className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center">
+        <svg viewBox="0 0 24 24" className="w-5 h-5">
+          <circle cx="9" cy="12" r="6" fill="#EB001B"/>
+          <circle cx="15" cy="12" r="6" fill="#F79E1B"/>
+          <path d="M12 6.5c1.5 0 2.8.8 3.5 2-1.4 1.4-3.5 1.4-4.9 0-.7-1.2 2-2 3.5-2z" fill="#FF5F00"/>
+        </svg>
+      </div>
+    );
+  }
+  
+  if (brand === 'amex') {
+    return (
+      <div className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center">
+        <svg viewBox="0 0 24 24" className="w-5 h-5">
+          <path fill="#006FCF" d="M2 6h20v12H2z"/>
+          <path fill="#fff" d="M4 8h16v8H4z"/>
+          <text x="12" y="14" textAnchor="middle" fontSize="8" fill="#006FCF" fontWeight="bold">AMEX</text>
+        </svg>
+      </div>
+    );
+  }
+  
+  return <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />;
+};
+
 interface PaymentStepProps {
   onNext: () => void;
   onBack: () => void;
@@ -226,7 +277,7 @@ export function PaymentStep({ onNext, onBack }: PaymentStepProps) {
                   Card Number *
                 </Label>
                 <div className="relative">
-                  <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <CardBrandIcon cardNumber={cardInfo.cardNumber} />
                   <Input
                     id="cardNumber"
                     placeholder="1234 5678 9012 3456"

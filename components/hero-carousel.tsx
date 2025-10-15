@@ -170,6 +170,15 @@ export default function HeroCarousel() {
           style={{ backgroundImage: `url(${s.image})` }}
           aria-hidden={i !== index}
         >
+          {/* Preload the first image for LCP optimization */}
+          {i === 0 && (
+            <link
+              rel="preload"
+              as="image"
+              href={s.image}
+              fetchPriority="high"
+            />
+          )}
           <div className="w-full h-full bg-gradient-to-r from-black/70 via-black/40 to-transparent flex items-center">
             <div className="container px-8 md:px-16">
               <div className="max-w-xl md:max-w-2xl">
