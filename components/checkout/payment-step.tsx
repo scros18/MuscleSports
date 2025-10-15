@@ -342,7 +342,13 @@ export function PaymentStep({ onNext, onBack }: PaymentStepProps) {
                     CVV *
                   </Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                    <Lock 
+                      className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 transition-all duration-300 ${
+                        cardInfo.cvv && cardInfo.cvv.length >= 3
+                          ? 'text-green-500 drop-shadow-lg animate-pulse'
+                          : 'text-muted-foreground'
+                      }`} 
+                    />
                     <Input
                       id="cvv"
                       placeholder="123"
@@ -355,7 +361,11 @@ export function PaymentStep({ onNext, onBack }: PaymentStepProps) {
                         })
                       }
                       maxLength={4}
-                      className="pl-12 h-12 text-lg font-mono"
+                      className={`pl-12 h-12 text-lg font-mono transition-all duration-300 ${
+                        cardInfo.cvv && cardInfo.cvv.length >= 3
+                          ? 'border-green-500 shadow-green-500/20 shadow-lg'
+                          : ''
+                      }`}
                       required
                     />
                   </div>

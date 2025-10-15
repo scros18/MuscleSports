@@ -172,12 +172,20 @@ export default function HeroCarousel() {
         >
           {/* Preload the first image for LCP optimization */}
           {i === 0 && (
-            <link
-              rel="preload"
-              as="image"
-              href={s.image}
-              fetchPriority="high"
-            />
+            <>
+              <link
+                rel="preload"
+                as="image"
+                href={s.image}
+                fetchPriority="high"
+              />
+              <img
+                src={s.image}
+                alt={s.title}
+                className="absolute inset-0 w-full h-full object-cover opacity-0"
+                style={{ contentVisibility: 'auto' }}
+              />
+            </>
           )}
           <div className="w-full h-full bg-gradient-to-r from-black/70 via-black/40 to-transparent flex items-center">
             <div className="container px-8 md:px-16">

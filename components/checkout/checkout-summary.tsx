@@ -34,20 +34,35 @@ export function CheckoutSummary() {
   const tax = totalPrice * 0.2; // 20% VAT
   const finalTotal = totalPrice + tax - discount;
 
-  const handleApplyPromo = () => {
-    // Simulate promo code validation
-    const validCodes: { [key: string]: number } = {
-      "SAVE10": totalPrice * 0.1,
-      "WELCOME20": totalPrice * 0.2,
-      "FREESHIP": 5.99,
-    };
+  const handleApplyPromo = async () => {
+    if (!promoInput.trim()) {
+      setPromoError("Please enter a promo code");
+      return;
+    }
 
-    if (validCodes[promoInput.toUpperCase()]) {
-      setDiscount(validCodes[promoInput.toUpperCase()]);
-      setPromoCode(promoInput.toUpperCase());
-      setPromoError("");
-    } else {
-      setPromoError("Invalid promo code");
+    try {
+      const response = await fetch("/api/promo-codes/validate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ code: promoInput.trim() }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const discountAmount = totalPrice * (data.discountPercentage / 100);
+        setDiscount(discountAmount);
+        setPromoCode(data.code);
+        setPromoError("");
+        setPromoInput("");
+      } else {
+        const error = await response.json();
+        setPromoError(error.message || "Invalid promo code");
+      }
+    } catch (error) {
+      console.error("Error validating promo code:", error);
+      setPromoError("Failed to validate promo code");
     }
   };
 

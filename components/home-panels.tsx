@@ -337,13 +337,14 @@ export default function HomePanels() {
                       : 'transition-colors duration-200'
                   }`}
                 >
-                  <div className="aspect-square relative overflow-hidden">
+                  <div className="aspect-square relative overflow-hidden bg-gray-50 dark:bg-gray-800">
                     <Image
                       src={item.img}
                       alt={item.title}
-                      fill
+                      width={200}
+                      height={200}
                       sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
-                      className={`transition-transform duration-500 ease-out ${
+                      className={`transition-transform duration-500 ease-out w-full h-full ${
                         item.title.includes('E-Liquid') || item.title.includes('Starter Kit') 
                           ? 'object-contain p-2' 
                           : 'object-cover'

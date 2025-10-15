@@ -18,6 +18,7 @@ import {
   Palette,
   Scissors,
   Wrench,
+  Percent,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -293,6 +294,18 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
               >
                 <Tag className="mr-3 h-4 w-4" />
                 Categories
+              </Link>
+              <Link
+                href="/admin/promo-codes"
+                onClick={closeSidebar}
+                className={`flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-150 ${
+                  pathname === '/admin/promo-codes'
+                    ? 'bg-accent text-accent-foreground'
+                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                }`}
+              >
+                <Percent className="mr-3 h-4 w-4" />
+                Promo Codes
               </Link>
             </div>
           )}

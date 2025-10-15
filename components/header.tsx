@@ -30,45 +30,52 @@ export function Header() {
     const detectTheme = () => {
       // ALWAYS prioritize localStorage
       const savedTheme = localStorage.getItem('admin_theme');
-      console.log('Header detectTheme - localStorage:', savedTheme);
       
       if (savedTheme) {
-        console.log('Header setting theme from localStorage:', savedTheme);
         setCurrentTheme(savedTheme);
         return;
       }
       
-      // Only check DOM if no localStorage value exists
-      const htmlClasses = document.documentElement.classList;
+      // Only check DOM if no localStorage value exists - batch DOM queries
+      const htmlElement = document.documentElement;
+      const classList = htmlElement.classList;
       
-      if (htmlClasses.contains('theme-musclesports')) {
-        console.log('Header setting theme from DOM: musclesports');
+      if (classList.contains('theme-musclesports')) {
         setCurrentTheme('musclesports');
-      } else if (htmlClasses.contains('theme-vera')) {
+      } else if (classList.contains('theme-vera')) {
         setCurrentTheme('vera');
-      } else if (htmlClasses.contains('theme-blisshair')) {
+      } else if (classList.contains('theme-blisshair')) {
         setCurrentTheme('blisshair');
       } else {
-        console.log('Header setting theme to default: ordify');
         setCurrentTheme('ordify');
       }
     };
 
-    // Run immediately on mount
-    detectTheme();
+    // Use requestAnimationFrame to avoid forced reflows
+    const rafId = requestAnimationFrame(detectTheme);
     
-    // Watch for theme changes
+    // Watch for theme changes with debouncing
+    let timeoutId: NodeJS.Timeout;
     const htmlObserver = new MutationObserver(() => {
-      const savedTheme = localStorage.getItem('admin_theme');
-      if (savedTheme) {
-        setCurrentTheme(savedTheme);
-      } else {
-        detectTheme();
-      }
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        const savedTheme = localStorage.getItem('admin_theme');
+        if (savedTheme) {
+          setCurrentTheme(savedTheme);
+        } else {
+          requestAnimationFrame(detectTheme);
+        }
+      }, 16); // ~60fps debouncing
     });
-    htmlObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    
+    htmlObserver.observe(document.documentElement, { 
+      attributes: true, 
+      attributeFilter: ['class'] 
+    });
     
     return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(timeoutId);
       htmlObserver.disconnect();
     };
   }, []);
@@ -204,8 +211,8 @@ export function Header() {
                 ? 'https://i.imgur.com/verarp-logo.png'
                 : siteSettings.logoUrl}
               alt={currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : siteSettings.siteName}
-              width={currentTheme === 'musclesports' ? 200 : 120}
-              height={currentTheme === 'musclesports' ? 80 : 40}
+              width={currentTheme === 'musclesports' ? 256 : 120}
+              height={currentTheme === 'musclesports' ? 256 : 40}
               className={currentTheme === 'musclesports' ? 'h-20 md:h-20 lg:h-24 w-auto' : 'h-10 md:h-10 w-auto'}
               style={currentTheme === 'musclesports' ? {
                 filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1)) brightness(1.05)',

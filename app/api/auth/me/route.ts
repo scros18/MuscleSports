@@ -55,7 +55,11 @@ export async function GET(request: NextRequest) {
     }
 
     if (!user) {
-      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+      // Return null user instead of 401 to avoid console errors
+      return NextResponse.json({ 
+        user: null, 
+        authenticated: false 
+      }, { status: 200 });
     }
 
     return NextResponse.json(user);

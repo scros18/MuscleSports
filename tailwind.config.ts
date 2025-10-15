@@ -7,6 +7,30 @@ module.exports = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
   ],
+  // Optimize for production builds
+  mode: 'jit',
+  purge: {
+    enabled: process.env.NODE_ENV === 'production',
+    content: [
+      './pages/**/*.{ts,tsx}',
+      './components/**/*.{ts,tsx}',
+      './app/**/*.{ts,tsx}',
+      './src/**/*.{ts,tsx}',
+    ],
+    options: {
+      safelist: [
+        // Keep dynamic classes that might be missed
+        /^theme-/,
+        /^bg-gradient-/,
+        /^text-gradient-/,
+        /^from-/,
+        /^to-/,
+        /^via-/,
+        /^border-/,
+        /^shadow-/,
+      ],
+    },
+  },
   theme: {
     container: {
       center: true,
