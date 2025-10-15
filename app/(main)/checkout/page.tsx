@@ -117,10 +117,10 @@ function CheckoutContent() {
       </div>
 
       {/* Main Content */}
-      <div className="container py-8">
-        <div className="grid lg:grid-cols-3 gap-8">
+      <div className="container py-4 md:py-8">
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Checkout Form */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 order-2 lg:order-1">
             <CurrentStepComponent
               onNext={handleNext}
               onBack={handleBack}
@@ -130,7 +130,7 @@ function CheckoutContent() {
           </div>
 
           {/* Order Summary Sidebar */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 order-1 lg:order-2">
             <CheckoutSummary />
           </div>
         </div>

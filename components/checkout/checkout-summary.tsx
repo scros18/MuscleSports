@@ -9,7 +9,19 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/utils";
-import { Tag, ChevronDown, ChevronUp } from "lucide-react";
+import { 
+  Tag, 
+  ChevronDown, 
+  ChevronUp, 
+  ShoppingBag, 
+  Truck, 
+  Percent, 
+  Shield, 
+  Lock,
+  CheckCircle,
+  Sparkles,
+  Gift
+} from "lucide-react";
 
 export function CheckoutSummary() {
   const { items, totalPrice } = useCart();
@@ -40,18 +52,30 @@ export function CheckoutSummary() {
   };
 
   return (
-    <div className="space-y-4">
-      {/* Order Summary Card */}
-      <Card className="sticky top-32 shadow-lg">
-        <CardContent className="p-6">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold">Order Summary</h2>
+    <div className="space-y-4 lg:sticky lg:top-32">
+      {/* Enhanced Order Summary Card */}
+      <Card className="shadow-xl border-2 border-primary/10">
+        <CardContent className="p-4 md:p-6">
+          {/* Enhanced Header */}
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
+                <ShoppingBag className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                  Order Summary
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  {items.reduce((sum, item) => sum + item.quantity, 0)} items
+                </p>
+              </div>
+            </div>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setShowItems(!showItems)}
-              className="text-sm"
+              className="text-sm hover:bg-primary/10 transition-colors duration-200"
             >
               {showItems ? (
                 <>
@@ -65,15 +89,19 @@ export function CheckoutSummary() {
             </Button>
           </div>
 
-          {/* Items List (Collapsible) */}
+          {/* Enhanced Items List */}
           {showItems && (
-            <div className="mb-4 space-y-3 max-h-64 overflow-y-auto">
-              {items.map((item) => {
+            <div className="mb-6 space-y-4 max-h-80 overflow-y-auto pr-2">
+              {items.map((item, index) => {
                 const itemAny = item as any;
                 const imageSrc = itemAny.images?.[0] || itemAny.image;
                 return (
-                  <div key={item.id} className="flex gap-3">
-                    <div className="relative h-16 w-16 rounded-md overflow-hidden bg-gray-100 flex-shrink-0">
+                  <div 
+                    key={item.id} 
+                    className="flex gap-4 p-3 rounded-xl bg-gradient-to-r from-muted/30 to-muted/10 border border-border/50 hover:border-primary/20 transition-all duration-200"
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <div className="relative h-20 w-20 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 flex-shrink-0 shadow-sm">
                       {imageSrc && (
                         <Image
                           src={imageSrc}
@@ -82,16 +110,23 @@ export function CheckoutSummary() {
                           className="object-cover"
                         />
                       )}
-                      <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center font-bold">
+                      <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-gradient-to-br from-primary to-primary/80 text-white text-xs flex items-center justify-center font-bold shadow-lg">
                         {item.quantity}
                       </div>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate">{item.name}</p>
-                      <p className="text-xs text-muted-foreground">{item.category}</p>
-                      <p className="text-sm font-semibold mt-1">
-                        {formatPrice(item.price * item.quantity)}
-                      </p>
+                      <h3 className="text-sm md:text-base font-semibold line-clamp-2 mb-1">
+                        {item.name}
+                      </h3>
+                      <p className="text-xs text-muted-foreground mb-2">{item.category}</p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-sm text-muted-foreground">
+                          {formatPrice(item.price)} × {item.quantity}
+                        </p>
+                        <p className="text-base font-bold text-primary">
+                          {formatPrice(item.price * item.quantity)}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 );
@@ -99,90 +134,131 @@ export function CheckoutSummary() {
             </div>
           )}
 
-          <Separator className="my-4" />
+          <Separator className="my-6" />
 
-          {/* Promo Code */}
-          <div className="mb-4">
-            <label className="text-sm font-medium mb-2 block">
-              Promo Code
-            </label>
-            <div className="flex gap-2">
-              <div className="relative flex-1">
-                <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input
-                  placeholder="Enter code"
-                  value={promoInput}
-                  onChange={(e) => {
-                    setPromoInput(e.target.value.toUpperCase());
-                    setPromoError("");
-                  }}
-                  className="pl-9"
-                  disabled={!!promoCode}
-                />
+          {/* Enhanced Promo Code Section */}
+          <div className="mb-6">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                <Percent className="w-4 h-4 text-white" />
               </div>
-              {!promoCode ? (
-                <Button onClick={handleApplyPromo} variant="secondary">
-                  Apply
-                </Button>
-              ) : (
-                <Button
-                  onClick={() => {
-                    setPromoCode("");
-                    setDiscount(0);
-                    setPromoInput("");
-                  }}
-                  variant="ghost"
-                >
-                  Remove
-                </Button>
+              <label className="text-base font-semibold">
+                Promo Code
+              </label>
+              {promoCode && (
+                <div className="flex items-center gap-1 text-xs bg-green-100 dark:bg-green-950 text-green-700 dark:text-green-300 px-2 py-1 rounded-full">
+                  <Sparkles className="w-3 h-3" />
+                  <span className="font-medium">Active</span>
+                </div>
               )}
             </div>
-            {promoError && (
-              <p className="text-xs text-red-600 mt-1">{promoError}</p>
-            )}
-            {promoCode && (
-              <p className="text-xs text-green-600 mt-1 flex items-center gap-1">
-                <Tag className="w-3 h-3" />
-                {promoCode} applied successfully!
-              </p>
-            )}
+            
+            <div className="space-y-3">
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Enter promo code"
+                    value={promoInput}
+                    onChange={(e) => {
+                      setPromoInput(e.target.value.toUpperCase());
+                      setPromoError("");
+                    }}
+                    className="pl-10 h-11"
+                    disabled={!!promoCode}
+                  />
+                </div>
+                {!promoCode ? (
+                  <Button 
+                    onClick={handleApplyPromo} 
+                    variant="secondary"
+                    className="h-11 px-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0"
+                  >
+                    Apply
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      setPromoCode("");
+                      setDiscount(0);
+                      setPromoInput("");
+                    }}
+                    variant="outline"
+                    className="h-11 px-6 border-red-200 text-red-600 hover:bg-red-50"
+                  >
+                    Remove
+                  </Button>
+                )}
+              </div>
+              
+              {promoError && (
+                <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 dark:bg-red-950/20 p-3 rounded-lg">
+                  <span className="w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center font-bold">!</span>
+                  {promoError}
+                </div>
+              )}
+              
+              {promoCode && (
+                <div className="flex items-center gap-2 text-sm text-green-600 bg-green-50 dark:bg-green-950/20 p-3 rounded-lg">
+                  <CheckCircle className="w-5 h-5" />
+                  <span className="font-medium">{promoCode} applied successfully! You saved {formatPrice(discount)}</span>
+                </div>
+              )}
+            </div>
           </div>
 
-          <Separator className="my-4" />
+          <Separator className="my-6" />
 
-          {/* Price Breakdown */}
-          <div className="space-y-3">
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">
-                Subtotal ({items.reduce((sum, item) => sum + item.quantity, 0)} items)
-              </span>
-              <span className="font-medium">{formatPrice(totalPrice)}</span>
+          {/* Enhanced Price Breakdown */}
+          <div className="space-y-4">
+            <div className="flex justify-between items-center py-2">
+              <div className="flex items-center gap-2">
+                <ShoppingBag className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm text-muted-foreground">
+                  Subtotal ({items.reduce((sum, item) => sum + item.quantity, 0)} items)
+                </span>
+              </div>
+              <span className="font-semibold text-base">{formatPrice(totalPrice)}</span>
             </div>
 
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Shipping</span>
-              <span className="font-medium text-green-600">Free</span>
+            <div className="flex justify-between items-center py-2">
+              <div className="flex items-center gap-2">
+                <Truck className="w-4 h-4 text-green-600" />
+                <span className="text-sm text-muted-foreground">Shipping</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs bg-green-100 dark:bg-green-950 text-green-700 dark:text-green-300 px-2 py-1 rounded-full font-medium">
+                  FREE
+                </span>
+                <span className="font-semibold text-green-600">£0.00</span>
+              </div>
             </div>
 
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">VAT (20%)</span>
-              <span className="font-medium">{formatPrice(tax)}</span>
+            <div className="flex justify-between items-center py-2">
+              <div className="flex items-center gap-2">
+                <Percent className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm text-muted-foreground">VAT (20%)</span>
+              </div>
+              <span className="font-semibold text-base">{formatPrice(tax)}</span>
             </div>
 
             {discount > 0 && (
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Discount</span>
-                <span className="font-medium text-green-600">
+              <div className="flex justify-between items-center py-2 bg-green-50 dark:bg-green-950/20 rounded-lg px-3">
+                <div className="flex items-center gap-2">
+                  <Gift className="w-4 h-4 text-green-600" />
+                  <span className="text-sm text-green-700 dark:text-green-300 font-medium">Discount ({promoCode})</span>
+                </div>
+                <span className="font-bold text-green-600 text-lg">
                   -{formatPrice(discount)}
                 </span>
               </div>
             )}
 
-            <Separator />
+            <Separator className="my-4" />
 
-            <div className="flex justify-between text-lg">
-              <span className="font-bold">Total</span>
-              <span className="font-bold text-primary">
+            <div className="flex justify-between items-center py-4 bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl px-4">
+              <span className="text-xl font-bold">Total</span>
+              <span className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                 {formatPrice(finalTotal)}
               </span>
             </div>
@@ -190,20 +266,44 @@ export function CheckoutSummary() {
         </CardContent>
       </Card>
 
-      {/* Trust Badges */}
-      <Card className="bg-muted/50">
-        <CardContent className="p-4">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <svg className="w-4 h-4 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            <span>30-day money-back guarantee</span>
+      {/* Enhanced Trust Badges */}
+      <Card className="bg-gradient-to-br from-muted/30 to-muted/10 border-2 border-primary/10">
+        <CardContent className="p-4 md:p-6">
+          <div className="text-center mb-4">
+            <h3 className="text-lg font-bold mb-2">Your Purchase is Protected</h3>
+            <p className="text-sm text-muted-foreground">
+              Shop with confidence knowing you&apos;re fully protected
+            </p>
           </div>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
-            <svg className="w-4 h-4 text-blue-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-            </svg>
-            <span>Secure SSL encrypted checkout</span>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-950/20 rounded-xl border border-green-200 dark:border-green-800">
+              <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+                <Shield className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-green-900 dark:text-green-100">
+                  30-day guarantee
+                </p>
+                <p className="text-xs text-green-700 dark:text-green-300">
+                  Money-back promise
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-950/20 rounded-xl border border-blue-200 dark:border-blue-800">
+              <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+                <Lock className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-blue-900 dark:text-blue-100">
+                  SSL encrypted
+                </p>
+                <p className="text-xs text-blue-700 dark:text-blue-300">
+                  Secure checkout
+                </p>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>
