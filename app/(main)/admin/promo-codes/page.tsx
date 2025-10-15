@@ -40,7 +40,10 @@ export default function PromoCodesPage() {
         const response = await fetch("/api/auth/me");
         const userData = await response.json();
         
-        if (!userData.isAdmin) {
+        // Check if user is authenticated and is admin
+        // Handle both old format (direct user object) and new format ({ user: ..., authenticated: ... })
+        const actualUser = userData.user || userData;
+        if (!actualUser || !actualUser.isAdmin) {
           window.location.href = "/";
           return;
         }
