@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
-import { ShoppingCart, Search, User, LogOut, X, Menu, ChevronDown } from "lucide-react";
+import { ShoppingCart, Search, User, LogOut, X, Menu, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/context/cart-context";
@@ -23,6 +23,18 @@ export function Header() {
   
   // Start with null to force client-side only rendering of the logo
   const [currentTheme, setCurrentTheme] = useState<string | null>(null);
+
+  // Update scroll buttons on mount and resize
+  useEffect(() => {
+    const updateButtons = () => {
+      updateScrollButtons();
+    };
+    
+    updateButtons();
+    window.addEventListener('resize', updateButtons);
+    
+    return () => window.removeEventListener('resize', updateButtons);
+  }, []);
 
   // Detect theme from localStorage FIRST, then DOM
   useEffect(() => {
@@ -85,12 +97,47 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [isFitnessGuidesOpen, setIsFitnessGuidesOpen] = useState(false);
+  const [navScrollPosition, setNavScrollPosition] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
   const searchRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties | null>(null);
 
   const handleLogout = () => {
     logout();
+  };
+
+  const scrollNav = (direction: 'left' | 'right') => {
+    if (!navRef.current) return;
+    
+    const scrollAmount = 200; // pixels to scroll
+    const currentScroll = navRef.current.scrollLeft;
+    const targetScroll = direction === 'left' 
+      ? currentScroll - scrollAmount 
+      : currentScroll + scrollAmount;
+    
+    navRef.current.scrollTo({
+      left: targetScroll,
+      behavior: 'smooth'
+    });
+    
+    // Update scroll position after animation
+    setTimeout(() => {
+      if (navRef.current) {
+        setNavScrollPosition(navRef.current.scrollLeft);
+        updateScrollButtons();
+      }
+    }, 300);
+  };
+
+  const updateScrollButtons = () => {
+    if (!navRef.current) return;
+    
+    const { scrollLeft, scrollWidth, clientWidth } = navRef.current;
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
   };
 
   const performSearch = async (query: string) => {
@@ -399,14 +446,44 @@ export function Header() {
       {/* Category Navigation Bar - Hidden on mobile */}
       <div className="border-t bg-muted/30 hidden md:block">
         <div className="container px-4">
-          <nav
-            className="flex justify-center items-center gap-2 md:gap-3 py-2 text-sm overflow-x-auto [&::-webkit-scrollbar]:hidden"
-            ref={dropdownRef}
-            style={{
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-            }}
-          >
+          <div className="relative flex items-center">
+            {/* Left Arrow */}
+            <button
+              onClick={() => scrollNav('left')}
+              className={`absolute left-0 z-10 p-1 rounded-full bg-background/80 backdrop-blur-sm border shadow-sm transition-all duration-200 ${
+                canScrollLeft 
+                  ? 'opacity-100 hover:bg-background hover:scale-105' 
+                  : 'opacity-50 cursor-not-allowed'
+              }`}
+              disabled={!canScrollLeft}
+              aria-label="Scroll navigation left"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+
+            {/* Right Arrow */}
+            <button
+              onClick={() => scrollNav('right')}
+              className={`absolute right-0 z-10 p-1 rounded-full bg-background/80 backdrop-blur-sm border shadow-sm transition-all duration-200 ${
+                canScrollRight 
+                  ? 'opacity-100 hover:bg-background hover:scale-105' 
+                  : 'opacity-50 cursor-not-allowed'
+              }`}
+              disabled={!canScrollRight}
+              aria-label="Scroll navigation right"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+
+            <nav
+              className="flex items-center gap-2 md:gap-3 py-2 text-sm overflow-x-auto [&::-webkit-scrollbar]:hidden px-8"
+              ref={navRef}
+              style={{
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+              }}
+              onScroll={updateScrollButtons}
+            >
             {/* Custom MuscleSports Categories with Animated Dropdowns */}
             <Link
               href="/products?category=Protein+Powders"
@@ -555,7 +632,8 @@ export function Header() {
                 </div>
               </div>
             </div>
-          </nav>
+            </nav>
+          </div>
         </div>
       </div>
 
