@@ -16,6 +16,11 @@ module.exports = {
     'theme-vera',
     'theme-blisshair',
     'theme-ordify',
+    // Ensure responsive utilities are preserved
+    'hidden',
+    'md:hidden',
+    'md:flex',
+    'md:block',
   ],
   theme: {
     container: {
