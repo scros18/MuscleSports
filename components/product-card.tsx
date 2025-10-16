@@ -106,11 +106,12 @@ export function ProductCard({ product, hideDescription = false, sectionType = 'd
       
       <Link href={`/products/${product.id}`}>
         <div className="relative aspect-square w-full overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-          <img
+          <Image
             src={imageError ? "/placeholder.svg" : firstImage}
             alt={product.name}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 200px"
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
-            loading="lazy"
             onError={() => {
               console.log('ProductCard image failed to load:', firstImage);
               setImageError(true);

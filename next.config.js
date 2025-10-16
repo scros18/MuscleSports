@@ -41,9 +41,16 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
-  // Configure SWC for modern browsers
+  // Configure SWC for modern browsers - target ES2020+ to avoid polyfills
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
+  },
+  // Target modern browsers to reduce bundle size
+  transpilePackages: [],
+  modularizeImports: {
+    'lucide-react': {
+      transform: 'lucide-react/dist/esm/icons/{{member}}',
+    },
   },
   // Add cache headers for static assets
   async headers() {

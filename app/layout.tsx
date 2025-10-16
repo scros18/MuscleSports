@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Saira } from "next/font/google";
 import "./globals.css";
+import "@/styles/critical.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ThemeLoader } from "@/components/theme-loader";
@@ -14,27 +15,36 @@ import { PageTransition } from "@/components/page-transition";
 import { DynamicMetadata } from "@/components/dynamic-metadata";
 import { generateSEO, generateOrganizationSchema, generateWebsiteSchema, getJsonLdScript } from "@/lib/seo";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: 'swap',
+  preload: true
+});
 const saira = Saira({ 
   subsets: ["latin"],
   variable: "--font-saira",
-  weight: ["300", "400", "500", "600", "700", "800"]
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: 'swap',
+  preload: true
 });
 
-export const metadata: Metadata = generateSEO({
-  title: undefined, // Use default
-  description: undefined, // Use default
-  path: '',
-  keywords: [
-    'e-commerce',
-    'online shopping',
-    'buy online',
-    'fast shipping',
-    'secure checkout',
-    'premium products',
-    'online store',
-  ],
-});
+export const metadata: Metadata = {
+  ...generateSEO({
+    title: undefined, // Use default
+    description: undefined, // Use default
+    path: '',
+    keywords: [
+      'e-commerce',
+      'online shopping',
+      'buy online',
+      'fast shipping',
+      'secure checkout',
+      'premium products',
+      'online store',
+    ],
+  }),
+  metadataBase: new URL('https://musclesports.co.uk'),
+};
 
 export const viewport: Viewport = {
   width: 'device-width',

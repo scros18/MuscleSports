@@ -6,31 +6,17 @@ module.exports = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
+    './context/**/*.{ts,tsx}',
+    './lib/**/*.{ts,tsx}',
   ],
-  // Optimize for production builds
-  mode: 'jit',
-  purge: {
-    enabled: process.env.NODE_ENV === 'production',
-    content: [
-      './pages/**/*.{ts,tsx}',
-      './components/**/*.{ts,tsx}',
-      './app/**/*.{ts,tsx}',
-      './src/**/*.{ts,tsx}',
-    ],
-    options: {
-      safelist: [
-        // Keep dynamic classes that might be missed
-        /^theme-/,
-        /^bg-gradient-/,
-        /^text-gradient-/,
-        /^from-/,
-        /^to-/,
-        /^via-/,
-        /^border-/,
-        /^shadow-/,
-      ],
-    },
-  },
+  safelist: [
+    // Only safelist specific dynamic theme classes
+    'theme-musclesports',
+    'theme-lumify',
+    'theme-vera',
+    'theme-blisshair',
+    'theme-ordify',
+  ],
   theme: {
     container: {
       center: true,

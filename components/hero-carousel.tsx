@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePerformance } from "@/context/performance-context";
 import { Button } from "@/components/ui/button";
@@ -164,29 +165,20 @@ export default function HeroCarousel() {
       {slides.map((s, i) => (
         <div
           key={s.id}
-          className={`w-full h-64 md:h-96 bg-center bg-cover absolute inset-0 transition-opacity duration-700 ease-in-out ${
+          className={`w-full h-64 md:h-96 absolute inset-0 transition-opacity duration-700 ease-in-out ${
             i === index ? "opacity-100 z-10 pointer-events-auto" : "opacity-0 z-0 pointer-events-none"
           }`}
-          style={{ backgroundImage: `url(${s.image})` }}
           aria-hidden={i !== index}
         >
-          {/* Preload the first image for LCP optimization */}
-          {i === 0 && (
-            <>
-              <link
-                rel="preload"
-                as="image"
-                href={s.image}
-                fetchPriority="high"
-              />
-              <img
-                src={s.image}
-                alt={s.title}
-                className="absolute inset-0 w-full h-full object-cover opacity-0"
-                style={{ contentVisibility: 'auto' }}
-              />
-            </>
-          )}
+          <Image
+            src={s.image}
+            alt={s.title}
+            fill
+            priority={i === 0}
+            fetchPriority={i === 0 ? "high" : "auto"}
+            sizes="(min-width: 768px) 100vw, 100vw"
+            className="object-cover"
+          />
           <div className="w-full h-full bg-gradient-to-r from-black/70 via-black/40 to-transparent flex items-center">
             <div className="container px-8 md:px-16">
               <div className="max-w-xl md:max-w-2xl">

@@ -66,5 +66,10 @@
     "tsx": "^4.20.6",
     "typescript": "^5.3.3",
     "webpack-obfuscator": "^3.5.1"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "maintained node versions"
+  ]
 }
