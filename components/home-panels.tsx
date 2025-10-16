@@ -139,13 +139,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Whey Protein', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/OPT073.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/OPT073.webp',
           category: 'Protein',
           link: '/products?category=Protein'
         },
         { 
           title: 'Vegan Protein', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/10X004.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/10X004.webp',
           category: 'Protein',
           link: '/products?category=Protein'
         },
@@ -158,13 +158,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Amino Acids', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/TPG005.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/TPG005.webp',
           category: 'Amino Acids',
           link: '/products?category=Amino+Acids'
         },
         { 
           title: 'Pre-Workout', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/10X014.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/10X014.webp',
           category: 'Pre-Workout',
           link: '/products?category=Pre-Workout'
         },
@@ -177,13 +177,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Multivitamins', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/HIM008.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/HIM008.webp',
           category: 'Vitamins',
           link: '/products?category=Vitamins'
         },
         { 
           title: 'Minerals', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/HIM016.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/HIM016.webp',
           category: 'Minerals',
           link: '/products?category=Minerals'
         },
@@ -196,13 +196,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Energy Bars', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/MAX020.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/MAX020.webp',
           category: 'Sports Nutrition',
           link: '/products?category=Sports+Nutrition'
         },
         { 
           title: 'Mass Gainers', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/BN236.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/BN236.webp',
           category: 'All-In-One Gainer',
           link: '/products?category=All-In-One+Gainer'
         },
@@ -219,13 +219,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Outdoor Furniture', 
-          img: 'https://img.aosomcdn.com/100/product/2025/01/23/FAkd3d19493af4097.jpg',
+          img: 'https://img.aosomcdn.com/100/product/2025/01/23/FAkd3d19493af4097.webp',
           category: 'Garden & Outdoor',
           link: '/products?category=Garden+%26+Outdoor'
         },
         { 
           title: 'Home Storage', 
-          img: 'https://img.aosomcdn.com/100/product/2025/07/25/vYO03a19842a63a06.jpg',
+          img: 'https://img.aosomcdn.com/100/product/2025/07/25/vYO03a19842a63a06.webp',
           category: 'Home Goods',
           link: '/products?category=Home+Goods'
         },
@@ -238,13 +238,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Pet Supplies', 
-          img: 'https://img.aosomcdn.com/100/product/2025/04/01/Ml498a195ef2d51da.jpg',
+          img: 'https://img.aosomcdn.com/100/product/2025/04/01/Ml498a195ef2d51da.webp',
           category: 'Pet Supplies',
           link: '/products?category=Pet+Supplies'
         },
         { 
           title: 'Sports & Leisure', 
-          img: 'https://img.aosomcdn.com/100/product/2025/09/29/Z23ed0199938888db.jpg',
+          img: 'https://img.aosomcdn.com/100/product/2025/09/29/Z23ed0199938888db.webp',
           category: 'Sports & Leisure',
           link: '/products?category=Sports+%26+Leisure'
         },
@@ -263,7 +263,7 @@ export default function HomePanels() {
         },
         { 
           title: 'E-Liquids', 
-          img: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?q=80&w=800&auto=format&fit=crop',
+          img: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?q=80&w=800&auto=format&fit=crop&fm=webp',
           category: 'Vapes & Accessories',
           link: '/products?category=Vapes+%26+Accessories'
         },
@@ -276,13 +276,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Garden Furniture', 
-          img: 'https://img.aosomcdn.com/100/product/2025/04/01/Ml498a195ef2d51da.jpg',
+          img: 'https://img.aosomcdn.com/100/product/2025/04/01/Ml498a195ef2d51da.webp',
           category: 'Garden & Outdoor',
           link: '/products?category=Garden+%26+Outdoor'
         },
         { 
           title: 'Planters & Beds', 
-          img: 'https://img.aosomcdn.com/100/product/2024/09/05/xWU014191c08e5d1a.jpg',
+          img: 'https://img.aosomcdn.com/100/product/2024/09/05/xWU014191c08e5d1a.webp',
           category: 'Garden & Outdoor',
           link: '/products?category=Garden+%26+Outdoor'
         },
@@ -349,7 +349,7 @@ export default function HomePanels() {
                           ? 'object-contain p-2' 
                           : 'object-cover'
                       }`}
-                      unoptimized
+                      priority={idx < 2}
                     />
                   </div>
                   <div className="p-2">
