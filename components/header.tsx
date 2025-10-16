@@ -13,7 +13,6 @@ import { useAuth } from "@/context/auth-context";
 import { usePerformance } from "@/context/performance-context";
 import { useSiteSettings } from "@/context/site-settings-context";
 import { Badge } from "@/components/ui/badge";
-import { SaleBanner } from "@/components/sale-banner";
 
 export function Header() {
   const { totalItems } = useCart();
@@ -401,8 +400,12 @@ export function Header() {
       <div className="border-t bg-muted/30 hidden md:block">
         <div className="container px-4">
           <nav
-            className="flex justify-center items-center gap-4 md:gap-6 py-2 text-sm"
+            className="flex justify-center items-center gap-2 md:gap-3 py-2 text-sm overflow-x-auto [&::-webkit-scrollbar]:hidden"
             ref={dropdownRef}
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
           >
             {/* Custom MuscleSports Categories with Animated Dropdowns */}
             <Link
@@ -538,6 +541,7 @@ export function Header() {
                 className={`absolute right-0 top-full pt-2 z-[9999] transition-all duration-300 ease-spring ${openDropdown === 'guides' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}
                 onMouseEnter={() => setOpenDropdown('guides')}
                 onMouseLeave={() => setOpenDropdown(null)}
+                style={{ right: '-20px' }}
               >
                 <div className="bg-background border rounded-lg shadow-xl p-4 min-w-[320px] animate-slide-in-up">
                   <Link href="/guides/muscle-building" className="block px-3 py-2 rounded-md hover:bg-accent text-sm transition-colors" onClick={() => setOpenDropdown(null)}>💪 Muscle Building Guide</Link>
@@ -1111,8 +1115,6 @@ export function Header() {
       )}
     </header>
     
-    {/* Sale Banner - only show if enabled in settings */}
-    {siteSettings.showSaleBanner !== false && <SaleBanner />}
     </>
   );
 }
