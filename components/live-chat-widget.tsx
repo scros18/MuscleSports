@@ -50,9 +50,10 @@ export function LiveChatWidget() {
         <button
           onClick={() => setIsOpen(true)}
           className="fixed bottom-6 right-6 z-[99997] w-16 h-16 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white shadow-2xl hover:scale-110 transition-all duration-300 flex items-center justify-center group"
+          aria-label="Open live chat support - 1 unread message"
         >
           <MessageCircle className="w-7 h-7" />
-          <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-xs font-bold animate-pulse">
+          <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-xs font-bold animate-pulse" aria-hidden="true">
             1
           </div>
         </button>
@@ -79,6 +80,7 @@ export function LiveChatWidget() {
               <button
                 onClick={() => setIsOpen(false)}
                 className="text-white/80 hover:text-white transition-colors"
+                aria-label="Close chat window"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -145,6 +147,7 @@ export function LiveChatWidget() {
                   onClick={handleSend}
                   size="icon"
                   className="bg-green-600 hover:bg-green-700"
+                  aria-label="Send message"
                 >
                   <Send className="w-4 h-4" />
                 </Button>

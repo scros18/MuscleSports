@@ -256,7 +256,7 @@ export function Header() {
                     <Button 
                       type="submit" 
                       size="sm"
-                      className="h-7 px-3 text-xs bg-primary text-white hover:bg-primary/90"
+                      className="h-7 px-3 text-xs bg-primary text-primary-foreground hover:bg-primary/90 font-semibold"
                     >
                       <Search className="h-3.5 w-3.5 mr-1" />
                       Search
@@ -534,7 +534,7 @@ export function Header() {
                 <ChevronDown className="h-3 w-3 transition-transform duration-300" style={{ transform: openDropdown === 'guides' ? 'rotate(180deg)' : 'rotate(0deg)' }} />
               </button>
               <div
-                className={`absolute left-1/2 -translate-x-1/2 top-full pt-2 z-[9999] transition-all duration-300 ease-spring ${openDropdown === 'guides' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}
+                className={`absolute left-0 top-full pt-2 z-[9999] transition-all duration-300 ease-spring ${openDropdown === 'guides' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}
                 onMouseEnter={() => setOpenDropdown('guides')}
                 onMouseLeave={() => setOpenDropdown(null)}
               >

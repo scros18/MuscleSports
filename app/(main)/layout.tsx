@@ -10,7 +10,6 @@ import { AuthProvider } from "@/context/auth-context";
 import { CartProvider } from "@/context/cart-context";
 import { ToastProvider } from "@/components/toast";
 import { PriceMatchBanner } from "@/components/price-match-banner";
-import { RewardsBanner } from "@/components/rewards-banner";
 import { LiveChatWidget } from "@/components/live-chat-widget";
 
 export default function MainLayout({
@@ -38,7 +37,6 @@ export default function MainLayout({
                       <PageTransition>{children}</PageTransition>
                     </main>
                     <Footer />
-                    <RewardsBanner />
                     <LiveChatWidget />
                   </div>
                 </ToastProvider>
