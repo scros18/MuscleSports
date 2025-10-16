@@ -531,7 +531,7 @@ export default function Home() {
                       {/* Right side - CTA Button */}
                       <div className="flex-shrink-0">
                         <a 
-                          href="/about" 
+                          href="/about-us" 
                           className={`inline-flex items-center gap-2 font-semibold px-6 py-3 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg group font-saira ${
                             currentTheme === 'musclesports'
                               ? 'bg-green-600 text-white hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700'

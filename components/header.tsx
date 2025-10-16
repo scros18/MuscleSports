@@ -483,7 +483,7 @@ export function Header() {
               Bundles
             </Link>
             <Link
-              href="/about"
+              href="/about-us"
               className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground"
             >
               About Us

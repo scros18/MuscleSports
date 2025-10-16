@@ -14,6 +14,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     {
+      url: `${baseUrl}/best-sports-supplements`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/products`,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
@@ -32,7 +38,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/about`,
+      url: `${baseUrl}/about-us`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
