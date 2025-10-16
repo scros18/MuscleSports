@@ -141,11 +141,12 @@ export default function Home() {
   const defaultSections = [
     { id: 'hero-carousel', type: 'hero', enabled: true, order: 0, title: 'Hero Carousel' },
     { id: 'home-panels', type: 'panels', enabled: true, order: 1, title: 'Category Panels' },
-    { id: 'best-sellers', type: 'products', enabled: true, order: 2, title: 'Best Sellers', settings: { limit: 5, filter: 'best-sellers' } },
-    { id: 'new-stock', type: 'products', enabled: true, order: 3, title: 'New Stock', settings: { limit: 5, filter: 'new' } },
-    { id: 'reviews', type: 'reviews', enabled: true, order: 4, title: 'Customer Reviews' },
-    { id: 'about-cta', type: 'about-cta', enabled: true, order: 5, title: 'Our Story' },
-    { id: 'partners', type: 'partners', enabled: true, order: 6, title: 'Business Partners' }
+    { id: 'community-cta', type: 'community-cta', enabled: true, order: 2, title: 'Community Hub' },
+    { id: 'best-sellers', type: 'products', enabled: true, order: 3, title: 'Best Sellers', settings: { limit: 5, filter: 'best-sellers' } },
+    { id: 'new-stock', type: 'products', enabled: true, order: 4, title: 'New Stock', settings: { limit: 5, filter: 'new' } },
+    { id: 'reviews', type: 'reviews', enabled: true, order: 5, title: 'Customer Reviews' },
+    { id: 'about-cta', type: 'about-cta', enabled: true, order: 6, title: 'Our Story' },
+    { id: 'partners', type: 'partners', enabled: true, order: 7, title: 'Business Partners' }
   ];
 
   const homepageSections = (siteLayout?.homepage?.sections ?? defaultSections)
@@ -463,6 +464,149 @@ export default function Home() {
                       </a>
                     </div>
                   )}
+                </section>
+              );
+
+            case 'community-cta':
+              return (
+                <section key={key} className="mb-16">
+                  <div className="relative overflow-hidden rounded-3xl border-2 border-gradient bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 dark:from-violet-950/30 dark:via-purple-950/30 dark:to-fuchsia-950/30">
+                    {/* Abstract background elements */}
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-violet-400 to-purple-600 rounded-full blur-3xl opacity-20"></div>
+                    <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-fuchsia-400 to-pink-600 rounded-full blur-3xl opacity-20"></div>
+                    
+                    <div className="relative px-6 py-12 md:py-16 lg:px-12">
+                      <div className="grid md:grid-cols-2 gap-8 items-center">
+                        {/* Left side - Content */}
+                        <div>
+                          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 text-white mb-4">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <span className="font-bold text-sm">NEW FEATURE</span>
+                          </div>
+                          
+                          <h3 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent">
+                            Join Our Community Hub
+                          </h3>
+                          
+                          <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-6">
+                            Connect with fellow fitness enthusiasts, watch expert educational videos on testosterone optimization, muscle building, and get real-time tips from our community.
+                          </p>
+                          
+                          <div className="grid grid-cols-2 gap-4 mb-6">
+                            <div className="flex items-start gap-3">
+                              <div className="w-10 h-10 rounded-lg bg-violet-100 dark:bg-violet-950/50 flex items-center justify-center flex-shrink-0">
+                                <svg className="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                </svg>
+                              </div>
+                              <div>
+                                <div className="font-semibold text-sm">Live Chat</div>
+                                <div className="text-xs text-muted-foreground">Real-time community</div>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-start gap-3">
+                              <div className="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-950/50 flex items-center justify-center flex-shrink-0">
+                                <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                              </div>
+                              <div>
+                                <div className="font-semibold text-sm">Expert Videos</div>
+                                <div className="text-xs text-muted-foreground">Curated content</div>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-start gap-3">
+                              <div className="w-10 h-10 rounded-lg bg-fuchsia-100 dark:bg-fuchsia-950/50 flex items-center justify-center flex-shrink-0">
+                                <svg className="w-5 h-5 text-fuchsia-600 dark:text-fuchsia-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                              </div>
+                              <div>
+                                <div className="font-semibold text-sm">Testosterone Tips</div>
+                                <div className="text-xs text-muted-foreground">Natural methods</div>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-start gap-3">
+                              <div className="w-10 h-10 rounded-lg bg-pink-100 dark:bg-pink-950/50 flex items-center justify-center flex-shrink-0">
+                                <svg className="w-5 h-5 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                              </div>
+                              <div>
+                                <div className="font-semibold text-sm">Health Guides</div>
+                                <div className="text-xs text-muted-foreground">Science-backed</div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <a 
+                            href="/community" 
+                            className="inline-flex items-center gap-2 font-bold px-8 py-4 rounded-xl bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 text-white hover:from-violet-700 hover:via-purple-700 hover:to-fuchsia-700 transition-all duration-300 hover:scale-105 hover:shadow-2xl group"
+                          >
+                            Explore Community Hub
+                            <svg 
+                              className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" 
+                              fill="none" 
+                              stroke="currentColor" 
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                          </a>
+                        </div>
+                        
+                        {/* Right side - Visual Preview */}
+                        <div className="hidden md:block">
+                          <div className="relative">
+                            {/* Mock chat window */}
+                            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border-2 border-violet-200 dark:border-violet-800 overflow-hidden">
+                              <div className="bg-gradient-to-r from-violet-600 to-purple-600 px-4 py-3 flex items-center gap-2">
+                                <div className="flex gap-1.5">
+                                  <div className="w-3 h-3 rounded-full bg-white/30"></div>
+                                  <div className="w-3 h-3 rounded-full bg-white/30"></div>
+                                  <div className="w-3 h-3 rounded-full bg-white/30"></div>
+                                </div>
+                                <span className="text-white text-sm font-semibold ml-2">Community Chat</span>
+                                <div className="ml-auto flex items-center gap-1.5">
+                                  <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                                  <span className="text-white/80 text-xs">Live</span>
+                                </div>
+                              </div>
+                              <div className="p-4 space-y-3 h-48 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+                                <div className="flex gap-2 items-start">
+                                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex-shrink-0"></div>
+                                  <div className="bg-gray-100 dark:bg-gray-700 rounded-lg px-3 py-2 text-xs">
+                                    <div className="font-semibold mb-1">FitnessPro</div>
+                                    <div className="text-muted-foreground">Check out the testosterone guide! 🔥</div>
+                                  </div>
+                                </div>
+                                <div className="flex gap-2 items-start">
+                                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 flex-shrink-0"></div>
+                                  <div className="bg-gray-100 dark:bg-gray-700 rounded-lg px-3 py-2 text-xs">
+                                    <div className="font-semibold mb-1">HealthGuru</div>
+                                    <div className="text-muted-foreground">The videos are super helpful 💪</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Floating badges */}
+                            <div className="absolute -top-4 -right-4 bg-gradient-to-br from-amber-400 to-orange-500 text-white px-4 py-2 rounded-full shadow-lg text-sm font-bold flex items-center gap-2 animate-bounce">
+                              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                              </svg>
+                              New
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </section>
               );
 

@@ -366,8 +366,8 @@ export function Header() {
           </Link>
         </div>
 
-        {/* Mobile menu button and cart - always visible on mobile */}
-        <div className="md:hidden flex items-center gap-1.5 sm:gap-2 flex-shrink-0 ml-auto">
+        {/* Mobile menu button and cart - only visible on mobile */}
+        <div className="flex md:hidden items-center gap-1.5 sm:gap-2 flex-shrink-0 ml-auto">
           <Link href="/cart" aria-label="Shopping cart">
             <Button variant="outline" size="icon" className="relative h-9 w-9 sm:h-10 sm:w-10">
               <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -499,6 +499,30 @@ export function Header() {
               className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground"
             >
               Recipe Generator
+            </Link>
+            <Link
+              href="/supplement-finder"
+              className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground font-semibold"
+            >
+              Supplement Finder 🎯
+            </Link>
+            <Link
+              href="/stacks"
+              className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground"
+            >
+              Product Stacks
+            </Link>
+            <Link
+              href="/progress-tracker"
+              className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground"
+            >
+              Track Progress
+            </Link>
+            <Link
+              href="/community"
+              className="whitespace-nowrap hover:text-primary transition-colors text-foreground/90 hover:text-foreground"
+            >
+              Community
             </Link>
             <div className="relative group">
               <button
@@ -806,6 +830,121 @@ export function Header() {
                       : currentTheme === 'vera'
                       ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
                       : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
+                  }}
+                ></div>
+              </Link>
+              <Link
+                href="/supplement-finder"
+                className={`relative block px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-bold rounded-xl backdrop-blur-xl border-2 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
+                  settings.animationsEnabled
+                    ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                    : 'transition-all duration-300'
+                }`}
+                style={{
+                  background: currentTheme === 'musclesports'
+                    ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
+                    : currentTheme === 'vera'
+                    ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
+                    : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))',
+                  borderColor: currentTheme === 'musclesports'
+                    ? 'rgba(0, 179, 65, 0.3)'
+                    : currentTheme === 'vera'
+                    ? 'rgba(255, 107, 0, 0.3)'
+                    : 'rgba(56, 142, 233, 0.3)'
+                }}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <span>🎯</span>
+                  <span>Supplement Finder</span>
+                </span>
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+                  style={{
+                    background: currentTheme === 'musclesports'
+                      ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.25), rgba(0, 179, 65, 0.1))'
+                      : currentTheme === 'vera'
+                      ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.3), rgba(255, 107, 0, 0.12))'
+                      : 'linear-gradient(135deg, rgba(56, 142, 233, 0.25), rgba(56, 142, 233, 0.1))'
+                  }}
+                ></div>
+              </Link>
+              <Link
+                href="/stacks"
+                className={`relative block px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
+                  settings.animationsEnabled
+                    ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                    : 'transition-all duration-300'
+                }`}
+                style={{
+                  background: currentTheme === 'musclesports'
+                    ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
+                    : currentTheme === 'vera'
+                    ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
+                    : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))',
+                  borderColor: 'rgba(255, 255, 255, 0.2)'
+                }}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span className="relative z-10">Product Stacks</span>
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+                  style={{
+                    background: currentTheme === 'musclesports'
+                      ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
+                      : currentTheme === 'vera'
+                      ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
+                      : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
+                  }}
+                ></div>
+              </Link>
+              <Link
+                href="/progress-tracker"
+                className={`relative block px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
+                  settings.animationsEnabled
+                    ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                    : 'transition-all duration-300'
+                }`}
+                style={{
+                  background: currentTheme === 'musclesports'
+                    ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.08), rgba(0, 179, 65, 0.02))'
+                    : currentTheme === 'vera'
+                    ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(255, 107, 0, 0.04))'
+                    : 'linear-gradient(135deg, rgba(56, 142, 233, 0.08), rgba(56, 142, 233, 0.02))',
+                  borderColor: 'rgba(255, 255, 255, 0.2)'
+                }}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span className="relative z-10">Track Progress</span>
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+                  style={{
+                    background: currentTheme === 'musclesports'
+                      ? 'linear-gradient(135deg, rgba(0, 179, 65, 0.15), rgba(0, 179, 65, 0.05))'
+                      : currentTheme === 'vera'
+                      ? 'linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 107, 0, 0.08))'
+                      : 'linear-gradient(135deg, rgba(56, 142, 233, 0.15), rgba(56, 142, 233, 0.05))'
+                  }}
+                ></div>
+              </Link>
+              <Link
+                href="/community"
+                className={`relative block px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
+                  settings.animationsEnabled
+                    ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                    : 'transition-all duration-300'
+                }`}
+                style={{
+                  background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(139, 92, 246, 0.02))',
+                  borderColor: 'rgba(255, 255, 255, 0.2)'
+                }}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span className="relative z-10">Community Hub</span>
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05))'
                   }}
                 ></div>
               </Link>

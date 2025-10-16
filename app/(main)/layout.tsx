@@ -9,6 +9,9 @@ import { PerformanceProvider } from "@/context/performance-context";
 import { AuthProvider } from "@/context/auth-context";
 import { CartProvider } from "@/context/cart-context";
 import { ToastProvider } from "@/components/toast";
+import { PriceMatchBanner } from "@/components/price-match-banner";
+import { RewardsBanner } from "@/components/rewards-banner";
+import { LiveChatWidget } from "@/components/live-chat-widget";
 
 export default function MainLayout({
   children,
@@ -29,11 +32,14 @@ export default function MainLayout({
               <CartProvider>
                 <ToastProvider>
                   <div className="flex min-h-screen flex-col">
+                    <PriceMatchBanner />
                     <Header />
                     <main id="main-content" className="flex-1 relative z-0" role="main">
                       <PageTransition>{children}</PageTransition>
                     </main>
                     <Footer />
+                    <RewardsBanner />
+                    <LiveChatWidget />
                   </div>
                 </ToastProvider>
               </CartProvider>

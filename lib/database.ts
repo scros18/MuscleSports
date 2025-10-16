@@ -237,6 +237,36 @@ export class Database {
           )
         `);
 
+        // Create cache settings table (Cache+ extension)
+        await connection.execute(`
+          CREATE TABLE IF NOT EXISTS cache_settings (
+            id VARCHAR(255) PRIMARY KEY,
+            enabled BOOLEAN DEFAULT TRUE,
+            page_cache BOOLEAN DEFAULT TRUE,
+            css_minification BOOLEAN DEFAULT TRUE,
+            js_minification BOOLEAN DEFAULT TRUE,
+            html_minification BOOLEAN DEFAULT TRUE,
+            image_lazy_load BOOLEAN DEFAULT TRUE,
+            critical_css BOOLEAN DEFAULT TRUE,
+            remove_unused_css BOOLEAN DEFAULT FALSE,
+            defer_javascript BOOLEAN DEFAULT TRUE,
+            preload_fonts BOOLEAN DEFAULT TRUE,
+            browser_cache BOOLEAN DEFAULT TRUE,
+            gzip_compression BOOLEAN DEFAULT TRUE,
+            cdn_enabled BOOLEAN DEFAULT FALSE,
+            cdn_url VARCHAR(500),
+            preload_key_requests BOOLEAN DEFAULT TRUE,
+            dns_prefetch BOOLEAN DEFAULT TRUE,
+            dns_prefetch_domains JSON,
+            preconnect_domains JSON,
+            cache_ttl INT DEFAULT 3600,
+            exclude_urls JSON,
+            database_optimization BOOLEAN DEFAULT FALSE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+          )
+        `);
+
         console.log('Database tables initialized successfully');
       } finally {
         connection.release();
@@ -906,5 +936,143 @@ export class Database {
 
   static async deleteSiteLayout(businessId: string) {
     await this.query('DELETE FROM site_layouts WHERE business_id = ?', [businessId]);
+  }
+
+  // Cache Settings CRUD operations
+  static async createOrUpdateCacheSettings(settingsData: {
+    id?: string;
+    enabled?: boolean;
+    pageCache?: boolean;
+    cssMinification?: boolean;
+    jsMinification?: boolean;
+    htmlMinification?: boolean;
+    imageLazyLoad?: boolean;
+    criticalCss?: boolean;
+    removeUnusedCss?: boolean;
+    deferJavascript?: boolean;
+    preloadFonts?: boolean;
+    browserCache?: boolean;
+    gzipCompression?: boolean;
+    cdnEnabled?: boolean;
+    cdnUrl?: string;
+    preloadKeyRequests?: boolean;
+    dnsPrefetch?: boolean;
+    dnsPrefetchDomains?: string[];
+    preconnectDomains?: string[];
+    cacheTtl?: number;
+    excludeUrls?: string[];
+    databaseOptimization?: boolean;
+  }) {
+    const id = settingsData.id || 'default';
+    
+    // Check if settings exist
+    const existing = await this.query('SELECT id FROM cache_settings WHERE id = ?', [id]);
+    
+    if ((existing as any[]).length > 0) {
+      // Update existing
+      const fields = [];
+      const values = [];
+
+      if (settingsData.enabled !== undefined) { fields.push('enabled = ?'); values.push(settingsData.enabled ? 1 : 0); }
+      if (settingsData.pageCache !== undefined) { fields.push('page_cache = ?'); values.push(settingsData.pageCache ? 1 : 0); }
+      if (settingsData.cssMinification !== undefined) { fields.push('css_minification = ?'); values.push(settingsData.cssMinification ? 1 : 0); }
+      if (settingsData.jsMinification !== undefined) { fields.push('js_minification = ?'); values.push(settingsData.jsMinification ? 1 : 0); }
+      if (settingsData.htmlMinification !== undefined) { fields.push('html_minification = ?'); values.push(settingsData.htmlMinification ? 1 : 0); }
+      if (settingsData.imageLazyLoad !== undefined) { fields.push('image_lazy_load = ?'); values.push(settingsData.imageLazyLoad ? 1 : 0); }
+      if (settingsData.criticalCss !== undefined) { fields.push('critical_css = ?'); values.push(settingsData.criticalCss ? 1 : 0); }
+      if (settingsData.removeUnusedCss !== undefined) { fields.push('remove_unused_css = ?'); values.push(settingsData.removeUnusedCss ? 1 : 0); }
+      if (settingsData.deferJavascript !== undefined) { fields.push('defer_javascript = ?'); values.push(settingsData.deferJavascript ? 1 : 0); }
+      if (settingsData.preloadFonts !== undefined) { fields.push('preload_fonts = ?'); values.push(settingsData.preloadFonts ? 1 : 0); }
+      if (settingsData.browserCache !== undefined) { fields.push('browser_cache = ?'); values.push(settingsData.browserCache ? 1 : 0); }
+      if (settingsData.gzipCompression !== undefined) { fields.push('gzip_compression = ?'); values.push(settingsData.gzipCompression ? 1 : 0); }
+      if (settingsData.cdnEnabled !== undefined) { fields.push('cdn_enabled = ?'); values.push(settingsData.cdnEnabled ? 1 : 0); }
+      if (settingsData.cdnUrl !== undefined) { fields.push('cdn_url = ?'); values.push(settingsData.cdnUrl); }
+      if (settingsData.preloadKeyRequests !== undefined) { fields.push('preload_key_requests = ?'); values.push(settingsData.preloadKeyRequests ? 1 : 0); }
+      if (settingsData.dnsPrefetch !== undefined) { fields.push('dns_prefetch = ?'); values.push(settingsData.dnsPrefetch ? 1 : 0); }
+      if (settingsData.dnsPrefetchDomains !== undefined) { fields.push('dns_prefetch_domains = ?'); values.push(JSON.stringify(settingsData.dnsPrefetchDomains)); }
+      if (settingsData.preconnectDomains !== undefined) { fields.push('preconnect_domains = ?'); values.push(JSON.stringify(settingsData.preconnectDomains)); }
+      if (settingsData.cacheTtl !== undefined) { fields.push('cache_ttl = ?'); values.push(settingsData.cacheTtl); }
+      if (settingsData.excludeUrls !== undefined) { fields.push('exclude_urls = ?'); values.push(JSON.stringify(settingsData.excludeUrls)); }
+      if (settingsData.databaseOptimization !== undefined) { fields.push('database_optimization = ?'); values.push(settingsData.databaseOptimization ? 1 : 0); }
+
+      if (fields.length > 0) {
+        const sql = `UPDATE cache_settings SET ${fields.join(', ')}, updated_at = CURRENT_TIMESTAMP WHERE id = ?`;
+        values.push(id);
+        await this.query(sql, values);
+      }
+    } else {
+      // Insert new with defaults
+      await this.query(
+        `INSERT INTO cache_settings (
+          id, enabled, page_cache, css_minification, js_minification, html_minification,
+          image_lazy_load, critical_css, remove_unused_css, defer_javascript, preload_fonts,
+          browser_cache, gzip_compression, cdn_enabled, cdn_url, preload_key_requests,
+          dns_prefetch, dns_prefetch_domains, preconnect_domains, cache_ttl, exclude_urls,
+          database_optimization
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          id,
+          settingsData.enabled !== undefined ? (settingsData.enabled ? 1 : 0) : 1,
+          settingsData.pageCache !== undefined ? (settingsData.pageCache ? 1 : 0) : 1,
+          settingsData.cssMinification !== undefined ? (settingsData.cssMinification ? 1 : 0) : 1,
+          settingsData.jsMinification !== undefined ? (settingsData.jsMinification ? 1 : 0) : 1,
+          settingsData.htmlMinification !== undefined ? (settingsData.htmlMinification ? 1 : 0) : 1,
+          settingsData.imageLazyLoad !== undefined ? (settingsData.imageLazyLoad ? 1 : 0) : 1,
+          settingsData.criticalCss !== undefined ? (settingsData.criticalCss ? 1 : 0) : 1,
+          settingsData.removeUnusedCss !== undefined ? (settingsData.removeUnusedCss ? 1 : 0) : 0,
+          settingsData.deferJavascript !== undefined ? (settingsData.deferJavascript ? 1 : 0) : 1,
+          settingsData.preloadFonts !== undefined ? (settingsData.preloadFonts ? 1 : 0) : 1,
+          settingsData.browserCache !== undefined ? (settingsData.browserCache ? 1 : 0) : 1,
+          settingsData.gzipCompression !== undefined ? (settingsData.gzipCompression ? 1 : 0) : 1,
+          settingsData.cdnEnabled !== undefined ? (settingsData.cdnEnabled ? 1 : 0) : 0,
+          settingsData.cdnUrl || null,
+          settingsData.preloadKeyRequests !== undefined ? (settingsData.preloadKeyRequests ? 1 : 0) : 1,
+          settingsData.dnsPrefetch !== undefined ? (settingsData.dnsPrefetch ? 1 : 0) : 1,
+          settingsData.dnsPrefetchDomains ? JSON.stringify(settingsData.dnsPrefetchDomains) : null,
+          settingsData.preconnectDomains ? JSON.stringify(settingsData.preconnectDomains) : null,
+          settingsData.cacheTtl || 3600,
+          settingsData.excludeUrls ? JSON.stringify(settingsData.excludeUrls) : null,
+          settingsData.databaseOptimization !== undefined ? (settingsData.databaseOptimization ? 1 : 0) : 0
+        ]
+      );
+    }
+  }
+
+  static async getCacheSettings(id: string = 'default') {
+    const rows = await this.query('SELECT * FROM cache_settings WHERE id = ?', [id]);
+    const settings = (rows as any[])[0];
+    if (settings) {
+      return {
+        id: settings.id,
+        enabled: settings.enabled === 1,
+        pageCache: settings.page_cache === 1,
+        cssMinification: settings.css_minification === 1,
+        jsMinification: settings.js_minification === 1,
+        htmlMinification: settings.html_minification === 1,
+        imageLazyLoad: settings.image_lazy_load === 1,
+        criticalCss: settings.critical_css === 1,
+        removeUnusedCss: settings.remove_unused_css === 1,
+        deferJavascript: settings.defer_javascript === 1,
+        preloadFonts: settings.preload_fonts === 1,
+        browserCache: settings.browser_cache === 1,
+        gzipCompression: settings.gzip_compression === 1,
+        cdnEnabled: settings.cdn_enabled === 1,
+        cdnUrl: settings.cdn_url,
+        preloadKeyRequests: settings.preload_key_requests === 1,
+        dnsPrefetch: settings.dns_prefetch === 1,
+        dnsPrefetchDomains: safeJsonParseArray(settings.dns_prefetch_domains),
+        preconnectDomains: safeJsonParseArray(settings.preconnect_domains),
+        cacheTtl: settings.cache_ttl,
+        excludeUrls: safeJsonParseArray(settings.exclude_urls),
+        databaseOptimization: settings.database_optimization === 1,
+        createdAt: settings.created_at,
+        updatedAt: settings.updated_at
+      };
+    }
+    return null;
+  }
+
+  static async deleteCacheSettings(id: string) {
+    await this.query('DELETE FROM cache_settings WHERE id = ?', [id]);
   }
 }

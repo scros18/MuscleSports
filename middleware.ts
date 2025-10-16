@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { getCacheHeaders } from '@/lib/cache';
+import { Database } from '@/lib/database';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -50,6 +52,39 @@ export async function middleware(request: NextRequest) {
   } catch (error) {
     // If there's an error checking maintenance mode, continue normally
     console.error('Error checking maintenance mode:', error);
+  }
+
+  // Apply Cache+ headers
+  try {
+    const cacheSettings = await Database.getCacheSettings('default');
+    
+    if (cacheSettings && cacheSettings.enabled) {
+      const response = NextResponse.next();
+      const headers = getCacheHeaders(cacheSettings, pathname);
+      
+      // Apply cache headers
+      Object.entries(headers).forEach(([key, value]) => {
+        response.headers.set(key, value);
+      });
+
+      // Add performance headers
+      if (cacheSettings.gzipCompression) {
+        response.headers.set('Content-Encoding', 'gzip');
+      }
+
+      // Security headers with caching
+      response.headers.set('X-Content-Type-Options', 'nosniff');
+      response.headers.set('X-Frame-Options', 'SAMEORIGIN');
+      response.headers.set('X-XSS-Protection', '1; mode=block');
+
+      // Performance timing header
+      response.headers.set('Server-Timing', 'cache;desc="Cache+ Enabled"');
+
+      return response;
+    }
+  } catch (error) {
+    // If cache settings fail, continue without caching
+    console.error('Cache+ error:', error);
   }
 
   return NextResponse.next();

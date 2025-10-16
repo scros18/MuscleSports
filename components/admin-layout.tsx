@@ -19,6 +19,7 @@ import {
   Scissors,
   Wrench,
   Percent,
+  Zap,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -355,6 +356,23 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
         >
           <Package className="mr-3 h-5 w-5" />
           Layout Builder
+        </Link>
+
+        {/* Cache+ */}
+        <Link
+          href="/admin/cache-plus"
+          onClick={closeSidebar}
+          className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-150 ${
+            pathname === '/admin/cache-plus'
+              ? 'bg-gradient-to-r from-purple-500 to-blue-600 text-white shadow-lg border-r-2 border-purple-600'
+              : 'text-muted-foreground hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50 hover:text-purple-700'
+          }`}
+        >
+          <Zap className="mr-3 h-5 w-5" />
+          <span className="flex items-center gap-2">
+            Cache+
+            <span className="text-[10px] px-1.5 py-0.5 bg-yellow-400 text-yellow-900 rounded font-bold">PRO</span>
+          </span>
         </Link>
 
         {/* Settings */}
