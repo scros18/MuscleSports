@@ -349,7 +349,15 @@ export default function HomePanels() {
                           ? 'object-contain p-2' 
                           : 'object-cover'
                       }`}
+                      unoptimized
                       priority={idx < 2}
+                      onError={(e) => {
+                        // Fallback to PNG if WebP fails
+                        const target = e.target as HTMLImageElement;
+                        if (target.src.includes('.webp')) {
+                          target.src = target.src.replace('.webp', '.png');
+                        }
+                      }}
                     />
                   </div>
                   <div className="p-2">
