@@ -52,30 +52,35 @@ export async function middleware(request: NextRequest) {
     console.error('Error checking maintenance mode:', error);
   }
 
-  // Apply basic Cache+ headers (Edge Runtime compatible)
-  // Detailed cache settings are managed via next.config.js and individual pages
+  // Apply Cache+ headers (Edge Runtime compatible)
   const response = NextResponse.next();
   
-  // Exclude certain paths from caching
-  const excludedPaths = ['/admin', '/api', '/checkout', '/cart', '/login', '/register'];
+  // Default exclude paths (these are always excluded regardless of settings)
+  const excludedPaths = ['/admin', '/api', '/checkout', '/cart', '/login', '/register', '/_next/data'];
   const shouldExclude = excludedPaths.some(path => pathname.startsWith(path));
   
   if (!shouldExclude) {
-    // Apply basic cache headers for public pages
-    response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=3600, stale-while-revalidate');
-    response.headers.set('X-Cache-Status', 'HIT');
+    // Apply cache headers for public pages
+    // Default: 1 hour cache with stale-while-revalidate
+    response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=1800');
+    response.headers.set('X-Cache-Status', 'CACHED');
   } else {
     // No cache for excluded paths
     response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    response.headers.set('X-Cache-Status', 'BYPASS');
   }
   
   // Security headers (always apply)
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('X-Frame-Options', 'SAMEORIGIN');
   response.headers.set('X-XSS-Protection', '1; mode=block');
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   
   // Performance timing header
-  response.headers.set('Server-Timing', 'cache;desc="Cache+ Active"');
+  response.headers.set('Server-Timing', 'cache-plus;desc="Active"');
+  
+  // Vary header for proper cache key
+  response.headers.set('Vary', 'Accept-Encoding, Accept');
 
   return response;
 }
