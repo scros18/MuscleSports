@@ -139,13 +139,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Whey Protein', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/OPT073.webp',
+          img: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?q=80&w=400&auto=format&fit=crop&fm=webp',
           category: 'Protein',
           link: '/products?category=Protein'
         },
         { 
           title: 'Vegan Protein', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/10X004.webp',
+          img: 'https://images.unsplash.com/photo-1628191010215-4b233724e20e?q=80&w=400&auto=format&fit=crop&fm=webp',
           category: 'Protein',
           link: '/products?category=Protein'
         },
@@ -158,13 +158,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Amino Acids', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/TPG005.webp',
+          img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=400&auto=format&fit=crop&fm=webp',
           category: 'Amino Acids',
           link: '/products?category=Amino+Acids'
         },
         { 
           title: 'Pre-Workout', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/10X014.webp',
+          img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=400&auto=format&fit=crop&fm=webp',
           category: 'Pre-Workout',
           link: '/products?category=Pre-Workout'
         },
@@ -177,13 +177,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Multivitamins', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/HIM008.webp',
+          img: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?q=80&w=400&auto=format&fit=crop&fm=webp',
           category: 'Vitamins',
           link: '/products?category=Vitamins'
         },
         { 
           title: 'Minerals', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/HIM016.webp',
+          img: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=400&auto=format&fit=crop&fm=webp',
           category: 'Minerals',
           link: '/products?category=Minerals'
         },
@@ -196,13 +196,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Energy Bars', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/MAX020.webp',
+          img: 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=400&auto=format&fit=crop&fm=webp',
           category: 'Sports Nutrition',
           link: '/products?category=Sports+Nutrition'
         },
         { 
           title: 'Mass Gainers', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/BN236.webp',
+          img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=400&auto=format&fit=crop&fm=webp',
           category: 'All-In-One Gainer',
           link: '/products?category=All-In-One+Gainer'
         },
@@ -219,13 +219,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Outdoor Furniture', 
-          img: 'https://img.aosomcdn.com/100/product/2025/01/23/FAkd3d19493af4097.webp',
+          img: 'https://img.aosomcdn.com/100/product/2025/01/23/FAkd3d19493af4097.jpg',
           category: 'Garden & Outdoor',
           link: '/products?category=Garden+%26+Outdoor'
         },
         { 
           title: 'Home Storage', 
-          img: 'https://img.aosomcdn.com/100/product/2025/07/25/vYO03a19842a63a06.webp',
+          img: 'https://img.aosomcdn.com/100/product/2025/07/25/vYO03a19842a63a06.jpg',
           category: 'Home Goods',
           link: '/products?category=Home+Goods'
         },
@@ -238,13 +238,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Pet Supplies', 
-          img: 'https://img.aosomcdn.com/100/product/2025/04/01/Ml498a195ef2d51da.webp',
+          img: 'https://img.aosomcdn.com/100/product/2025/04/01/Ml498a195ef2d51da.jpg',
           category: 'Pet Supplies',
           link: '/products?category=Pet+Supplies'
         },
         { 
           title: 'Sports & Leisure', 
-          img: 'https://img.aosomcdn.com/100/product/2025/09/29/Z23ed0199938888db.webp',
+          img: 'https://img.aosomcdn.com/100/product/2025/09/29/Z23ed0199938888db.jpg',
           category: 'Sports & Leisure',
           link: '/products?category=Sports+%26+Leisure'
         },
@@ -276,13 +276,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Garden Furniture', 
-          img: 'https://img.aosomcdn.com/100/product/2025/04/01/Ml498a195ef2d51da.webp',
+          img: 'https://img.aosomcdn.com/100/product/2025/04/01/Ml498a195ef2d51da.jpg',
           category: 'Garden & Outdoor',
           link: '/products?category=Garden+%26+Outdoor'
         },
         { 
           title: 'Planters & Beds', 
-          img: 'https://img.aosomcdn.com/100/product/2024/09/05/xWU014191c08e5d1a.webp',
+          img: 'https://img.aosomcdn.com/100/product/2024/09/05/xWU014191c08e5d1a.jpg',
           category: 'Garden & Outdoor',
           link: '/products?category=Garden+%26+Outdoor'
         },
@@ -349,15 +349,10 @@ export default function HomePanels() {
                           ? 'object-contain p-2' 
                           : 'object-cover'
                       }`}
-                      unoptimized
                       priority={idx < 2}
-                      onError={(e) => {
-                        // Fallback to PNG if WebP fails
-                        const target = e.target as HTMLImageElement;
-                        if (target.src.includes('.webp')) {
-                          target.src = target.src.replace('.webp', '.png');
-                        }
-                      }}
+                      quality={85}
+                      placeholder="blur"
+                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                     />
                   </div>
                   <div className="p-2">
