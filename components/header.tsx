@@ -320,8 +320,8 @@ export function Header() {
           </div>
         </div>
 
-        {/* Auth and Cart buttons */}
-        <div className="hidden md:flex items-center space-x-3">
+        {/* Auth and Cart buttons - DESKTOP ONLY */}
+        <div className="hidden md:flex items-center space-x-3 flex-shrink-0">
           {user ? (
             <div className="flex items-center space-x-2">
               <Link href="/account">
@@ -350,6 +350,7 @@ export function Header() {
             </div>
           )}
 
+          {/* Single Shopping Cart Icon - Desktop */}
           <Link href="/cart" aria-label="Shopping cart">
             <Button variant="outline" size="icon" className="relative">
               <ShoppingCart className="h-5 w-5" />
@@ -366,8 +367,8 @@ export function Header() {
           </Link>
         </div>
 
-        {/* Mobile menu button and cart - only visible on mobile */}
-        <div className="flex md:hidden items-center gap-1.5 sm:gap-2 flex-shrink-0 ml-auto">
+        {/* Mobile menu button and cart - MOBILE ONLY (hidden on md and up) */}
+        <div className="md:!hidden flex items-center gap-1.5 sm:gap-2 flex-shrink-0 ml-auto">
           <Link href="/cart" aria-label="Shopping cart">
             <Button variant="outline" size="icon" className="relative h-9 w-9 sm:h-10 sm:w-10">
               <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />

@@ -35,17 +35,24 @@ const nextConfig = {
       },
     ],
   },
-  // Enable compression
+  // Enable aggressive compression - Cache+ feature
   compress: true,
-  // Optimize bundle for modern browsers
+  // Optimize bundle for modern browsers - Cache+ feature
   swcMinify: true,
-  // Add performance optimizations
+  // Production URL for absolute paths
+  productionBrowserSourceMaps: false, // Disable source maps in production for smaller bundles
+  // Add performance optimizations - Cache+ feature
   experimental: {
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons', 'recharts'],
+    optimizeCss: true, // Enable CSS optimization
   },
   // Configure SWC for modern browsers - target ES2020+ to avoid polyfills
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
+    // Remove React properties in production for smaller bundles
+    reactRemoveProperties: process.env.NODE_ENV === 'production',
+    // Remove debugger statements
+    removeDebugger: true,
   },
   // Target modern browsers to reduce bundle size
   transpilePackages: [],
