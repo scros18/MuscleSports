@@ -340,7 +340,7 @@ export default function HomePanels() {
                   <div className="aspect-square relative overflow-hidden bg-gray-50 dark:bg-gray-800">
                     <Image
                       src={item.img}
-                      alt={item.title}
+                      alt={`${item.title} product image`}
                       width={200}
                       height={200}
                       sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"

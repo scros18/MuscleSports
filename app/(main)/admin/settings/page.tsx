@@ -35,7 +35,7 @@ export default function SettingsPage() {
     const defaults = {
       siteName: "MuscleSports",
       siteUrl: "https://musclesports.co.uk",
-      logoUrl: "/MuscleSports.png",
+      logoUrl: "/musclesports-logo.png",
       tagline: "Your Premier Sports Nutrition Destination",
       showSaleBanner: false
     };
