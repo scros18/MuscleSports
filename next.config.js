@@ -51,8 +51,6 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
     // Remove React properties in production for smaller bundles
     reactRemoveProperties: process.env.NODE_ENV === 'production',
-    // Remove debugger statements
-    removeDebugger: true,
   },
   // Target modern browsers to reduce bundle size
   transpilePackages: [],
