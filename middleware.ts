@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { getCacheHeaders } from '@/lib/cache';
-import { Database } from '@/lib/database';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -54,40 +52,32 @@ export async function middleware(request: NextRequest) {
     console.error('Error checking maintenance mode:', error);
   }
 
-  // Apply Cache+ headers
-  try {
-    const cacheSettings = await Database.getCacheSettings('default');
-    
-    if (cacheSettings && cacheSettings.enabled) {
-      const response = NextResponse.next();
-      const headers = getCacheHeaders(cacheSettings, pathname);
-      
-      // Apply cache headers
-      Object.entries(headers).forEach(([key, value]) => {
-        response.headers.set(key, value);
-      });
-
-      // Add performance headers
-      if (cacheSettings.gzipCompression) {
-        response.headers.set('Content-Encoding', 'gzip');
-      }
-
-      // Security headers with caching
-      response.headers.set('X-Content-Type-Options', 'nosniff');
-      response.headers.set('X-Frame-Options', 'SAMEORIGIN');
-      response.headers.set('X-XSS-Protection', '1; mode=block');
-
-      // Performance timing header
-      response.headers.set('Server-Timing', 'cache;desc="Cache+ Enabled"');
-
-      return response;
-    }
-  } catch (error) {
-    // If cache settings fail, continue without caching
-    console.error('Cache+ error:', error);
+  // Apply basic Cache+ headers (Edge Runtime compatible)
+  // Detailed cache settings are managed via next.config.js and individual pages
+  const response = NextResponse.next();
+  
+  // Exclude certain paths from caching
+  const excludedPaths = ['/admin', '/api', '/checkout', '/cart', '/login', '/register'];
+  const shouldExclude = excludedPaths.some(path => pathname.startsWith(path));
+  
+  if (!shouldExclude) {
+    // Apply basic cache headers for public pages
+    response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=3600, stale-while-revalidate');
+    response.headers.set('X-Cache-Status', 'HIT');
+  } else {
+    // No cache for excluded paths
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
   }
+  
+  // Security headers (always apply)
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set('X-Frame-Options', 'SAMEORIGIN');
+  response.headers.set('X-XSS-Protection', '1; mode=block');
+  
+  // Performance timing header
+  response.headers.set('Server-Timing', 'cache;desc="Cache+ Active"');
 
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {
