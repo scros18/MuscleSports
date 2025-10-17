@@ -264,7 +264,7 @@ async function scrapeSportsSupplements() {
         // Extract product data using Tropicana Wholesale's exact selectors
         const products = await page.evaluate((categoryName) => {
           // Use the exact selectors from Tropicana Wholesale HTML structure
-          const productElements = document.querySelectorAll('.product, .product-item, .product-card, .grid-product, .product-listing-item, [data-product-id], .product-row, .product-list-item, .product-container, .item, .listing-item');
+          const productElements = document.querySelectorAll('.product, .product-item, .product-card, .grid-product, .product-listing-item, [data-product-id], .product-row, .product-list-item, .product-container, .item, .listing-item, .pricing-col, .pricing-info');
           
           console.log(`Found ${productElements.length} product elements using Tropicana selectors`);
           
@@ -278,7 +278,7 @@ async function scrapeSportsSupplements() {
               try {
                 // Look for elements that contain Tropicana product structure
                 const hasProductName = element.querySelector('.product-name');
-                const hasPrice = element.querySelector('.price');
+                const hasPrice = element.querySelector('.price, .product-prices .price, .pricing-info .price, .pricing-col .price');
                 const hasStock = element.querySelector('.product-stock');
                 
                 // Debug: Log element content if it looks like a product
@@ -302,7 +302,8 @@ async function scrapeSportsSupplements() {
                 // Debug logging for name extraction
                 console.log(`Name extraction debug - Found: "${name}"`);
                 
-                const priceElement = element.querySelector('.price');
+                // Try multiple price selectors including nested structure
+                const priceElement = element.querySelector('.price, .product-prices .price, .pricing-info .price, .pricing-col .price');
                 const priceText = priceElement ? priceElement.textContent.trim() : '';
                 
                 // Clean price text (remove "Your price", "£", "+ VAT", etc.)
@@ -378,7 +379,8 @@ async function scrapeSportsSupplements() {
               const nameElement = element.querySelector('.product-name a, .product-name');
               const name = nameElement ? nameElement.textContent.trim() : '';
               
-              const priceElement = element.querySelector('.price');
+              // Try multiple price selectors including nested structure
+              const priceElement = element.querySelector('.price, .product-prices .price, .pricing-info .price, .pricing-col .price');
               const priceText = priceElement ? priceElement.textContent.trim() : '';
               
               // Clean price text (remove "Your price", "£", "+ VAT", etc.)
