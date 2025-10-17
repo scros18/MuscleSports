@@ -97,7 +97,13 @@ export default function NotificationBell() {
 
       {/* Notification Dropdown */}
       {isOpen && (
-        <div className="fixed inset-0 md:fixed md:bottom-auto md:top-16 md:left-4 md:right-4 bg-background border rounded-2xl shadow-2xl z-[100000] overflow-hidden animate-in slide-in-from-bottom-2 duration-300 md:animate-in md:slide-in-from-top-2 max-h-[90vh] md:max-h-[75vh]">
+        <>
+          {/* Backdrop blur */}
+          <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-[99999] md:hidden" onClick={() => setIsOpen(false)} />
+          
+          {/* Notification Modal */}
+          <div className="fixed inset-0 md:absolute md:inset-auto md:right-0 md:top-full md:mt-2 flex items-center justify-center md:items-start md:justify-end md:pointer-events-none z-[100000] md:z-auto">
+            <div className="w-[90vw] sm:w-[85vw] md:w-96 mx-auto md:mx-0 md:mr-4 bg-background border rounded-2xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom-5 duration-300 md:animate-in md:slide-in-from-top-2 max-h-[80vh] md:max-h-[600px]">
           {/* Header */}
           <div className="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 p-4 sm:p-5 border-b flex items-center justify-between sticky top-0">
             <div>
@@ -226,8 +232,10 @@ export default function NotificationBell() {
               </Link>
             </div>
           )}
-        </div>
-      )}
+            </div>
+          </div>
+        </>
+        )}
     </div>
   );
 }
