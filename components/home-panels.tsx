@@ -135,38 +135,38 @@ export default function HomePanels() {
     {
       key: 'protein',
       title: 'Protein Powders',
-      link: '/products?category=Protein',
+      link: '/products?category=Protein+Powder',
       items: [
         { 
           title: 'Whey Protein', 
-          img: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?q=80&w=400&auto=format&fit=crop&fm=jpg',
-          category: 'Protein',
-          link: '/products?category=Protein'
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/10X001.png',
+          category: 'Protein Powder',
+          link: '/products?category=Protein+Powder'
         },
         { 
           title: 'Vegan Protein', 
-          img: 'https://images.unsplash.com/photo-1628191010215-4b233724e20e?q=80&w=400&auto=format&fit=crop&fm=jpg',
-          category: 'Protein',
-          link: '/products?category=Protein'
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/10X004.png',
+          category: 'Protein Powder',
+          link: '/products?category=Protein+Powder'
         },
       ],
     },
     {
       key: 'supplements',
       title: 'Supplements',
-      link: '/products?category=Amino+Acids',
+      link: '/products?category=Pre-Workout+Powder',
       items: [
         { 
           title: 'Amino Acids', 
-          img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=400&auto=format&fit=crop&fm=jpg',
-          category: 'Amino Acids',
-          link: '/products?category=Amino+Acids'
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/APP039.png',
+          category: 'BCAA',
+          link: '/products?category=BCAA'
         },
         { 
           title: 'Pre-Workout', 
-          img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=400&auto=format&fit=crop&fm=jpg',
-          category: 'Pre-Workout',
-          link: '/products?category=Pre-Workout'
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/APP208.png',
+          category: 'Pre-Workout Powder',
+          link: '/products?category=Pre-Workout+Powder'
         },
       ],
     },
@@ -177,32 +177,32 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Multivitamins', 
-          img: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?q=80&w=400&auto=format&fit=crop&fm=jpg',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/APP073.png',
           category: 'Vitamins',
           link: '/products?category=Vitamins'
         },
         { 
           title: 'Minerals', 
-          img: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=400&auto=format&fit=crop&fm=jpg',
-          category: 'Minerals',
-          link: '/products?category=Minerals'
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/APP082.png',
+          category: 'Vitamins',
+          link: '/products?category=Vitamins'
         },
       ],
     },
     {
       key: 'nutrition',
       title: 'Sports Nutrition',
-      link: '/products?category=Sports+Nutrition',
+      link: '/products?category=Creatine+Chews',
       items: [
         { 
           title: 'Energy Bars', 
-          img: 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=400&auto=format&fit=crop&fm=jpg',
-          category: 'Sports Nutrition',
-          link: '/products?category=Sports+Nutrition'
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/WAR173.png',
+          category: 'Creatine Chews',
+          link: '/products?category=Creatine+Chews'
         },
         { 
           title: 'Mass Gainers', 
-          img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=400&auto=format&fit=crop&fm=jpg',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/APP012.png',
           category: 'All-In-One Gainer',
           link: '/products?category=All-In-One+Gainer'
         },
@@ -319,22 +319,15 @@ export default function HomePanels() {
                       : 'transition-colors duration-200'
                   }`}
                 >
-                  <div className="aspect-square relative overflow-hidden bg-gray-50 dark:bg-gray-800">
+                  <div className="aspect-square relative overflow-hidden bg-white dark:bg-gray-800">
                     <Image
                       src={item.img}
                       alt={`${item.title} product image`}
-                      width={200}
-                      height={200}
-                      sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
-                      className={`transition-transform duration-500 ease-out w-full h-full ${
-                        item.title.includes('E-Liquid') || item.title.includes('Starter Kit') 
-                          ? 'object-contain p-2' 
-                          : 'object-cover'
-                      }`}
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 200px"
+                      className="object-contain p-3 transition-transform duration-500 ease-out group-hover:scale-110"
                       priority={idx < 2}
-                      quality={85}
-                      placeholder="blur"
-                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                      quality={90}
                     />
                   </div>
                   <div className="p-2">

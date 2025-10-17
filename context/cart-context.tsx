@@ -75,8 +75,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         );
       }
 
-      // create a unique cartItemId so the UI can distinguish lines
-      const cartItemId = `${product.id}-${flavour || 'default'}-${Date.now()}`;
+      // create a unique cartItemId so the UI can distinguish lines (no timestamp to allow matching)
+      const cartItemId = `${product.id}-${flavour || 'default'}`;
       const newItem: CartItem = { ...product, quantity: 1, cartItemId, selectedFlavour: flavour || undefined } as CartItem;
       return [...currentItems, newItem];
     });
