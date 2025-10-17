@@ -242,14 +242,18 @@ async function scrapeSportsSupplements() {
             const inStock = product.stock && !product.stock.toLowerCase().includes('out') && !product.stock.toLowerCase().includes('unavailable');
             const stockQty = product.stock ? parseInt(product.stock.match(/\d+/)?.[0] || '100') : 100;
             
-            // Insert product into database with all details
+            // Prepare flavors array for MuscleSports site compatibility
+            const flavours = product.flavor ? [product.flavor] : [];
+            
+            // Insert product into database with MuscleSports site compatibility
             await connection.execute(`
               INSERT INTO products (
                 id, name, description, price, wholesale_price, retail_price, 
                 margin, category, brand, sku, in_stock, stock_quantity, 
                 images, weight, flavor, best_before, case_quantity, 
-                pallet_quantity, origin, promotion, created_at, updated_at
-              ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+                pallet_quantity, origin, promotion, flavours, featured, 
+                created_at, updated_at
+              ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
             `, [
               productId,
               cleanName,
@@ -270,7 +274,9 @@ async function scrapeSportsSupplements() {
               product.caseQty || '',
               product.palletQty || '',
               product.origin || '',
-              product.promotion || ''
+              product.promotion || '',
+              JSON.stringify(flavours),
+              false // Not featured by default, can be manually promoted
             ]);
             
             console.log(`✅ Added: ${cleanName}${product.flavor ? ` (${product.flavor})` : ''} - £${cleanPrice} → £${retailPrice} (${margin.toFixed(1)}% margin) [SKU: ${product.sku || 'N/A'}]`);
