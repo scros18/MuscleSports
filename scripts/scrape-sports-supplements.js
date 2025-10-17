@@ -21,16 +21,6 @@ function cleanText(text) {
     .trim();
 }
 
-// Helper function to clean HTML description
-function cleanHtmlDescription(html) {
-  if (!html) return '';
-  return html
-    .replace(/<[^>]*>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .replace(/[^\w\s\-.,!?]/g, '')
-    .trim();
-}
-
 // Helper function to generate product ID
 function generateProductId(name, brand = '') {
   const cleanName = name.toLowerCase()
@@ -51,13 +41,13 @@ function extractPrice(priceText) {
   return match ? parseFloat(match[0]) : 0;
 }
 
-// Main scraping function
-async function scrapeTropicanaWholesale() {
+// Main scraping function for sports supplements
+async function scrapeSportsSupplements() {
   let browser;
   let connection;
   
   try {
-    console.log('🚀 Starting Tropicana Wholesale scraper...\n');
+    console.log('🏋️ Starting Sports Supplements scraper...\n');
     
     // Connect to database
     console.log('📊 Connecting to database...');
@@ -75,7 +65,7 @@ async function scrapeTropicanaWholesale() {
     await page.setViewport({ width: 1920, height: 1080 });
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
     
-    // Categories to scrape - Sports Supplements
+    // Sports supplement categories to scrape
     const categories = [
       { name: 'Protein Powders', url: 'https://tropicanawholesale.co.uk/collections/protein-powders' },
       { name: 'Pre-Workout', url: 'https://tropicanawholesale.co.uk/collections/pre-workout' },
@@ -162,43 +152,41 @@ async function scrapeTropicanaWholesale() {
               continue;
             }
             
-            // Create product data
-            const productData = {
-              id: productId,
-              name: cleanName,
-              price: cleanPrice,
-              description: `${cleanName} - Premium vaping product from Tropicana Wholesale. High quality and great value.`,
-              images: product.image ? [product.image] : [],
-              category: category.name,
-              inStock: true,
-              featured: false,
-              flavours: [],
-              strengths: []
-            };
+            // Calculate margin (50% markup for sports supplements)
+            const retailPrice = cleanPrice * 1.5;
+            const margin = ((retailPrice - cleanPrice) / cleanPrice) * 100;
+            
+            // Skip if margin is too low
+            if (margin < 30) {
+              console.log(`⚠️  Skipping product: ${cleanName} (margin too low: ${margin.toFixed(1)}%)`);
+              continue;
+            }
             
             // Insert product into database
-            await connection.execute(
-              `INSERT INTO products (id, name, price, description, images, category, in_stock, featured, flavours, strengths) 
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-              [
-                productData.id,
-                productData.name,
-                productData.price,
-                productData.description,
-                JSON.stringify(productData.images),
-                productData.category,
-                productData.inStock,
-                productData.featured,
-                JSON.stringify(productData.flavours),
-                JSON.stringify(productData.strengths)
-              ]
-            );
+            await connection.execute(`
+              INSERT INTO products (
+                id, name, description, price, wholesale_price, retail_price, 
+                margin, category, brand, sku, in_stock, stock_quantity, 
+                images, created_at, updated_at
+              ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+            `, [
+              productId,
+              cleanName,
+              `High-quality ${category.name.toLowerCase()} from Tropicana Wholesale`,
+              retailPrice,
+              cleanPrice,
+              retailPrice,
+              margin,
+              category.name,
+              'Tropicana',
+              productId,
+              true,
+              100,
+              JSON.stringify([product.image])
+            ]);
             
+            console.log(`✅ Added: ${cleanName} - £${cleanPrice} → £${retailPrice.toFixed(2)} (${margin.toFixed(1)}% margin)`);
             processedProducts++;
-            console.log(`✅ Added: ${cleanName} - £${cleanPrice.toFixed(2)}`);
-            
-            // Add delay to avoid overwhelming the server
-            await new Promise(resolve => setTimeout(resolve, 100));
             
           } catch (error) {
             console.log(`❌ Error processing product: ${product.name}`, error.message);
@@ -233,7 +221,7 @@ async function scrapeTropicanaWholesale() {
 
 // Run the scraper
 if (require.main === module) {
-  scrapeTropicanaWholesale();
+  scrapeSportsSupplements();
 }
 
-module.exports = { scrapeTropicanaWholesale };
+module.exports = { scrapeSportsSupplements };
