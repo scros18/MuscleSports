@@ -268,10 +268,11 @@ async function scrapeSportsSupplements() {
           
           console.log(`Found ${productElements.length} product elements using Tropicana selectors`);
           
+          const products = [];
+          
           // Process products found with standard selectors first
           if (productElements.length > 0) {
             console.log('Processing products with standard selectors...');
-            const products = [];
             
             productElements.forEach((element, index) => {
               try {
@@ -354,126 +355,9 @@ async function scrapeSportsSupplements() {
                 console.log(`Error processing product ${index}:`, error.message);
               }
             });
-            
-            return products;
           }
           
-          // If no products found with standard selectors, try broader approach
-          console.log('Trying broader selector approach...');
-          const allDivs = document.querySelectorAll('div');
-          const products = [];
-            
-            allDivs.forEach((element, index) => {
-              try {
-                // Look for elements that contain Tropicana product structure
-                const hasProductName = element.querySelector('.product-name');
-                const hasPrice = element.querySelector('.price, .product-prices .price, .pricing-info .price, .pricing-col .price');
-                const hasStock = element.querySelector('.product-stock');
-                const hasSku = element.querySelector('.product-code');
-                const hasSizeFlavor = element.querySelector('.product-sizeflavour');
-                
-                // Debug: Log element content if it looks like a product
-                const text = element.textContent || '';
-                if (text.length > 20 && text.length < 500 && (text.includes('£') || text.includes('price') || text.includes('stock'))) {
-                  console.log(`Potential product element ${index}:`, {
-                    text: text.substring(0, 200),
-                    hasProductName: !!hasProductName,
-                    hasPrice: !!hasPrice,
-                    hasStock: !!hasStock,
-                    hasSku: !!hasSku,
-                    hasSizeFlavor: !!hasSizeFlavor,
-                    className: element.className
-                  });
-                }
-                
-                // Look for product elements that have either product name or SKU/size info
-                if (!hasProductName && !hasSku && !hasSizeFlavor) return;
-                
-                // Extract using Tropicana's exact selectors
-                const nameElement = element.querySelector('.product-name a, .product-name');
-                const name = nameElement ? nameElement.textContent.trim() : '';
-                
-                // Debug logging for name extraction
-                console.log(`Name extraction debug - Found: "${name}"`);
-                
-                // Try multiple price selectors including nested structure
-                let priceElement = element.querySelector('.price, .product-prices .price, .pricing-info .price, .pricing-col .price');
-                let priceText = priceElement ? priceElement.textContent.trim() : '';
-                
-                // If no price found with selectors, search for any text containing £
-                if (!priceText) {
-                  const allText = element.textContent || '';
-                  const priceMatch = allText.match(/Your price £[\d,]+\.?\d*/);
-                  priceText = priceMatch ? priceMatch[0] : '';
-                }
-                
-                // Clean price text (remove "Your price", "£", "+ VAT", etc.)
-                const cleanPriceText = priceText.replace(/Your price|£|\+ VAT|VAT|small|span/gi, '').trim();
-                const priceMatch = cleanPriceText.match(/[\d,]+\.?\d*/);
-                const price = priceMatch ? parseFloat(priceMatch[0].replace(',', '')) : 0;
-                
-                // Debug logging for price extraction
-                console.log(`Price extraction debug - Original: "${priceText}" | Cleaned: "${cleanPriceText}" | Extracted: ${price}`);
-                
-                const imageElement = element.querySelector('img');
-                const image = imageElement ? (imageElement.src || imageElement.getAttribute('data-src') || imageElement.getAttribute('data-lazy-src')) : '';
-                
-                const linkElement = element.querySelector('.product-name a, a');
-                const productUrl = linkElement ? linkElement.href : '';
-                
-                // Extract size/flavor using Tropicana's exact selector
-                const sizeFlavorElement = element.querySelector('.product-sizeflavour');
-                const sizeFlavorText = sizeFlavorElement ? sizeFlavorElement.textContent.trim() : '';
-                
-                // Split size and flavor
-                const sizeFlavorParts = sizeFlavorText.split(' / ');
-                const weight = sizeFlavorParts[0] || '';
-                const flavor = sizeFlavorParts[1] || '';
-                
-                // Extract stock status using Tropicana's exact selector
-                const stockElement = element.querySelector('.product-stock');
-                const stockText = stockElement ? stockElement.textContent.trim() : '';
-                const inStock = stockText.toLowerCase().includes('in stock');
-                const stockQty = stockText.match(/\d+/);
-                const stockQuantity = stockQty ? parseInt(stockQty[0]) : 0;
-                
-                // Extract SKU using the correct Tropicana selector
-                const skuElement = element.querySelector('.product-code');
-                const sku = skuElement ? skuElement.textContent.trim() : '';
-                
-                const brand = 'Tropicana'; // Default brand
-                
-                if (name && price > 0 && name.length > 5) {
-                  products.push({
-                    name: name,
-                    price: price,
-                    image: image,
-                    url: productUrl,
-                    sku: sku,
-                    stock: stockText,
-                    inStock: inStock,
-                    stockQuantity: stockQuantity,
-                    brand: brand,
-                    weight: weight,
-                    flavor: flavor,
-                    bestBefore: '',
-                    caseQty: '',
-                    palletQty: '',
-                    origin: '',
-                    promotion: '',
-                    category: categoryName,
-                    index: index
-                  });
-                }
-              } catch (error) {
-                // Skip this element
-              }
-            });
-            
-            return products;
-          }
-          
-          return [];
+          return products;
         }, category.name);
         
         console.log(`📋 Found ${products.length} products in ${category.name}`);
