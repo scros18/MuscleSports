@@ -15,11 +15,6 @@ export default function NotificationBell() {
   const { user } = useAuth();
   const { notifications, unreadCount, loading, markAsRead, markAllAsRead, deleteNotification } = useNotifications();
   
-  // Don't render if user is not logged in
-  if (!user) {
-    return null;
-  }
-
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -36,6 +31,11 @@ export default function NotificationBell() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
+
+  // Don't render if user is not logged in (must be after all hooks)
+  if (!user) {
+    return null;
+  }
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
