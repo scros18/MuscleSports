@@ -97,7 +97,7 @@ export default function NotificationBell() {
 
       {/* Notification Dropdown */}
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-[96vw] sm:w-[540px] md:w-[600px] lg:w-[680px] bg-background border rounded-xl shadow-2xl z-[100000] overflow-hidden animate-in slide-in-from-top-2 duration-200">
+        <div className="fixed left-3 right-3 top-auto md:absolute md:right-0 md:left-auto md:top-full md:mt-2 sm:bottom-auto md:bottom-auto bottom-20 w-auto md:w-[600px] lg:w-[680px] bg-background border rounded-xl shadow-2xl z-[100000] overflow-hidden animate-in slide-in-from-top-2 duration-200">
           {/* Header */}
           <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-background p-3 sm:p-4 border-b flex items-center justify-between">
             <div>
