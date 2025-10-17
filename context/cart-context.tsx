@@ -63,16 +63,28 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     // Allow multiple cart lines for same product if selectedFlavour differs
     setItems((currentItems) => {
       const prodAny: any = product;
-      const flavour = prodAny.selectedFlavour || null;
+      // Normalize flavour: empty string, undefined, and null all treated as "default"
+      const flavour = prodAny.selectedFlavour && String(prodAny.selectedFlavour).trim() 
+        ? String(prodAny.selectedFlavour).trim() 
+        : null;
 
       // try to find existing line with same product id and flavour
-      const existingItem = currentItems.find((item) => item.id === product.id && (item as any).selectedFlavour === flavour);
+      const existingItem = currentItems.find((item) => {
+        const existingFlavour = (item as any).selectedFlavour && String((item as any).selectedFlavour).trim() 
+          ? String((item as any).selectedFlavour).trim() 
+          : null;
+        return item.id === product.id && existingFlavour === flavour;
+      });
+      
       if (existingItem) {
-        return currentItems.map((item) =>
-          item.id === product.id && (item as any).selectedFlavour === flavour
+        return currentItems.map((item) => {
+          const existingFlavour = (item as any).selectedFlavour && String((item as any).selectedFlavour).trim() 
+            ? String((item as any).selectedFlavour).trim() 
+            : null;
+          return item.id === product.id && existingFlavour === flavour
             ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
+            : item;
+        });
       }
 
       // create a unique cartItemId so the UI can distinguish lines (no timestamp to allow matching)
