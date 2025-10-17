@@ -139,13 +139,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Whey Protein', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/10X001.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/WAR065.png',
           category: 'Protein Powder',
           link: '/products?category=Protein+Powder'
         },
         { 
           title: 'Vegan Protein', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/10X004.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/USN175.png',
           category: 'Protein Powder',
           link: '/products?category=Protein+Powder'
         },
@@ -158,13 +158,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Amino Acids', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/APP039.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/XTE033.png',
           category: 'BCAA',
           link: '/products?category=BCAA'
         },
         { 
           title: 'Pre-Workout', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/10X014.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/HYP026.png',
           category: 'Pre-Workout Powder',
           link: '/products?category=Pre-Workout+Powder'
         },
@@ -177,13 +177,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Multivitamins', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/APP073.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/VIL056.png',
           category: 'Vitamins',
           link: '/products?category=Vitamins'
         },
         { 
           title: 'Minerals', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/APP082.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/VWE004.png',
           category: 'Vitamins',
           link: '/products?category=Vitamins'
         },
@@ -196,13 +196,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Energy Bars', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/WAR172.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/VIL029.png',
           category: 'Creatine Chews',
           link: '/products?category=Creatine+Chews'
         },
         { 
           title: 'Mass Gainers', 
-          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/APP012.png',
+          img: 'https://www.tropicanawholesale.com/Images/Product/Default/large/WAR004.png',
           category: 'All-In-One Gainer',
           link: '/products?category=All-In-One+Gainer'
         },
