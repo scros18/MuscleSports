@@ -22,21 +22,21 @@ const defaultSlides: Slide[] = [
     title: "AUTUMN COLLECTION",
     subtitle: "New Season Arrivals",
     image:
-      "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&fm=webp&s=1a7f9d2b2a1f5f6b9a2b4e0f0a2d3c1b",
+      "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3",
   },
   {
     id: 2,
     title: "WEEKLY SPECIALS",
     subtitle: "Limited Time Offers",
     image:
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&fm=webp",
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3",
   },
   {
     id: 3,
     title: "FREE SHIPPING",
     subtitle: "On all orders",
     image:
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&fm=webp&s=4c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f",
+      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3",
   },
 ];
 
@@ -46,7 +46,7 @@ const muscleSportsSlides: Slide[] = [
     id: 1,
     title: "FUEL YOUR GAINS",
     subtitle: "Premium Creatine Supplements",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1600&auto=format&fit=crop&fm=webp",
+    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1600&auto=format&fit=crop",
     category: "CREATINE",
     sku: "WAR090",
   },
@@ -54,7 +54,7 @@ const muscleSportsSlides: Slide[] = [
     id: 2,
     title: "EXPLOSIVE ENERGY",
     subtitle: "Pre-Workout Formulas",
-    image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1600&auto=format&fit=crop&fm=webp",
+    image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1600&auto=format&fit=crop",
     category: "PRE-WORKOUT",
     sku: "WA01",
   },
@@ -62,7 +62,7 @@ const muscleSportsSlides: Slide[] = [
     id: 3,
     title: "BUILD MUSCLE",
     subtitle: "High-Quality Protein Powders",
-    image: "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?q=80&w=1600&auto=format&fit=crop&fm=webp",
+    image: "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?q=80&w=1600&auto=format&fit=crop",
     category: "PROTEIN",
     sku: "WAR065",
   },
@@ -70,7 +70,7 @@ const muscleSportsSlides: Slide[] = [
     id: 4,
     title: "COMPLETE NUTRITION",
     subtitle: "Essential Vitamins & Minerals",
-    image: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?q=80&w=1600&auto=format&fit=crop&fm=webp",
+    image: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?q=80&w=1600&auto=format&fit=crop",
     category: "VITAMINS",
     sku: "WAR118",
   },

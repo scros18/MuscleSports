@@ -36,6 +36,17 @@ export function Header() {
     return () => window.removeEventListener('resize', updateButtons);
   }, []);
 
+  // Handle scroll for mobile sticky header enhancement
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 10);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Detect theme from localStorage FIRST, then DOM
   useEffect(() => {
     const detectTheme = () => {
@@ -100,6 +111,7 @@ export function Header() {
   const [navScrollPosition, setNavScrollPosition] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
@@ -245,7 +257,11 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-[99999] w-full max-w-full bg-background/70 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/60 overflow-visible border-b border-white/10 dark:border-white/5 shadow-lg shadow-black/5">
+      <header className={`sticky top-0 z-[99999] w-full max-w-full overflow-visible border-b transition-all duration-300 ease-in-out ${
+        isScrolled 
+          ? 'bg-background/95 backdrop-blur-3xl supports-[backdrop-filter]:bg-background/90 border-white/20 dark:border-white/10 shadow-xl shadow-black/10' 
+          : 'bg-background/70 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/60 border-white/10 dark:border-white/5 shadow-lg shadow-black/5'
+      }`}>
       <div className="container mx-auto flex h-16 items-center justify-between px-3 sm:px-4 gap-2 sm:gap-4">
         <Link href="/" className="flex items-center flex-shrink-0 min-w-0">
           {currentTheme !== null && (
