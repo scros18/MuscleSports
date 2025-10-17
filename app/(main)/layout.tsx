@@ -8,6 +8,7 @@ import { SiteSettingsProvider } from "@/context/site-settings-context";
 import { PerformanceProvider } from "@/context/performance-context";
 import { AuthProvider } from "@/context/auth-context";
 import { CartProvider } from "@/context/cart-context";
+import { NotificationProvider } from "@/context/notification-context";
 import { ToastProvider } from "@/components/toast";
 import { LiveChatWidget } from "@/components/live-chat-widget";
 
@@ -27,18 +28,20 @@ export default function MainLayout({
         <SiteSettingsProvider>
           <PerformanceProvider>
             <AuthProvider>
-              <CartProvider>
-                <ToastProvider>
-                  <div className="flex min-h-screen flex-col">
-                    <Header />
-                    <main id="main-content" className="flex-1 relative z-0" role="main">
-                      <PageTransition>{children}</PageTransition>
-                    </main>
-                    <Footer />
-                    <LiveChatWidget />
-                  </div>
-                </ToastProvider>
-              </CartProvider>
+              <NotificationProvider>
+                <CartProvider>
+                  <ToastProvider>
+                    <div className="flex min-h-screen flex-col">
+                      <Header />
+                      <main id="main-content" className="flex-1 relative z-0" role="main">
+                        <PageTransition>{children}</PageTransition>
+                      </main>
+                      <Footer />
+                      <LiveChatWidget />
+                    </div>
+                  </ToastProvider>
+                </CartProvider>
+              </NotificationProvider>
             </AuthProvider>
           </PerformanceProvider>
         </SiteSettingsProvider>

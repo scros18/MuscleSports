@@ -89,3 +89,22 @@ export function handleAuthError(error: Error): NextResponse {
 
   return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
 }
+
+/**
+ * Extract user ID from JWT token in request
+ * Returns null if no valid token found
+ */
+export async function getUserIdFromToken(request: NextRequest): Promise<number | null> {
+  try {
+    const user = await authenticateUser(request);
+    if (!user) {
+      return null;
+    }
+    
+    // Parse the user ID as a number (for database queries)
+    const userId = parseInt(user.id, 10);
+    return isNaN(userId) ? null : userId;
+  } catch (error) {
+    return null;
+  }
+}

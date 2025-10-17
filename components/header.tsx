@@ -13,6 +13,7 @@ import { useAuth } from "@/context/auth-context";
 import { usePerformance } from "@/context/performance-context";
 import { useSiteSettings } from "@/context/site-settings-context";
 import { Badge } from "@/components/ui/badge";
+import NotificationBell from "@/components/notification-bell";
 
 export function Header() {
   const { totalItems } = useCart();
@@ -413,24 +414,28 @@ export function Header() {
           )}
 
           {/* Single Shopping Cart Icon - Desktop */}
-          <Link href="/cart" aria-label="Shopping cart">
-            <Button variant="outline" size="icon" className="relative">
-              <ShoppingCart className="h-5 w-5" />
-              {totalItems > 0 && (
-                <Badge
-                  variant="destructive"
-                  className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs"
-                >
-                  {totalItems}
-                </Badge>
-              )}
-              <span className="sr-only">Shopping cart{totalItems > 0 ? ` (${totalItems} items)` : ''}</span>
-            </Button>
-          </Link>
+          <div className="flex items-center gap-2">
+            <NotificationBell />
+            <Link href="/cart" aria-label="Shopping cart">
+              <Button variant="outline" size="icon" className="relative">
+                <ShoppingCart className="h-5 w-5" />
+                {totalItems > 0 && (
+                  <Badge
+                    variant="destructive"
+                    className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs"
+                  >
+                    {totalItems}
+                  </Badge>
+                )}
+                <span className="sr-only">Shopping cart{totalItems > 0 ? ` (${totalItems} items)` : ''}</span>
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {/* Mobile menu button and cart - MOBILE ONLY (hidden on md and up) */}
         <div className="md:!hidden flex items-center gap-1.5 sm:gap-2 flex-shrink-0 ml-auto">
+          <NotificationBell />
           <Link href="/cart" aria-label="Shopping cart">
             <Button variant="outline" size="icon" className="relative h-9 w-9 sm:h-10 sm:w-10">
               <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -1212,27 +1217,27 @@ export function Header() {
     </header>
     
     {/* Mobile Sticky Quick Navigation - Shows below header on small screens */}
-    <div className="md:hidden sticky z-[99998] bg-background/95 backdrop-blur-2xl border-b border-white/10 shadow-md" style={{ top: '64px' }}>
-      <div className="flex items-center gap-2 overflow-x-auto px-3 py-2 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-        <Link href="/products?category=All&stockFilter=all" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+    <div className="md:hidden sticky z-[99998] bg-gradient-to-b from-background via-background/98 to-background/95 backdrop-blur-3xl border-b border-border/40 shadow-lg shadow-black/10" style={{ top: '64px' }}>
+      <div className="flex items-center gap-2.5 overflow-x-auto px-4 py-3 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <Link href="/products?category=All" className="flex-shrink-0 px-4 py-2 text-xs font-bold whitespace-nowrap rounded-full bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-md shadow-primary/25 hover:shadow-lg hover:shadow-primary/30 hover:scale-105 active:scale-95 transition-all duration-200">
           All Products
         </Link>
-        <Link href="/products?category=Protein+Powder" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full hover:bg-muted transition-colors">
+        <Link href="/products?category=Protein+Powder" className="flex-shrink-0 px-4 py-2 text-xs font-semibold whitespace-nowrap rounded-full bg-muted/60 hover:bg-muted hover:shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 border border-border/30">
           Protein
         </Link>
-        <Link href="/products?category=Pre-Workout+Powder" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full hover:bg-muted transition-colors">
+        <Link href="/products?category=Pre-Workout+Powder" className="flex-shrink-0 px-4 py-2 text-xs font-semibold whitespace-nowrap rounded-full bg-muted/60 hover:bg-muted hover:shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 border border-border/30">
           Pre-Workout
         </Link>
-        <Link href="/products?category=Creatine" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full hover:bg-muted transition-colors">
+        <Link href="/products?category=Creatine" className="flex-shrink-0 px-4 py-2 text-xs font-semibold whitespace-nowrap rounded-full bg-muted/60 hover:bg-muted hover:shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 border border-border/30">
           Creatine
         </Link>
-        <Link href="/products?category=BCAA" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full hover:bg-muted transition-colors">
+        <Link href="/products?category=BCAA" className="flex-shrink-0 px-4 py-2 text-xs font-semibold whitespace-nowrap rounded-full bg-muted/60 hover:bg-muted hover:shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 border border-border/30">
           BCAAs
         </Link>
-        <Link href="/products?category=Vitamins" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full hover:bg-muted transition-colors">
+        <Link href="/products?category=Vitamins" className="flex-shrink-0 px-4 py-2 text-xs font-semibold whitespace-nowrap rounded-full bg-muted/60 hover:bg-muted hover:shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 border border-border/30">
           Vitamins
         </Link>
-        <Link href="/supplement-finder" className="flex-shrink-0 px-3 py-1.5 text-xs font-bold whitespace-nowrap rounded-full bg-primary/20 text-primary hover:bg-primary/30 transition-colors">
+        <Link href="/supplement-finder" className="flex-shrink-0 px-4 py-2 text-xs font-bold whitespace-nowrap rounded-full bg-gradient-to-r from-primary/30 to-primary/20 text-primary border border-primary/30 shadow-sm hover:shadow-md hover:from-primary/40 hover:to-primary/30 hover:scale-105 active:scale-95 transition-all duration-200">
           🎯 Finder
         </Link>
       </div>
