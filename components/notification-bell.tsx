@@ -100,18 +100,25 @@ export default function NotificationBell() {
         <>
           {/* Backdrop with blur */}
           <div 
-            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[99999] transition-opacity duration-300" 
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300" 
             onClick={() => setIsOpen(false)}
-            style={{ animation: 'fadeIn 0.3s ease-out' }}
+            style={{ 
+              animation: 'fadeIn 0.3s ease-out',
+              zIndex: 10000000
+            }}
           />
           
-          {/* Centered Modal */}
-          <div className="fixed inset-0 z-[100000] flex items-center justify-center p-4 pointer-events-none">
+          {/* Centered Modal - Ensure it's above everything */}
+          <div 
+            className="fixed inset-0 flex items-center justify-center p-3 sm:p-4 pointer-events-none"
+            style={{ zIndex: 10000001 }}
+          >
             <div 
-              className="w-full max-w-lg bg-background rounded-2xl shadow-2xl overflow-hidden pointer-events-auto transform transition-all duration-300 ease-out"
+              className="w-full bg-background rounded-2xl shadow-2xl overflow-hidden pointer-events-auto transform transition-all duration-300 ease-out"
               style={{ 
                 animation: 'slideInScale 0.3s ease-out',
-                maxHeight: '85vh'
+                maxHeight: '90vh',
+                maxWidth: 'min(90vw, 512px)'
               }}
             >
           {/* Header */}
@@ -149,7 +156,7 @@ export default function NotificationBell() {
           </div>
 
           {/* Notifications List */}
-          <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-green-600/30 hover:scrollbar-thumb-green-600/50 scrollbar-track-transparent" style={{ maxHeight: 'calc(85vh - 140px)' }}>
+          <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-green-600/30 hover:scrollbar-thumb-green-600/50 scrollbar-track-transparent" style={{ maxHeight: 'calc(90vh - 160px)' }}>
             {loading && notifications.length === 0 ? (
               <div className="p-12 text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-3 border-green-600 border-t-transparent mx-auto mb-4"></div>
