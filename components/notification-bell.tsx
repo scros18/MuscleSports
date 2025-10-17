@@ -140,7 +140,7 @@ export default function NotificationBell() {
                 </div>
                 <p className="text-sm sm:text-base font-semibold text-foreground mb-1">All caught up!</p>
                 <p className="text-xs sm:text-sm text-muted-foreground">No notifications right now</p>
-                <p className="text-[10px] sm:text-xs mt-2 text-muted-foreground/60">We'll notify you when something important happens</p>
+                <p className="text-[10px] sm:text-xs mt-2 text-muted-foreground/60">We&apos;ll notify you when something important happens</p>
               </div>
             ) : (
               <div className="divide-y divide-border/50">
