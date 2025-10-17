@@ -85,7 +85,7 @@ async function scrapeSportsSupplements() {
         await page.goto(category.url, { waitUntil: 'networkidle2', timeout: 30000 });
         
         // Wait a bit for dynamic content to load
-        await page.waitForTimeout(3000);
+        await new Promise(resolve => setTimeout(resolve, 3000));
         
         // Try to find products with multiple fallback selectors
         let productElements = null;
