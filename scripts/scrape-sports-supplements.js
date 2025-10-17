@@ -281,11 +281,26 @@ async function scrapeSportsSupplements() {
                 const hasPrice = element.querySelector('.price');
                 const hasStock = element.querySelector('.product-stock');
                 
+                // Debug: Log element content if it looks like a product
+                const text = element.textContent || '';
+                if (text.length > 20 && text.length < 500 && (text.includes('£') || text.includes('price') || text.includes('stock'))) {
+                  console.log(`Potential product element ${index}:`, {
+                    text: text.substring(0, 200),
+                    hasProductName: !!hasProductName,
+                    hasPrice: !!hasPrice,
+                    hasStock: !!hasStock,
+                    className: element.className
+                  });
+                }
+                
                 if (!hasProductName || !hasPrice) return;
                 
                 // Extract using Tropicana's exact selectors
                 const nameElement = element.querySelector('.product-name a, .product-name');
                 const name = nameElement ? nameElement.textContent.trim() : '';
+                
+                // Debug logging for name extraction
+                console.log(`Name extraction debug - Found: "${name}"`);
                 
                 const priceElement = element.querySelector('.price');
                 const priceText = priceElement ? priceElement.textContent.trim() : '';
@@ -294,6 +309,9 @@ async function scrapeSportsSupplements() {
                 const cleanPriceText = priceText.replace(/Your price|£|\+ VAT|VAT|small|span/gi, '').trim();
                 const priceMatch = cleanPriceText.match(/[\d,]+\.?\d*/);
                 const price = priceMatch ? parseFloat(priceMatch[0].replace(',', '')) : 0;
+                
+                // Debug logging for price extraction
+                console.log(`Price extraction debug - Original: "${priceText}" | Cleaned: "${cleanPriceText}" | Extracted: ${price}`);
                 
                 const imageElement = element.querySelector('img');
                 const image = imageElement ? (imageElement.src || imageElement.getAttribute('data-src') || imageElement.getAttribute('data-lazy-src')) : '';
