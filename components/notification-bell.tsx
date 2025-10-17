@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Bell, Check, Trash2, X, Package, UserCheck, Gift, Info } from "lucide-react";
 import { useNotifications } from "@/context/notification-context";
+import { useAuth } from "@/context/auth-context";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -11,7 +12,13 @@ import { formatDistanceToNow } from "date-fns";
 export default function NotificationBell() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { user } = useAuth();
   const { notifications, unreadCount, loading, markAsRead, markAllAsRead, deleteNotification } = useNotifications();
+  
+  // Don't render if user is not logged in
+  if (!user) {
+    return null;
+  }
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -95,14 +102,13 @@ export default function NotificationBell() {
           <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-background p-3 sm:p-4 border-b flex items-center justify-between">
             <div>
               <h3 className="font-bold text-base sm:text-lg flex items-center gap-2">
-                <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
-                Notifications
+                Order Updates
               </h3>
               <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5">
-                {unreadCount > 0 ? `${unreadCount} unread message${unreadCount > 1 ? 's' : ''}` : 'All caught up! 🎉'}
+                {unreadCount > 0 ? `Track your order status and delivery updates` : 'All notifications viewed'}
               </p>
             </div>
-            {notifications.length > 0 && (
+            {notifications.length > 0 && unreadCount > 0 && (
               <Button
                 variant="ghost"
                 size="sm"
@@ -112,7 +118,7 @@ export default function NotificationBell() {
                 className="text-xs h-7 sm:h-8 px-2 sm:px-3 hover:bg-primary/10 hover:text-primary font-semibold"
               >
                 <Check className="h-3 w-3 mr-1" />
-                Mark all
+                Clear all
               </Button>
             )}
           </div>
@@ -129,18 +135,15 @@ export default function NotificationBell() {
                 <p className="text-[10px] sm:text-xs mt-1 text-muted-foreground/60">Just a moment</p>
               </div>
             ) : notifications.length === 0 ? (
-              <div className="p-12 sm:p-16 text-center text-muted-foreground">
-                <div className="relative inline-block mb-4">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-                    <Bell className="h-8 w-8 sm:h-10 sm:w-10 text-primary/40" />
-                  </div>
-                  <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
-                    <Check className="h-3.5 w-3.5 text-white" />
+              <div className="p-16 sm:p-20 text-center">
+                <div className="relative inline-block mb-6">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center mx-auto border-4 border-background shadow-inner">
+                    <Bell className="h-10 w-10 sm:h-12 sm:w-12 text-primary/30" strokeWidth={1.5} />
                   </div>
                 </div>
-                <p className="text-sm sm:text-base font-semibold text-foreground mb-1">All caught up!</p>
-                <p className="text-xs sm:text-sm text-muted-foreground">No notifications right now</p>
-                <p className="text-[10px] sm:text-xs mt-2 text-muted-foreground/60">We&apos;ll notify you when something important happens</p>
+                <h3 className="text-base sm:text-lg font-bold text-foreground mb-2">No notifications yet</h3>
+                <p className="text-sm text-muted-foreground mb-1">You&apos;ll see order updates here when you</p>
+                <p className="text-sm text-muted-foreground">make a purchase</p>
               </div>
             ) : (
               <div className="divide-y divide-border/50">
@@ -226,17 +229,17 @@ export default function NotificationBell() {
             )}
           </div>
 
-          {/* Footer */}
-          {notifications.length > 0 && (
-            <div className="p-3 border-t bg-muted/30 text-center">
-              <Link href="/notifications">
+          {/* Footer - Only show if there are notifications */}
+          {notifications.length > 3 && (
+            <div className="p-2 border-t bg-muted/20 text-center">
+              <Link href="/orders">
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-xs w-full hover:bg-background"
+                  className="text-xs w-full hover:bg-background h-8 font-medium"
                   onClick={() => setIsOpen(false)}
                 >
-                  View All Notifications
+                  View all orders
                 </Button>
               </Link>
             </div>

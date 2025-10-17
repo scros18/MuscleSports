@@ -45,15 +45,15 @@ export function LiveChatWidget() {
 
   return (
     <>
-      {/* Chat Button */}
+      {/* Chat Button - Sleek & Minimal */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-[99997] w-16 h-16 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white shadow-2xl hover:scale-110 transition-all duration-300 flex items-center justify-center group"
+          className="fixed bottom-6 right-6 z-[99997] w-14 h-14 rounded-full bg-green-600 text-white shadow-lg hover:shadow-xl hover:bg-green-700 active:scale-95 transition-all duration-200 flex items-center justify-center"
           aria-label="Open live chat support - 1 unread message"
         >
-          <MessageCircle className="w-7 h-7" />
-          <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-xs font-bold animate-pulse" aria-hidden="true">
+          <MessageCircle className="w-6 h-6" strokeWidth={2} />
+          <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-white" aria-hidden="true">
             1
           </div>
         </button>

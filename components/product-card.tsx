@@ -112,6 +112,9 @@ export function ProductCard({ product, hideDescription = false, sectionType = 'd
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 200px"
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
+            priority={true}
+            loading="eager"
+            quality={90}
             onError={() => {
               console.log('ProductCard image failed to load:', firstImage);
               setImageError(true);

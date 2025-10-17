@@ -179,6 +179,13 @@ async function importTropicanaCSV(csvPath: string) {
           imageUrls.push(mainProduct['Image']);
         }
         
+        // If still no images, construct Tropicana image URL from SKU
+        if (imageUrls.length === 0) {
+          const tropicanaImageUrl = `https://www.tropicanawholesale.com/Images/Product/Default/large/${id}.png`;
+          imageUrls.push(tropicanaImageUrl);
+          console.log(`  → Generated Tropicana image URL for ${id}: ${tropicanaImageUrl}`);
+        }
+        
         // Build flavourImages object mapping flavour to image
         const flavourImages: { [key: string]: string } = {};
         variants.forEach((v: CsvProduct) => {
@@ -194,9 +201,9 @@ async function importTropicanaCSV(csvPath: string) {
           continue;
         }
 
-        // Warn if no images
+        // All products should now have at least one image (either from CSV or auto-generated Tropicana URL)
         if (imageUrls.length === 0) {
-          console.warn(`⚠️  Product ${id} (${name}) has no images!`);
+          console.error(`❌ Product ${id} (${name}) has no images after processing - this should not happen!`);
         }
 
         // Check if product already exists

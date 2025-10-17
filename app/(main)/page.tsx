@@ -214,9 +214,9 @@ export default function Home() {
                     };
                   } else if (filter === 'new') {
                     return {
-                      bgGradient: 'bg-gradient-to-br from-emerald-600 via-green-500 to-teal-500',
-                      iconGradient: 'bg-gradient-to-br from-emerald-700 to-teal-600',
-                      textGradient: 'bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 bg-clip-text text-transparent',
+                      bgGradient: 'bg-gradient-to-br from-green-600 via-emerald-500 to-teal-500',
+                      iconGradient: 'bg-gradient-to-br from-green-700 to-teal-600',
+                      textGradient: 'bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent',
                       icon: (
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />

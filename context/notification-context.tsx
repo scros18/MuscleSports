@@ -47,9 +47,14 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
         const data = await response.json();
         setNotifications(data.notifications || []);
         setUnreadCount(data.unreadCount || 0);
+      } else {
+        setNotifications([]);
+        setUnreadCount(0);
       }
     } catch (error) {
       console.error('Failed to fetch notifications:', error);
+      setNotifications([]);
+      setUnreadCount(0);
     } finally {
       setLoading(false);
     }
@@ -66,9 +71,12 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
       if (response.ok) {
         const data = await response.json();
         setUnreadCount(data.count || 0);
+      } else {
+        setUnreadCount(0);
       }
     } catch (error) {
       console.error('Failed to fetch unread count:', error);
+      setUnreadCount(0);
     }
   }, [user]);
 

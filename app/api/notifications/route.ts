@@ -14,8 +14,8 @@ export async function GET(req: NextRequest) {
     
     if (!userId) {
       return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
+        { notifications: [], unreadCount: 0 },
+        { status: 200 }
       );
     }
 
@@ -29,8 +29,8 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error('Error fetching notifications:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch notifications' },
-      { status: 500 }
+      { notifications: [], unreadCount: 0 },
+      { status: 200 }
     );
   }
 }

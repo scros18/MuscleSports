@@ -141,7 +141,7 @@ export class NotificationService {
   static async notifyOrderPlaced(userId: number, orderId: string, totalAmount: string): Promise<void> {
     await this.createNotification(
       userId,
-      '🎉 Order Confirmed!',
+      'Order Confirmed!',
       `Your order #${orderId} for ${totalAmount} has been successfully placed. We'll notify you when it ships!`,
       'order',
       `/orders/${orderId}`
@@ -154,7 +154,7 @@ export class NotificationService {
   static async notifyAccountVerified(userId: number): Promise<void> {
     await this.createNotification(
       userId,
-      '✅ Account Verified!',
+      'Account Verified!',
       'Welcome to MuscleSports! Your account has been successfully verified. Start shopping for premium supplements now!',
       'account',
       '/products'
@@ -167,7 +167,7 @@ export class NotificationService {
   static async notifyWelcome(userId: number, userName: string): Promise<void> {
     await this.createNotification(
       userId,
-      `👋 Welcome ${userName}!`,
+      `Welcome ${userName}!`,
       'Thanks for joining MuscleSports! Explore our premium range of supplements and nutrition products.',
       'system',
       '/products'
