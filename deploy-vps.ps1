@@ -1,7 +1,7 @@
 # MuscleSports VPS Deployment Script
 # Run this to automatically deploy latest code to VPS
 
-Write-Host "🚀 Deploying to VPS..." -ForegroundColor Green
+Write-Host "Deploying to VPS..." -ForegroundColor Green
 
 # SSH connection details (update these with your VPS details)
 $VPS_USER = "root"  # Change if different
@@ -24,9 +24,9 @@ pm2 status
 "@
 
 # Execute via SSH
-Write-Host "📡 Connecting to VPS: $VPS_USER@$VPS_HOST" -ForegroundColor Cyan
+Write-Host "Connecting to VPS: $VPS_USER@$VPS_HOST" -ForegroundColor Cyan
 ssh $VPS_USER@$VPS_HOST $DEPLOY_COMMANDS
 
-Write-Host "`n✨ Deployment finished!" -ForegroundColor Green
-Write-Host "🌐 Visit: https://musclesports.co.uk" -ForegroundColor Cyan
+Write-Host "`nDeployment finished!" -ForegroundColor Green
+Write-Host "Visit: https://musclesports.co.uk" -ForegroundColor Cyan
 

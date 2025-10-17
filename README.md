@@ -41,7 +41,7 @@ npm install
 npm run dev
 ```
 
-**That's it!** Visit `http://localhost:3000` to see your store.
+**That's it!** Visit `http://localhost:4000` to see your store.
 
 ---
 
@@ -120,7 +120,8 @@ This project is licensed under the **Proprietary License** - see the [LICENSE](L
 
 ## 🙏 Acknowledgments
 
-- Built with ❤️ by the Lumify team
+- Built with ❤️ by Leon & Sam
+- Contact us at [Ordify Direct](https://ordifydirect.com) [MuscleSports](https://musclesports.co.uk)
 - Inspired by modern e-commerce best practices
 - Powered by the open-source community
 
@@ -130,6 +131,6 @@ This project is licensed under the **Proprietary License** - see the [LICENSE](L
 
 **[⬆ Back to Top](#lumify)**
 
-Made with ❤️ by [Lumify Team](https://github.com/lumify)
+Made with ❤️ by [Lumify Team @ Vera](https://verarp.co.uk)
 
 </div>
