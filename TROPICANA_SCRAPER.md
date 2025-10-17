@@ -5,7 +5,9 @@ This is a TypeScript port of Fred's Java-based Tropicana scraper, converted from
 ## Features
 
 - ✅ Fetches product data from Tropicana Wholesale API
-- ✅ Multi-threaded/concurrent requests (40 parallel requests)
+- ✅ Multi-threaded/concurrent requests (10 parallel requests with rate limiting)
+- ✅ Automatic retry with exponential backoff for rate limits (429 errors)
+- ✅ 500ms delay between requests to avoid overwhelming the API
 - ✅ Exports to CSV format
 - ✅ Downloads product images
 - ✅ Database synchronization
@@ -109,7 +111,8 @@ const scraper = new TropicanaScraper(
   'custom-output.csv'       // CSV output path
 );
 
-// Custom concurrency (default: 40)
+// The scraper now uses 10 concurrent requests by default (reduced from 40)
+// with automatic rate limiting and retry logic to handle API throttling
 await scraper.execute('skus.txt');
 ```
 
@@ -166,7 +169,9 @@ Products are stored in the `products` table with:
 | Feature | Java (Fred's) | TypeScript (Ours) |
 |---------|---------------|-------------------|
 | Language | Java 21 | TypeScript/Node.js |
-| Concurrency | ExecutorService (40 threads) | Promise.all batches |
+| Concurrency | ExecutorService (40 threads) | Promise.all batches (10 concurrent) |
+| Rate Limiting | None | 500ms delay + exponential backoff |
+| Retry Logic | None visible | 3 retries with backoff on 429 |
 | HTTP Client | java.net.http.HttpClient | Node.js https |
 | JSON Parsing | Gson | Native JSON.parse |
 | CSV Export | Custom | Built-in |
@@ -195,6 +200,20 @@ This scraper was reverse-engineered from Fred's Java JAR file:
    - Type safety
 
 ## Troubleshooting
+
+### Rate Limiting (429 Errors)
+
+If you see "API returned status 429" errors:
+- ✅ **Already handled!** The scraper now automatically retries with exponential backoff
+- The scraper uses 10 concurrent requests (reduced from 40) to be more API-friendly
+- 500ms delay between individual requests
+- Up to 3 automatic retries with 2s, 4s, 8s delays
+
+To further reduce rate limiting:
+```typescript
+// You can manually reduce concurrency by modifying the fetchProducts call
+// in lib/tropicana-scraper.ts, change concurrency = 10 to a lower number like 5
+```
 
 ### No products fetched
 

@@ -81,12 +81,16 @@ interface ApiResponse {
 export class TropicanaScraper {
   private static readonly API_URL = 'https://www.tropicanawholesale.com/Services/ProductDetails.asmx/GetProductDetailsByCode';
   private static readonly PRICE_LIST_ID = 32735; // From decompiled code
+  private static readonly MAX_RETRIES = 3;
+  private static readonly RETRY_DELAY = 2000; // 2 seconds
+  private static readonly RATE_LIMIT_DELAY = 500; // 500ms between requests
   
   private products: ProductModel[] = [];
   private groupedProducts: ProductGroupModel[] = [];
   private cachedImages: Map<string, string> = new Map();
   private imageFolder: string;
   private outputCsvPath: string;
+  private lastRequestTime: number = 0;
 
   constructor(imageFolder = 'tropicana-images', outputCsvPath = 'DropshipProductFeed.csv') {
     this.imageFolder = imageFolder;
@@ -127,19 +131,20 @@ export class TropicanaScraper {
   /**
    * Fetch products from Tropicana API with concurrency control
    */
-  private async fetchProducts(skus: string[], concurrency = 40): Promise<void> {
+  private async fetchProducts(skus: string[], concurrency = 10): Promise<void> {
     let processed = 0;
     let successful = 0;
     const total = skus.length;
 
     console.log('Fetching product data from API...');
+    console.log(`Note: Using reduced concurrency (${concurrency}) to avoid rate limiting`);
 
-    // Process in batches for concurrency control
+    // Process in batches for concurrency control - REDUCED from 40 to 10
     for (let i = 0; i < skus.length; i += concurrency) {
       const batch = skus.slice(i, i + concurrency);
       const promises = batch.map(async (sku) => {
         try {
-          const product = await this.fetchProduct(sku);
+          const product = await this.fetchProductWithRetry(sku);
           if (product) {
             this.products.push(product);
             successful++;
@@ -154,9 +159,50 @@ export class TropicanaScraper {
       });
 
       await Promise.all(promises);
+      
+      // Add delay between batches to avoid overwhelming the API
+      if (i + concurrency < skus.length) {
+        await this.sleep(1000); // 1 second between batches
+      }
     }
 
     console.log(`\nFetching complete: ${successful}/${total} products retrieved`);
+  }
+
+  /**
+   * Fetch a single product with retry logic for rate limiting
+   */
+  private async fetchProductWithRetry(sku: string, retryCount = 0): Promise<ProductModel | null> {
+    try {
+      // Rate limiting: ensure minimum delay between requests
+      const now = Date.now();
+      const timeSinceLastRequest = now - this.lastRequestTime;
+      if (timeSinceLastRequest < TropicanaScraper.RATE_LIMIT_DELAY) {
+        await this.sleep(TropicanaScraper.RATE_LIMIT_DELAY - timeSinceLastRequest);
+      }
+      this.lastRequestTime = Date.now();
+
+      return await this.fetchProduct(sku);
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      
+      // Check if it's a rate limit error (429)
+      if (errorMessage.includes('429') && retryCount < TropicanaScraper.MAX_RETRIES) {
+        const delay = TropicanaScraper.RETRY_DELAY * Math.pow(2, retryCount); // Exponential backoff
+        console.log(`\n⏳ Rate limited on ${sku}, retrying in ${delay/1000}s... (attempt ${retryCount + 1}/${TropicanaScraper.MAX_RETRIES})`);
+        await this.sleep(delay);
+        return this.fetchProductWithRetry(sku, retryCount + 1);
+      }
+      
+      throw error;
+    }
+  }
+
+  /**
+   * Sleep helper function
+   */
+  private sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   /**
