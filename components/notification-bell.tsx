@@ -98,88 +98,107 @@ export default function NotificationBell() {
       {/* Notification Dropdown */}
       {isOpen && (
         <>
-          {/* Backdrop blur */}
-          <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-[99999] md:hidden" onClick={() => setIsOpen(false)} />
+          {/* Backdrop with blur */}
+          <div 
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[99999] transition-opacity duration-300" 
+            onClick={() => setIsOpen(false)}
+            style={{ animation: 'fadeIn 0.3s ease-out' }}
+          />
           
-          {/* Notification Modal */}
-          <div className="fixed inset-0 md:absolute md:inset-auto md:right-0 md:top-full md:mt-2 flex items-center justify-center md:items-start md:justify-end md:pointer-events-none z-[100000] md:z-auto">
-            <div className="w-[90vw] sm:w-[85vw] md:w-96 mx-auto md:mx-0 md:mr-4 bg-background border rounded-2xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom-5 duration-300 md:animate-in md:slide-in-from-top-2 max-h-[80vh] md:max-h-[600px]">
+          {/* Centered Modal */}
+          <div className="fixed inset-0 z-[100000] flex items-center justify-center p-4 pointer-events-none">
+            <div 
+              className="w-full max-w-lg bg-background rounded-2xl shadow-2xl overflow-hidden pointer-events-auto transform transition-all duration-300 ease-out"
+              style={{ 
+                animation: 'slideInScale 0.3s ease-out',
+                maxHeight: '85vh'
+              }}
+            >
           {/* Header */}
-          <div className="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 p-4 sm:p-5 border-b flex items-center justify-between sticky top-0">
-            <div>
-              <h3 className="font-bold text-lg sm:text-xl text-white flex items-center gap-2">
-                📬 Order Updates
+          <div className="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 p-5 flex items-center justify-between">
+            <div className="flex-1">
+              <h3 className="font-bold text-xl text-white flex items-center gap-2">
+                <Bell className="h-5 w-5" />
+                Order Updates
               </h3>
-              <p className="text-xs sm:text-sm text-white/90 mt-1">
-                {unreadCount > 0 ? `${unreadCount} new update${unreadCount !== 1 ? 's' : ''}` : 'All caught up!'}
+              <p className="text-sm text-white/90 mt-1">
+                {unreadCount > 0 ? `${unreadCount} new notification${unreadCount !== 1 ? 's' : ''}` : 'You&apos;re all caught up!'}
               </p>
             </div>
-            {notifications.length > 0 && unreadCount > 0 && (
+            <div className="flex items-center gap-2">
+              {notifications.length > 0 && unreadCount > 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => markAllAsRead()}
+                  className="text-sm h-9 px-4 hover:bg-white/20 text-white font-semibold transition-colors"
+                >
+                  <Check className="h-4 w-4 mr-2" />
+                  Mark all read
+                </Button>
+              )}
               <Button
                 variant="ghost"
-                size="sm"
-                onClick={() => {
-                  markAllAsRead();
-                }}
-                className="text-xs sm:text-sm h-8 sm:h-9 px-3 sm:px-4 hover:bg-green-100 dark:hover:bg-green-900/30 hover:text-green-600 dark:hover:text-green-400 font-semibold"
+                size="icon"
+                onClick={() => setIsOpen(false)}
+                className="h-9 w-9 hover:bg-white/20 text-white transition-colors"
               >
-                <Check className="h-4 w-4 mr-2" />
-                Mark all read
+                <X className="h-5 w-5" />
               </Button>
-            )}
+            </div>
           </div>
 
           {/* Notifications List */}
-          <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
+          <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-green-600/30 hover:scrollbar-thumb-green-600/50 scrollbar-track-transparent" style={{ maxHeight: 'calc(85vh - 140px)' }}>
             {loading && notifications.length === 0 ? (
-              <div className="p-8 sm:p-12 text-center text-muted-foreground">
-                <div className="relative inline-block">
-                  <div className="animate-spin rounded-full h-12 w-12 sm:h-14 sm:w-14 border-3 border-green-600 border-t-transparent mx-auto mb-4"></div>
-                </div>
-                <p className="text-sm sm:text-base font-medium">Loading updates...</p>
+              <div className="p-12 text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-3 border-green-600 border-t-transparent mx-auto mb-4"></div>
+                <p className="text-sm font-medium text-muted-foreground">Loading notifications...</p>
               </div>
             ) : notifications.length === 0 ? (
-              <div className="p-8 sm:p-12 text-center">
-                <div className="relative inline-block mb-4">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-green-100 to-green-50 dark:from-green-950/30 dark:to-green-900/20 flex items-center justify-center mx-auto">
-                    <Bell className="h-10 w-10 sm:h-12 sm:w-12 text-green-600 dark:text-green-400" strokeWidth={1.5} />
-                  </div>
+              <div className="p-16 text-center">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-green-100 to-green-50 dark:from-green-950/30 dark:to-green-900/20 flex items-center justify-center mx-auto mb-4">
+                  <Bell className="h-10 w-10 text-green-600 dark:text-green-400" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2">No updates yet</h3>
-                <p className="text-sm text-muted-foreground">When you make a purchase, you&apos;ll see order updates here</p>
+                <h3 className="text-lg font-bold text-foreground mb-2">No notifications yet</h3>
+                <p className="text-sm text-muted-foreground">You&apos;ll see order updates when you make a purchase</p>
               </div>
             ) : (
-              <div className="divide-y divide-border/50">
+              <div>
                 {notifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className={`p-4 sm:p-5 hover:bg-muted/30 transition-colors group border-l-4 cursor-pointer ${
+                    className={`relative px-5 py-4 border-b border-border/50 transition-all duration-200 hover:bg-green-50/50 dark:hover:bg-green-950/20 group cursor-pointer ${
                       !notification.read 
-                        ? 'bg-green-50 dark:bg-green-950/20 border-l-green-600' 
-                        : 'border-l-transparent'
+                        ? 'bg-green-50/30 dark:bg-green-950/10' 
+                        : ''
                     }`}
                   >
-                    <div className="flex gap-3 sm:gap-4">
+                    {!notification.read && (
+                      <div className="absolute left-2 top-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full shadow-sm shadow-green-500/50" />
+                    )}
+                    
+                    <div className="flex gap-3">
                       {/* Icon */}
-                      <div className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center ${getNotificationColor(notification.type)} shadow-sm`}>
+                      <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${getNotificationColor(notification.type)} shadow-sm`}>
                         {getNotificationIcon(notification.type)}
                       </div>
 
                       {/* Content */}
                       <div className="flex-1 min-w-0">
                         {/* Title */}
-                        <h4 className={`text-sm sm:text-base font-bold mb-1 ${!notification.read ? 'text-foreground' : 'text-muted-foreground'}`}>
+                        <h4 className={`text-sm font-bold mb-1 ${!notification.read ? 'text-foreground' : 'text-muted-foreground'}`}>
                           {notification.title}
                         </h4>
 
                         {/* Message */}
-                        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-2 mb-2">
+                        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2 mb-2">
                           {notification.message}
                         </p>
                         
                         {/* Footer with time and actions */}
                         <div className="flex items-center justify-between gap-2">
-                          <span className="text-[11px] sm:text-xs text-muted-foreground/70 font-medium">
+                          <span className="text-[11px] text-muted-foreground/70 font-medium">
                             {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true })}
                           </span>
                           
@@ -189,7 +208,7 @@ export default function NotificationBell() {
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  className="h-7 px-2 text-[11px] sm:text-xs hover:bg-green-100 dark:hover:bg-green-900/30 hover:text-green-600 dark:hover:text-green-400"
+                                  className="h-7 px-2 text-[11px] hover:bg-green-100 dark:hover:bg-green-900/30 hover:text-green-600 dark:hover:text-green-400"
                                   onClick={() => handleNotificationClick(notification)}
                                 >
                                   View

@@ -304,166 +304,138 @@ export default function Home() {
 
             case 'reviews':
               if (reviewsLoading || reviews.length === 0) return null;
-              
-              // MuscleSports green color scheme for all review tiles
-              const reviewColors = [
-                { 
-                  bg: 'bg-gradient-to-br from-green-700 via-emerald-600 to-teal-600',
-                  icon: 'bg-gradient-to-br from-green-800 to-emerald-700',
-                  star: 'text-green-300 fill-green-300',
-                  text: 'text-green-100',
-                  border: 'border-green-300/30'
-                },
-                { 
-                  bg: 'bg-gradient-to-br from-emerald-700 via-green-600 to-teal-600',
-                  icon: 'bg-gradient-to-br from-emerald-800 to-green-700',
-                  star: 'text-emerald-300 fill-emerald-300',
-                  text: 'text-emerald-100',
-                  border: 'border-emerald-300/30'
-                },
-                { 
-                  bg: 'bg-gradient-to-br from-teal-700 via-emerald-600 to-green-600',
-                  icon: 'bg-gradient-to-br from-teal-800 to-emerald-700',
-                  star: 'text-teal-300 fill-teal-300',
-                  text: 'text-teal-100',
-                  border: 'border-teal-300/30'
-                },
-                { 
-                  bg: 'bg-gradient-to-br from-green-700 via-emerald-600 to-teal-600',
-                  icon: 'bg-gradient-to-br from-green-800 to-emerald-700',
-                  star: 'text-green-300 fill-green-300',
-                  text: 'text-green-100',
-                  border: 'border-green-300/30'
-                },
-                { 
-                  bg: 'bg-gradient-to-br from-emerald-700 via-teal-600 to-green-600',
-                  icon: 'bg-gradient-to-br from-emerald-800 to-teal-700',
-                  star: 'text-emerald-300 fill-emerald-300',
-                  text: 'text-emerald-100',
-                  border: 'border-emerald-300/30'
-                },
-                { 
-                  bg: 'bg-gradient-to-br from-teal-700 via-green-600 to-emerald-600',
-                  icon: 'bg-gradient-to-br from-teal-800 to-green-700',
-                  star: 'text-teal-300 fill-teal-300',
-                  text: 'text-teal-100',
-                  border: 'border-teal-300/30'
-                },
-              ];
 
               return (
-                <section key={key} className="mb-20 relative">
-                  {/* Abstract background shapes */}
-                  <div className="absolute inset-0 -z-10 overflow-hidden">
-                    <div className="absolute top-0 left-1/4 w-72 h-72 bg-green-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-                    <div className="absolute top-0 right-1/4 w-72 h-72 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-                    <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-teal-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-                  </div>
+                <section key={key} className="mb-32 relative">
+                  {/* Premium background with subtle gradient */}
+                  <div className="absolute inset-0 -z-10 bg-gradient-to-b from-green-50/30 via-transparent to-transparent dark:from-green-950/10"></div>
 
                   <div className="text-center mb-16">
-                    {/* MuscleSports x Trustpilot Badge */}
-                    <div className="inline-flex items-center justify-center gap-4 px-8 py-4 rounded-2xl mb-6 bg-gradient-to-r from-green-700 to-emerald-700 shadow-2xl border-2 border-green-600">
-                      <div className="flex items-center gap-2">
-                        <div className="bg-white px-3 py-1.5 rounded-lg flex items-center gap-2">
-                          <Star className="h-5 w-5 fill-[#00B67A] text-[#00B67A]" />
-                          <span className="font-bold text-base text-[#00B67A]">Trustpilot</span>
-                        </div>
+                    {/* Trustpilot-style Trust Badge */}
+                    <div className="inline-flex items-center gap-3 mb-6">
+                      <div className="flex items-center gap-2 px-4 py-2 bg-[#00B67A] rounded-lg shadow-lg">
+                        <Star className="h-5 w-5 fill-white text-white" />
+                        <span className="font-bold text-white text-sm tracking-wide">Trustpilot</span>
                       </div>
-                      <div className="h-8 w-px bg-white/30"></div>
+                      <div className="flex items-center gap-1.5">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="h-6 w-6 fill-[#00B67A] text-[#00B67A]" />
+                        ))}
+                      </div>
                       <div className="flex flex-col items-start">
-                        <div className="flex gap-1 mb-1">
-                          {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="h-5 w-5 fill-white text-white" />
-                          ))}
-                        </div>
-                        <span className="text-white font-bold text-sm">4.8 out of 5 stars</span>
+                        <span className="text-2xl font-bold text-foreground">4.8</span>
+                        <span className="text-xs text-muted-foreground">Excellent</span>
                       </div>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4 font-saira bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                      {section.title ?? 'What Our Customers Say'}
+                    
+                    <h2 className="text-4xl md:text-5xl font-bold mb-3 text-foreground">
+                      {section.title ?? 'Customer Reviews'}
                     </h2>
-                    <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                      {section.description ?? (currentTheme === 'musclesports' ? 'Real reviews from verified MuscleSports customers on Trustpilot' : 'Real reviews from real customers')}
+                    <p className="text-muted-foreground text-base max-w-2xl mx-auto">
+                      {section.description ?? 'Real reviews from verified customers'}
                     </p>
                   </div>
 
+                  {/* Trustpilot-inspired review cards */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12">
-                    {displayedReviews.map((review, index) => {
-                      const colors = reviewColors[index % reviewColors.length];
-                      
-                      return (
-                        <div 
-                          key={review.id} 
-                          className={`group relative overflow-hidden rounded-3xl ${colors.bg} p-[2px] hover:scale-105 transition-all duration-500 hover:shadow-2xl`}
-                        >
-                          {/* Abstract decorative elements */}
-                          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500"></div>
-                          <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12 group-hover:scale-150 transition-transform duration-500"></div>
-                          
-                          <div className="relative bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm rounded-3xl p-6 h-full">
-                            {/* Star rating */}
-                            <div className="flex items-center justify-between mb-4">
-                              <div className="flex gap-1">
-                                {[...Array(5)].map((_, i) => (
-                                  <Star 
-                                    key={i} 
-                                    className={`h-5 w-5 transition-all duration-300 ${
-                                      i < review.rating 
-                                        ? colors.star
-                                        : 'text-gray-300 fill-gray-300'
-                                    }`} 
-                                  />
-                                ))}
-                              </div>
-                              <div className={`px-3 py-1 rounded-full text-xs font-bold text-white ${colors.icon}`}>
-                                {review.rating}.0
-                              </div>
-                            </div>
+                    {displayedReviews.map((review, index) => (
+                      <div 
+                        key={review.id} 
+                        className="group bg-background border border-border rounded-2xl p-6 hover:shadow-xl hover:border-[#00B67A]/30 transition-all duration-300 hover:-translate-y-1"
+                      >
+                        {/* Header with stars and date */}
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex gap-0.5">
+                            {[...Array(5)].map((_, i) => (
+                              <Star 
+                                key={i} 
+                                className={`h-5 w-5 transition-all ${
+                                  i < review.rating 
+                                    ? 'fill-[#00B67A] text-[#00B67A]'
+                                    : 'fill-gray-200 text-gray-200 dark:fill-gray-700 dark:text-gray-700'
+                                }`} 
+                              />
+                            ))}
+                          </div>
+                          <span className="text-xs font-medium text-muted-foreground whitespace-nowrap">
+                            {review.date}
+                          </span>
+                        </div>
 
-                            {/* Review comment with quote icon */}
-                            <div className="relative mb-6">
-                              <svg className="absolute -top-2 -left-2 w-8 h-8 text-gray-200 dark:text-gray-700" fill="currentColor" viewBox="0 0 32 32">
-                                <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-1.1.9-2 2-2h2V8h-2zm14 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-1.1.9-2 2-2h2V8h-2z"/>
-                              </svg>
-                              <p className="text-foreground/90 leading-relaxed pl-6 pt-2 italic">
-                                {review.comment}
+                        {/* Review title (if present) */}
+                        {review.title && (
+                          <h3 className="text-base font-bold text-foreground mb-3 line-clamp-2">
+                            {review.title}
+                          </h3>
+                        )}
+
+                        {/* Review comment */}
+                        <p className="text-sm text-foreground/80 leading-relaxed mb-6 line-clamp-4">
+                          {review.comment}
+                        </p>
+
+                        {/* Footer with author info */}
+                        <div className="flex items-center gap-3 pt-4 border-t border-border">
+                          {/* Avatar with initials */}
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white font-bold text-sm shadow-md flex-shrink-0">
+                            {(review.author || review.reviewer)?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <p className="font-semibold text-sm text-foreground truncate">
+                                {review.author || review.reviewer}
                               </p>
+                              {review.verified && (
+                                <svg className="w-4 h-4 text-[#00B67A] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                              )}
                             </div>
-
-                            {/* Author info with gradient accent */}
-                            <div className="flex items-center gap-4 pt-4 border-t-2 border-gray-100 dark:border-gray-800">
-                              <div className={`w-12 h-12 rounded-full ${colors.icon} flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
-                                {(review.author || review.reviewer)?.charAt(0).toUpperCase()}
-                              </div>
-                              <div className="flex-1">
-                                <div className="flex items-center gap-2">
-                                  <p className="font-bold text-sm text-foreground">{review.author || review.reviewer}</p>
-                                  {review.verified && (
-                                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-950/50 px-2 py-0.5 rounded-full">
-                                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                      </svg>
-                                      Verified
-                                    </span>
-                                  )}
-                                </div>
-                                <p className="text-xs text-muted-foreground mt-0.5">{review.location || review.item}</p>
-                              </div>
-                            </div>
+                            <p className="text-xs text-muted-foreground truncate">
+                              {review.location || review.item || 'Verified Customer'}
+                            </p>
                           </div>
                         </div>
-                      );
-                    })}
+
+                        {/* Verified badge (Trustpilot style) */}
+                        {review.verified && (
+                          <div className="mt-4 pt-4 border-t border-border">
+                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              <span className="font-medium">Verified purchase</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
 
-                  {currentTheme !== 'musclesports' && (
-                    <div className="text-center">
-                      <a href="https://www.ebay.co.uk/fdbk/feedback_profile/ordifydirectltd" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-semibold text-base bg-primary/10 hover:bg-primary/20 px-6 py-3 rounded-xl transition-all duration-200 hover:scale-105">
-                        View all reviews on eBay
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                      </a>
+                  {/* CTA Section */}
+                  <div className="text-center">
+                    <div className="inline-flex flex-col items-center gap-4 p-8 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 rounded-2xl border border-green-200/50 dark:border-green-800/30">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-muted-foreground">Rated</span>
+                        <span className="text-2xl font-bold text-foreground">4.8/5</span>
+                        <span className="text-sm text-muted-foreground">based on</span>
+                        <span className="font-bold text-foreground">{reviews.length}+ reviews</span>
+                      </div>
+                      {currentTheme !== 'musclesports' && (
+                        <a 
+                          href="https://www.ebay.co.uk/fdbk/feedback_profile/ordifydirectltd" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="inline-flex items-center gap-2 text-sm font-semibold text-[#00B67A] hover:text-[#00B67A]/80 transition-colors group"
+                        >
+                          View all reviews
+                          <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                          </svg>
+                        </a>
+                      )}
                     </div>
-                  )}
+                  </div>
                 </section>
               );
 
