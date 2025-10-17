@@ -65,6 +65,32 @@ async function scrapeSportsSupplements() {
     await page.setViewport({ width: 1920, height: 1080 });
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
     
+    // Login to Tropicana Wholesale
+    console.log('🔐 Logging into Tropicana Wholesale...');
+    try {
+      await page.goto('https://tropicanawholesale.co.uk/login', { waitUntil: 'networkidle2', timeout: 30000 });
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Look for login form elements
+      const emailInput = await page.$('input[type="email"], input[name="email"], input[id="email"], input[placeholder*="email" i]');
+      const passwordInput = await page.$('input[type="password"], input[name="password"], input[id="password"]');
+      const loginButton = await page.$('button[type="submit"], input[type="submit"], button:contains("Login"), button:contains("Sign In")');
+      
+      if (emailInput && passwordInput && loginButton) {
+        await emailInput.type(process.env.TROPICANA_EMAIL || 'johncroston@myyahoo.com');
+        await passwordInput.type(process.env.TROPICANA_PASSWORD || 'Wholesale123');
+        await loginButton.click();
+        
+        // Wait for login to complete
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        console.log('✅ Successfully logged in!');
+      } else {
+        console.log('⚠️  Could not find login form elements, proceeding without login...');
+      }
+    } catch (error) {
+      console.log('⚠️  Login failed, proceeding without login:', error.message);
+    }
+    
     // Sports supplement categories to scrape - Verified working URLs
     const categories = [
       { name: 'Amino Acids', url: 'https://www.tropicanawholesale.com/shop-by-category/Amino-Acids/' },
@@ -123,6 +149,32 @@ async function scrapeSportsSupplements() {
           console.log(`⚠️  No products found with any selector. Trying to get all divs...`);
           productElements = await page.$$('div');
           console.log(`📊 Found ${productElements.length} total divs on page`);
+        }
+        
+        // Debug: Log page content to help identify selectors
+        console.log('🔍 Debugging page content...');
+        const pageInfo = await page.evaluate(() => {
+          const allDivs = document.querySelectorAll('div');
+          const allClasses = Array.from(allDivs).map(div => div.className).filter(cls => cls.length > 0);
+          const uniqueClasses = [...new Set(allClasses)];
+          
+          return {
+            totalDivs: allDivs.length,
+            uniqueClasses: uniqueClasses.slice(0, 20), // First 20 unique classes
+            pageTitle: document.title,
+            bodyText: document.body.textContent.substring(0, 500)
+          };
+        });
+        
+        console.log(`📊 Page info: ${pageInfo.totalDivs} divs found`);
+        console.log(`🏷️  Sample classes: ${pageInfo.uniqueClasses.join(', ')}`);
+        
+        // Take a screenshot for debugging
+        try {
+          await page.screenshot({ path: `debug-${category.name.replace(/\s+/g, '-').toLowerCase()}.png`, fullPage: true });
+          console.log(`📸 Screenshot saved: debug-${category.name.replace(/\s+/g, '-').toLowerCase()}.png`);
+        } catch (e) {
+          console.log('⚠️  Could not save screenshot:', e.message);
         }
         
         // Extract product data with detailed information
