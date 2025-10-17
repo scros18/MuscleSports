@@ -1220,7 +1220,7 @@ export function Header() {
     {/* Mobile Sticky Quick Navigation - Shows below header on small screens */}
     <div className="md:hidden sticky z-[99998] bg-background/95 backdrop-blur-2xl border-b border-white/10 shadow-md" style={{ top: '64px' }}>
       <div className="flex items-center gap-2 overflow-x-auto px-3 py-2 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-        <Link href="/products" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+        <Link href="/products?category=All&stockFilter=all" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
           All Products
         </Link>
         <Link href="/products?category=Protein+Powder" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full hover:bg-muted transition-colors">

@@ -40,7 +40,7 @@ export default function ProductsPage() {
   const [sort, setSort] = useState<string>("best_match");
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [currentTheme, setCurrentTheme] = useState('ordify');
-  const [stockFilter, setStockFilter] = useState<"all" | "inStock" | "outOfStock">("inStock");
+  const [stockFilter, setStockFilter] = useState<"all" | "inStock" | "outOfStock">("all");
 
   // Initialize search query and category from URL params
   useEffect(() => {
