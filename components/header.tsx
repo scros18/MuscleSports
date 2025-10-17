@@ -1211,6 +1211,33 @@ export function Header() {
       )}
     </header>
     
+    {/* Mobile Sticky Quick Navigation - Shows below header on small screens */}
+    <div className="md:hidden sticky top-16 z-[99998] bg-background/95 backdrop-blur-2xl border-b border-white/10 shadow-md">
+      <div className="flex items-center gap-2 overflow-x-auto px-3 py-2 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <Link href="/products" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+          All Products
+        </Link>
+        <Link href="/products?category=Protein+Powder" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full hover:bg-muted transition-colors">
+          Protein
+        </Link>
+        <Link href="/products?category=Pre-Workout+Powder" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full hover:bg-muted transition-colors">
+          Pre-Workout
+        </Link>
+        <Link href="/products?category=Creatine" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full hover:bg-muted transition-colors">
+          Creatine
+        </Link>
+        <Link href="/products?category=BCAA" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full hover:bg-muted transition-colors">
+          BCAAs
+        </Link>
+        <Link href="/products?category=Vitamins" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full hover:bg-muted transition-colors">
+          Vitamins
+        </Link>
+        <Link href="/supplement-finder" className="flex-shrink-0 px-3 py-1.5 text-xs font-bold whitespace-nowrap rounded-full bg-primary/20 text-primary hover:bg-primary/30 transition-colors">
+          🎯 Finder
+        </Link>
+      </div>
+    </div>
+    
     </>
   );
 }

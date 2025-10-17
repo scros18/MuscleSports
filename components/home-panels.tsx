@@ -344,7 +344,7 @@ export default function HomePanels() {
                 href={panel.link}
                 className="block w-full text-center text-sm font-semibold bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg transition-all duration-200 py-3 active:scale-95 shadow-sm hover:shadow-md"
               >
-                See more {panel.title.toLowerCase()}
+                View Products
               </Link>
             )}
           </div>
