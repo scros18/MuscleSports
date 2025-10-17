@@ -301,6 +301,13 @@ html.hydrated {
     overflow-x: hidden;
     width: 100%;
   }
+  
+  /* Ensure header stays sticky on mobile */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 99999;
+  }
 }
 
 /* iOS-style smooth transitions */

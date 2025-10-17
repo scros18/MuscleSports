@@ -261,13 +261,7 @@ export function Header() {
         isScrolled 
           ? 'bg-background/95 backdrop-blur-3xl supports-[backdrop-filter]:bg-background/90 border-white/20 dark:border-white/10 shadow-xl shadow-black/10' 
           : 'bg-background/70 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/60 border-white/10 dark:border-white/5 shadow-lg shadow-black/5'
-      }`}
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 99999
-      }}
-      >
+      }`}>
       <div className="container mx-auto flex h-16 items-center justify-between px-3 sm:px-4 gap-2 sm:gap-4">
         <Link href="/" className="flex items-center flex-shrink-0 min-w-0">
           {currentTheme !== null && (
