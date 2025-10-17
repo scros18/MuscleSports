@@ -171,8 +171,13 @@ async function importTropicanaCSV(csvPath: string) {
         // Build images array - collect all unique images from variants
         const imageUrls = variants
           .map((v: CsvProduct) => v['Image'] || '')
-          .filter((img: string) => img && img.trim())
+          .filter((img: string) => img && img.trim() && !img.includes('placeholder'))
           .filter((img: string, i: number, arr: string[]) => arr.indexOf(img) === i);
+        
+        // Ensure we have at least one image, use the first variant's image if available
+        if (imageUrls.length === 0 && mainProduct['Image'] && !mainProduct['Image'].includes('placeholder')) {
+          imageUrls.push(mainProduct['Image']);
+        }
         
         // Build flavourImages object mapping flavour to image
         const flavourImages: { [key: string]: string } = {};
@@ -187,6 +192,11 @@ async function importTropicanaCSV(csvPath: string) {
         if (!id || !name) {
           console.warn(`Skipping product without SKU or name`);
           continue;
+        }
+
+        // Warn if no images
+        if (imageUrls.length === 0) {
+          console.warn(`⚠️  Product ${id} (${name}) has no images!`);
         }
 
         // Check if product already exists
