@@ -13,6 +13,18 @@ html.hydrated {
 }
 
 @layer utilities {
+  /* Ensure all interactive elements show pointer cursor */
+  a, button, [role="button"], .cursor-pointer, 
+  input[type="submit"], input[type="button"], 
+  select, label[for], summary {
+    cursor: pointer !important;
+  }
+
+  /* Prevent text cursor on clickable elements */
+  a *, button *, [role="button"] * {
+    cursor: pointer !important;
+  }
+
   /* Mobile-first responsive utilities */
   @media (max-width: 640px) {
     .container {

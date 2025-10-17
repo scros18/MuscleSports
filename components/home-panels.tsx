@@ -296,16 +296,15 @@ export default function HomePanels() {
           >
           <div className="p-5">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-foreground">{panel.title}</h3>
-              {panel.link && (
-                <Link 
-                  href={panel.link}
-                  className="text-primary hover:text-primary/80 transition-all duration-200 hover:scale-110"
-                  aria-label={`View all ${panel.title}`}
-                >
-                  <ArrowRight className="h-5 w-5" />
-                </Link>
-              )}
+              <Link 
+                href={panel.link || '#'}
+                className="group/title flex items-center gap-2 cursor-pointer"
+              >
+                <h3 className="text-xl font-bold text-foreground group-hover/title:text-primary transition-colors duration-300">
+                  {panel.title}
+                </h3>
+                <ArrowRight className="h-4 w-4 text-muted-foreground group-hover/title:text-primary group-hover/title:translate-x-1 transition-all duration-300" />
+              </Link>
             </div>
             
             <div className="grid grid-cols-2 gap-3 mb-4">
@@ -313,28 +312,34 @@ export default function HomePanels() {
                 <Link 
                   key={idx} 
                   href={item.link || `/products?category=${encodeURIComponent(item.category || item.title)}`}
-                  className={`group relative block rounded-lg overflow-hidden bg-muted/30 hover:bg-muted/50 hover:shadow-md ${
+                  className={`group/item relative block rounded-xl overflow-hidden bg-gradient-to-br from-muted/30 to-muted/10 hover:from-muted/60 hover:to-muted/30 hover:shadow-xl border border-border/20 hover:border-primary/30 cursor-pointer ${
                     settings.animationsEnabled
-                      ? 'transition-all duration-300 ease-out active:scale-95'
+                      ? 'transition-all duration-300 ease-out hover:-translate-y-1 active:scale-95'
                       : 'transition-colors duration-200'
                   }`}
                 >
-                  <div className="aspect-square relative overflow-hidden bg-white dark:bg-gray-800">
+                  <div className="aspect-square relative overflow-hidden bg-white dark:bg-gray-800 rounded-t-xl">
+                    {/* Subtle glow effect on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/5 opacity-0 group-hover/item:opacity-100 transition-opacity duration-500 z-10"></div>
+                    
                     <Image
                       src={item.img}
                       alt={`${item.title} product image`}
                       fill
                       sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 200px"
-                      className="object-contain p-3 transition-transform duration-500 ease-out group-hover:scale-110"
+                      className="object-contain p-3 transition-transform duration-500 ease-out group-hover/item:scale-110"
                       priority={idx < 2}
                       quality={90}
                     />
                   </div>
-                  <div className="p-2">
-                    <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-200 line-clamp-1">
+                  <div className="p-2.5 bg-gradient-to-b from-background/80 to-background">
+                    <p className="text-sm font-semibold text-foreground/90 group-hover/item:text-primary transition-colors duration-300 line-clamp-1 cursor-pointer">
                       {item.title}
                     </p>
                   </div>
+                  
+                  {/* Premium corner accent */}
+                  <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 backdrop-blur-sm"></div>
                 </Link>
               ))}
             </div>
@@ -342,9 +347,21 @@ export default function HomePanels() {
             {panel.link && (
               <Link 
                 href={panel.link}
-                className="block w-full text-center text-sm font-semibold bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg transition-all duration-200 py-3 active:scale-95 shadow-sm hover:shadow-md"
+                className="group/btn block w-full text-center text-sm font-semibold rounded-lg transition-all duration-300 py-3.5 shadow-sm hover:shadow-lg relative overflow-hidden cursor-pointer"
               >
-                View Products
+                {/* Premium gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 transition-all duration-300"></div>
+                
+                {/* Hover overlay with dark green and softened edges */}
+                <div className="absolute inset-0 bg-gradient-to-r from-green-700 via-emerald-700 to-green-800 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 blur-[0.5px]"></div>
+                
+                {/* Subtle shine effect on hover */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-700"></div>
+                
+                <span className="relative z-10 text-white font-semibold tracking-wide flex items-center justify-center gap-2">
+                  View Products
+                  <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
+                </span>
               </Link>
             )}
           </div>
