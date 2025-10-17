@@ -182,14 +182,16 @@ export default function HeroCarousel() {
           <div className="w-full h-full bg-gradient-to-r from-black/70 via-black/40 to-transparent flex items-center">
             <div className="container px-8 md:px-16">
               <div className="max-w-xl md:max-w-2xl">
-                {/* Main Title - Bold & Masculine */}
-                <h2 className="text-white text-3xl md:text-6xl font-black tracking-tight leading-none mb-2 md:mb-3 drop-shadow-2xl uppercase">
-                  {s.title}
-                </h2>
+                {/* Main Title - Bold & Masculine with premium black background */}
+                <div className="inline-block mb-2 md:mb-3">
+                  <h2 className="text-white text-3xl md:text-6xl font-black tracking-tight leading-tight px-4 md:px-6 py-2 md:py-3 uppercase bg-black/80 backdrop-blur-sm rounded-lg">
+                    {s.title}
+                  </h2>
+                </div>
                 
-                {/* Subtitle with accent line */}
+                {/* Subtitle with accent line and black background */}
                 {s.subtitle && (
-                  <div className="flex items-center gap-2 md:gap-3">
+                  <div className="inline-flex items-center gap-2 md:gap-3 bg-black/80 backdrop-blur-sm rounded-lg px-4 md:px-5 py-2 md:py-2.5">
                     <div 
                       className="h-0.5 w-10 md:w-14"
                       style={{
@@ -200,7 +202,7 @@ export default function HeroCarousel() {
                           : 'linear-gradient(to right, #388EE9, #8B5CF6)'
                       }}
                     ></div>
-                    <p className="text-white text-base md:text-xl font-bold tracking-wide drop-shadow-lg uppercase">
+                    <p className="text-white text-base md:text-xl font-bold tracking-wide uppercase">
                       {s.subtitle}
                     </p>
                   </div>
