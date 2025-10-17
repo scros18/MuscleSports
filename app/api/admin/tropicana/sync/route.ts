@@ -117,11 +117,11 @@ export async function GET() {
         MAX(updated_at) as last_sync
       FROM products
       WHERE image_url LIKE '%tropicanawholesale%'`
-    );
+    ) as any[];
 
     return NextResponse.json({
       success: true,
-      stats: result[0]
+      stats: result[0] || { total: 0, tropicana_products: 0, last_sync: null }
     });
   } catch (error) {
     return NextResponse.json(
