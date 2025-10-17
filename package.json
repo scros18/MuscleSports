@@ -18,6 +18,7 @@
     "db:migrate:all": "npm run db:maintenance && npm run db:shipping",
     "make:admin": "tsx scripts/make-admin.ts",
     "scrape:tropicana": "tsx scripts/run-tropicana-scraper.ts",
+    "import:tropicana": "tsx scripts/import-tropicana-csv.ts",
     "optimize": "node scripts/optimize.js",
     "deploy:prod": "npm run clean && npm run build:obfuscated && npm start"
   },
