@@ -26,12 +26,12 @@ async function createNotificationsTable() {
     console.log('✅ Notifications table created successfully!');
     
     // Check if table was created
-    const tables = await Database.query("SHOW TABLES LIKE 'notifications'");
+    const tables = await Database.query("SHOW TABLES LIKE 'notifications'") as any[];
     if (tables && tables.length > 0) {
       console.log('✅ Verified: notifications table exists');
       
       // Show table structure
-      const structure = await Database.query("DESCRIBE notifications");
+      const structure = await Database.query("DESCRIBE notifications") as any[];
       console.log('\nTable structure:');
       console.table(structure);
     }
