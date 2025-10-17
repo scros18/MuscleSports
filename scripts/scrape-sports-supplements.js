@@ -54,11 +54,19 @@ async function scrapeSportsSupplements() {
     connection = await mysql.createConnection(dbConfig);
     console.log('✅ Database connected!\n');
     
-    // Launch browser
+    // Launch browser with SSL handling
     console.log('🌐 Launching browser...');
     browser = await puppeteer.launch({
       headless: 'new',
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      args: [
+        '--no-sandbox', 
+        '--disable-setuid-sandbox',
+        '--ignore-certificate-errors',
+        '--ignore-ssl-errors',
+        '--ignore-certificate-errors-spki-list',
+        '--disable-web-security',
+        '--allow-running-insecure-content'
+      ]
     });
     
     const page = await browser.newPage();
@@ -67,28 +75,47 @@ async function scrapeSportsSupplements() {
     
     // Login to Tropicana Wholesale
     console.log('🔐 Logging into Tropicana Wholesale...');
-    try {
-      await page.goto('https://tropicanawholesale.co.uk/login', { waitUntil: 'networkidle2', timeout: 30000 });
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Look for login form elements
-      const emailInput = await page.$('input[type="email"], input[name="email"], input[id="email"], input[placeholder*="email" i]');
-      const passwordInput = await page.$('input[type="password"], input[name="password"], input[id="password"]');
-      const loginButton = await page.$('button[type="submit"], input[type="submit"], button:contains("Login"), button:contains("Sign In")');
-      
-      if (emailInput && passwordInput && loginButton) {
-        await emailInput.type(process.env.TROPICANA_EMAIL || 'johncroston@myyahoo.com');
-        await passwordInput.type(process.env.TROPICANA_PASSWORD || 'Wholesale123');
-        await loginButton.click();
+    let loginSuccess = false;
+    
+    // Try different login URLs
+    const loginUrls = [
+      'https://www.tropicanawholesale.com/login',
+      'https://tropicanawholesale.com/login',
+      'https://www.tropicanawholesale.com/account/login',
+      'https://tropicanawholesale.com/account/login'
+    ];
+    
+    for (const loginUrl of loginUrls) {
+      try {
+        console.log(`🔗 Trying login URL: ${loginUrl}`);
+        await page.goto(loginUrl, { waitUntil: 'networkidle2', timeout: 30000 });
+        await new Promise(resolve => setTimeout(resolve, 2000));
         
-        // Wait for login to complete
-        await new Promise(resolve => setTimeout(resolve, 5000));
-        console.log('✅ Successfully logged in!');
-      } else {
-        console.log('⚠️  Could not find login form elements, proceeding without login...');
+        // Look for login form elements
+        const emailInput = await page.$('input[type="email"], input[name="email"], input[id="email"], input[placeholder*="email" i]');
+        const passwordInput = await page.$('input[type="password"], input[name="password"], input[id="password"]');
+        const loginButton = await page.$('button[type="submit"], input[type="submit"], button:contains("Login"), button:contains("Sign In")');
+        
+        if (emailInput && passwordInput && loginButton) {
+          await emailInput.type(process.env.TROPICANA_EMAIL || 'johncroston@myyahoo.com');
+          await passwordInput.type(process.env.TROPICANA_PASSWORD || 'Wholesale123');
+          await loginButton.click();
+          
+          // Wait for login to complete
+          await new Promise(resolve => setTimeout(resolve, 5000));
+          console.log('✅ Successfully logged in!');
+          loginSuccess = true;
+          break;
+        } else {
+          console.log('⚠️  Could not find login form elements on this URL');
+        }
+      } catch (error) {
+        console.log(`⚠️  Login failed for ${loginUrl}:`, error.message);
       }
-    } catch (error) {
-      console.log('⚠️  Login failed, proceeding without login:', error.message);
+    }
+    
+    if (!loginSuccess) {
+      console.log('⚠️  All login attempts failed, proceeding without login...');
     }
     
     // Sports supplement categories to scrape - Verified working URLs
