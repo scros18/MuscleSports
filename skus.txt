@@ -1,0 +1,9 @@
+# Sample Tropicana SKUs
+# Add your actual product SKUs here, one per line
+
+# Example SKUs (replace with real ones):
+# MS001
+# MS002
+# MS003
+# WHEY001
+# CREATINE001

@@ -6,7 +6,7 @@
     "dev": "next dev -p 4000",
     "build": "next build",
     "build:obfuscated": "node build-obfuscated.js",
-    "start": "next start",
+    "start": "next start -p 4000",
     "lint": "next lint",
     "clean": "node scripts/clean.js",
     "db:init": "tsx scripts/init-db.ts",
@@ -17,6 +17,7 @@
     "db:shipping": "tsx scripts/add-shipping-column.ts",
     "db:migrate:all": "npm run db:maintenance && npm run db:shipping",
     "make:admin": "tsx scripts/make-admin.ts",
+    "scrape:tropicana": "tsx scripts/run-tropicana-scraper.ts",
     "optimize": "node scripts/optimize.js",
     "deploy:prod": "npm run clean && npm run build:obfuscated && npm start"
   },
