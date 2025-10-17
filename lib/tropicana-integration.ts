@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 import { Database } from './database';
+import puppeteer, { Browser, Page } from 'puppeteer';
 
 // Load environment variables
 dotenv.config({ path: '.env.local' });
@@ -49,11 +50,20 @@ interface SyncSettings {
   updateDescriptions: boolean;
 }
 
+interface ProductListFilters {
+  search?: string;
+  inStock?: boolean;
+  active?: boolean;
+  excluded?: boolean;
+}
+
 class TropicanaIntegration {
   private credentials: TropicanaCredentials;
   private settings: SyncSettings;
   private session: any;
   private isAuthenticated: boolean = false;
+  private browser: Browser | null = null;
+  private page: Page | null = null;
 
   constructor() {
     this.credentials = {
@@ -164,6 +174,8 @@ class TropicanaIntegration {
           age_restriction VARCHAR(100),
           country_of_origin VARCHAR(100),
           barcode VARCHAR(50),
+          active BOOLEAN DEFAULT TRUE,
+          excluded BOOLEAN DEFAULT FALSE,
           last_synced TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -173,6 +185,10 @@ class TropicanaIntegration {
           INDEX idx_last_synced (last_synced)
         )
       `);
+
+      // Best effort: ensure new columns exist on older deployments
+      await connection.execute('ALTER TABLE tropicana_products ADD COLUMN IF NOT EXISTS active BOOLEAN DEFAULT TRUE');
+      await connection.execute('ALTER TABLE tropicana_products ADD COLUMN IF NOT EXISTS excluded BOOLEAN DEFAULT FALSE');
 
       // Create tropicana_sync_log table
       await connection.execute(`
@@ -296,13 +312,75 @@ class TropicanaIntegration {
   async authenticate(): Promise<boolean> {
     try {
       console.log('🔐 Authenticating with Tropicana Wholesale...');
-      
-      // For now, we'll simulate authentication
-      // In a real implementation, you would use web scraping or API calls
-      this.isAuthenticated = true;
-      
-      console.log('✅ Authentication successful');
-      return true;
+
+      // Reuse existing browser if present
+      if (!this.browser) {
+        this.browser = await puppeteer.launch({
+          headless: true,
+          args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
+      }
+      this.page = await this.browser.newPage();
+      await this.page.setViewport({ width: 1366, height: 900 });
+      await this.page.setUserAgent(
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      );
+
+      const baseUrl = this.credentials.baseUrl.replace(/\/$/, '');
+
+      // Navigate to login
+      await this.page.goto(`${baseUrl}/account/login`, { waitUntil: 'networkidle2', timeout: 60000 });
+
+      // Fill login form (Shopify-like selectors with fallbacks)
+      const email = this.credentials.email;
+      const password = this.credentials.password;
+
+      // Try common selectors
+      const emailSelectors = ['#CustomerEmail', 'input[type="email"]#email', 'input[name="customer[email]"]', 'input[name="email"]'];
+      const passwordSelectors = ['#CustomerPassword', 'input[type="password"]#password', 'input[name="customer[password]"]', 'input[name="password"]'];
+      const submitSelectors = ['#customer_login button[type="submit"]', 'form[action*="login"] button[type="submit"]', 'button[type="submit"]'];
+
+      let emailSel: string | null = null;
+      for (const sel of emailSelectors) {
+        if (await this.page.$(sel)) { emailSel = sel; break; }
+      }
+      let passSel: string | null = null;
+      for (const sel of passwordSelectors) {
+        if (await this.page.$(sel)) { passSel = sel; break; }
+      }
+      let submitSel: string | null = null;
+      for (const sel of submitSelectors) {
+        if (await this.page.$(sel)) { submitSel = sel; break; }
+      }
+
+      if (!emailSel || !passSel || !submitSel) {
+        throw new Error('Login form not found on Tropicana site');
+      }
+
+      await this.page.click(emailSel);
+      await this.page.keyboard.down('Control');
+      await this.page.keyboard.press('A');
+      await this.page.keyboard.up('Control');
+      await this.page.keyboard.type(email, { delay: 10 });
+      await this.page.click(passSel);
+      await this.page.keyboard.down('Control');
+      await this.page.keyboard.press('A');
+      await this.page.keyboard.up('Control');
+      await this.page.keyboard.type(password, { delay: 10 });
+      await Promise.all([
+        this.page.click(submitSel),
+        this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 60000 })
+      ]);
+
+      // Basic assertion that we are logged in: look for account/logout or account page
+      const loggedIn = await this.page.evaluate(() => {
+        const text = document.body.innerText || '';
+        return /log\s*out|account|orders|addresses/i.test(text);
+      });
+
+      this.isAuthenticated = !!loggedIn;
+      console.log(this.isAuthenticated ? '✅ Authentication successful' : '❌ Authentication may have failed');
+      return this.isAuthenticated;
     } catch (error) {
       console.error('❌ Authentication failed:', error);
       this.isAuthenticated = false;
@@ -401,6 +479,8 @@ class TropicanaIntegration {
       console.error('❌ Full sync failed:', error);
       await this.failSyncLog(syncId, error instanceof Error ? error.message : 'Unknown error');
       throw error;
+    } finally {
+      await this.close();
     }
   }
 
@@ -456,6 +536,8 @@ class TropicanaIntegration {
       console.error('❌ Incremental sync failed:', error);
       await this.failSyncLog(syncId, error instanceof Error ? error.message : 'Unknown error');
       throw error;
+    } finally {
+      await this.close();
     }
   }
 
@@ -511,39 +593,123 @@ class TropicanaIntegration {
       console.error('❌ Stock check failed:', error);
       await this.failSyncLog(syncId, error instanceof Error ? error.message : 'Unknown error');
       throw error;
+    } finally {
+      await this.close();
     }
   }
 
-  // Fetch all products from Tropicana (simulated)
+  // Fetch all products from Tropicana using the authenticated session
   private async fetchAllProducts(): Promise<TropicanaProduct[]> {
-    // This would be implemented with actual web scraping or API calls
-    // For now, returning sample data structure
-    
-    const sampleProducts: TropicanaProduct[] = [
-      {
-        id: 'opt-nut-gold-standard-whey-2kg',
-        name: 'Optimum Nutrition Gold Standard Whey Protein 2kg',
-        price: 45.99,
-        description: 'Premium whey protein isolate with 25g protein per serving',
-        images: ['https://example.com/image1.jpg'],
-        category: 'Protein Powders',
-        brand: 'Optimum Nutrition',
-        inStock: true,
-        stockQuantity: 50,
-        flavours: ['Chocolate', 'Vanilla', 'Strawberry'],
-        strengths: ['2kg'],
-        wholesalePrice: 32.99,
-        retailPrice: 45.99,
-        margin: 28.5,
-        sku: 'OPT-GS-WHEY-2KG',
-        weight: '2kg',
-        ingredients: ['Whey Protein Isolate', 'Cocoa Powder', 'Natural Flavors'],
-        lastUpdated: new Date()
-      }
-      // More products would be fetched here...
+    if (!this.isAuthenticated || !this.page) {
+      const ok = await this.authenticate();
+      if (!ok) return [];
+    }
+
+    const page = this.page!;
+    const baseUrl = this.credentials.baseUrl.replace(/\/$/, '');
+
+    // Candidate collection URLs for supplements (can be expanded)
+    const collectionUrls = [
+      `${baseUrl}/collections/all`,
+      `${baseUrl}/collections/protein`,
+      `${baseUrl}/collections/pre-workout`,
+      `${baseUrl}/collections/post-workout`,
+      `${baseUrl}/collections/creatine`,
+      `${baseUrl}/collections/weight-loss`,
+      `${baseUrl}/collections/vitamins-minerals`,
+      `${baseUrl}/collections/bars-snacks`,
+      `${baseUrl}/collections/energy-endurance`
     ];
 
-    return sampleProducts.slice(0, this.settings.maxProducts);
+    const seen = new Set<string>();
+    const results: TropicanaProduct[] = [];
+
+    const extractListing = async (): Promise<any[]> => {
+      return await page.evaluate(() => {
+        const cardSelectors = ['.product-item', '.product-card', '.grid-product', '[data-product-id]'];
+        const cards: Element[] = [];
+        for (const sel of cardSelectors) {
+          const found = Array.from(document.querySelectorAll(sel));
+          if (found.length) { cards.push(...found); }
+        }
+        const products: any[] = [];
+        cards.forEach((el) => {
+          try {
+            const nameEl = el.querySelector('.product-title, .product-name, h3, h4, .title');
+            const priceEl = el.querySelector('.price, .product-price, .money, [data-price]');
+            const imgEl = el.querySelector('img');
+            const linkEl = el.querySelector('a');
+            const name = nameEl ? (nameEl as HTMLElement).innerText.trim() : '';
+            const priceText = priceEl ? (priceEl as HTMLElement).innerText.trim() : '';
+            const image = imgEl ? ((imgEl as HTMLImageElement).src || (imgEl as HTMLImageElement).getAttribute('data-src') || '') : '';
+            const href = linkEl ? (linkEl as HTMLAnchorElement).href : '';
+            if (name && priceText && href) {
+              products.push({ name, priceText, image, href });
+            }
+          } catch {}
+        });
+        return products;
+      });
+    };
+
+    const parsePrice = (text: string): number => {
+      const match = (text || '').replace(/,/g, '').match(/[0-9]+(?:\.[0-9]{1,2})?/);
+      return match ? parseFloat(match[0]) : 0;
+    };
+
+    for (const coll of collectionUrls) {
+      try {
+        await page.goto(coll, { waitUntil: 'networkidle2', timeout: 60000 });
+
+        // Paginate through collection pages by detecting next links
+        let pageNum = 1;
+        while (true) {
+          const listings = await extractListing();
+          for (const p of listings) {
+            if (seen.has(p.href)) continue;
+            seen.add(p.href);
+            const sku = p.href.split('/').pop() || p.name; // fallback sku from handle
+            const wholesalePrice = parsePrice(p.priceText);
+
+            const product: TropicanaProduct = {
+              id: sku.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$|--+/g, '-'),
+              name: p.name,
+              price: wholesalePrice,
+              description: '',
+              images: p.image ? [p.image] : [],
+              category: '',
+              brand: '',
+              inStock: true,
+              wholesalePrice,
+              retailPrice: wholesalePrice, // will be recalculated with margin
+              margin: 0,
+              sku,
+              lastUpdated: new Date()
+            } as TropicanaProduct;
+            results.push(product);
+            if (results.length >= this.settings.maxProducts) break;
+          }
+          if (results.length >= this.settings.maxProducts) break;
+
+          // Try to click next
+          const nextSel = 'a[rel="next"], .pagination a.next, a[aria-label="Next"], a[title="Next"]';
+          const hasNext = await page.$(nextSel);
+          if (!hasNext) break;
+          await Promise.all([
+            page.click(nextSel),
+            page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 60000 })
+          ]);
+          pageNum++;
+          if (pageNum > 50) break; // safety
+        }
+
+        if (results.length >= this.settings.maxProducts) break;
+      } catch (err) {
+        console.warn('Collection scrape error:', coll, err);
+      }
+    }
+
+    return results.slice(0, this.settings.maxProducts);
   }
 
   // Helper methods
@@ -776,15 +942,72 @@ class TropicanaIntegration {
   }
 
   private async fetchProductBySku(sku: string): Promise<TropicanaProduct | null> {
-    // This would fetch actual product data from Tropicana
-    // For now, returning null to indicate no updates needed
-    return null;
+    if (!this.isAuthenticated || !this.page) {
+      const ok = await this.authenticate();
+      if (!ok) return null;
+    }
+    const page = this.page!;
+    const baseUrl = this.credentials.baseUrl.replace(/\/$/, '');
+    try {
+      // Attempt to go directly to product by handle (sku used as handle fallback)
+      const guessUrl = `${baseUrl}/products/${encodeURIComponent(sku)}`;
+      await page.goto(guessUrl, { waitUntil: 'networkidle2', timeout: 60000 });
+      // Extract minimal fields
+      const data = await page.evaluate(() => {
+        const nameEl = document.querySelector('h1, .product-title');
+        const priceEl = document.querySelector('.price, .product-price, .money, [data-price]');
+        const imgEl = document.querySelector('.product__media img, .product-gallery img, img');
+        return {
+          name: nameEl ? (nameEl as HTMLElement).innerText.trim() : '',
+          priceText: priceEl ? (priceEl as HTMLElement).innerText.trim() : '',
+          image: imgEl ? ((imgEl as HTMLImageElement).src || '') : ''
+        };
+      });
+      if (!data.name) return null;
+      const price = (data.priceText || '').replace(/,/g, '').match(/[0-9]+(?:\.[0-9]{1,2})?/);
+      const wholesalePrice = price ? parseFloat(price[0]) : 0;
+      return {
+        id: sku,
+        sku,
+        name: data.name,
+        price: wholesalePrice,
+        wholesalePrice,
+        retailPrice: wholesalePrice,
+        margin: 0,
+        description: '',
+        images: data.image ? [data.image] : [],
+        category: '',
+        brand: '',
+        inStock: true,
+        lastUpdated: new Date()
+      } as TropicanaProduct;
+    } catch {
+      return null;
+    }
   }
 
   private async checkProductStock(sku: string): Promise<{ inStock: boolean; quantity?: number }> {
-    // This would check actual stock status from Tropicana
-    // For now, returning mock data
-    return { inStock: true, quantity: Math.floor(Math.random() * 100) };
+    if (!this.isAuthenticated || !this.page) {
+      const ok = await this.authenticate();
+      if (!ok) return { inStock: false };
+    }
+    const page = this.page!;
+    const baseUrl = this.credentials.baseUrl.replace(/\/$/, '');
+    try {
+      const url = `${baseUrl}/products/${encodeURIComponent(sku)}`;
+      await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+      const stock = await page.evaluate(() => {
+        const text = (document.body.innerText || '').toLowerCase();
+        if (/out of stock|sold out/.test(text)) return { inStock: false, quantity: 0 };
+        // Try to find quantity-like hints
+        const qtyMatch = text.match(/(qty|quantity)\s*[:\-]?\s*(\d{1,4})/);
+        const qty = qtyMatch ? parseInt(qtyMatch[2], 10) : undefined;
+        return { inStock: true, quantity: qty };
+      });
+      return stock;
+    } catch {
+      return { inStock: true };
+    }
   }
 
   // Public methods for API endpoints
@@ -810,18 +1033,91 @@ class TropicanaIntegration {
     }
   }
 
-  async getProductsPaginated(page: number = 1, limit: number = 50): Promise<any[]> {
+  async getProductsPaginated(page: number = 1, limit: number = 50, filters: ProductListFilters = {}): Promise<any[]> {
     const offset = (page - 1) * limit;
     const connection = await Database.getConnection();
     try {
-      const [rows] = await connection.execute(
-        'SELECT * FROM tropicana_products ORDER BY last_synced DESC LIMIT ? OFFSET ?',
-        [limit, offset]
-      );
+      const where: string[] = [];
+      const params: any[] = [];
+      if (filters.search) {
+        where.push('(name LIKE ? OR sku LIKE ? OR brand LIKE ? OR category LIKE ?)');
+        params.push(`%${filters.search}%`, `%${filters.search}%`, `%${filters.search}%`, `%${filters.search}%`);
+      }
+      if (filters.inStock !== undefined) {
+        where.push('in_stock = ?');
+        params.push(filters.inStock ? 1 : 0);
+      }
+      if (filters.active !== undefined) {
+        where.push('active = ?');
+        params.push(filters.active ? 1 : 0);
+      }
+      if (filters.excluded !== undefined) {
+        where.push('excluded = ?');
+        params.push(filters.excluded ? 1 : 0);
+      }
+      const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
+      const sql = `SELECT * FROM tropicana_products ${whereSql} ORDER BY last_synced DESC LIMIT ? OFFSET ?`;
+      params.push(limit, offset);
+      const [rows] = await connection.execute(sql, params);
       return rows as any[];
     } finally {
       connection.release();
     }
+  }
+
+  async setProductActive(id: string, active: boolean): Promise<void> {
+    const connection = await Database.getConnection();
+    try {
+      await connection.execute(
+        'UPDATE tropicana_products SET active = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+        [active ? 1 : 0, id]
+      );
+    } finally {
+      connection.release();
+    }
+  }
+
+  async setProductExcluded(id: string, excluded: boolean): Promise<void> {
+    const connection = await Database.getConnection();
+    try {
+      await connection.execute(
+        'UPDATE tropicana_products SET excluded = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+        [excluded ? 1 : 0, id]
+      );
+    } finally {
+      connection.release();
+    }
+  }
+
+  async repriceProduct(id: string, newMargin?: number, newRetailPrice?: number): Promise<void> {
+    const connection = await Database.getConnection();
+    try {
+      const [rows] = await connection.execute('SELECT wholesale_price FROM tropicana_products WHERE id = ?', [id]);
+      const row = (rows as any[])[0];
+      if (!row) return;
+      const wholesale = parseFloat(row.wholesale_price);
+      let retail = newRetailPrice ?? (newMargin !== undefined ? wholesale * (1 + newMargin / 100) : undefined);
+      let margin = newMargin ?? (retail !== undefined ? ((retail - wholesale) / wholesale) * 100 : undefined);
+      const fields: string[] = [];
+      const params: any[] = [];
+      if (retail !== undefined) { fields.push('retail_price = ?'); params.push(retail); }
+      if (margin !== undefined) { fields.push('margin = ?'); params.push(margin); }
+      if (fields.length) {
+        fields.push('updated_at = CURRENT_TIMESTAMP');
+        const sql = `UPDATE tropicana_products SET ${fields.join(', ')} WHERE id = ?`;
+        params.push(id);
+        await connection.execute(sql, params);
+      }
+    } finally {
+      connection.release();
+    }
+  }
+
+  async close(): Promise<void> {
+    try {
+      if (this.page) { await this.page.close().catch(() => {}); this.page = null; }
+      if (this.browser) { await this.browser.close().catch(() => {}); this.browser = null; }
+    } catch {}
   }
 
   async updateSettings(newSettings: Partial<SyncSettings>): Promise<void> {

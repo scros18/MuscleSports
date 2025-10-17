@@ -84,6 +84,10 @@ export default function TropicanaAdminPage() {
   const [productsCount, setProductsCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(50);
+  const [search, setSearch] = useState('');
+  const [filterInStock, setFilterInStock] = useState<boolean | undefined>(undefined);
+  const [filterActive, setFilterActive] = useState<boolean | undefined>(true);
+  const [filterExcluded, setFilterExcluded] = useState<boolean | undefined>(undefined);
 
   // Load initial data
   useEffect(() => {
@@ -122,7 +126,12 @@ export default function TropicanaAdminPage() {
 
   const loadProducts = async (page: number) => {
     try {
-      const response = await fetch(`/api/admin/tropicana?action=products&page=${page}&limit=${productsPerPage}`);
+      const params = new URLSearchParams({ page: String(page), limit: String(productsPerPage) });
+      if (search) params.set('search', search);
+      if (filterInStock !== undefined) params.set('inStock', String(filterInStock));
+      if (filterActive !== undefined) params.set('active', String(filterActive));
+      if (filterExcluded !== undefined) params.set('excluded', String(filterExcluded));
+      const response = await fetch(`/api/admin/tropicana?action=products&${params.toString()}`);
       if (!response.ok) throw new Error('Failed to load products');
       const data = await response.json();
       
@@ -415,6 +424,48 @@ export default function TropicanaAdminPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
+                {/* Filters */}
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+                  <Input
+                    placeholder="Search name, SKU, brand, category"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                  <Select onValueChange={(v) => setFilterInStock(v === 'any' ? undefined : v === 'true')}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="In stock: Any" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="any">In stock: Any</SelectItem>
+                      <SelectItem value="true">In stock: Yes</SelectItem>
+                      <SelectItem value="false">In stock: No</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select onValueChange={(v) => setFilterActive(v === 'any' ? undefined : v === 'true')}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Active: Any" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="any">Active: Any</SelectItem>
+                      <SelectItem value="true">Active: Yes</SelectItem>
+                      <SelectItem value="false">Active: No</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select onValueChange={(v) => setFilterExcluded(v === 'any' ? undefined : v === 'true')}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Excluded: Any" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="any">Excluded: Any</SelectItem>
+                      <SelectItem value="true">Excluded: Yes</SelectItem>
+                      <SelectItem value="false">Excluded: No</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Button variant="secondary" onClick={() => loadProducts(1)} disabled={loading}>
+                    Apply Filters
+                  </Button>
+                </div>
+
                 {products.length === 0 ? (
                   <p className="text-muted-foreground text-center py-8">
                     No products found. Run a sync to import products.
@@ -444,6 +495,50 @@ export default function TropicanaAdminPage() {
                                 Qty: {product.stock_quantity}
                               </span>
                             )}
+                            {/* Manage actions */}
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={async () => {
+                                await fetch('/api/admin/tropicana', {
+                                  method: 'POST',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({ action: 'setActive', id: product.id, active: !('active' in product ? (product as any).active : true) })
+                                });
+                                await loadProducts(currentPage);
+                              }}
+                            >
+                              {('active' in product ? (product as any).active : true) ? 'Deactivate' : 'Activate'}
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={async () => {
+                                await fetch('/api/admin/tropicana', {
+                                  method: 'POST',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({ action: 'setExcluded', id: product.id, excluded: !('excluded' in product ? (product as any).excluded : false) })
+                                });
+                                await loadProducts(currentPage);
+                              }}
+                            >
+                              {('excluded' in product ? (product as any).excluded : false) ? 'Include' : 'Exclude'}
+                            </Button>
+                            <Button
+                              variant="secondary"
+                              size="sm"
+                              onClick={async () => {
+                                const newMargin = (product.margin || 0) + 5;
+                                await fetch('/api/admin/tropicana', {
+                                  method: 'POST',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({ action: 'reprice', id: product.id, margin: newMargin })
+                                });
+                                await loadProducts(currentPage);
+                              }}
+                            >
+                              +5% Margin
+                            </Button>
                           </div>
                         </div>
                       ))}

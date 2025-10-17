@@ -26,10 +26,19 @@ export async function GET(request: NextRequest) {
           }
         });
 
-      case 'products':
-        const page = parseInt(url.searchParams.get('page') || '1');
-        const limit = parseInt(url.searchParams.get('limit') || '50');
-        const products = await integration.getProductsPaginated(page, limit);
+    case 'products':
+      const page = parseInt(url.searchParams.get('page') || '1');
+      const limit = parseInt(url.searchParams.get('limit') || '50');
+      const search = url.searchParams.get('search') || undefined;
+      const inStock = url.searchParams.get('inStock');
+      const active = url.searchParams.get('active');
+      const excluded = url.searchParams.get('excluded');
+      const products = await integration.getProductsPaginated(page, limit, {
+        search,
+        inStock: inStock !== null ? inStock === 'true' : undefined,
+        active: active !== null ? active === 'true' : undefined,
+        excluded: excluded !== null ? excluded === 'true' : undefined
+      });
         return NextResponse.json({
           success: true,
           data: { products }
@@ -88,6 +97,33 @@ export async function POST(request: NextRequest) {
           success: true,
           message: `${syncType} sync completed successfully`
         });
+
+    case 'setActive': {
+      const { id, active } = body;
+      if (!id || active === undefined) {
+        return NextResponse.json({ error: 'Missing id or active' }, { status: 400 });
+      }
+      await integration.setProductActive(id, !!active);
+      return NextResponse.json({ success: true });
+    }
+
+    case 'setExcluded': {
+      const { id, excluded } = body;
+      if (!id || excluded === undefined) {
+        return NextResponse.json({ error: 'Missing id or excluded' }, { status: 400 });
+      }
+      await integration.setProductExcluded(id, !!excluded);
+      return NextResponse.json({ success: true });
+    }
+
+    case 'reprice': {
+      const { id, margin, retailPrice } = body;
+      if (!id || (margin === undefined && retailPrice === undefined)) {
+        return NextResponse.json({ error: 'Missing id or pricing' }, { status: 400 });
+      }
+      await integration.repriceProduct(id, margin, retailPrice);
+      return NextResponse.json({ success: true });
+    }
 
       case 'updateSettings':
         const newSettings = body.settings;
