@@ -20,6 +20,7 @@
     "scrape:tropicana": "tsx scripts/run-tropicana-scraper.ts",
     "import:tropicana": "tsx scripts/import-tropicana-csv.ts",
     "migrate:flavours": "tsx scripts/migrate-add-flavours.ts",
+    "check:images": "tsx scripts/check-product-images.ts",
     "optimize": "node scripts/optimize.js",
     "deploy:prod": "npm run clean && npm run build:obfuscated && npm start"
   },
