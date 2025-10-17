@@ -261,7 +261,13 @@ export function Header() {
         isScrolled 
           ? 'bg-background/95 backdrop-blur-3xl supports-[backdrop-filter]:bg-background/90 border-white/20 dark:border-white/10 shadow-xl shadow-black/10' 
           : 'bg-background/70 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/60 border-white/10 dark:border-white/5 shadow-lg shadow-black/5'
-      }`}>
+      }`}
+      style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 99999
+      }}
+      >
       <div className="container mx-auto flex h-16 items-center justify-between px-3 sm:px-4 gap-2 sm:gap-4">
         <Link href="/" className="flex items-center flex-shrink-0 min-w-0">
           {currentTheme !== null && (
@@ -1212,7 +1218,7 @@ export function Header() {
     </header>
     
     {/* Mobile Sticky Quick Navigation - Shows below header on small screens */}
-    <div className="md:hidden sticky top-16 z-[99998] bg-background/95 backdrop-blur-2xl border-b border-white/10 shadow-md">
+    <div className="md:hidden sticky z-[99998] bg-background/95 backdrop-blur-2xl border-b border-white/10 shadow-md" style={{ top: '64px' }}>
       <div className="flex items-center gap-2 overflow-x-auto px-3 py-2 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         <Link href="/products" className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold whitespace-nowrap rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
           All Products
