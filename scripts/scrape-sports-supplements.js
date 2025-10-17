@@ -140,13 +140,48 @@ async function scrapeSportsSupplements() {
       console.log('⚠️  All login attempts failed, proceeding without login...');
     }
     
-    // Sports supplement categories to scrape - Verified working URLs
+    // Complete Tropicana Wholesale categories to scrape - All categories for MuscleSports rebrand
     const categories = [
       { name: 'Amino Acids', url: 'https://www.tropicanawholesale.com/shop-by-category/Amino-Acids/' },
+      { name: 'Anti Inflammatory', url: 'https://www.tropicanawholesale.com/shop-by-category/Anti-Inflammatory/' },
+      { name: 'Antioxidant Support', url: 'https://www.tropicanawholesale.com/shop-by-category/Antioxidant-Support/' },
+      { name: 'Appetite Control', url: 'https://www.tropicanawholesale.com/shop-by-category/Appetite-Control/' },
+      { name: 'Ashwagandha', url: 'https://www.tropicanawholesale.com/shop-by-category/Ashwagandha/' },
+      { name: 'Caffeine', url: 'https://www.tropicanawholesale.com/shop-by-category/Caffeine/' },
+      { name: 'Carbohydrate Powders', url: 'https://www.tropicanawholesale.com/shop-by-category/Carbohydrate-Powders/' },
+      { name: 'CBD', url: 'https://www.tropicanawholesale.com/shop-by-category/CBD/' },
+      { name: 'CLA', url: 'https://www.tropicanawholesale.com/shop-by-category/CLA/' },
+      { name: 'Probiotics & Digestion', url: 'https://www.tropicanawholesale.com/shop-by-category/Probiotics-and-Digestion/' },
+      { name: 'Clothing', url: 'https://www.tropicanawholesale.com/shop-by-category/Clothing/' },
+      { name: 'Cognitive Support', url: 'https://www.tropicanawholesale.com/shop-by-category/Cognitive-Support/' },
+      { name: 'Collagen', url: 'https://www.tropicanawholesale.com/shop-by-category/Collagen/' },
+      { name: 'Cream Of Rice', url: 'https://www.tropicanawholesale.com/shop-by-category/Cream-Of-Rice/' },
+      { name: 'Creams, Gels, Lotions, Ointments', url: 'https://www.tropicanawholesale.com/shop-by-category/Creams-Gels-Lotions-Ointments/' },
+      { name: 'Creatine', url: 'https://www.tropicanawholesale.com/shop-by-category/Creatine/' },
+      { name: 'Egg Whites', url: 'https://www.tropicanawholesale.com/shop-by-category/Egg-Whites/' },
+      { name: 'Electrolytes', url: 'https://www.tropicanawholesale.com/shop-by-category/Electrolytes/' },
+      { name: 'Energy & Endurance', url: 'https://www.tropicanawholesale.com/shop-by-category/Energy-Endurance/' },
+      { name: 'Fish Oils & Omega', url: 'https://www.tropicanawholesale.com/shop-by-category/Fish-Oils-Omega/' },
+      { name: 'Functional Foods', url: 'https://www.tropicanawholesale.com/shop-by-category/Functional-Foods/' },
+      { name: 'Glutamine', url: 'https://www.tropicanawholesale.com/shop-by-category/Glutamine/' },
+      { name: 'Health & Wellness', url: 'https://www.tropicanawholesale.com/shop-by-category/Health-Wellness/' },
+      { name: 'Joint Support', url: 'https://www.tropicanawholesale.com/shop-by-category/Joint-Support/' },
+      { name: 'Mass Gainers', url: 'https://www.tropicanawholesale.com/shop-by-category/Mass-Gainers/' },
+      { name: 'Meal Replacements', url: 'https://www.tropicanawholesale.com/shop-by-category/Meal-Replacements/' },
+      { name: 'Multivitamins', url: 'https://www.tropicanawholesale.com/shop-by-category/Multivitamins/' },
+      { name: 'Muscle Recovery', url: 'https://www.tropicanawholesale.com/shop-by-category/Muscle-Recovery/' },
+      { name: 'Omega 3', url: 'https://www.tropicanawholesale.com/shop-by-category/Omega-3/' },
+      { name: 'Pre-Workout', url: 'https://www.tropicanawholesale.com/shop-by-category/Pre-Workout/' },
+      { name: 'Protein Bars', url: 'https://www.tropicanawholesale.com/shop-by-category/Protein-Bars/' },
       { name: 'Protein Powders', url: 'https://www.tropicanawholesale.com/shop-by-category/Protein-Powders/' },
-      { name: 'Ready-To-Drinks', url: 'https://www.tropicanawholesale.com/shop-by-category/Ready-To-Drinks/' },
       { name: 'Protein RTDs', url: 'https://www.tropicanawholesale.com/shop-by-category/Protein-RTDs/' },
-      { name: 'Cream Of Rice', url: 'https://www.tropicanawholesale.com/shop-by-category/Cream-Of-Rice/' }
+      { name: 'Ready-To-Drinks', url: 'https://www.tropicanawholesale.com/shop-by-category/Ready-To-Drinks/' },
+      { name: 'Sleep Support', url: 'https://www.tropicanawholesale.com/shop-by-category/Sleep-Support/' },
+      { name: 'Sports Nutrition', url: 'https://www.tropicanawholesale.com/shop-by-category/Sports-Nutrition/' },
+      { name: 'Testosterone Support', url: 'https://www.tropicanawholesale.com/shop-by-category/Testosterone-Support/' },
+      { name: 'Vitamins & Minerals', url: 'https://www.tropicanawholesale.com/shop-by-category/Vitamins-Minerals/' },
+      { name: 'Weight Management', url: 'https://www.tropicanawholesale.com/shop-by-category/Weight-Management/' },
+      { name: 'Whey Protein', url: 'https://www.tropicanawholesale.com/shop-by-category/Whey-Protein/' }
     ];
     
     let totalProducts = 0;
@@ -454,6 +489,12 @@ async function scrapeSportsSupplements() {
     console.log(`\n🎉 Scraping completed!`);
     console.log(`📊 Total products found: ${totalProducts}`);
     console.log(`✅ Products added to database: ${processedProducts}`);
+    console.log(`⏰ Scraping took: ${((Date.now() - startTime) / 1000).toFixed(2)} seconds`);
+    
+    // Log completion for monitoring
+    console.log(`\n🔄 Next scheduled update: ${new Date(Date.now() + 6 * 60 * 60 * 1000).toLocaleString()}`);
+    console.log(`📈 Categories updated: ${categories.length}`);
+    console.log(`🏪 MuscleSports products section ready for customers!`);
     
   } catch (error) {
     console.error('❌ Scraping failed:', error);
