@@ -139,13 +139,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Whey Protein', 
-          img: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?q=80&w=400&auto=format&fit=crop',
+          img: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?q=80&w=400&auto=format&fit=crop&fm=jpg',
           category: 'Protein',
           link: '/products?category=Protein'
         },
         { 
           title: 'Vegan Protein', 
-          img: 'https://images.unsplash.com/photo-1628191010215-4b233724e20e?q=80&w=400&auto=format&fit=crop',
+          img: 'https://images.unsplash.com/photo-1628191010215-4b233724e20e?q=80&w=400&auto=format&fit=crop&fm=jpg',
           category: 'Protein',
           link: '/products?category=Protein'
         },
@@ -158,13 +158,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Amino Acids', 
-          img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=400&auto=format&fit=crop',
+          img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=400&auto=format&fit=crop&fm=jpg',
           category: 'Amino Acids',
           link: '/products?category=Amino+Acids'
         },
         { 
           title: 'Pre-Workout', 
-          img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=400&auto=format&fit=crop',
+          img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=400&auto=format&fit=crop&fm=jpg',
           category: 'Pre-Workout',
           link: '/products?category=Pre-Workout'
         },
@@ -177,13 +177,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Multivitamins', 
-          img: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?q=80&w=400&auto=format&fit=crop',
+          img: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?q=80&w=400&auto=format&fit=crop&fm=jpg',
           category: 'Vitamins',
           link: '/products?category=Vitamins'
         },
         { 
           title: 'Minerals', 
-          img: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=400&auto=format&fit=crop',
+          img: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=400&auto=format&fit=crop&fm=jpg',
           category: 'Minerals',
           link: '/products?category=Minerals'
         },
@@ -196,13 +196,13 @@ export default function HomePanels() {
       items: [
         { 
           title: 'Energy Bars', 
-          img: 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=400&auto=format&fit=crop',
+          img: 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=400&auto=format&fit=crop&fm=jpg',
           category: 'Sports Nutrition',
           link: '/products?category=Sports+Nutrition'
         },
         { 
           title: 'Mass Gainers', 
-          img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=400&auto=format&fit=crop',
+          img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=400&auto=format&fit=crop&fm=jpg',
           category: 'All-In-One Gainer',
           link: '/products?category=All-In-One+Gainer'
         },
@@ -250,25 +250,7 @@ export default function HomePanels() {
         },
       ],
     },
-    {
-      key: 'vapes',
-      title: 'Vapes',
-      link: '/products?category=Vapes+%26+Accessories',
-      items: [
-        { 
-          title: 'Starter Kits', 
-          img: 'https://www.washingtonvapeswholesale.co.uk/cdn/shop/files/ivg-pro-12-kit-pack-of-5-washington-vapes-wholesale-627386_1800x1800.webp?v=1741749726',
-          category: 'Vapes & Accessories',
-          link: '/products?category=Vapes+%26+Accessories'
-        },
-        { 
-          title: 'E-Liquids', 
-          img: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?q=80&w=800&auto=format&fit=crop',
-          category: 'Vapes & Accessories',
-          link: '/products?category=Vapes+%26+Accessories'
-        },
-      ],
-    },
+    // Vapes panel removed (sports nutrition only)
     {
       key: 'more',
       title: 'Garden essentials',

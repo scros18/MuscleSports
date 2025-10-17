@@ -139,7 +139,7 @@ export async function GET(request: Request) {
       });
     }
 
-    // Apply stock filtering
+    // Apply stock filtering - CRITICAL FOR LAUNCH: Hide out of stock products by default
     if (stockFilterParam && stockFilterParam !== 'all') {
       filtered = filtered.filter((p: any) => {
         const override = pricing[p.id];
@@ -154,23 +154,52 @@ export async function GET(request: Request) {
         }
         return true;
       });
+    } else {
+      // DEFAULT BEHAVIOR FOR LAUNCH: Hide out of stock products unless specifically searching
+      // Only show out of stock products if user is searching for something specific
+      if (!searchParam.trim()) {
+        filtered = filtered.filter((p: any) => {
+          const override = pricing[p.id];
+          const inStock = typeof override?.inStock === 'boolean' ? override.inStock : p.inStock;
+          // Hide products that are explicitly out of stock
+          return inStock !== false;
+        });
+      }
     }
 
     // Apply sorting if requested (use overridden price when available)
     const sortParam = url.searchParams.get('sort') || 'best_match';
-    if (sortParam === 'price_asc') {
-      filtered.sort((a: any, b: any) => {
+    
+    // CRITICAL FOR LAUNCH: Always sort by stock status first, then by requested sort
+    filtered.sort((a: any, b: any) => {
+      // First priority: In-stock products always come first
+      const aStock = typeof pricing[a.id]?.inStock === 'boolean' ? pricing[a.id].inStock : a.inStock;
+      const bStock = typeof pricing[b.id]?.inStock === 'boolean' ? pricing[b.id].inStock : b.inStock;
+      
+      // If one is in stock and other isn't, prioritize in-stock
+      if (aStock !== false && bStock === false) return -1;
+      if (aStock === false && bStock !== false) return 1;
+      
+      // If both have same stock status, apply requested sorting
+      if (sortParam === 'price_asc') {
         const pa = (pricing[a.id]?.price !== undefined) ? pricing[a.id].price : a.price;
         const pb = (pricing[b.id]?.price !== undefined) ? pricing[b.id].price : b.price;
         return (pa ?? 0) - (pb ?? 0);
-      });
-    } else if (sortParam === 'price_desc') {
-      filtered.sort((a: any, b: any) => {
+      } else if (sortParam === 'price_desc') {
         const pa = (pricing[a.id]?.price !== undefined) ? pricing[a.id].price : a.price;
         const pb = (pricing[b.id]?.price !== undefined) ? pricing[b.id].price : b.price;
         return (pb ?? 0) - (pa ?? 0);
-      });
-    }
+      } else if (sortParam === 'name_asc') {
+        return a.name.localeCompare(b.name);
+      } else if (sortParam === 'name_desc') {
+        return b.name.localeCompare(a.name);
+      } else {
+        // Default 'best_match' sorting: featured first, then by creation date
+        if (a.featured && !b.featured) return -1;
+        if (!a.featured && b.featured) return 1;
+        return new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime();
+      }
+    });
 
     const total = filtered.length;
 

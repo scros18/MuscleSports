@@ -653,6 +653,8 @@ export function Header() {
         </div>
       </div>
 
+      {/* Spacer no longer needed with sticky header */}
+
       {/* Mobile Navigation Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden border-t bg-background max-w-full overflow-x-hidden">

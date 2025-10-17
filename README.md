@@ -55,19 +55,7 @@ npm run dev
 
 ---
 
-## 📱 Screenshots
-
-<div align="center">
-
-### Desktop Experience
-![Desktop View](https://via.placeholder.com/800x400/1a1a1a/ffffff?text=Desktop+Experience)
-
-### Mobile Experience  
-![Mobile View](https://via.placeholder.com/400x600/1a1a1a/ffffff?text=Mobile+Experience)
-
-</div>
-
----
+<!-- Screenshots section removed per request -->
 
 ## 🎨 Themes
 
