@@ -1,4 +1,5 @@
 import { Database } from './database';
+import type { ResultSetHeader } from 'mysql2';
 
 export interface Notification {
   id: number;
@@ -27,7 +28,7 @@ export class NotificationService {
         `INSERT INTO notifications (user_id, title, message, type, action_url, created_at)
          VALUES (?, ?, ?, ?, ?, NOW())`,
         [userId, title, message, type, actionUrl || null]
-      );
+      ) as ResultSetHeader;
 
       return {
         id: result.insertId,
@@ -73,7 +74,7 @@ export class NotificationService {
         `SELECT COUNT(*) as count FROM notifications 
          WHERE user_id = ? AND \`read\` = 0`,
         [userId]
-      );
+      ) as any[];
       return rows[0]?.count || 0;
     } catch (error) {
       console.error('Failed to get unread count:', error);
