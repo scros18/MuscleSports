@@ -102,15 +102,48 @@ async function scrapeSportsSupplements() {
         console.log(`📊 Found elements - Email: ${!!emailInput}, Password: ${!!passwordInput}, Button: ${!!loginButton}`);
         
         if (emailInput && passwordInput && loginButton) {
+          // Clear any existing values
+          await emailInput.click({ clickCount: 3 });
           await emailInput.type(process.env.TROPICANA_EMAIL || 'johncroston@myyahoo.com');
+          
+          await passwordInput.click({ clickCount: 3 });
           await passwordInput.type(process.env.TROPICANA_PASSWORD || 'Wholesale123');
+          
+          // Wait a moment before clicking
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          
           await loginButton.click();
           
           // Wait for login to complete
-          await new Promise(resolve => setTimeout(resolve, 5000));
-          console.log('✅ Successfully logged in!');
-          loginSuccess = true;
-          break;
+          await new Promise(resolve => setTimeout(resolve, 8000));
+          
+          // Check if login was successful by looking for logout button or user info
+          const logoutButton = await page.$('a[href*="logout"], a[href*="signout"], .logout, .signout');
+          const userInfo = await page.$('.user-info, .account-info, .welcome-user');
+          const accountLink = await page.$('a[href*="account"], a[href*="profile"]');
+          
+          // Also check if we can see prices (not "Sign In To See Prices")
+          const signInText = await page.$('text="Sign In To See Prices"');
+          const hasPrices = !signInText;
+          
+          if (logoutButton || userInfo || accountLink || hasPrices) {
+            console.log('✅ Successfully logged in!');
+            loginSuccess = true;
+            break;
+          } else {
+            console.log('⚠️  Login may have failed, checking current URL...');
+            const currentUrl = page.url();
+            console.log(`Current URL: ${currentUrl}`);
+            
+            // If we're still on login page, login failed
+            if (currentUrl.includes('login')) {
+              console.log('❌ Still on login page, login failed');
+            } else {
+              console.log('✅ Redirected away from login page, assuming success');
+              loginSuccess = true;
+              break;
+            }
+          }
         } else {
           console.log('⚠️  Could not find login form elements on this URL');
           
@@ -138,6 +171,23 @@ async function scrapeSportsSupplements() {
     
     if (!loginSuccess) {
       console.log('⚠️  All login attempts failed, proceeding without login...');
+    } else {
+      // Verify login by checking if we can see prices
+      console.log('🔍 Verifying login by checking for prices...');
+      try {
+        await page.goto('https://www.tropicanawholesale.com/shop-by-category/Amino-Acids/', { waitUntil: 'networkidle2', timeout: 30000 });
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        
+        const signInText = await page.$('text="Sign In To See Prices"');
+        if (signInText) {
+          console.log('❌ Login verification failed - still seeing "Sign In To See Prices"');
+          loginSuccess = false;
+        } else {
+          console.log('✅ Login verified - can see prices!');
+        }
+      } catch (error) {
+        console.log('⚠️  Could not verify login:', error.message);
+      }
     }
     
     // Complete Tropicana Wholesale categories to scrape - All categories for MuscleSports rebrand
