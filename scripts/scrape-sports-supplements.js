@@ -95,20 +95,8 @@ async function scrapeSportsSupplements() {
         const emailInput = await page.$('input[name="loginname"], input[id="loginemail"], input[type="email"]');
         const passwordInput = await page.$('input[type="password"], input[name="password"], input[id="password"]');
         
-        // Find login button with multiple approaches
-        let loginButton = await page.$('button[type="submit"], input[type="submit"]');
-        if (!loginButton) {
-          // Try to find button by text content
-          loginButton = await page.evaluateHandle(() => {
-            const buttons = Array.from(document.querySelectorAll('button, input[type="submit"]'));
-            return buttons.find(btn => 
-              btn.textContent.toLowerCase().includes('login') || 
-              btn.textContent.toLowerCase().includes('sign in') ||
-              btn.value?.toLowerCase().includes('login') ||
-              btn.value?.toLowerCase().includes('sign in')
-            );
-          });
-        }
+        // Find login button using the actual HTML structure
+        const loginButton = await page.$('button[name="login-continue"], button[class*="primary-button"], button[type="submit"]');
         
         // Debug: Log what elements we found
         console.log(`📊 Found elements - Email: ${!!emailInput}, Password: ${!!passwordInput}, Button: ${!!loginButton}`);
