@@ -378,7 +378,7 @@ export default function Home() {
                         <div className="flex items-center gap-3 pt-4 border-t border-border">
                           {/* Avatar with initials */}
                           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white font-bold text-sm shadow-md flex-shrink-0">
-                            {(review.author || review.reviewer)?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
+                            {(review.author || review.reviewer)?.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)}
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-0.5">
