@@ -65,16 +65,13 @@ async function scrapeSportsSupplements() {
     await page.setViewport({ width: 1920, height: 1080 });
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
     
-    // Sports supplement categories to scrape
+    // Sports supplement categories to scrape - Verified working URLs
     const categories = [
-      { name: 'Protein Powders', url: 'https://tropicanawholesale.co.uk/collections/protein-powders' },
-      { name: 'Pre-Workout', url: 'https://tropicanawholesale.co.uk/collections/pre-workout' },
-      { name: 'Creatine', url: 'https://tropicanawholesale.co.uk/collections/creatine' },
-      { name: 'Amino Acids', url: 'https://tropicanawholesale.co.uk/collections/amino-acids' },
-      { name: 'Vitamins & Supplements', url: 'https://tropicanawholesale.co.uk/collections/vitamins-supplements' },
-      { name: 'Weight Management', url: 'https://tropicanawholesale.co.uk/collections/weight-management' },
-      { name: 'Sports Nutrition', url: 'https://tropicanawholesale.co.uk/collections/sports-nutrition' },
-      { name: 'Health & Wellness', url: 'https://tropicanawholesale.co.uk/collections/health-wellness' }
+      { name: 'Amino Acids', url: 'https://www.tropicanawholesale.com/shop-by-category/Amino-Acids/' },
+      { name: 'Protein Powders', url: 'https://www.tropicanawholesale.com/shop-by-category/Protein-Powders/' },
+      { name: 'Ready-To-Drinks', url: 'https://www.tropicanawholesale.com/shop-by-category/Ready-To-Drinks/' },
+      { name: 'Protein RTDs', url: 'https://www.tropicanawholesale.com/shop-by-category/Protein-RTDs/' },
+      { name: 'Cream Of Rice', url: 'https://www.tropicanawholesale.com/shop-by-category/Cream-Of-Rice/' }
     ];
     
     let totalProducts = 0;
@@ -87,26 +84,67 @@ async function scrapeSportsSupplements() {
       try {
         await page.goto(category.url, { waitUntil: 'networkidle2', timeout: 30000 });
         
-        // Wait for products to load
-        await page.waitForSelector('.product-item, .product-card, .grid-product', { timeout: 10000 });
+        // Wait for products to load - Updated selectors for Tropicana Wholesale
+        await page.waitForSelector('.product-item, .product-card, .grid-product, .product-listing-item', { timeout: 10000 });
         
-        // Extract product data
+        // Extract product data with detailed information
         const products = await page.evaluate((categoryName) => {
-          const productElements = document.querySelectorAll('.product-item, .product-card, .grid-product, [data-product-id]');
+          // Try multiple selectors that might be used on the site
+          const productElements = document.querySelectorAll('.product-item, .product-card, .grid-product, .product-listing-item, [data-product-id], .product, .product-row');
           const products = [];
           
           productElements.forEach((element, index) => {
             try {
-              // Extract product information
-              const nameElement = element.querySelector('.product-title, .product-name, h3, h4, .title');
-              const priceElement = element.querySelector('.price, .product-price, .money, [data-price]');
+              // Extract main product information
+              const nameElement = element.querySelector('.product-title, .product-name, h3, h4, .title, .product-title a, .product-name a, .product-name-link');
+              const priceElement = element.querySelector('.price, .product-price, .money, [data-price], .your-price, .price-value, .trade-price');
               const imageElement = element.querySelector('img');
               const linkElement = element.querySelector('a');
               
               const name = nameElement ? nameElement.textContent.trim() : '';
               const price = priceElement ? priceElement.textContent.trim() : '';
-              const image = imageElement ? imageElement.src || imageElement.getAttribute('data-src') : '';
+              const image = imageElement ? (imageElement.src || imageElement.getAttribute('data-src') || imageElement.getAttribute('data-lazy-src')) : '';
               const productUrl = linkElement ? linkElement.href : '';
+              
+              // Extract detailed product information
+              const skuElement = element.querySelector('.product-code, .sku, .stock-code, .product-sku');
+              const sku = skuElement ? skuElement.textContent.trim() : '';
+              
+              // Extract stock information
+              const stockElement = element.querySelector('.stock, .in-stock, .stock-status, .availability');
+              const stock = stockElement ? stockElement.textContent.trim() : '';
+              
+              // Extract brand information
+              const brandElement = element.querySelector('.brand, .manufacturer, .product-brand');
+              const brand = brandElement ? brandElement.textContent.trim() : '';
+              
+              // Extract weight/size information
+              const weightElement = element.querySelector('.weight, .size, .product-weight, .product-size');
+              const weight = weightElement ? weightElement.textContent.trim() : '';
+              
+              // Extract flavor information
+              const flavorElement = element.querySelector('.flavour, .flavor, .product-flavour, .product-flavor, .variant');
+              const flavor = flavorElement ? flavorElement.textContent.trim() : '';
+              
+              // Extract best before date
+              const bestBeforeElement = element.querySelector('.best-before, .expiry, .expiry-date');
+              const bestBefore = bestBeforeElement ? bestBeforeElement.textContent.trim() : '';
+              
+              // Extract case quantity
+              const caseQtyElement = element.querySelector('.case-quantity, .case-qty, .per-case');
+              const caseQty = caseQtyElement ? caseQtyElement.textContent.trim() : '';
+              
+              // Extract pallet quantity
+              const palletQtyElement = element.querySelector('.pallet-quantity, .pallet-qty, .per-pallet');
+              const palletQty = palletQtyElement ? palletQtyElement.textContent.trim() : '';
+              
+              // Extract country of origin
+              const originElement = element.querySelector('.origin, .country, .country-of-origin');
+              const origin = originElement ? originElement.textContent.trim() : '';
+              
+              // Extract promotional information
+              const promoElement = element.querySelector('.promo, .promotion, .offer, .deal');
+              const promotion = promoElement ? promoElement.textContent.trim() : '';
               
               if (name && price) {
                 products.push({
@@ -114,6 +152,16 @@ async function scrapeSportsSupplements() {
                   price: price,
                   image: image,
                   url: productUrl,
+                  sku: sku,
+                  stock: stock,
+                  brand: brand,
+                  weight: weight,
+                  flavor: flavor,
+                  bestBefore: bestBefore,
+                  caseQty: caseQty,
+                  palletQty: palletQty,
+                  origin: origin,
+                  promotion: promotion,
                   category: categoryName,
                   index: index
                 });
@@ -133,7 +181,7 @@ async function scrapeSportsSupplements() {
           try {
             const cleanName = cleanText(product.name);
             const cleanPrice = extractPrice(product.price);
-            const productId = generateProductId(cleanName, 'Tropicana');
+            const productId = product.sku || generateProductId(cleanName, 'Tropicana');
             
             // Skip if price is 0 or name is empty
             if (cleanPrice <= 0 || !cleanName) {
@@ -143,8 +191,8 @@ async function scrapeSportsSupplements() {
             
             // Check if product already exists
             const [existing] = await connection.execute(
-              'SELECT id FROM products WHERE id = ? OR name = ?',
-              [productId, cleanName]
+              'SELECT id FROM products WHERE id = ? OR name = ? OR sku = ?',
+              [productId, cleanName, product.sku]
             );
             
             if (existing.length > 0) {
@@ -152,40 +200,80 @@ async function scrapeSportsSupplements() {
               continue;
             }
             
-            // Calculate margin (50% markup for sports supplements)
-            const retailPrice = cleanPrice * 1.5;
+            // Calculate competitive pricing strategy
+            let markupMultiplier = 1.4; // 40% markup for competitive pricing
+            let retailPrice = cleanPrice * markupMultiplier;
+            
+            // Adjust markup based on product price range for better competitiveness
+            if (cleanPrice < 10) {
+              markupMultiplier = 1.6; // 60% markup for cheaper items
+              retailPrice = cleanPrice * markupMultiplier;
+            } else if (cleanPrice < 25) {
+              markupMultiplier = 1.45; // 45% markup for mid-range items
+              retailPrice = cleanPrice * markupMultiplier;
+            } else if (cleanPrice < 50) {
+              markupMultiplier = 1.35; // 35% markup for higher-end items
+              retailPrice = cleanPrice * markupMultiplier;
+            } else {
+              markupMultiplier = 1.3; // 30% markup for premium items
+              retailPrice = cleanPrice * markupMultiplier;
+            }
+            
             const margin = ((retailPrice - cleanPrice) / cleanPrice) * 100;
             
-            // Skip if margin is too low
-            if (margin < 30) {
+            // Skip if margin is too low (minimum 25% for sustainability)
+            if (margin < 25) {
               console.log(`⚠️  Skipping product: ${cleanName} (margin too low: ${margin.toFixed(1)}%)`);
               continue;
             }
             
-            // Insert product into database
+            // Round retail price to competitive pricing
+            retailPrice = Math.round(retailPrice * 100) / 100;
+            
+            // Create detailed description with all product info
+            let description = `High-quality ${category.name.toLowerCase()} from Tropicana Wholesale`;
+            if (product.brand) description += ` by ${product.brand}`;
+            if (product.flavor) description += ` - ${product.flavor} flavor`;
+            if (product.weight) description += ` (${product.weight})`;
+            if (product.origin) description += ` - Made in ${product.origin}`;
+            if (product.promotion) description += ` - ${product.promotion}`;
+            
+            // Determine stock status
+            const inStock = product.stock && !product.stock.toLowerCase().includes('out') && !product.stock.toLowerCase().includes('unavailable');
+            const stockQty = product.stock ? parseInt(product.stock.match(/\d+/)?.[0] || '100') : 100;
+            
+            // Insert product into database with all details
             await connection.execute(`
               INSERT INTO products (
                 id, name, description, price, wholesale_price, retail_price, 
                 margin, category, brand, sku, in_stock, stock_quantity, 
-                images, created_at, updated_at
-              ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+                images, weight, flavor, best_before, case_quantity, 
+                pallet_quantity, origin, promotion, created_at, updated_at
+              ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
             `, [
               productId,
               cleanName,
-              `High-quality ${category.name.toLowerCase()} from Tropicana Wholesale`,
+              description,
               retailPrice,
               cleanPrice,
               retailPrice,
               margin,
               category.name,
-              'Tropicana',
-              productId,
-              true,
-              100,
-              JSON.stringify([product.image])
+              product.brand || 'Tropicana',
+              product.sku || productId,
+              inStock,
+              stockQty,
+              JSON.stringify([product.image]),
+              product.weight || '',
+              product.flavor || '',
+              product.bestBefore || '',
+              product.caseQty || '',
+              product.palletQty || '',
+              product.origin || '',
+              product.promotion || ''
             ]);
             
-            console.log(`✅ Added: ${cleanName} - £${cleanPrice} → £${retailPrice.toFixed(2)} (${margin.toFixed(1)}% margin)`);
+            console.log(`✅ Added: ${cleanName}${product.flavor ? ` (${product.flavor})` : ''} - £${cleanPrice} → £${retailPrice} (${margin.toFixed(1)}% margin) [SKU: ${product.sku || 'N/A'}]`);
             processedProducts++;
             
           } catch (error) {
