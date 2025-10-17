@@ -264,7 +264,7 @@ async function scrapeSportsSupplements() {
         // Extract product data using Tropicana Wholesale's exact selectors
         const products = await page.evaluate((categoryName) => {
           // Use the exact selectors from Tropicana Wholesale HTML structure
-          const productElements = document.querySelectorAll('.product, .product-item, .product-card, .grid-product, .product-listing-item, [data-product-id], .product-row, .product-list-item, .product-container, .item, .listing-item, .pricing-col, .pricing-info');
+          const productElements = document.querySelectorAll('.product-line, .product-col, .col-sm-2, .product, .product-item, .product-card, .grid-product, .product-listing-item, [data-product-id], .product-row, .product-list-item, .product-container, .item, .listing-item, .pricing-col, .pricing-info');
           
           console.log(`Found ${productElements.length} product elements using Tropicana selectors`);
           
@@ -280,6 +280,8 @@ async function scrapeSportsSupplements() {
                 const hasProductName = element.querySelector('.product-name');
                 const hasPrice = element.querySelector('.price, .product-prices .price, .pricing-info .price, .pricing-col .price');
                 const hasStock = element.querySelector('.product-stock');
+                const hasSku = element.querySelector('.product-code');
+                const hasSizeFlavor = element.querySelector('.product-sizeflavour');
                 
                 // Debug: Log element content if it looks like a product
                 const text = element.textContent || '';
@@ -293,7 +295,8 @@ async function scrapeSportsSupplements() {
                   });
                 }
                 
-                if (!hasProductName || !hasPrice) return;
+                // Look for product elements that have either product name or SKU/size info
+                if (!hasProductName && !hasSku && !hasSizeFlavor) return;
                 
                 // Extract using Tropicana's exact selectors
                 const nameElement = element.querySelector('.product-name a, .product-name');
@@ -336,9 +339,9 @@ async function scrapeSportsSupplements() {
                 const stockQty = stockText.match(/\d+/);
                 const stockQuantity = stockQty ? parseInt(stockQty[0]) : 0;
                 
-                // Extract additional details
-                const skuElement = element.querySelector('[data-analyticstagmanager-product]');
-                const sku = skuElement ? skuElement.getAttribute('data-analyticstagmanager-product') : '';
+                // Extract SKU using the correct Tropicana selector
+                const skuElement = element.querySelector('.product-code');
+                const sku = skuElement ? skuElement.textContent.trim() : '';
                 
                 const brand = 'Tropicana'; // Default brand
                 
@@ -410,9 +413,9 @@ async function scrapeSportsSupplements() {
               const stockQty = stockText.match(/\d+/);
               const stockQuantity = stockQty ? parseInt(stockQty[0]) : 0;
               
-              // Extract additional details
-              const skuElement = element.querySelector('[data-analyticstagmanager-product]');
-              const sku = skuElement ? skuElement.getAttribute('data-analyticstagmanager-product') : '';
+              // Extract SKU using the correct Tropicana selector
+              const skuElement = element.querySelector('.product-code');
+              const sku = skuElement ? skuElement.textContent.trim() : '';
               
               const brand = 'Tropicana'; // Default brand
               
