@@ -91,10 +91,27 @@ async function scrapeSportsSupplements() {
         await page.goto(loginUrl, { waitUntil: 'networkidle2', timeout: 30000 });
         await new Promise(resolve => setTimeout(resolve, 2000));
         
-        // Look for login form elements
-        const emailInput = await page.$('input[type="email"], input[name="email"], input[id="email"], input[placeholder*="email" i]');
+        // Look for login form elements using the actual HTML structure
+        const emailInput = await page.$('input[name="loginname"], input[id="loginemail"], input[type="email"]');
         const passwordInput = await page.$('input[type="password"], input[name="password"], input[id="password"]');
-        const loginButton = await page.$('button[type="submit"], input[type="submit"], button:contains("Login"), button:contains("Sign In")');
+        
+        // Find login button with multiple approaches
+        let loginButton = await page.$('button[type="submit"], input[type="submit"]');
+        if (!loginButton) {
+          // Try to find button by text content
+          loginButton = await page.evaluateHandle(() => {
+            const buttons = Array.from(document.querySelectorAll('button, input[type="submit"]'));
+            return buttons.find(btn => 
+              btn.textContent.toLowerCase().includes('login') || 
+              btn.textContent.toLowerCase().includes('sign in') ||
+              btn.value?.toLowerCase().includes('login') ||
+              btn.value?.toLowerCase().includes('sign in')
+            );
+          });
+        }
+        
+        // Debug: Log what elements we found
+        console.log(`📊 Found elements - Email: ${!!emailInput}, Password: ${!!passwordInput}, Button: ${!!loginButton}`);
         
         if (emailInput && passwordInput && loginButton) {
           await emailInput.type(process.env.TROPICANA_EMAIL || 'johncroston@myyahoo.com');
@@ -108,6 +125,23 @@ async function scrapeSportsSupplements() {
           break;
         } else {
           console.log('⚠️  Could not find login form elements on this URL');
+          
+          // Debug: Show what's on the page
+          const pageInfo = await page.evaluate(() => {
+            const forms = document.querySelectorAll('form');
+            const inputs = document.querySelectorAll('input');
+            const buttons = document.querySelectorAll('button');
+            return {
+              forms: forms.length,
+              inputs: inputs.length,
+              buttons: buttons.length,
+              inputTypes: Array.from(inputs).map(i => i.type),
+              buttonTexts: Array.from(buttons).map(b => b.textContent?.trim())
+            };
+          });
+          console.log(`🔍 Page debug: ${pageInfo.forms} forms, ${pageInfo.inputs} inputs, ${pageInfo.buttons} buttons`);
+          console.log(`📝 Input types: ${pageInfo.inputTypes.join(', ')}`);
+          console.log(`🔘 Button texts: ${pageInfo.buttonTexts.join(', ')}`);
         }
       } catch (error) {
         console.log(`⚠️  Login failed for ${loginUrl}:`, error.message);
