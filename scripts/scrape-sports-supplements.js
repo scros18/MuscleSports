@@ -261,106 +261,166 @@ async function scrapeSportsSupplements() {
           console.log('⚠️  Could not save screenshot:', e.message);
         }
         
-        // Extract product data with detailed information
+        // Extract product data using Tropicana Wholesale's exact selectors
         const products = await page.evaluate((categoryName) => {
-          // Get all possible product elements
-          const allElements = document.querySelectorAll('div, article, section');
-          const products = [];
+          // Use the exact selectors from Tropicana Wholesale HTML structure
+          const productElements = document.querySelectorAll('.product, .product-item, .product-card, .grid-product, .product-listing-item, [data-product-id], .product-row, .product-list-item, .product-container, .item, .listing-item');
           
-          allElements.forEach((element, index) => {
+          console.log(`Found ${productElements.length} product elements using Tropicana selectors`);
+          
+          // If no products found with standard selectors, try broader approach
+          if (productElements.length === 0) {
+            console.log('Trying broader selector approach...');
+            const allDivs = document.querySelectorAll('div');
+            const products = [];
+            
+            allDivs.forEach((element, index) => {
+              try {
+                // Look for elements that contain Tropicana product structure
+                const hasProductName = element.querySelector('.product-name');
+                const hasPrice = element.querySelector('.price');
+                const hasStock = element.querySelector('.product-stock');
+                
+                if (!hasProductName || !hasPrice) return;
+                
+                // Extract using Tropicana's exact selectors
+                const nameElement = element.querySelector('.product-name a, .product-name');
+                const name = nameElement ? nameElement.textContent.trim() : '';
+                
+                const priceElement = element.querySelector('.price');
+                const priceText = priceElement ? priceElement.textContent.trim() : '';
+                
+                // Clean price text (remove "Your price", "£", "+ VAT", etc.)
+                const cleanPriceText = priceText.replace(/Your price|£|\+ VAT|VAT|small|span/gi, '').trim();
+                const priceMatch = cleanPriceText.match(/[\d,]+\.?\d*/);
+                const price = priceMatch ? parseFloat(priceMatch[0].replace(',', '')) : 0;
+                
+                const imageElement = element.querySelector('img');
+                const image = imageElement ? (imageElement.src || imageElement.getAttribute('data-src') || imageElement.getAttribute('data-lazy-src')) : '';
+                
+                const linkElement = element.querySelector('.product-name a, a');
+                const productUrl = linkElement ? linkElement.href : '';
+                
+                // Extract size/flavor using Tropicana's exact selector
+                const sizeFlavorElement = element.querySelector('.product-sizeflavour');
+                const sizeFlavorText = sizeFlavorElement ? sizeFlavorElement.textContent.trim() : '';
+                
+                // Split size and flavor
+                const sizeFlavorParts = sizeFlavorText.split(' / ');
+                const weight = sizeFlavorParts[0] || '';
+                const flavor = sizeFlavorParts[1] || '';
+                
+                // Extract stock status using Tropicana's exact selector
+                const stockElement = element.querySelector('.product-stock');
+                const stockText = stockElement ? stockElement.textContent.trim() : '';
+                const inStock = stockText.toLowerCase().includes('in stock');
+                const stockQty = stockText.match(/\d+/);
+                const stockQuantity = stockQty ? parseInt(stockQty[0]) : 0;
+                
+                // Extract additional details
+                const skuElement = element.querySelector('[data-analyticstagmanager-product]');
+                const sku = skuElement ? skuElement.getAttribute('data-analyticstagmanager-product') : '';
+                
+                const brand = 'Tropicana'; // Default brand
+                
+                if (name && price > 0 && name.length > 5) {
+                  products.push({
+                    name: name,
+                    price: price,
+                    image: image,
+                    url: productUrl,
+                    sku: sku,
+                    stock: stockText,
+                    inStock: inStock,
+                    stockQuantity: stockQuantity,
+                    brand: brand,
+                    weight: weight,
+                    flavor: flavor,
+                    bestBefore: '',
+                    caseQty: '',
+                    palletQty: '',
+                    origin: '',
+                    promotion: '',
+                    category: categoryName,
+                    index: index
+                  });
+                }
+              } catch (error) {
+                // Skip this element
+              }
+            });
+            
+            return products;
+          }
+          
+          // Process products found with standard selectors
+          return Array.from(productElements).map((element, index) => {
             try {
-              // Look for elements that contain product-like information
-              const text = element.textContent || '';
-              const hasPrice = /£\d+|\$\d+|\d+\.\d{2}/.test(text);
-              const hasProductName = text.length > 10 && text.length < 200;
-              const hasImage = element.querySelector('img');
+              // Extract using Tropicana's exact selectors
+              const nameElement = element.querySelector('.product-name a, .product-name');
+              const name = nameElement ? nameElement.textContent.trim() : '';
               
-              // Skip if doesn't look like a product
-              if (!hasPrice || !hasProductName) return;
+              const priceElement = element.querySelector('.price');
+              const priceText = priceElement ? priceElement.textContent.trim() : '';
               
-              // Extract main product information with broader selectors
-              const nameElement = element.querySelector('h1, h2, h3, h4, h5, h6, .title, .name, .product-title, .product-name, [class*="title"], [class*="name"]') || 
-                                 element.querySelector('a[href*="product"], a[href*="item"]') ||
-                                 element.querySelector('div[class*="title"], div[class*="name"]');
-              
-              const priceElement = element.querySelector('.price, .cost, .money, [class*="price"], [class*="cost"]') ||
-                                  element.querySelector('span:contains("£"), div:contains("£"), p:contains("£")') ||
-                                  Array.from(element.querySelectorAll('*')).find(el => /£\d+|\$\d+|\d+\.\d{2}/.test(el.textContent));
+              // Clean price text (remove "Your price", "£", "+ VAT", etc.)
+              const cleanPriceText = priceText.replace(/Your price|£|\+ VAT|VAT|small|span/gi, '').trim();
+              const priceMatch = cleanPriceText.match(/[\d,]+\.?\d*/);
+              const price = priceMatch ? parseFloat(priceMatch[0].replace(',', '')) : 0;
               
               const imageElement = element.querySelector('img');
-              const linkElement = element.querySelector('a');
-              
-              const name = nameElement ? nameElement.textContent.trim() : '';
-              const price = priceElement ? priceElement.textContent.trim() : '';
               const image = imageElement ? (imageElement.src || imageElement.getAttribute('data-src') || imageElement.getAttribute('data-lazy-src')) : '';
+              
+              const linkElement = element.querySelector('.product-name a, a');
               const productUrl = linkElement ? linkElement.href : '';
               
-              // Extract detailed product information
-              const skuElement = element.querySelector('[class*="sku"], [class*="code"], [class*="id"]');
-              const sku = skuElement ? skuElement.textContent.trim() : '';
+              // Extract size/flavor using Tropicana's exact selector
+              const sizeFlavorElement = element.querySelector('.product-sizeflavour');
+              const sizeFlavorText = sizeFlavorElement ? sizeFlavorElement.textContent.trim() : '';
               
-              // Extract stock information
-              const stockElement = element.querySelector('[class*="stock"], [class*="available"], [class*="in-stock"]');
-              const stock = stockElement ? stockElement.textContent.trim() : '';
+              // Split size and flavor
+              const sizeFlavorParts = sizeFlavorText.split(' / ');
+              const weight = sizeFlavorParts[0] || '';
+              const flavor = sizeFlavorParts[1] || '';
               
-              // Extract brand information
-              const brandElement = element.querySelector('[class*="brand"], [class*="manufacturer"]');
-              const brand = brandElement ? brandElement.textContent.trim() : '';
+              // Extract stock status using Tropicana's exact selector
+              const stockElement = element.querySelector('.product-stock');
+              const stockText = stockElement ? stockElement.textContent.trim() : '';
+              const inStock = stockText.toLowerCase().includes('in stock');
+              const stockQty = stockText.match(/\d+/);
+              const stockQuantity = stockQty ? parseInt(stockQty[0]) : 0;
               
-              // Extract weight/size information
-              const weightElement = element.querySelector('[class*="weight"], [class*="size"], [class*="gram"], [class*="kg"]');
-              const weight = weightElement ? weightElement.textContent.trim() : '';
+              // Extract additional details
+              const skuElement = element.querySelector('[data-analyticstagmanager-product]');
+              const sku = skuElement ? skuElement.getAttribute('data-analyticstagmanager-product') : '';
               
-              // Extract flavor information
-              const flavorElement = element.querySelector('[class*="flavour"], [class*="flavor"], [class*="variant"]');
-              const flavor = flavorElement ? flavorElement.textContent.trim() : '';
+              const brand = 'Tropicana'; // Default brand
               
-              // Extract best before date
-              const bestBeforeElement = element.querySelector('[class*="best"], [class*="expiry"], [class*="date"]');
-              const bestBefore = bestBeforeElement ? bestBeforeElement.textContent.trim() : '';
-              
-              // Extract case quantity
-              const caseQtyElement = element.querySelector('[class*="case"], [class*="per-case"]');
-              const caseQty = caseQtyElement ? caseQtyElement.textContent.trim() : '';
-              
-              // Extract pallet quantity
-              const palletQtyElement = element.querySelector('[class*="pallet"], [class*="per-pallet"]');
-              const palletQty = palletQtyElement ? palletQtyElement.textContent.trim() : '';
-              
-              // Extract country of origin
-              const originElement = element.querySelector('[class*="origin"], [class*="country"]');
-              const origin = originElement ? originElement.textContent.trim() : '';
-              
-              // Extract promotional information
-              const promoElement = element.querySelector('[class*="promo"], [class*="offer"], [class*="deal"]');
-              const promotion = promoElement ? promoElement.textContent.trim() : '';
-              
-              if (name && price && name.length > 5 && price.length > 2) {
-                products.push({
-                  name: name,
-                  price: price,
-                  image: image,
-                  url: productUrl,
-                  sku: sku,
-                  stock: stock,
-                  brand: brand,
-                  weight: weight,
-                  flavor: flavor,
-                  bestBefore: bestBefore,
-                  caseQty: caseQty,
-                  palletQty: palletQty,
-                  origin: origin,
-                  promotion: promotion,
-                  category: categoryName,
-                  index: index
-                });
-              }
+              return {
+                name: name,
+                price: price,
+                image: image,
+                url: productUrl,
+                sku: sku,
+                stock: stockText,
+                inStock: inStock,
+                stockQuantity: stockQuantity,
+                brand: brand,
+                weight: weight,
+                flavor: flavor,
+                bestBefore: '',
+                caseQty: '',
+                palletQty: '',
+                origin: '',
+                promotion: '',
+                category: categoryName,
+                index: index
+              };
             } catch (error) {
-              // Skip this element
+              console.log(`Error processing product ${index + 1}:`, error.message);
+              return null;
             }
-          });
-          
-          return products;
+          }).filter(Boolean);
         }, category.name);
         
         console.log(`📋 Found ${products.length} products in ${category.name}`);
@@ -369,7 +429,7 @@ async function scrapeSportsSupplements() {
         for (const product of products) {
           try {
             const cleanName = cleanText(product.name);
-            const cleanPrice = extractPrice(product.price);
+            const cleanPrice = product.price; // Already cleaned in extraction
             const productId = product.sku || generateProductId(cleanName, 'Tropicana');
             
             // Skip if price is 0 or name is empty
@@ -427,9 +487,9 @@ async function scrapeSportsSupplements() {
             if (product.origin) description += ` - Made in ${product.origin}`;
             if (product.promotion) description += ` - ${product.promotion}`;
             
-            // Determine stock status
-            const inStock = product.stock && !product.stock.toLowerCase().includes('out') && !product.stock.toLowerCase().includes('unavailable');
-            const stockQty = product.stock ? parseInt(product.stock.match(/\d+/)?.[0] || '100') : 100;
+            // Use the extracted stock data from Tropicana selectors
+            const inStock = product.inStock || false;
+            const stockQty = product.stockQuantity || 0;
             
             // Prepare flavors array for MuscleSports site compatibility
             const flavours = product.flavor ? [product.flavor] : [];
