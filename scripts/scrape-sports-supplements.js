@@ -84,20 +84,73 @@ async function scrapeSportsSupplements() {
       try {
         await page.goto(category.url, { waitUntil: 'networkidle2', timeout: 30000 });
         
-        // Wait for products to load - Updated selectors for Tropicana Wholesale
-        await page.waitForSelector('.product-item, .product-card, .grid-product, .product-listing-item', { timeout: 10000 });
+        // Wait a bit for dynamic content to load
+        await page.waitForTimeout(3000);
+        
+        // Try to find products with multiple fallback selectors
+        let productElements = null;
+        const selectors = [
+          '.product',
+          '.product-item', 
+          '.product-card',
+          '.grid-product',
+          '.product-listing-item',
+          '[data-product-id]',
+          '.product-row',
+          '.product-list-item',
+          '.product-container',
+          '.item',
+          '.listing-item',
+          'div[class*="product"]',
+          'div[class*="item"]',
+          'div[class*="listing"]'
+        ];
+        
+        for (const selector of selectors) {
+          try {
+            await page.waitForSelector(selector, { timeout: 5000 });
+            productElements = await page.$$(selector);
+            if (productElements.length > 0) {
+              console.log(`✅ Found ${productElements.length} products using selector: ${selector}`);
+              break;
+            }
+          } catch (e) {
+            // Try next selector
+          }
+        }
+        
+        if (!productElements || productElements.length === 0) {
+          console.log(`⚠️  No products found with any selector. Trying to get all divs...`);
+          productElements = await page.$$('div');
+          console.log(`📊 Found ${productElements.length} total divs on page`);
+        }
         
         // Extract product data with detailed information
         const products = await page.evaluate((categoryName) => {
-          // Try multiple selectors that might be used on the site
-          const productElements = document.querySelectorAll('.product-item, .product-card, .grid-product, .product-listing-item, [data-product-id], .product, .product-row');
+          // Get all possible product elements
+          const allElements = document.querySelectorAll('div, article, section');
           const products = [];
           
-          productElements.forEach((element, index) => {
+          allElements.forEach((element, index) => {
             try {
-              // Extract main product information
-              const nameElement = element.querySelector('.product-title, .product-name, h3, h4, .title, .product-title a, .product-name a, .product-name-link');
-              const priceElement = element.querySelector('.price, .product-price, .money, [data-price], .your-price, .price-value, .trade-price');
+              // Look for elements that contain product-like information
+              const text = element.textContent || '';
+              const hasPrice = /£\d+|\$\d+|\d+\.\d{2}/.test(text);
+              const hasProductName = text.length > 10 && text.length < 200;
+              const hasImage = element.querySelector('img');
+              
+              // Skip if doesn't look like a product
+              if (!hasPrice || !hasProductName) return;
+              
+              // Extract main product information with broader selectors
+              const nameElement = element.querySelector('h1, h2, h3, h4, h5, h6, .title, .name, .product-title, .product-name, [class*="title"], [class*="name"]') || 
+                                 element.querySelector('a[href*="product"], a[href*="item"]') ||
+                                 element.querySelector('div[class*="title"], div[class*="name"]');
+              
+              const priceElement = element.querySelector('.price, .cost, .money, [class*="price"], [class*="cost"]') ||
+                                  element.querySelector('span:contains("£"), div:contains("£"), p:contains("£")') ||
+                                  Array.from(element.querySelectorAll('*')).find(el => /£\d+|\$\d+|\d+\.\d{2}/.test(el.textContent));
+              
               const imageElement = element.querySelector('img');
               const linkElement = element.querySelector('a');
               
@@ -107,46 +160,46 @@ async function scrapeSportsSupplements() {
               const productUrl = linkElement ? linkElement.href : '';
               
               // Extract detailed product information
-              const skuElement = element.querySelector('.product-code, .sku, .stock-code, .product-sku');
+              const skuElement = element.querySelector('[class*="sku"], [class*="code"], [class*="id"]');
               const sku = skuElement ? skuElement.textContent.trim() : '';
               
               // Extract stock information
-              const stockElement = element.querySelector('.stock, .in-stock, .stock-status, .availability');
+              const stockElement = element.querySelector('[class*="stock"], [class*="available"], [class*="in-stock"]');
               const stock = stockElement ? stockElement.textContent.trim() : '';
               
               // Extract brand information
-              const brandElement = element.querySelector('.brand, .manufacturer, .product-brand');
+              const brandElement = element.querySelector('[class*="brand"], [class*="manufacturer"]');
               const brand = brandElement ? brandElement.textContent.trim() : '';
               
               // Extract weight/size information
-              const weightElement = element.querySelector('.weight, .size, .product-weight, .product-size');
+              const weightElement = element.querySelector('[class*="weight"], [class*="size"], [class*="gram"], [class*="kg"]');
               const weight = weightElement ? weightElement.textContent.trim() : '';
               
               // Extract flavor information
-              const flavorElement = element.querySelector('.flavour, .flavor, .product-flavour, .product-flavor, .variant');
+              const flavorElement = element.querySelector('[class*="flavour"], [class*="flavor"], [class*="variant"]');
               const flavor = flavorElement ? flavorElement.textContent.trim() : '';
               
               // Extract best before date
-              const bestBeforeElement = element.querySelector('.best-before, .expiry, .expiry-date');
+              const bestBeforeElement = element.querySelector('[class*="best"], [class*="expiry"], [class*="date"]');
               const bestBefore = bestBeforeElement ? bestBeforeElement.textContent.trim() : '';
               
               // Extract case quantity
-              const caseQtyElement = element.querySelector('.case-quantity, .case-qty, .per-case');
+              const caseQtyElement = element.querySelector('[class*="case"], [class*="per-case"]');
               const caseQty = caseQtyElement ? caseQtyElement.textContent.trim() : '';
               
               // Extract pallet quantity
-              const palletQtyElement = element.querySelector('.pallet-quantity, .pallet-qty, .per-pallet');
+              const palletQtyElement = element.querySelector('[class*="pallet"], [class*="per-pallet"]');
               const palletQty = palletQtyElement ? palletQtyElement.textContent.trim() : '';
               
               // Extract country of origin
-              const originElement = element.querySelector('.origin, .country, .country-of-origin');
+              const originElement = element.querySelector('[class*="origin"], [class*="country"]');
               const origin = originElement ? originElement.textContent.trim() : '';
               
               // Extract promotional information
-              const promoElement = element.querySelector('.promo, .promotion, .offer, .deal');
+              const promoElement = element.querySelector('[class*="promo"], [class*="offer"], [class*="deal"]');
               const promotion = promoElement ? promoElement.textContent.trim() : '';
               
-              if (name && price) {
+              if (name && price && name.length > 5 && price.length > 2) {
                 products.push({
                   name: name,
                   price: price,
@@ -167,7 +220,7 @@ async function scrapeSportsSupplements() {
                 });
               }
             } catch (error) {
-              console.log(`Error processing product ${index}:`, error);
+              // Skip this element
             }
           });
           
