@@ -193,7 +193,7 @@ async function importTropicanaCSV(csvPath: string) {
         const existing = await Database.query(
           'SELECT id FROM products WHERE id = ?',
           [id]
-        );
+        ) as any[];
 
         if (existing.length > 0) {
           // Update existing product
