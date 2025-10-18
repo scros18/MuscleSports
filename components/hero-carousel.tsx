@@ -179,21 +179,21 @@ export default function HeroCarousel() {
             sizes="(min-width: 768px) 100vw, 100vw"
             className="object-cover"
           />
-          <div className="w-full h-full bg-gradient-to-r from-black/70 via-black/40 to-transparent flex items-center">
-            <div className="container px-8 md:px-16">
+          <div className="w-full h-full bg-gradient-to-r from-black/80 via-black/50 to-transparent flex items-center relative z-10">
+            <div className="container px-4 sm:px-6 md:px-16">
               <div className="max-w-xl md:max-w-2xl">
                 {/* Main Title - Bold & Masculine with premium black background */}
                 <div className="inline-block mb-2 md:mb-3">
-                  <h2 className="text-white text-3xl md:text-6xl font-black tracking-tight leading-tight px-4 md:px-6 py-2 md:py-3 uppercase bg-black/80 backdrop-blur-sm rounded-lg">
+                  <h2 className="text-white text-2xl sm:text-3xl md:text-6xl font-black tracking-tight leading-tight px-3 sm:px-4 md:px-6 py-2 md:py-3 uppercase bg-black/90 backdrop-blur-sm rounded-lg shadow-2xl">
                     {s.title}
                   </h2>
                 </div>
                 
                 {/* Subtitle with accent line and black background */}
                 {s.subtitle && (
-                  <div className="inline-flex items-center gap-2 md:gap-3 bg-black/80 backdrop-blur-sm rounded-lg px-4 md:px-5 py-2 md:py-2.5">
+                  <div className="inline-flex items-center gap-2 md:gap-3 bg-black/90 backdrop-blur-sm rounded-lg px-3 sm:px-4 md:px-5 py-2 md:py-2.5 shadow-xl">
                     <div 
-                      className="h-0.5 w-10 md:w-14"
+                      className="h-0.5 w-8 sm:w-10 md:w-14"
                       style={{
                         background: currentTheme === 'musclesports' 
                           ? 'linear-gradient(to right, #00B341, #00E050)'
@@ -202,7 +202,7 @@ export default function HeroCarousel() {
                           : 'linear-gradient(to right, #388EE9, #8B5CF6)'
                       }}
                     ></div>
-                    <p className="text-white text-base md:text-xl font-bold tracking-wide uppercase">
+                    <p className="text-white text-sm sm:text-base md:text-xl font-bold tracking-wide uppercase">
                       {s.subtitle}
                     </p>
                   </div>
@@ -212,12 +212,13 @@ export default function HeroCarousel() {
                 <Link 
                   href={s.category ? `/products?category=${encodeURIComponent(s.category)}` : '/products'}
                   tabIndex={i !== index ? -1 : undefined}
+                  className="inline-block"
                 >
                   <Button
                     className={`${
                       settings.animationsEnabled
-                        ? 'mt-5 md:mt-6 rounded-full font-black text-xs md:text-sm uppercase tracking-wider shadow-2xl px-6 md:px-10 py-2.5 md:py-3.5 transition-all duration-500 hover:scale-105 active:scale-95'
-                        : 'mt-5 md:mt-6 rounded-full font-black text-xs md:text-sm uppercase tracking-wider shadow-2xl px-6 md:px-10 py-2.5 md:py-3.5 transition-colors duration-200'
+                        ? 'mt-4 sm:mt-5 md:mt-6 rounded-full font-black text-xs sm:text-sm md:text-base uppercase tracking-wider shadow-2xl px-5 sm:px-6 md:px-10 py-2 sm:py-2.5 md:py-3.5 transition-all duration-500 hover:scale-105 active:scale-95'
+                        : 'mt-4 sm:mt-5 md:mt-6 rounded-full font-black text-xs sm:text-sm md:text-base uppercase tracking-wider shadow-2xl px-5 sm:px-6 md:px-10 py-2 sm:py-2.5 md:py-3.5 transition-colors duration-200'
                     }`}
                     aria-label={s.title + ' - Shop Now'}
                     tabIndex={i !== index ? -1 : undefined}
