@@ -71,19 +71,19 @@ export function ProductCard({ product, hideDescription = false, sectionType = 'd
   const getSectionStyles = () => {
     if (sectionType === 'best-sellers') {
       return {
-        buttonClass: 'bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 text-white',
+        buttonClass: 'bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-white rounded-full',
         titleGradient: 'hover:bg-gradient-to-r hover:from-yellow-600 hover:via-amber-500 hover:to-yellow-700 hover:bg-clip-text hover:text-transparent',
         priceGradient: 'bg-gradient-to-r from-yellow-600 to-amber-600 bg-clip-text text-transparent'
       };
     } else if (sectionType === 'new') {
       return {
-        buttonClass: 'bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white',
+        buttonClass: 'bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white rounded-full',
         titleGradient: 'hover:bg-gradient-to-r hover:from-teal-600 hover:via-cyan-500 hover:to-sky-700 hover:bg-clip-text hover:text-transparent',
         priceGradient: 'bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent'
       };
     } else {
       return {
-        buttonClass: '',
+        buttonClass: 'rounded-full',
         titleGradient: 'hover:text-primary',
         priceGradient: 'bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent'
       };
@@ -262,11 +262,11 @@ export function ProductCard({ product, hideDescription = false, sectionType = 'd
 
         {/* Add to cart button */}
         <Button
-          className={`w-full font-semibold shadow-sm hover:shadow-md text-xs sm:text-sm h-8 sm:h-9 ${
-            isAdded ? "bg-green-600 hover:bg-green-700" : sectionStyles.buttonClass
+          className={`w-full font-semibold shadow-lg hover:shadow-xl text-xs sm:text-sm h-9 sm:h-10 ${
+            isAdded ? "bg-green-600 hover:bg-green-700 rounded-full" : sectionStyles.buttonClass
           } ${
             settings.animationsEnabled
-              ? "transition-all duration-300 active:scale-[0.98] hover:scale-[1.01]"
+              ? "transition-all duration-300 active:scale-[0.98] hover:scale-[1.02]"
               : "transition-colors duration-200"
           }`}
           onClick={(e) => {

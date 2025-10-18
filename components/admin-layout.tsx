@@ -471,17 +471,6 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden bg-slate-950">
-        {/* Maintenance Mode Warning Banner */}
-        {isMaintenanceMode && (
-          <div className="bg-orange-600/90 text-white px-4 py-3 flex items-center justify-center gap-3 sticky top-0 z-50 shadow-lg border-b border-orange-700">
-            <Wrench className="h-5 w-5 animate-pulse" />
-            <div className="font-semibold text-sm sm:text-base">
-              🚧 MAINTENANCE MODE ACTIVE - Site is down for all customers. Only you can access /admin
-            </div>
-            <Wrench className="h-5 w-5 animate-pulse" />
-          </div>
-        )}
-
         {/* Mobile Menu Button */}
         <div className="md:hidden bg-slate-900 border-b border-slate-800 px-4 py-3 sticky top-0 z-30">
           <Button

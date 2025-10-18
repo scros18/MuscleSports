@@ -345,20 +345,11 @@ export default function HomePanels() {
             </div>
 
             {panel.link && (
-              <Link 
+              <Link
                 href={panel.link}
-                className="group/btn block w-full text-center text-sm font-semibold rounded-lg transition-all duration-300 py-3.5 shadow-sm hover:shadow-lg relative overflow-hidden cursor-pointer"
+                className="group/btn block w-full text-center text-sm font-bold rounded-full transition-all duration-300 py-3.5 shadow-lg hover:shadow-xl relative overflow-hidden cursor-pointer bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
               >
-                {/* Premium gradient background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 transition-all duration-300"></div>
-                
-                {/* Hover overlay with dark green and softened edges */}
-                <div className="absolute inset-0 bg-gradient-to-r from-green-700 via-emerald-700 to-green-800 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 blur-[0.5px]"></div>
-                
-                {/* Subtle shine effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-700"></div>
-                
-                <span className="relative z-10 text-white font-semibold tracking-wide flex items-center justify-center gap-2">
+                <span className="relative z-10 text-white font-bold tracking-wide flex items-center justify-center gap-2">
                   View Products
                   <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
                 </span>

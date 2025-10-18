@@ -274,11 +274,21 @@ export default function Home() {
                       <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-6 shadow-md ${colorScheme.iconGradient}`}>
                         {colorScheme.icon}
                       </div>
-                      <h2 className="text-3xl font-bold mb-3 tracking-tight font-saira">
-                        <span className={colorScheme.textGradient}>
-                          {section.title ?? 'Products'}
-                        </span>
-                      </h2>
+                      <div className="relative inline-block mb-3">
+                        <h2 className="text-3xl font-bold tracking-tight font-saira uppercase">
+                          <span className={colorScheme.textGradient}>
+                            {section.title ?? 'Products'}
+                          </span>
+                        </h2>
+                        {/* Green underline accent */}
+                        <div className={`absolute -bottom-2 left-0 right-0 h-1 ${
+                          currentTheme === 'musclesports' 
+                            ? 'bg-gradient-to-r from-transparent via-green-500 to-transparent' 
+                            : currentTheme === 'vera'
+                            ? 'bg-gradient-to-r from-transparent via-purple-500 to-transparent'
+                            : 'bg-gradient-to-r from-transparent via-blue-500 to-transparent'
+                        }`}></div>
+                      </div>
                       <p className="text-muted-foreground text-base max-w-md mb-0">{section.description ?? ''}</p>
                     </div>
                   </div>
@@ -376,14 +386,14 @@ export default function Home() {
                         </p>
 
                         {/* Footer with author info */}
-                        <div className="flex items-center gap-3 pt-4 border-t border-border">
+                        <div className="flex flex-col items-center text-center gap-3 pt-4 border-t border-border">
                           {/* Avatar with initials */}
                           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white font-bold text-sm shadow-md flex-shrink-0">
                             {(review.author || review.reviewer)?.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)}
                           </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-0.5">
-                              <p className="font-semibold text-sm text-foreground truncate">
+                          <div className="flex-1 min-w-0 w-full">
+                            <div className="flex items-center justify-center gap-2 mb-0.5">
+                              <p className="font-semibold text-sm text-foreground">
                                 {review.author || review.reviewer}
                               </p>
                               {review.verified && (
@@ -392,7 +402,7 @@ export default function Home() {
                                 </svg>
                               )}
                             </div>
-                            <p className="text-xs text-muted-foreground truncate">
+                            <p className="text-xs text-muted-foreground">
                               {review.location || review.item || 'Verified Customer'}
                             </p>
                           </div>
@@ -401,7 +411,7 @@ export default function Home() {
                         {/* Verified badge (Trustpilot style) */}
                         {review.verified && (
                           <div className="mt-4 pt-4 border-t border-border">
-                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
                               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                               </svg>
