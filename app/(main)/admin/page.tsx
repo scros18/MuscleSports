@@ -18,6 +18,17 @@ import {
   Wrench,
   ToggleLeft,
   ToggleRight,
+  Plus,
+  Search,
+  Bell,
+  Menu,
+  Home,
+  Settings,
+  LayoutGrid,
+  FileText,
+  Tag,
+  ArrowUpRight,
+  ArrowDownRight,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -32,6 +43,95 @@ interface DashboardStats {
   totalProducts: number;
   recentOrders: any[];
   salesData: any[];
+}
+
+// Modern Maintenance Toggle Component for Sidebar
+function MaintenanceToggleModern() {
+  const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(false);
+
+  useEffect(() => {
+    fetchStatus();
+  }, []);
+
+  const fetchStatus = async () => {
+    try {
+      const res = await fetch('/api/admin/maintenance');
+      const data = await res.json();
+      setIsMaintenanceMode(data.isMaintenanceMode || false);
+    } catch (err) {
+      console.error('Failed to fetch maintenance status:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const toggleMaintenance = async () => {
+    setUpdating(true);
+    try {
+      const res = await fetch('/api/admin/maintenance', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          isMaintenanceMode: !isMaintenanceMode 
+        }),
+      });
+
+      if (!res.ok) throw new Error('Failed to toggle maintenance mode');
+
+      const data = await res.json();
+      setIsMaintenanceMode(data.isMaintenanceMode);
+    } catch (err) {
+      console.error('Error toggling maintenance:', err);
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <Card>
+        <CardContent className="pt-6">
+          <div className="text-center text-sm text-muted-foreground">Loading...</div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">Maintenance Mode</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Badge 
+                variant={isMaintenanceMode ? "destructive" : "default"}
+                className={isMaintenanceMode ? "bg-orange-500 hover:bg-orange-600" : "bg-green-500 hover:bg-green-600"}
+              >
+                {isMaintenanceMode ? 'Offline' : 'Live'}
+              </Badge>
+              <span className="text-sm text-muted-foreground">
+                {isMaintenanceMode ? 'Site is down' : 'Site is running'}
+              </span>
+            </div>
+          </div>
+          <Button 
+            onClick={toggleMaintenance} 
+            disabled={updating}
+            variant={isMaintenanceMode ? "default" : "outline"}
+            className={`w-full ${isMaintenanceMode ? 'bg-green-600 hover:bg-green-700' : ''}`}
+            size="sm"
+          >
+            {updating ? 'Updating...' : isMaintenanceMode ? 'Enable Site' : 'Enable Maintenance'}
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
 }
 
 export default function AdminPage() {
@@ -146,107 +246,256 @@ export default function AdminPage() {
   };
 
   return (
-    <AdminLayout title={simpleMode ? "Admin (Simple)" : "Dashboard"} description={simpleMode ? 'Easy mode for quick tasks' : 'Welcome back!'}>
-      <div className="p-4 sm:p-6">
-        {/* Mode Toggle */}
-        <div className="mb-4 flex items-center justify-between">
-          <div className="text-sm text-muted-foreground">Switch between Simple and Advanced views.</div>
-          <Button variant="outline" size="sm" onClick={() => setSimpleMode(!simpleMode)}>
-            {simpleMode ? 'Switch to Advanced' : 'Switch to Simple'}
-          </Button>
+    <AdminLayout title="Home" description="">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+        {/* Header */}
+        <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+          <div className="px-4 sm:px-6 lg:px-8 py-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Home</h1>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Manage your store from one place</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <Button variant="outline" size="sm" className="hidden sm:flex">
+                  <Search className="h-4 w-4 mr-2" />
+                  Search
+                </Button>
+                <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
+                  <Plus className="h-4 w-4 mr-2" />
+                  <span className="hidden sm:inline">Add product</span>
+                  <span className="sm:hidden">Add</span>
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Simple Admin - large clear actions */}
-        {simpleMode ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            <Link href="/admin/products/new">
-              <Card className="group hover:shadow-lg transition-shadow">
-                <CardContent className="p-6 flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-                    <Package className="h-6 w-6" />
+        {/* Main Content */}
+        <div className="px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
+          {/* Quick Stats */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <Card className="hover:shadow-md transition-shadow">
+              <CardContent className="p-5">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Total sales</div>
+                  <div className="p-2 bg-green-50 dark:bg-green-950 rounded-lg">
+                    <DollarSign className="h-4 w-4 text-green-600 dark:text-green-400" />
                   </div>
-                  <div>
-                    <div className="font-semibold text-lg">Add Product</div>
-                    <div className="text-sm text-muted-foreground">Create a new product listing</div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
+                </div>
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">£{stats.totalRevenue.toLocaleString()}</div>
+                <div className="flex items-center gap-1 mt-1 text-xs text-green-600 dark:text-green-400">
+                  <ArrowUpRight className="h-3 w-3" />
+                  <span>12% from last month</span>
+                </div>
+              </CardContent>
+            </Card>
 
-            <Link href="/admin/products">
-              <Card className="group hover:shadow-lg transition-shadow">
-                <CardContent className="p-6 flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center">
-                    <BarChart3 className="h-6 w-6" />
+            <Card className="hover:shadow-md transition-shadow">
+              <CardContent className="p-5">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Orders</div>
+                  <div className="p-2 bg-blue-50 dark:bg-blue-950 rounded-lg">
+                    <ShoppingBag className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                   </div>
-                  <div>
-                    <div className="font-semibold text-lg">Manage Products</div>
-                    <div className="text-sm text-muted-foreground">Edit prices, stock and details</div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
+                </div>
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalOrders}</div>
+                <div className="flex items-center gap-1 mt-1 text-xs text-green-600 dark:text-green-400">
+                  <ArrowUpRight className="h-3 w-3" />
+                  <span>8% from last month</span>
+                </div>
+              </CardContent>
+            </Card>
 
-            <Link href="/admin/products/categories">
-              <Card className="group hover:shadow-lg transition-shadow">
-                <CardContent className="p-6 flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center">
-                    <ChevronRight className="h-6 w-6" />
+            <Card className="hover:shadow-md transition-shadow">
+              <CardContent className="p-5">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Customers</div>
+                  <div className="p-2 bg-purple-50 dark:bg-purple-950 rounded-lg">
+                    <Users className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                   </div>
-                  <div>
-                    <div className="font-semibold text-lg">Categories</div>
-                    <div className="text-sm text-muted-foreground">Organise your catalog</div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
+                </div>
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalCustomers}</div>
+                <div className="flex items-center gap-1 mt-1 text-xs text-green-600 dark:text-green-400">
+                  <ArrowUpRight className="h-3 w-3" />
+                  <span>5% from last month</span>
+                </div>
+              </CardContent>
+            </Card>
 
-            <Link href="/admin/orders">
-              <Card className="group hover:shadow-lg transition-shadow">
-                <CardContent className="p-6 flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-xl bg-green-500/10 text-green-600 flex items-center justify-center">
-                    <ShoppingBag className="h-6 w-6" />
+            <Card className="hover:shadow-md transition-shadow">
+              <CardContent className="p-5">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Products</div>
+                  <div className="p-2 bg-orange-50 dark:bg-orange-950 rounded-lg">
+                    <Package className="h-4 w-4 text-orange-600 dark:text-orange-400" />
                   </div>
-                  <div>
-                    <div className="font-semibold text-lg">Orders</div>
-                    <div className="text-sm text-muted-foreground">See and manage recent orders</div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-
-            <Link href="/admin/users">
-              <Card className="group hover:shadow-lg transition-shadow">
-                <CardContent className="p-6 flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-xl bg-purple-500/10 text-purple-600 flex items-center justify-center">
-                    <Users className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-lg">Customers</div>
-                    <div className="text-sm text-muted-foreground">View customer list</div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-
-            <Link href="/admin/settings">
-              <Card className="group hover:shadow-lg transition-shadow">
-                <CardContent className="p-6 flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-xl bg-slate-500/10 text-slate-600 flex items-center justify-center">
-                    <UserCheck className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-lg">Settings</div>
-                    <div className="text-sm text-muted-foreground">Business details & theme</div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-
-            {/* Maintenance Mode Toggle */}
-            <MaintenanceToggle />
+                </div>
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalProducts}</div>
+                <div className="flex items-center gap-1 mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  <span>In catalog</span>
+                </div>
+              </CardContent>
+            </Card>
           </div>
-        ) : (
+
+          {/* Main Grid */}
+          <div className="grid lg:grid-cols-3 gap-6">
+            {/* Left Column - Actions */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Quick Actions */}
+              <Card>
+                <CardHeader className="border-b border-gray-100 dark:border-gray-800 pb-4">
+                  <CardTitle className="text-base font-semibold">Get started</CardTitle>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <Link href="/admin/products/new" className="group">
+                      <div className="p-4 border border-gray-200 dark:border-gray-800 rounded-lg hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-sm transition-all">
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="font-semibold text-gray-900 dark:text-white">Add your first product</h3>
+                          <div className="p-2 bg-green-50 dark:bg-green-950 rounded-lg group-hover:scale-110 transition-transform">
+                            <Package className="h-4 w-4 text-green-600 dark:text-green-400" />
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Start by adding a product and a few key details. Not ready? Start with a sample product</p>
+                        <Button variant="link" className="p-0 h-auto mt-2 text-green-600 hover:text-green-700">
+                          Add product →
+                        </Button>
+                      </div>
+                    </Link>
+
+                    <Link href="/admin/settings" className="group">
+                      <div className="p-4 border border-gray-200 dark:border-gray-800 rounded-lg hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-sm transition-all">
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="font-semibold text-gray-900 dark:text-white">Customize your store</h3>
+                          <div className="p-2 bg-blue-50 dark:bg-blue-950 rounded-lg group-hover:scale-110 transition-transform">
+                            <Settings className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Choose a theme and add your logo</p>
+                        <Button variant="link" className="p-0 h-auto mt-2 text-blue-600 hover:text-blue-700">
+                          Customize theme →
+                        </Button>
+                      </div>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Recent Orders */}
+              <Card>
+                <CardHeader className="border-b border-gray-100 dark:border-gray-800 pb-4">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-base font-semibold">Recent orders</CardTitle>
+                    <Link href="/admin/orders">
+                      <Button variant="link" className="text-sm text-green-600 hover:text-green-700">View all</Button>
+                    </Link>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-0">
+                  {stats.recentOrders.length > 0 ? (
+                    <div className="divide-y divide-gray-100 dark:divide-gray-800">
+                      {stats.recentOrders.map((order) => (
+                        <div key={order.id} className="p-4 hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-3">
+                                <div className="font-medium text-gray-900 dark:text-white">{order.id}</div>
+                                <Badge variant={order.status === 'completed' ? 'default' : 'secondary'} className="text-xs">
+                                  {order.status}
+                                </Badge>
+                              </div>
+                              <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">{order.customer}</div>
+                            </div>
+                            <div className="text-right">
+                              <div className="font-semibold text-gray-900 dark:text-white">£{order.amount.toFixed(2)}</div>
+                              <div className="text-sm text-gray-500 dark:text-gray-400">{order.date}</div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="p-8 text-center">
+                      <ShoppingBag className="h-12 w-12 text-gray-400 dark:text-gray-600 mx-auto mb-3" />
+                      <p className="text-gray-600 dark:text-gray-400">No orders yet</p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Right Column - Sidebar */}
+            <div className="space-y-6">
+              {/* Maintenance Mode */}
+              <MaintenanceToggleModern />
+
+              {/* Quick Links */}
+              <Card>
+                <CardHeader className="border-b border-gray-100 dark:border-gray-800 pb-4">
+                  <CardTitle className="text-base font-semibold">Quick links</CardTitle>
+                </CardHeader>
+                <CardContent className="p-4">
+                  <div className="space-y-1">
+                    <Link href="/admin/products">
+                      <Button variant="ghost" className="w-full justify-start text-sm" size="sm">
+                        <LayoutGrid className="h-4 w-4 mr-2" />
+                        Products
+                      </Button>
+                    </Link>
+                    <Link href="/admin/products/categories">
+                      <Button variant="ghost" className="w-full justify-start text-sm" size="sm">
+                        <Tag className="h-4 w-4 mr-2" />
+                        Categories
+                      </Button>
+                    </Link>
+                    <Link href="/admin/orders">
+                      <Button variant="ghost" className="w-full justify-start text-sm" size="sm">
+                        <FileText className="h-4 w-4 mr-2" />
+                        Orders
+                      </Button>
+                    </Link>
+                    <Link href="/admin/users">
+                      <Button variant="ghost" className="w-full justify-start text-sm" size="sm">
+                        <Users className="h-4 w-4 mr-2" />
+                        Customers
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Performance Stats - Compact */}
+              {!simpleMode && (
+                <Card>
+                  <CardHeader className="border-b border-gray-100 dark:border-gray-800 pb-4">
+                    <CardTitle className="text-base font-semibold">Performance</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-4 space-y-3">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-600 dark:text-gray-400">Server uptime</span>
+                      <span className="font-medium">{serverStats ? `${Math.floor(serverStats.process.uptimeSeconds/3600)}h ${(Math.floor(serverStats.process.uptimeSeconds/60)%60)}m` : '—'}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-600 dark:text-gray-400">Browser FPS</span>
+                      <Badge variant={clientPerf.fps >= 55 ? 'default' : 'destructive'}>{clientPerf.fps}</Badge>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-600 dark:text-gray-400">Status</span>
+                      <Badge variant={serverOk ? 'default' : 'destructive'} className={serverOk ? 'bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-400' : ''}>
+                        {serverOk ? 'Healthy' : 'Offline'}
+                      </Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Hidden Advanced View */}
+        {!simpleMode && (
         <>
         {/* Dashboard Content (Advanced) - redesigned performance view */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
