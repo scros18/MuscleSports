@@ -29,12 +29,12 @@ export function MaintenanceModeModal({
 
   return (
     <>
-      {/* Blurred Backdrop */}
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" onClick={onClose} />
+      {/* Blurred Backdrop - covers entire screen including sidebar */}
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-md z-[9999]" onClick={onClose} />
 
       {/* Modal */}
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md mx-4 sm:max-w-lg">
-        <div className="bg-slate-900 border border-slate-800 rounded-xl shadow-2xl overflow-hidden">
+      <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
+        <div className="bg-slate-900 border-2 border-slate-700 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden w-full max-w-md sm:max-w-lg">
           {/* Header */}
           <div className="bg-gradient-to-r from-slate-900 to-slate-800 border-b border-slate-800 px-6 py-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -90,8 +90,7 @@ export function MaintenanceModeModal({
             <div className="flex gap-3 pt-2">
               <Button
                 onClick={onClose}
-                variant="outline"
-                className="flex-1 h-10 border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+                className="flex-1 h-10 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 transition-all"
               >
                 Cancel
               </Button>

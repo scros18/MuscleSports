@@ -79,17 +79,40 @@ export default function AdminPage() {
 
   const toggleMaintenanceMode = async () => {
     setMaintenanceLoading(true);
+    
+    // Trigger haptic feedback (vibration) for mobile devices
+    if ('vibrate' in navigator) {
+      // Double vibration pattern: [vibrate ms, pause ms, vibrate ms]
+      navigator.vibrate([100, 50, 100]);
+    }
+    
     try {
       const res = await fetch('/api/maintenance-mode', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('auth_token') || ''}`
+        },
         body: JSON.stringify({ enabled: !maintenanceMode })
       });
+      
       if (res.ok) {
+        const data = await res.json();
         setMaintenanceMode(!maintenanceMode);
+        setMaintenanceModalOpen(false);
+        
+        // Refresh the page to show the maintenance banner if enabled
+        if (!maintenanceMode) {
+          window.location.reload();
+        }
+      } else {
+        const error = await res.json();
+        console.error('Failed to toggle maintenance mode:', error);
+        alert('Failed to toggle maintenance mode. Please try again.');
       }
     } catch (error) {
       console.error('Failed to toggle maintenance mode:', error);
+      alert('Network error. Please check your connection and try again.');
     } finally {
       setMaintenanceLoading(false);
     }

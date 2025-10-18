@@ -390,15 +390,17 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
           onClick={onMaintenanceModeClick}
           className={`flex items-center gap-3 w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             isMaintenanceMode
-              ? 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30'
+              ? 'bg-green-500/10 text-green-400 hover:bg-green-500/20 shadow-[0_0_15px_rgba(34,197,94,0.3)]'
               : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
           }`}
         >
-          <Wrench className="h-5 w-5 flex-shrink-0" />
-          <span>Maintenance</span>
+          <Wrench className={`h-5 w-5 flex-shrink-0 ${isMaintenanceMode ? 'animate-pulse' : ''}`} />
+          <span className={isMaintenanceMode ? 'font-semibold' : ''}>
+            {isMaintenanceMode ? 'Maintenance Mode' : 'Maintenance'}
+          </span>
           {isMaintenanceMode && (
             <span className="ml-auto">
-              <span className="inline-block w-2 h-2 bg-amber-400 rounded-full animate-pulse"></span>
+              <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
             </span>
           )}
         </button>
