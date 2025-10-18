@@ -454,7 +454,7 @@ export default function CachePlusPage() {
         </Card>
 
         {/* Cache Management */}
-        <Card className="p-6 bg-gradient-to-br from-red-900/30 to-orange-900/30 border-red-500/30">
+        <Card className="p-6 bg-slate-900 border-slate-800">
           <div className="flex items-center gap-3 mb-4">
             <Trash2 className="h-6 w-6 text-red-400" />
             <h3 className="text-lg font-semibold text-white">Cache Management</h3>
@@ -464,7 +464,7 @@ export default function CachePlusPage() {
             <Button
               onClick={() => handleClearCache('all')}
               disabled={clearing}
-              className="bg-red-600 hover:bg-red-700 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
+              className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
             >
               <Trash2 className="mr-2 h-4 w-4" />
               Clear All
@@ -472,7 +472,7 @@ export default function CachePlusPage() {
             <Button
               onClick={() => handleClearCache('page')}
               disabled={clearing}
-              className="bg-orange-600 hover:bg-orange-700 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
+              className="bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
             >
               <FileCode className="mr-2 h-4 w-4" />
               Page
@@ -480,7 +480,7 @@ export default function CachePlusPage() {
             <Button
               onClick={() => handleClearCache('css')}
               disabled={clearing}
-              className="bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
             >
               <Code className="mr-2 h-4 w-4" />
               CSS
@@ -488,7 +488,7 @@ export default function CachePlusPage() {
             <Button
               onClick={() => handleClearCache('js')}
               disabled={clearing}
-              className="bg-purple-600 hover:bg-purple-700 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
+              className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
             >
               <Code className="mr-2 h-4 w-4" />
               JS
@@ -496,7 +496,7 @@ export default function CachePlusPage() {
             <Button
               onClick={() => handleClearCache('images')}
               disabled={clearing}
-              className="bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
+              className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
             >
               <Image className="mr-2 h-4 w-4" />
               Images
@@ -504,7 +504,7 @@ export default function CachePlusPage() {
             <Button
               onClick={() => handleClearCache('database')}
               disabled={clearing}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
+              className="bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
             >
               <Database className="mr-2 h-4 w-4" />
               Database
@@ -513,7 +513,7 @@ export default function CachePlusPage() {
         </Card>
 
         {/* Footer Info */}
-        <Card className="p-6 bg-gradient-to-r from-blue-900/30 to-cyan-900/30 border-blue-500/30">
+        <Card className="p-6 bg-slate-900 border-slate-800">
           <div className="flex items-center gap-4">
             <Zap className="h-8 w-8 text-blue-400" />
             <div>

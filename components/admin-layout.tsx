@@ -220,21 +220,6 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
           <span>Orders</span>
         </Link>
 
-        {/* Customers */}
-        <Link
-          href="/admin/customers"
-          onClick={handleNavClick}
-          scroll={false}
-          className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
-            pathname === '/admin/customers'
-              ? 'bg-slate-800 text-white'
-              : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
-          }`}
-        >
-          <Users className="h-5 w-5 flex-shrink-0" />
-          <span>Customers</span>
-        </Link>
-
         {/* Users */}
         <Link
           href="/admin/users"
@@ -295,21 +280,6 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
           )}
         </div>
 
-        {/* Analytics */}
-        <Link
-          href="/admin/analytics"
-          onClick={handleNavClick}
-          scroll={false}
-          className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
-            pathname === '/admin/analytics'
-              ? 'bg-slate-800 text-white'
-              : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
-          }`}
-        >
-          <BarChart3 className="h-5 w-5 flex-shrink-0" />
-          <span>Analytics</span>
-        </Link>
-
         {/* Salon Management (for salon-type businesses) */}
         {currentTheme === 'blisshair' && (
           <Link
@@ -326,21 +296,6 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
             <span>Salon Management</span>
           </Link>
         )}
-
-        {/* Site Builder */}
-        <Link
-          href="/admin/site-builder"
-          onClick={handleNavClick}
-          scroll={false}
-          className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
-            pathname === '/admin/site-builder'
-              ? 'bg-slate-800 text-white'
-              : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
-          }`}
-        >
-          <Wrench className="h-5 w-5 flex-shrink-0" />
-          <span>Site Builder</span>
-        </Link>
 
         {/* Layout Builder */}
         <Link
