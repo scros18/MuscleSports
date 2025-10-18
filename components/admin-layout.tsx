@@ -166,6 +166,16 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
 
   const SidebarContent = () => (
     <>
+      {/* Sidebar Header - Lumify Branding (Mobile) */}
+      <div className="px-4 py-4 border-b border-slate-800 bg-gradient-to-r from-slate-900 to-slate-800">
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-white font-black text-xl italic tracking-tighter" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontWeight: 900, letterSpacing: '-0.02em' }}>
+            Lumify
+          </span>
+          <span className="text-blue-400 text-[10px] font-light tracking-widest uppercase">Admin Panel</span>
+        </div>
+      </div>
+
       {/* Navigation */}
       <nav className="flex-1 px-3 pt-3 pb-3 space-y-1 overflow-y-auto">
         {/* Dashboard */}
@@ -174,8 +184,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           onClick={closeSidebar}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin'
-              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
-              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
+              ? 'bg-slate-800 text-white'
+              : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
           }`}
         >
           <Home className="h-5 w-5 flex-shrink-0" />
@@ -188,8 +198,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           onClick={closeSidebar}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/orders'
-              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
-              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
+              ? 'bg-slate-800 text-white'
+              : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
           }`}
         >
           <ShoppingCart className="h-5 w-5 flex-shrink-0" />
@@ -202,8 +212,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           onClick={closeSidebar}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/customers'
-              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
-              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
+              ? 'bg-slate-800 text-white'
+              : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
           }`}
         >
           <Users className="h-5 w-5 flex-shrink-0" />
@@ -216,8 +226,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           onClick={closeSidebar}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/users'
-              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
-              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
+              ? 'bg-slate-800 text-white'
+              : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
           }`}
         >
           <Users className="h-5 w-5 flex-shrink-0" />
@@ -228,7 +238,7 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
         <div>
           <button
             onClick={() => setProductsExpanded(!productsExpanded)}
-            className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white"
+            className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200"
           >
             <Package className="h-5 w-5 flex-shrink-0" />
             <span className="flex-1 text-left">Products</span>
@@ -246,8 +256,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
                 onClick={closeSidebar}
                 className={`flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-all duration-150 ${
                   pathname === '/admin/products'
-                    ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-medium'
-                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
+                    ? 'bg-slate-800 text-white font-medium'
+                    : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
                 }`}
               >
                 All Products
@@ -257,8 +267,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
                 onClick={closeSidebar}
                 className={`flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-all duration-150 ${
                   pathname === '/admin/products/categories'
-                    ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-medium'
-                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
+                    ? 'bg-slate-800 text-white font-medium'
+                    : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
                 }`}
               >
                 Categories
@@ -273,8 +283,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           onClick={closeSidebar}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/analytics'
-              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
-              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
+              ? 'bg-slate-800 text-white'
+              : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
           }`}
         >
           <BarChart3 className="h-5 w-5 flex-shrink-0" />
@@ -288,8 +298,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
             onClick={closeSidebar}
             className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
               pathname === '/admin/salon'
-                ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
-                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
+                ? 'bg-slate-800 text-white'
+                : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
             }`}
           >
             <Scissors className="h-5 w-5 flex-shrink-0" />
@@ -303,8 +313,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           onClick={closeSidebar}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/site-builder'
-              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
-              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
+              ? 'bg-slate-800 text-white'
+              : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
           }`}
         >
           <Wrench className="h-5 w-5 flex-shrink-0" />
@@ -317,8 +327,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           onClick={closeSidebar}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/layout-builder'
-              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
-              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
+              ? 'bg-slate-800 text-white'
+              : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
           }`}
         >
           <Package className="h-5 w-5 flex-shrink-0" />
@@ -331,8 +341,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           onClick={closeSidebar}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/cache-plus'
-              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
-              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
+              ? 'bg-slate-800 text-white'
+              : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
           }`}
         >
           <Zap className="h-5 w-5 flex-shrink-0" />
@@ -348,8 +358,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           onClick={closeSidebar}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/settings'
-              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
-              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
+              ? 'bg-slate-800 text-white'
+              : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
           }`}
         >
           <Settings className="h-5 w-5 flex-shrink-0" />
@@ -362,8 +372,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           onClick={closeSidebar}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/promo-codes'
-              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
-              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
+              ? 'bg-slate-800 text-white'
+              : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
           }`}
         >
           <Percent className="h-5 w-5 flex-shrink-0" />
@@ -372,15 +382,15 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
       </nav>
 
       {/* Footer with Theme Switcher */}
-      <div className="p-3 border-t border-gray-200 dark:border-gray-700">
+      <div className="p-3 border-t border-slate-800">
         {/* Theme Switcher */}
         <button
           onClick={toggleTheme}
-          className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white mb-3"
+          className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 mb-3"
         >
           <Palette className="h-5 w-5 flex-shrink-0" />
           <span className="flex items-center gap-2">
-            <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-0.5 rounded">
+            <span className="text-xs bg-blue-900/40 text-blue-300 px-2 py-0.5 rounded">
               {currentTheme === 'lumify' ? 'Lumify' : currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : currentTheme === 'blisshair' ? 'Bliss Hair' : 'Ordify'}
             </span>
           </span>
@@ -390,21 +400,21 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
         <div className="px-1">
           <div className="flex items-center mb-3">
             <div className="flex-shrink-0">
-              <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-sm font-medium text-primary-foreground">
+              <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center">
+                <span className="text-sm font-medium text-white">
                   {user.name.charAt(0).toUpperCase()}
                 </span>
               </div>
             </div>
             <div className="ml-3 min-w-0">
-              <p className="text-sm font-medium truncate">{user.name}</p>
-              <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+              <p className="text-sm font-medium text-slate-100 truncate">{user.name}</p>
+              <p className="text-xs text-slate-400 truncate">{user.email}</p>
             </div>
           </div>
           <Link
             href="/"
             onClick={closeSidebar}
-            className="block text-sm text-primary hover:underline"
+            className="block text-sm text-blue-400 hover:text-blue-300 transition-colors"
           >
             ← Back to Store
           </Link>
@@ -414,23 +424,23 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-slate-950 flex">
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
           onClick={closeSidebar}
         />
       )}
 
       {/* Sidebar - Desktop */}
-      <div className="hidden md:flex md:w-64 bg-white shadow-lg flex-col">
+      <div className="hidden md:flex md:w-64 bg-slate-900 border-r border-slate-800 flex-col">
         <SidebarContent />
       </div>
 
       {/* Sidebar - Mobile */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out md:hidden flex flex-col ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 border-r border-slate-800 transform transition-transform duration-300 ease-in-out md:hidden flex flex-col ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -438,10 +448,10 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden bg-gray-50 dark:bg-gray-950">
+      <div className="flex-1 flex flex-col overflow-hidden bg-slate-950">
         {/* Maintenance Mode Warning Banner */}
         {isMaintenanceMode && (
-          <div className="bg-orange-600 text-white px-4 py-3 flex items-center justify-center gap-3 sticky top-0 z-50 shadow-lg">
+          <div className="bg-orange-600/90 text-white px-4 py-3 flex items-center justify-center gap-3 sticky top-0 z-50 shadow-lg border-b border-orange-700">
             <Wrench className="h-5 w-5 animate-pulse" />
             <div className="font-semibold text-sm sm:text-base">
               🚧 MAINTENANCE MODE ACTIVE - Site is down for all customers. Only you can access /admin
@@ -451,11 +461,12 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
         )}
 
         {/* Mobile Menu Button */}
-        <div className="md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-4 py-3 sticky top-0 z-30">
+        <div className="md:hidden bg-slate-900 border-b border-slate-800 px-4 py-3 sticky top-0 z-30">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setSidebarOpen(true)}
+            className="text-slate-400 hover:text-white hover:bg-slate-800"
           >
             <Menu className="h-6 w-6" />
           </Button>
@@ -465,6 +476,30 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
         <main className="flex-1 overflow-y-auto">
           {children}
         </main>
+
+        {/* Mobile Footer - User Info */}
+        <div className="md:hidden bg-slate-900 border-t border-slate-800 px-4 py-4 mt-auto">
+          <div className="flex items-center mb-3">
+            <div className="flex-shrink-0">
+              <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center">
+                <span className="text-sm font-medium text-white">
+                  {user.name.charAt(0).toUpperCase()}
+                </span>
+              </div>
+            </div>
+            <div className="ml-3 min-w-0 flex-1">
+              <p className="text-sm font-medium text-slate-100 truncate">{user.name}</p>
+              <p className="text-xs text-slate-400 truncate">{user.email}</p>
+            </div>
+          </div>
+          <Link
+            href="/"
+            onClick={closeSidebar}
+            className="block text-sm text-blue-400 hover:text-blue-300 transition-colors"
+          >
+            ← Back to Store
+          </Link>
+        </div>
       </div>
     </div>
   );

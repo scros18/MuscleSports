@@ -202,58 +202,41 @@ export default function AdminPage() {
 
   return (
     <AdminLayout title="Home" description="">
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <div className="min-h-screen bg-slate-950">
         {/* Mobile Simple View - Shows on mobile only */}
         <div className="md:hidden">
-          <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-4 py-4">
-            <h1 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Dashboard</h1>
+          <div className="bg-slate-900 border-b border-slate-800 px-4 py-4">
+            <h1 className="text-xl font-semibold text-white mb-4">Dashboard</h1>
             
             {/* Simple Stats Grid */}
             <div className="grid grid-cols-2 gap-3 mb-4">
-              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
-                <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Sales</div>
-                <div className="text-lg font-bold text-gray-900 dark:text-white">£{stats.totalRevenue.toLocaleString()}</div>
+              <div className="bg-slate-800 rounded-lg p-3">
+                <div className="text-xs text-slate-400 mb-1">Sales</div>
+                <div className="text-lg font-bold text-white">£{stats.totalRevenue.toLocaleString()}</div>
               </div>
-              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
-                <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Orders</div>
-                <div className="text-lg font-bold text-gray-900 dark:text-white">{stats.totalOrders}</div>
+              <div className="bg-slate-800 rounded-lg p-3">
+                <div className="text-xs text-slate-400 mb-1">Orders</div>
+                <div className="text-lg font-bold text-white">{stats.totalOrders}</div>
               </div>
-              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
-                <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Customers</div>
-                <div className="text-lg font-bold text-gray-900 dark:text-white">{stats.totalCustomers}</div>
+              <div className="bg-slate-800 rounded-lg p-3">
+                <div className="text-xs text-slate-400 mb-1">Customers</div>
+                <div className="text-lg font-bold text-white">{stats.totalCustomers}</div>
               </div>
-              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
-                <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Products</div>
-                <div className="text-lg font-bold text-gray-900 dark:text-white">{stats.totalProducts}</div>
+              <div className="bg-slate-800 rounded-lg p-3">
+                <div className="text-xs text-slate-400 mb-1">Products</div>
+                <div className="text-lg font-bold text-white">{stats.totalProducts}</div>
               </div>
             </div>
-
-            {/* Quick Actions */}
-            <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
-              <Plus className="h-4 w-4 mr-2" />
-              Add Product
-            </Button>
           </div>
         </div>
 
         {/* Desktop Header - Hidden on mobile */}
-        <div className="hidden md:block bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        <div className="hidden md:block bg-slate-900 border-b border-slate-800">
           <div className="px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Home</h1>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Manage your store from one place</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <Button variant="outline" size="sm" className="hidden sm:flex">
-                  <Search className="h-4 w-4 mr-2" />
-                  Search
-                </Button>
-                <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
-                  <Plus className="h-4 w-4 mr-2" />
-                  <span className="hidden sm:inline">Add product</span>
-                  <span className="sm:hidden">Add</span>
-                </Button>
+                <h1 className="text-2xl font-semibold text-white">Home</h1>
+                <p className="text-sm text-slate-400 mt-0.5">Welcome back to your dashboard</p>
               </div>
             </div>
           </div>
@@ -263,64 +246,64 @@ export default function AdminPage() {
         <div className="hidden md:block px-6 py-6">
           {/* Quick Stats */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <Card className="hover:shadow-md transition-shadow">
+            <Card className="bg-slate-900 border-slate-800 hover:border-slate-700 transition-colors">
               <CardContent className="p-5">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Total sales</div>
-                  <div className="p-2 bg-green-50 dark:bg-green-950 rounded-lg">
-                    <DollarSign className="h-4 w-4 text-green-600 dark:text-green-400" />
+                  <div className="text-sm font-medium text-slate-400">Total sales</div>
+                  <div className="p-2 bg-green-500/10 rounded-lg">
+                    <DollarSign className="h-4 w-4 text-green-500" />
                   </div>
                 </div>
-                <div className="text-2xl font-bold text-gray-900 dark:text-white">£{stats.totalRevenue.toLocaleString()}</div>
-                <div className="flex items-center gap-1 mt-1 text-xs text-green-600 dark:text-green-400">
+                <div className="text-2xl font-bold text-white">£{stats.totalRevenue.toLocaleString()}</div>
+                <div className="flex items-center gap-1 mt-1 text-xs text-green-500">
                   <ArrowUpRight className="h-3 w-3" />
                   <span>12% from last month</span>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-md transition-shadow">
+            <Card className="bg-slate-900 border-slate-800 hover:border-slate-700 transition-colors">
               <CardContent className="p-5">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Orders</div>
-                  <div className="p-2 bg-blue-50 dark:bg-blue-950 rounded-lg">
-                    <ShoppingBag className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                  <div className="text-sm font-medium text-slate-400">Orders</div>
+                  <div className="p-2 bg-blue-500/10 rounded-lg">
+                    <ShoppingBag className="h-4 w-4 text-blue-500" />
                   </div>
                 </div>
-                <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalOrders}</div>
-                <div className="flex items-center gap-1 mt-1 text-xs text-green-600 dark:text-green-400">
+                <div className="text-2xl font-bold text-white">{stats.totalOrders}</div>
+                <div className="flex items-center gap-1 mt-1 text-xs text-green-500">
                   <ArrowUpRight className="h-3 w-3" />
                   <span>8% from last month</span>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-md transition-shadow">
+            <Card className="bg-slate-900 border-slate-800 hover:border-slate-700 transition-colors">
               <CardContent className="p-5">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Customers</div>
-                  <div className="p-2 bg-purple-50 dark:bg-purple-950 rounded-lg">
-                    <Users className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                  <div className="text-sm font-medium text-slate-400">Customers</div>
+                  <div className="p-2 bg-purple-500/10 rounded-lg">
+                    <Users className="h-4 w-4 text-purple-500" />
                   </div>
                 </div>
-                <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalCustomers}</div>
-                <div className="flex items-center gap-1 mt-1 text-xs text-green-600 dark:text-green-400">
+                <div className="text-2xl font-bold text-white">{stats.totalCustomers}</div>
+                <div className="flex items-center gap-1 mt-1 text-xs text-green-500">
                   <ArrowUpRight className="h-3 w-3" />
                   <span>5% from last month</span>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-md transition-shadow">
+            <Card className="bg-slate-900 border-slate-800 hover:border-slate-700 transition-colors">
               <CardContent className="p-5">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Products</div>
-                  <div className="p-2 bg-orange-50 dark:bg-orange-950 rounded-lg">
-                    <Package className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+                  <div className="text-sm font-medium text-slate-400">Products</div>
+                  <div className="p-2 bg-orange-500/10 rounded-lg">
+                    <Package className="h-4 w-4 text-orange-500" />
                   </div>
                 </div>
-                <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalProducts}</div>
-                <div className="flex items-center gap-1 mt-1 text-xs text-gray-500 dark:text-gray-400">
+                <div className="text-2xl font-bold text-white">{stats.totalProducts}</div>
+                <div className="flex items-center gap-1 mt-1 text-xs text-slate-500">
                   <span>In catalog</span>
                 </div>
               </CardContent>
@@ -336,59 +319,24 @@ export default function AdminPage() {
 
             {/* Right Column - Sidebar */}
             <div className="space-y-6">
-              {/* Quick Links */}
-              <Card className="h-full">
-                <CardHeader className="border-b border-gray-100 dark:border-gray-800 pb-4">
-                  <CardTitle className="text-base font-semibold">Quick links</CardTitle>
-                </CardHeader>
-                <CardContent className="p-4">
-                  <div className="space-y-1">
-                    <Link href="/admin/products">
-                      <Button variant="ghost" className="w-full justify-start text-sm hover:bg-gray-50 dark:hover:bg-gray-800" size="sm">
-                        <LayoutGrid className="h-4 w-4 mr-2" />
-                        Products
-                      </Button>
-                    </Link>
-                    <Link href="/admin/products/categories">
-                      <Button variant="ghost" className="w-full justify-start text-sm hover:bg-gray-50 dark:hover:bg-gray-800" size="sm">
-                        <Tag className="h-4 w-4 mr-2" />
-                        Categories
-                      </Button>
-                    </Link>
-                    <Link href="/admin/orders">
-                      <Button variant="ghost" className="w-full justify-start text-sm hover:bg-gray-50 dark:hover:bg-gray-800" size="sm">
-                        <FileText className="h-4 w-4 mr-2" />
-                        Orders
-                      </Button>
-                    </Link>
-                    <Link href="/admin/customers">
-                      <Button variant="ghost" className="w-full justify-start text-sm hover:bg-gray-50 dark:hover:bg-gray-800" size="sm">
-                        <Users className="h-4 w-4 mr-2" />
-                        Customers
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-
               {/* Performance Stats - Compact */}
               {!simpleMode && (
-                <Card>
-                  <CardHeader className="border-b border-gray-100 dark:border-gray-800 pb-4">
-                    <CardTitle className="text-base font-semibold">Performance</CardTitle>
+                <Card className="bg-slate-900 border-slate-800">
+                  <CardHeader className="border-b border-slate-800 pb-4">
+                    <CardTitle className="text-base font-semibold text-white">Performance</CardTitle>
                   </CardHeader>
                   <CardContent className="p-4 space-y-3">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600 dark:text-gray-400">Server uptime</span>
-                      <span className="font-medium">{serverStats ? `${Math.floor(serverStats.process.uptimeSeconds/3600)}h ${(Math.floor(serverStats.process.uptimeSeconds/60)%60)}m` : '—'}</span>
+                      <span className="text-slate-400">Server uptime</span>
+                      <span className="font-medium text-white">{serverStats ? `${Math.floor(serverStats.process.uptimeSeconds/3600)}h ${(Math.floor(serverStats.process.uptimeSeconds/60)%60)}m` : '—'}</span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600 dark:text-gray-400">Browser FPS</span>
-                      <Badge variant={clientPerf.fps >= 55 ? 'default' : 'destructive'}>{clientPerf.fps}</Badge>
+                      <span className="text-slate-400">Browser FPS</span>
+                      <Badge variant={clientPerf.fps >= 55 ? 'default' : 'destructive'} className={clientPerf.fps >= 55 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}>{clientPerf.fps}</Badge>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600 dark:text-gray-400">Status</span>
-                      <Badge variant={serverOk ? 'default' : 'destructive'} className={serverOk ? 'bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-400' : ''}>
+                      <span className="text-slate-400">Status</span>
+                      <Badge variant={serverOk ? 'default' : 'destructive'} className={serverOk ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}>
                         {serverOk ? 'Healthy' : 'Offline'}
                       </Badge>
                     </div>
