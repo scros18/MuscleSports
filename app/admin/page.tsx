@@ -333,8 +333,8 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* Main Content - Desktop View Only */}
-        <div className="hidden md:block px-6 py-6">
+        {/* Main Content */}
+        <div className="px-4 py-4 md:px-6 md:py-6">
           {/* Quick Stats */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <Card className="bg-slate-900 border-slate-800 hover:border-slate-700 transition-colors">
