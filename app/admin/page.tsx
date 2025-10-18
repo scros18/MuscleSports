@@ -212,9 +212,13 @@ export default function AdminPage() {
     try {
       // Fetch actual orders from API
       const ordersRes = await fetch('/api/admin/orders');
+      // Fetch actual products from API
+      const productsRes = await fetch('/api/products');
+      
       let recentOrders = [];
-      let totalOrders = 156;
-      let totalRevenue = 12450.99;
+      let totalOrders = 0;
+      let totalRevenue = 0;
+      let totalProducts = 0;
       
       if (ordersRes.ok) {
         const ordersData = await ordersRes.json();
@@ -237,44 +241,39 @@ export default function AdminPage() {
         }
       }
       
-      // If no orders from API, use mock data
-      if (recentOrders.length === 0) {
-        recentOrders = [
-          { id: 'ORD-001', customer: 'John Doe', amount: 299.99, status: 'completed', date: '2025-10-11' },
-          { id: 'ORD-002', customer: 'Jane Smith', amount: 149.50, status: 'pending', date: '2025-10-11' },
-          { id: 'ORD-003', customer: 'Bob Johnson', amount: 79.99, status: 'completed', date: '2025-10-10' },
-        ];
+      // Get real product count
+      if (productsRes.ok) {
+        const productsData = await productsRes.json();
+        if (productsData.products && Array.isArray(productsData.products)) {
+          totalProducts = productsData.products.length;
+        }
       }
 
       setStats({
         totalOrders,
         totalRevenue,
-        totalCustomers: 89,
-        totalProducts: 234,
+        totalCustomers: 0, // Set to 0 as requested
+        totalProducts,
         recentOrders,
         salesData: [
-          { name: 'Jan', value: 2400, color: 'hsl(var(--primary))' },
-          { name: 'Feb', value: 1398, color: 'hsl(var(--primary))' },
-          { name: 'Mar', value: 9800, color: 'hsl(var(--primary))' },
-          { name: 'Apr', value: 3908, color: 'hsl(var(--primary))' },
-          { name: 'May', value: 4800, color: 'hsl(var(--primary))' },
-          { name: 'Jun', value: 3800, color: 'hsl(var(--primary))' },
-          { name: 'Jul', value: 4300, color: 'hsl(var(--primary))' },
+          { name: 'Jan', value: 0, color: 'hsl(var(--primary))' },
+          { name: 'Feb', value: 0, color: 'hsl(var(--primary))' },
+          { name: 'Mar', value: 0, color: 'hsl(var(--primary))' },
+          { name: 'Apr', value: 0, color: 'hsl(var(--primary))' },
+          { name: 'May', value: 0, color: 'hsl(var(--primary))' },
+          { name: 'Jun', value: 0, color: 'hsl(var(--primary))' },
+          { name: 'Jul', value: 0, color: 'hsl(var(--primary))' },
         ]
       });
     } catch (error) {
       console.error('Failed to load dashboard stats:', error);
-      // Fallback to mock data on error
+      // Fallback to 0 values on error
       setStats({
-        totalOrders: 156,
-        totalRevenue: 12450.99,
-        totalCustomers: 89,
-        totalProducts: 234,
-        recentOrders: [
-          { id: 'ORD-001', customer: 'John Doe', amount: 299.99, status: 'completed', date: '2025-10-11' },
-          { id: 'ORD-002', customer: 'Jane Smith', amount: 149.50, status: 'pending', date: '2025-10-11' },
-          { id: 'ORD-003', customer: 'Bob Johnson', amount: 79.99, status: 'completed', date: '2025-10-10' },
-        ],
+        totalOrders: 0,
+        totalRevenue: 0,
+        totalCustomers: 0,
+        totalProducts: 0,
+        recentOrders: [],
         salesData: []
       });
     }
