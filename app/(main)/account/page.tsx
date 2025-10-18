@@ -325,238 +325,338 @@ export default function AccountPage() {
   ];
 
   return (
-    <div className="container py-8 md:py-16">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold">My Account</h1>
-        <p className="text-muted-foreground mt-1">Manage your account settings and preferences</p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      <div className="container py-6 md:py-12">
+        {/* Hero Section with User Info */}
+        <div className="mb-8 md:mb-12">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-black tracking-tight bg-gradient-to-r from-primary via-primary to-emerald-600 bg-clip-text text-transparent">
+                Welcome back, {user.name.split(' ')[0]}
+              </h1>
+              <p className="text-muted-foreground mt-2">Manage your account, orders, and preferences</p>
+            </div>
+            <Button
+              onClick={handleLogout}
+              variant="outline"
+              className="group hover:border-red-500 hover:text-red-600 transition-all duration-300"
+            >
+              <LogOut className="h-4 w-4 mr-2 group-hover:translate-x-[-2px] transition-transform" />
+              Logout
+            </Button>
+          </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[250px,1fr] gap-6">
-        {/* Sidebar Menu */}
-        <aside className="lg:sticky lg:top-20 lg:self-start">
-          <Card>
-            <CardContent className="p-2">
-              <nav className="space-y-1">
-                {menuItems.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => setActiveSection(item.id)}
-                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-all ${
-                        activeSection === item.id
-                          ? "bg-primary text-primary-foreground shadow-sm"
-                          : "hover:bg-accent text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      <Icon className="h-4 w-4 flex-shrink-0" />
-                      <span>{item.label}</span>
-                    </button>
-                  );
-                })}
-                <div className="pt-2 mt-2 border-t">
+          {/* Mobile Menu - Horizontal Scroll */}
+          <div className="lg:hidden">
+            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4">
+              {menuItems.map((item) => {
+                const Icon = item.icon;
+                return (
                   <button
-                    onClick={handleLogout}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-950 transition-all"
+                    key={item.id}
+                    onClick={() => setActiveSection(item.id)}
+                    className={`flex flex-col items-center gap-2 px-4 py-3 rounded-xl whitespace-nowrap transition-all duration-300 ${
+                      activeSection === item.id
+                        ? "bg-gradient-to-br from-primary via-primary to-emerald-600 text-white shadow-lg scale-105"
+                        : "bg-card hover:bg-accent border border-border"
+                    }`}
                   >
-                    <LogOut className="h-4 w-4 flex-shrink-0" />
-                    <span>Logout</span>
+                    <Icon className="h-5 w-5" />
+                    <span className="text-xs font-medium">{item.label}</span>
                   </button>
-                </div>
-              </nav>
-            </CardContent>
-          </Card>
-        </aside>
+                );
+              })}
+            </div>
+          </div>
+        </div>
 
-        {/* Main Content */}
-        <main className="space-y-6">
-          {/* Account Info Section */}
-          {activeSection === "account" && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <User className="h-5 w-5" />
-                  Account Information
-                </CardTitle>
-                <CardDescription>
-                  Your personal account details
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center gap-3 p-4 border rounded-lg">
-                  <User className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="text-sm font-medium">Full Name</p>
-                    <p className="text-sm text-muted-foreground">{user.name}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 p-4 border rounded-lg">
-                  <Mail className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="text-sm font-medium">Email</p>
-                    <p className="text-sm text-muted-foreground">{user.email}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 p-4 border rounded-lg">
-                  <Calendar className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="text-sm font-medium">Member Since</p>
-                    <p className="text-sm text-muted-foreground">
-                      {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Admin Entry */}
-                {((user.role === 'admin' || user.isAdmin) || isServerAdmin) && (
-                  <div className="pt-4">
-                    <Button
-                      variant="default"
-                      className="w-full"
-                      onClick={() => router.push('/admin')}
-                    >
-                      <Settings className="mr-2 h-4 w-4" />
-                      Enter Admin Panel
-                    </Button>
-                  </div>
-                )}
+        <div className="grid grid-cols-1 lg:grid-cols-[280px,1fr] gap-6 md:gap-8">
+          {/* Desktop Sidebar Menu */}
+          <aside className="hidden lg:block lg:sticky lg:top-24 lg:self-start">
+            <Card className="overflow-hidden border-0 shadow-xl bg-gradient-to-br from-card via-card to-card/80 backdrop-blur-sm">
+              <CardContent className="p-3">
+                <nav className="space-y-1.5">
+                  {menuItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => setActiveSection(item.id)}
+                        className={`group w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
+                          activeSection === item.id
+                            ? "bg-gradient-to-r from-primary via-primary to-emerald-600 text-white shadow-lg shadow-primary/25 scale-[1.02]"
+                            : "hover:bg-accent text-muted-foreground hover:text-foreground hover:translate-x-1"
+                        }`}
+                      >
+                        <div className={`p-2 rounded-lg transition-colors ${
+                          activeSection === item.id
+                            ? "bg-white/20"
+                            : "bg-primary/10 group-hover:bg-primary/20"
+                        }`}>
+                          <Icon className="h-4 w-4" />
+                        </div>
+                        <span className="flex-1 text-left">{item.label}</span>
+                        {activeSection === item.id && (
+                          <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </nav>
               </CardContent>
             </Card>
-          )}
+
+            {/* Admin Badge (Desktop) */}
+            {((user.role === 'admin' || user.isAdmin) || isServerAdmin) && (
+              <Card className="mt-4 overflow-hidden border-0 shadow-xl bg-gradient-to-br from-amber-500/10 via-orange-500/10 to-red-500/10">
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600">
+                      <Settings className="h-4 w-4 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold">Admin Access</p>
+                      <p className="text-xs text-muted-foreground">Manage your store</p>
+                    </div>
+                  </div>
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700"
+                    onClick={() => router.push('/admin')}
+                  >
+                    <Settings className="mr-2 h-3.5 w-3.5" />
+                    Admin Panel
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
+          </aside>
+
+          {/* Main Content */}
+          <main className="space-y-6">
+            {/* Account Info Section */}
+            {activeSection === "account" && (
+              <div className="space-y-6">
+                <Card className="overflow-hidden border-0 shadow-xl bg-gradient-to-br from-card via-card to-card/80">
+                  <CardHeader className="border-b bg-gradient-to-r from-primary/5 via-emerald-500/5 to-primary/5">
+                    <div className="flex items-center gap-3">
+                      <div className="p-3 rounded-xl bg-gradient-to-br from-primary to-emerald-600">
+                        <User className="h-5 w-5 text-white" />
+                      </div>
+                      <div>
+                        <CardTitle>Account Information</CardTitle>
+                        <CardDescription>Your personal details and membership info</CardDescription>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <div className="grid gap-4">
+                      {/* Name */}
+                      <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-background to-muted/20 p-5 transition-all duration-300 hover:shadow-lg hover:border-primary/50">
+                        <div className="flex items-start gap-4">
+                          <div className="p-2.5 rounded-lg bg-gradient-to-br from-blue-500/10 to-cyan-500/10 group-hover:from-blue-500/20 group-hover:to-cyan-500/20 transition-colors">
+                            <User className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Full Name</p>
+                            <p className="text-lg font-semibold">{user.name}</p>
+                          </div>
+                        </div>
+                        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-500/5 to-transparent rounded-full blur-2xl" />
+                      </div>
+
+                      {/* Email */}
+                      <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-background to-muted/20 p-5 transition-all duration-300 hover:shadow-lg hover:border-primary/50">
+                        <div className="flex items-start gap-4">
+                          <div className="p-2.5 rounded-lg bg-gradient-to-br from-emerald-500/10 to-teal-500/10 group-hover:from-emerald-500/20 group-hover:to-teal-500/20 transition-colors">
+                            <Mail className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Email Address</p>
+                            <p className="text-lg font-semibold break-all">{user.email}</p>
+                          </div>
+                        </div>
+                        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-full blur-2xl" />
+                      </div>
+
+                      {/* Member Since */}
+                      <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-background to-muted/20 p-5 transition-all duration-300 hover:shadow-lg hover:border-primary/50">
+                        <div className="flex items-start gap-4">
+                          <div className="p-2.5 rounded-lg bg-gradient-to-br from-purple-500/10 to-pink-500/10 group-hover:from-purple-500/20 group-hover:to-pink-500/20 transition-colors">
+                            <Calendar className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Member Since</p>
+                            <p className="text-lg font-semibold">
+                              {user.createdAt ? new Date(user.createdAt).toLocaleDateString('en-GB', { 
+                                day: 'numeric', 
+                                month: 'long', 
+                                year: 'numeric' 
+                              }) : 'N/A'}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-500/5 to-transparent rounded-full blur-2xl" />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Admin Badge (Mobile) */}
+                {((user.role === 'admin' || user.isAdmin) || isServerAdmin) && (
+                  <Card className="lg:hidden overflow-hidden border-0 shadow-xl bg-gradient-to-br from-amber-500/10 via-orange-500/10 to-red-500/10">
+                    <CardContent className="p-6">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="p-3 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600">
+                          <Settings className="h-6 w-6 text-white" />
+                        </div>
+                        <div>
+                          <p className="font-bold text-lg">Admin Access</p>
+                          <p className="text-sm text-muted-foreground">Manage your store settings</p>
+                        </div>
+                      </div>
+                      <Button
+                        variant="default"
+                        className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 shadow-lg"
+                        onClick={() => router.push('/admin')}
+                      >
+                        <Settings className="mr-2 h-4 w-4" />
+                        Enter Admin Panel
+                      </Button>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            )}
 
           {/* Security Section */}
           {activeSection === "security" && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Lock className="h-5 w-5" />
-                  Security Settings
-                </CardTitle>
-                <CardDescription>
-                  Manage your password and security preferences
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {/* Password Change Section */}
-                <div>
-              <div className="flex items-center justify-between">
+            <Card className="overflow-hidden border-0 shadow-xl bg-gradient-to-br from-card via-card to-card/80">
+              <CardHeader className="border-b bg-gradient-to-r from-red-500/5 via-orange-500/5 to-red-500/5">
                 <div className="flex items-center gap-3">
-                  <Lock className="h-5 w-5 text-muted-foreground" />
+                  <div className="p-3 rounded-xl bg-gradient-to-br from-red-500 to-orange-600">
+                    <Lock className="h-5 w-5 text-white" />
+                  </div>
                   <div>
-                    <p className="text-sm font-medium">Password</p>
-                    <p className="text-sm text-muted-foreground">Change your account password</p>
+                    <CardTitle>Security Settings</CardTitle>
+                    <CardDescription>Manage your password and security preferences</CardDescription>
                   </div>
                 </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowPasswordForm(!showPasswordForm)}
-                >
-                  {showPasswordForm ? 'Cancel' : 'Change Password'}
-                </Button>
-              </div>
-
-              {showPasswordForm && (
-                <Card className="mt-4">
-                  <CardContent className="pt-6">
-                    <form onSubmit={handlePasswordChange} className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="currentPassword">Current Password</Label>
-                        <div className="relative">
-                          <Input
-                            id="currentPassword"
-                            type={showCurrentPassword ? "text" : "password"}
-                            value={passwordForm.currentPassword}
-                            onChange={(e) => setPasswordForm(prev => ({ ...prev, currentPassword: e.target.value }))}
-                            required
-                          />
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                            onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                          >
-                            {showCurrentPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                          </Button>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  <div className="group rounded-xl border border-border bg-gradient-to-br from-background to-muted/20 p-5 transition-all duration-300 hover:shadow-lg hover:border-primary/50">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="p-2.5 rounded-lg bg-gradient-to-br from-red-500/10 to-orange-500/10">
+                          <Lock className="h-5 w-5 text-red-600 dark:text-red-400" />
+                        </div>
+                        <div>
+                          <p className="font-semibold">Password</p>
+                          <p className="text-sm text-muted-foreground">Change your account password</p>
                         </div>
                       </div>
+                      <Button
+                        variant={showPasswordForm ? "outline" : "default"}
+                        size="sm"
+                        onClick={() => setShowPasswordForm(!showPasswordForm)}
+                        className="transition-all duration-300"
+                      >
+                        {showPasswordForm ? 'Cancel' : 'Change'}
+                      </Button>
+                    </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="newPassword">New Password</Label>
-                        <div className="relative">
-                          <Input
-                            id="newPassword"
-                            type={showNewPassword ? "text" : "password"}
-                            value={passwordForm.newPassword}
-                            onChange={(e) => setPasswordForm(prev => ({ ...prev, newPassword: e.target.value }))}
-                            required
-                            minLength={6}
-                          />
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                            onClick={() => setShowNewPassword(!showNewPassword)}
-                          >
-                            {showNewPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                          </Button>
-                        </div>
+                    {showPasswordForm && (
+                      <div className="mt-6 pt-6 border-t">
+                        <form onSubmit={handlePasswordChange} className="space-y-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="currentPassword">Current Password</Label>
+                            <div className="relative">
+                              <Input
+                                id="currentPassword"
+                                type={showCurrentPassword ? "text" : "password"}
+                                value={passwordForm.currentPassword}
+                                onChange={(e) => setPasswordForm(prev => ({ ...prev, currentPassword: e.target.value }))}
+                                required
+                                className="pr-10"
+                              />
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                                onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                              >
+                                {showCurrentPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                              </Button>
+                            </div>
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label htmlFor="newPassword">New Password</Label>
+                            <div className="relative">
+                              <Input
+                                id="newPassword"
+                                type={showNewPassword ? "text" : "password"}
+                                value={passwordForm.newPassword}
+                                onChange={(e) => setPasswordForm(prev => ({ ...prev, newPassword: e.target.value }))}
+                                required
+                                minLength={6}
+                                className="pr-10"
+                              />
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                                onClick={() => setShowNewPassword(!showNewPassword)}
+                              >
+                                {showNewPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                              </Button>
+                            </div>
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                            <div className="relative">
+                              <Input
+                                id="confirmPassword"
+                                type={showConfirmPassword ? "text" : "password"}
+                                value={passwordForm.confirmPassword}
+                                onChange={(e) => setPasswordForm(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                                required
+                                minLength={6}
+                                className="pr-10"
+                              />
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                              >
+                                {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                              </Button>
+                            </div>
+                          </div>
+
+                          {passwordMessage && (
+                            <div className={`p-3 rounded-lg ${passwordMessage.includes('successfully') ? 'bg-green-500/10 text-green-600 dark:text-green-400' : 'bg-red-500/10 text-red-600 dark:text-red-400'}`}>
+                              <p className="text-sm font-medium">{passwordMessage}</p>
+                            </div>
+                          )}
+
+                          <div className="flex gap-2 pt-2">
+                            <Button type="submit" disabled={passwordLoading} className="flex-1">
+                              {passwordLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                              Update Password
+                            </Button>
+                          </div>
+                        </form>
                       </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="confirmPassword">Confirm New Password</Label>
-                        <div className="relative">
-                          <Input
-                            id="confirmPassword"
-                            type={showConfirmPassword ? "text" : "password"}
-                            value={passwordForm.confirmPassword}
-                            onChange={(e) => setPasswordForm(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                            required
-                            minLength={6}
-                          />
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                          >
-                            {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                          </Button>
-                        </div>
-                      </div>
-
-                      {passwordMessage && (
-                        <p className={`text-sm ${passwordMessage.includes('successfully') ? 'text-green-600' : 'text-red-600'}`}>
-                          {passwordMessage}
-                        </p>
-                      )}
-
-                      <div className="flex gap-2">
-                        <Button type="submit" disabled={passwordLoading}>
-                          {passwordLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                          Change Password
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={() => {
-                            setShowPasswordForm(false);
-                            setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
-                            setPasswordMessage('');
-                          }}
-                        >
-                          Cancel
-                        </Button>
-                      </div>
-                    </form>
-                  </CardContent>
-                </Card>
-              )}
+                    )}
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -898,6 +998,9 @@ export default function AccountPage() {
           )}
         </main>
       </div>
+    </div>
+  );
+}
     </div>
   );
 }
