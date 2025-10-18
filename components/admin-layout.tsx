@@ -166,6 +166,16 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
 
   const closeSidebar = () => setSidebarOpen(false);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    closeSidebar();
+    // Prevent scroll to top on navigation
+    e.preventDefault();
+    const href = e.currentTarget.getAttribute('href');
+    if (href) {
+      router.push(href);
+    }
+  };
+
   const SidebarContent = () => (
     <>
       {/* Sidebar Header - Lumify Branding (Mobile) */}
@@ -183,7 +193,8 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
         {/* Dashboard */}
         <Link
           href="/admin"
-          onClick={closeSidebar}
+          onClick={handleNavClick}
+          scroll={false}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin'
               ? 'bg-slate-800 text-white'
@@ -197,7 +208,8 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
         {/* Orders */}
         <Link
           href="/admin/orders"
-          onClick={closeSidebar}
+          onClick={handleNavClick}
+          scroll={false}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/orders'
               ? 'bg-slate-800 text-white'
@@ -211,7 +223,8 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
         {/* Customers */}
         <Link
           href="/admin/customers"
-          onClick={closeSidebar}
+          onClick={handleNavClick}
+          scroll={false}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/customers'
               ? 'bg-slate-800 text-white'
@@ -225,7 +238,8 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
         {/* Users */}
         <Link
           href="/admin/users"
-          onClick={closeSidebar}
+          onClick={handleNavClick}
+          scroll={false}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/users'
               ? 'bg-slate-800 text-white'
@@ -255,7 +269,8 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
             <div className="ml-8 mt-1 space-y-1">
               <Link
                 href="/admin/products"
-                onClick={closeSidebar}
+                onClick={handleNavClick}
+                scroll={false}
                 className={`flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-all duration-150 ${
                   pathname === '/admin/products'
                     ? 'bg-slate-800 text-white font-medium'
@@ -266,7 +281,8 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
               </Link>
               <Link
                 href="/admin/products/categories"
-                onClick={closeSidebar}
+                onClick={handleNavClick}
+                scroll={false}
                 className={`flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-all duration-150 ${
                   pathname === '/admin/products/categories'
                     ? 'bg-slate-800 text-white font-medium'
@@ -282,7 +298,8 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
         {/* Analytics */}
         <Link
           href="/admin/analytics"
-          onClick={closeSidebar}
+          onClick={handleNavClick}
+          scroll={false}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/analytics'
               ? 'bg-slate-800 text-white'
@@ -297,7 +314,8 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
         {currentTheme === 'blisshair' && (
           <Link
             href="/admin/salon"
-            onClick={closeSidebar}
+            onClick={handleNavClick}
+            scroll={false}
             className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
               pathname === '/admin/salon'
                 ? 'bg-slate-800 text-white'
@@ -312,7 +330,8 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
         {/* Site Builder */}
         <Link
           href="/admin/site-builder"
-          onClick={closeSidebar}
+          onClick={handleNavClick}
+          scroll={false}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/site-builder'
               ? 'bg-slate-800 text-white'
@@ -326,7 +345,8 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
         {/* Layout Builder */}
         <Link
           href="/admin/layout-builder"
-          onClick={closeSidebar}
+          onClick={handleNavClick}
+          scroll={false}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/layout-builder'
               ? 'bg-slate-800 text-white'
@@ -340,7 +360,8 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
         {/* Cache+ */}
         <Link
           href="/admin/cache-plus"
-          onClick={closeSidebar}
+          onClick={handleNavClick}
+          scroll={false}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/cache-plus'
               ? 'bg-slate-800 text-white'
@@ -357,7 +378,8 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
         {/* Settings */}
         <Link
           href="/admin/settings"
-          onClick={closeSidebar}
+          onClick={handleNavClick}
+          scroll={false}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/settings'
               ? 'bg-slate-800 text-white'
@@ -371,7 +393,8 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
         {/* Promo Codes */}
         <Link
           href="/admin/promo-codes"
-          onClick={closeSidebar}
+          onClick={handleNavClick}
+          scroll={false}
           className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/promo-codes'
               ? 'bg-slate-800 text-white'
@@ -435,7 +458,8 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
           </div>
           <Link
             href="/"
-            onClick={closeSidebar}
+            onClick={handleNavClick}
+            scroll={false}
             className="block text-sm text-blue-400 hover:text-blue-300 transition-colors"
           >
             ← Back to Store

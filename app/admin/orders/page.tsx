@@ -97,7 +97,7 @@ export default function OrdersPage() {
               </Button>
               <Button
                 size="sm"
-                className="bg-green-600 hover:bg-green-700 text-white h-10 px-4 whitespace-nowrap"
+                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-full h-10 px-6 whitespace-nowrap shadow-lg hover:shadow-xl font-semibold transition-all duration-300"
               >
                 <Download className="h-4 w-4 mr-2" />
                 Export
