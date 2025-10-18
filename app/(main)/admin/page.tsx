@@ -248,8 +248,41 @@ export default function AdminPage() {
   return (
     <AdminLayout title="Home" description="">
       <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-        {/* Header */}
-        <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        {/* Mobile Simple View - Shows on mobile only */}
+        <div className="md:hidden">
+          <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-4 py-4">
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Dashboard</h1>
+            
+            {/* Simple Stats Grid */}
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+                <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Sales</div>
+                <div className="text-lg font-bold text-gray-900 dark:text-white">£{stats.totalRevenue.toLocaleString()}</div>
+              </div>
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+                <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Orders</div>
+                <div className="text-lg font-bold text-gray-900 dark:text-white">{stats.totalOrders}</div>
+              </div>
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+                <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Customers</div>
+                <div className="text-lg font-bold text-gray-900 dark:text-white">{stats.totalCustomers}</div>
+              </div>
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+                <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Products</div>
+                <div className="text-lg font-bold text-gray-900 dark:text-white">{stats.totalProducts}</div>
+              </div>
+            </div>
+
+            {/* Quick Actions */}
+            <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
+              <Plus className="h-4 w-4 mr-2" />
+              Add Product
+            </Button>
+          </div>
+        </div>
+
+        {/* Desktop Header - Hidden on mobile */}
+        <div className="hidden md:block bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
           <div className="px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
               <div>
@@ -271,8 +304,8 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
+        {/* Main Content - Desktop View Only */}
+        <div className="hidden md:block px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
           {/* Quick Stats */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <Card className="hover:shadow-md transition-shadow">

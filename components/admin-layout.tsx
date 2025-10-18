@@ -166,135 +166,113 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
 
   const SidebarContent = () => (
     <>
-      {/* Logo */}
-      <div className="flex flex-col h-20 px-4 bg-white border-b border-gray-200">
-        <div className="flex items-center justify-between pt-4">
-          <div className="flex flex-col">
-            <Link href="/admin" className="text-xl font-bold" onClick={closeSidebar}>
-              {currentTheme === 'lumify' ? (
-                <span className="bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Lumify</span>
-              ) : currentTheme === 'musclesports' ? (
-                <span className="bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">MuscleSports</span>
-              ) : currentTheme === 'vera' ? (
-                <span className="bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">VeraRP</span>
-              ) : currentTheme === 'blisshair' ? (
-                <span className="bg-gradient-to-r from-emerald-600 to-teal-400 bg-clip-text text-transparent">Bliss Hair Studio</span>
-              ) : (
-                <span className="text-gray-900">Ordify Admin</span>
-              )}
-            </Link>
-            <span className="text-[10px] font-medium text-muted-foreground mt-0.5">
-              {currentTheme === 'lumify' ? 'Light Up Your Business' : currentTheme === 'musclesports' ? 'Leon\'s MuscleSports.co.uk' : currentTheme === 'vera' ? 'Serious FiveM Roleplay' : currentTheme === 'blisshair' ? 'Maxine\'s Hair & Beauty' : 'Direct E-commerce'}
-            </span>
-          </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={closeSidebar}
-          >
-            <X className="h-6 w-6" />
-          </Button>
-        </div>
+      {/* Mobile close button */}
+      <div className="flex items-center justify-end p-3 md:hidden border-b">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
+          onClick={closeSidebar}
+        >
+          <X className="h-5 w-5" />
+        </Button>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+      <nav className="flex-1 px-3 py-3 space-y-1 overflow-y-auto">
         {/* Dashboard */}
         <Link
           href="/admin"
           onClick={closeSidebar}
-          className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ${
+          className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin'
-              ? 'bg-accent text-accent-foreground border-r-2 border-primary'
-              : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
           }`}
         >
-          <Home className="mr-3 h-5 w-5" />
-          Dashboard
+          <Home className="h-5 w-5 flex-shrink-0" />
+          <span>Dashboard</span>
         </Link>
 
         {/* Orders */}
         <Link
           href="/admin/orders"
           onClick={closeSidebar}
-          className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ${
+          className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/orders'
-              ? 'bg-accent text-accent-foreground border-r-2 border-primary'
-              : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
           }`}
         >
-          <ShoppingCart className="mr-3 h-5 w-5" />
-          Orders
+          <ShoppingCart className="h-5 w-5 flex-shrink-0" />
+          <span>Orders</span>
         </Link>
 
         {/* Customers */}
         <Link
           href="/admin/customers"
           onClick={closeSidebar}
-          className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ${
+          className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/customers'
-              ? 'bg-accent text-accent-foreground border-r-2 border-primary'
-              : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
           }`}
         >
-          <Users className="mr-3 h-5 w-5" />
-          Customers
+          <Users className="h-5 w-5 flex-shrink-0" />
+          <span>Customers</span>
         </Link>
 
         {/* Users */}
         <Link
           href="/admin/users"
           onClick={closeSidebar}
-          className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ${
+          className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/users'
-              ? 'bg-accent text-accent-foreground border-r-2 border-primary'
-              : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
           }`}
         >
-          <Users className="mr-3 h-5 w-5" />
-          Users
+          <Users className="h-5 w-5 flex-shrink-0" />
+          <span>Users</span>
         </Link>
 
         {/* Products Section */}
         <div>
           <button
             onClick={() => setProductsExpanded(!productsExpanded)}
-            className="flex items-center w-full px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+            className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white"
           >
-            <Package className="mr-3 h-5 w-5" />
-            <span>Products</span>
+            <Package className="h-5 w-5 flex-shrink-0" />
+            <span className="flex-1 text-left">Products</span>
             {productsExpanded ? (
-              <ChevronDown className="ml-auto h-4 w-4" />
+              <ChevronDown className="h-4 w-4 flex-shrink-0" />
             ) : (
-              <ChevronRight className="ml-auto h-4 w-4" />
+              <ChevronRight className="h-4 w-4 flex-shrink-0" />
             )}
           </button>
 
           {productsExpanded && (
-            <div className="ml-6 mt-2 space-y-1">
+            <div className="ml-8 mt-1 space-y-1">
               <Link
                 href="/admin/products"
                 onClick={closeSidebar}
-                className={`flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-150 ${
+                className={`flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-all duration-150 ${
                   pathname === '/admin/products'
-                    ? 'bg-accent text-accent-foreground'
-                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                    ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-medium'
+                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
                 }`}
               >
-                <Package className="mr-3 h-4 w-4" />
                 All Products
               </Link>
               <Link
                 href="/admin/products/categories"
                 onClick={closeSidebar}
-                className={`flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-150 ${
+                className={`flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-all duration-150 ${
                   pathname === '/admin/products/categories'
-                    ? 'bg-accent text-accent-foreground'
-                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                    ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-medium'
+                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
                 }`}
               >
-                <Tag className="mr-3 h-4 w-4" />
                 Categories
               </Link>
             </div>
@@ -305,14 +283,14 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
         <Link
           href="/admin/analytics"
           onClick={closeSidebar}
-          className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ${
+          className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/analytics'
-              ? 'bg-accent text-accent-foreground border-r-2 border-primary'
-              : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
           }`}
         >
-          <BarChart3 className="mr-3 h-5 w-5" />
-          Analytics
+          <BarChart3 className="h-5 w-5 flex-shrink-0" />
+          <span>Analytics</span>
         </Link>
 
         {/* Salon Management (for salon-type businesses) */}
@@ -320,14 +298,14 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           <Link
             href="/admin/salon"
             onClick={closeSidebar}
-            className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ${
+            className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
               pathname === '/admin/salon'
-                ? 'bg-accent text-accent-foreground border-r-2 border-primary'
-                : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
             }`}
           >
-            <Scissors className="mr-3 h-5 w-5" />
-            Salon Management
+            <Scissors className="h-5 w-5 flex-shrink-0" />
+            <span>Salon Management</span>
           </Link>
         )}
 
@@ -335,41 +313,41 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
         <Link
           href="/admin/site-builder"
           onClick={closeSidebar}
-          className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ${
+          className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/site-builder'
-              ? 'bg-accent text-accent-foreground border-r-2 border-primary'
-              : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
           }`}
         >
-          <Wrench className="mr-3 h-5 w-5" />
-          Site Builder
+          <Wrench className="h-5 w-5 flex-shrink-0" />
+          <span>Site Builder</span>
         </Link>
 
         {/* Layout Builder */}
         <Link
           href="/admin/layout-builder"
           onClick={closeSidebar}
-          className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ${
+          className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/layout-builder'
-              ? 'bg-accent text-accent-foreground border-r-2 border-primary'
-              : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
           }`}
         >
-          <Package className="mr-3 h-5 w-5" />
-          Layout Builder
+          <Package className="h-5 w-5 flex-shrink-0" />
+          <span>Layout Builder</span>
         </Link>
 
         {/* Cache+ */}
         <Link
           href="/admin/cache-plus"
           onClick={closeSidebar}
-          className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-150 ${
+          className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/cache-plus'
-              ? 'bg-gradient-to-r from-purple-500 to-blue-600 text-white shadow-lg border-r-2 border-purple-600'
-              : 'text-muted-foreground hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50 hover:text-purple-700'
+              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
           }`}
         >
-          <Zap className="mr-3 h-5 w-5" />
+          <Zap className="h-5 w-5 flex-shrink-0" />
           <span className="flex items-center gap-2">
             Cache+
             <span className="text-[10px] px-1.5 py-0.5 bg-yellow-400 text-yellow-900 rounded font-bold">PRO</span>
@@ -380,38 +358,42 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
         <Link
           href="/admin/settings"
           onClick={closeSidebar}
-          className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ${
+          className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/settings'
-              ? 'bg-accent text-accent-foreground border-r-2 border-primary'
-              : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
           }`}
         >
-          <Settings className="mr-3 h-5 w-5" />
-          Settings
+          <Settings className="h-5 w-5 flex-shrink-0" />
+          <span>Settings</span>
         </Link>
 
         {/* Promo Codes */}
         <Link
           href="/admin/promo-codes"
           onClick={closeSidebar}
-          className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ${
+          className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
             pathname === '/admin/promo-codes'
-              ? 'bg-accent text-accent-foreground border-r-2 border-primary'
-              : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+              ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'
           }`}
         >
-          <Percent className="mr-3 h-5 w-5" />
-          Promo Codes
+          <Percent className="h-5 w-5 flex-shrink-0" />
+          <span>Promo Codes</span>
         </Link>
 
         {/* Theme Switcher */}
-        <div className="pt-4 mt-4 border-t">
+        <div className="pt-3 mt-3 border-t border-gray-200 dark:border-gray-700">
           <button
             onClick={toggleTheme}
-            className="flex items-center w-full px-4 py-3 text-sm font-medium rounded-lg transition-all duration-300 bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 text-foreground border border-primary/20 shadow-sm"
+            className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white"
           >
-            <Palette className="mr-3 h-5 w-5 text-primary" />
-            <span>Theme: {currentTheme === 'lumify' ? 'Lumify' : currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : currentTheme === 'blisshair' ? 'Bliss Hair' : 'Ordify'}</span>
+            <Palette className="h-5 w-5 flex-shrink-0" />
+            <span className="flex items-center gap-2">
+              <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-0.5 rounded">
+                {currentTheme === 'lumify' ? 'Lumify' : currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : currentTheme === 'blisshair' ? 'Bliss Hair' : 'Ordify'}
+              </span>
+            </span>
           </button>
           <p className="px-4 mt-2 text-xs text-muted-foreground">
             {currentTheme === 'lumify'
