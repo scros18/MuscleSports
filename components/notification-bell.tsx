@@ -97,30 +97,19 @@ export default function NotificationBell() {
 
       {/* Notification Dropdown */}
       {isOpen && (
-        <>
+        <div 
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-4 animate-in fade-in duration-200"
+          onClick={() => setIsOpen(false)}
+        >
           {/* Backdrop with blur */}
-          <div 
-            className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300" 
-            onClick={() => setIsOpen(false)}
-            style={{ 
-              animation: 'fadeIn 0.3s ease-out',
-              zIndex: 10000000
-            }}
-          />
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
           
-          {/* Centered Modal - Ensure it's above everything */}
+          {/* Centered Modal */}
           <div 
-            className="fixed inset-0 flex items-center justify-center p-3 sm:p-4 pointer-events-none"
-            style={{ zIndex: 10000001 }}
+            className="relative w-full max-w-lg bg-background rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200"
+            style={{ maxHeight: '90vh' }}
+            onClick={(e) => e.stopPropagation()}
           >
-            <div 
-              className="w-full bg-background rounded-2xl shadow-2xl overflow-hidden pointer-events-auto transform transition-all duration-300 ease-out"
-              style={{ 
-                animation: 'slideInScale 0.3s ease-out',
-                maxHeight: '90vh',
-                maxWidth: 'min(90vw, 512px)'
-              }}
-            >
           {/* Header */}
           <div className="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 p-5 flex items-center justify-between">
             <div className="flex-1">
@@ -258,10 +247,9 @@ export default function NotificationBell() {
               </Link>
             </div>
           )}
-            </div>
           </div>
-        </>
-        )}
+        </div>
+      )}
     </div>
   );
 }
