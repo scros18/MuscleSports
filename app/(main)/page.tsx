@@ -313,19 +313,19 @@ export default function Home() {
 
                   <div className="text-center mb-16">
                     {/* Trustpilot-style Trust Badge */}
-                    <div className="inline-flex items-center gap-3 mb-6">
-                      <div className="flex items-center gap-2 px-4 py-2 bg-[#00B67A] rounded-lg shadow-lg">
-                        <Star className="h-5 w-5 fill-white text-white" />
+                    <div className="inline-flex items-center gap-3 mb-6 px-5 py-3 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 rounded-full border border-green-200/50 dark:border-green-800/30 shadow-sm">
+                      <div className="flex items-center gap-2 px-3 py-1.5 bg-[#00B67A] rounded-full">
+                        <Star className="h-4 w-4 fill-white text-white" />
                         <span className="font-bold text-white text-sm tracking-wide">Trustpilot</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-6 w-6 fill-[#00B67A] text-[#00B67A]" />
+                          <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />
                         ))}
                       </div>
-                      <div className="flex flex-col items-start">
+                      <div className="flex items-center gap-2 border-l border-green-300/50 dark:border-green-700/50 pl-3">
                         <span className="text-2xl font-bold text-foreground">4.8</span>
-                        <span className="text-xs text-muted-foreground">Excellent</span>
+                        <span className="text-sm font-medium text-muted-foreground">Excellent</span>
                       </div>
                     </div>
                     
@@ -338,7 +338,7 @@ export default function Home() {
                   </div>
 
                   {/* Trustpilot-inspired review cards */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12 lg:justify-items-center">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12 [&>*:nth-child(4)]:lg:col-start-2">
                     {displayedReviews.map((review, index) => (
                       <div 
                         key={review.id} 
