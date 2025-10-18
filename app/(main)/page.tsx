@@ -345,14 +345,14 @@ export default function Home() {
                         className="group bg-background border border-border rounded-2xl p-6 hover:shadow-xl hover:border-[#00B67A]/30 transition-all duration-300 hover:-translate-y-1 w-full max-w-md"
                       >
                         {/* Header with stars and date */}
-                        <div className="flex items-start justify-between mb-4">
+                        <div className="flex items-center justify-between mb-4">
                           <div className="flex gap-0.5">
                             {[...Array(5)].map((_, i) => (
                               <Star 
                                 key={i} 
                                 className={`h-5 w-5 transition-all ${
                                   i < review.rating 
-                                    ? 'fill-[#00B67A] text-[#00B67A]'
+                                    ? 'fill-amber-400 text-amber-400'
                                     : 'fill-gray-200 text-gray-200 dark:fill-gray-700 dark:text-gray-700'
                                 }`} 
                               />
@@ -387,8 +387,8 @@ export default function Home() {
                                 {review.author || review.reviewer}
                               </p>
                               {review.verified && (
-                                <svg className="w-4 h-4 text-[#00B67A] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                <svg className="w-4 h-4 text-blue-500 flex-shrink-0" viewBox="0 0 22 22" fill="currentColor">
+                                  <path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/>
                                 </svg>
                               )}
                             </div>
@@ -411,31 +411,6 @@ export default function Home() {
                         )}
                       </div>
                     ))}
-                  </div>
-
-                  {/* CTA Section */}
-                  <div className="text-center">
-                    <div className="inline-flex flex-col items-center gap-4 p-8 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 rounded-2xl border border-green-200/50 dark:border-green-800/30">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-muted-foreground">Rated</span>
-                        <span className="text-2xl font-bold text-foreground">4.8/5</span>
-                        <span className="text-sm text-muted-foreground">based on</span>
-                        <span className="font-bold text-foreground">{reviews.length}+ reviews</span>
-                      </div>
-                      {currentTheme !== 'musclesports' && (
-                        <a 
-                          href="https://www.ebay.co.uk/fdbk/feedback_profile/ordifydirectltd" 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className="inline-flex items-center gap-2 text-sm font-semibold text-[#00B67A] hover:text-[#00B67A]/80 transition-colors group"
-                        >
-                          View all reviews
-                          <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                          </svg>
-                        </a>
-                      )}
-                    </div>
                   </div>
                 </section>
               );
