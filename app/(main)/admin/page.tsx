@@ -384,6 +384,12 @@ function MaintenanceToggle() {
   const [estimatedTime, setEstimatedTime] = useState('');
   const [loading, setLoading] = useState(false);
   const [updating, setUpdating] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalConfig, setModalConfig] = useState<{
+    title: string;
+    message: string;
+    type: 'success' | 'error';
+  } | null>(null);
 
   useEffect(() => {
     // Fetch current maintenance status
@@ -425,17 +431,36 @@ function MaintenanceToggle() {
         const newMode = !isMaintenanceMode;
         setIsMaintenanceMode(newMode);
         if (newMode) {
-          alert('✅ Maintenance mode enabled! All users will see the maintenance page.\n\nThe site is now in maintenance mode.');
+          setModalConfig({
+            title: 'Maintenance Mode Enabled',
+            message: 'All users will see the maintenance page. The site is now in maintenance mode.',
+            type: 'success'
+          });
         } else {
-          alert('✅ Maintenance mode disabled! Site is now live.\n\nCustomers can now access the site normally.');
+          setModalConfig({
+            title: 'Site is Now Live',
+            message: 'Maintenance mode disabled! Customers can now access the site normally.',
+            type: 'success'
+          });
         }
+        setShowModal(true);
       } else {
         const errorData = await response.json().catch(() => ({}));
-        alert(`Failed to update maintenance mode: ${errorData.error || 'Unknown error'}`);
+        setModalConfig({
+          title: 'Update Failed',
+          message: errorData.error || 'Unknown error occurred',
+          type: 'error'
+        });
+        setShowModal(true);
       }
     } catch (error) {
       console.error('Error toggling maintenance mode:', error);
-      alert('Error updating maintenance mode. Please try again.');
+      setModalConfig({
+        title: 'Error',
+        message: 'Error updating maintenance mode. Please try again.',
+        type: 'error'
+      });
+      setShowModal(true);
     } finally {
       setLoading(false);
     }
@@ -460,14 +485,29 @@ function MaintenanceToggle() {
       });
 
       if (response.ok) {
-        alert('✅ Maintenance message updated successfully!');
+        setModalConfig({
+          title: 'Message Updated',
+          message: 'Maintenance message updated successfully!',
+          type: 'success'
+        });
+        setShowModal(true);
       } else {
         const errorData = await response.json().catch(() => ({}));
-        alert(`Failed to update message: ${errorData.error || 'Unknown error'}`);
+        setModalConfig({
+          title: 'Update Failed',
+          message: errorData.error || 'Unknown error occurred',
+          type: 'error'
+        });
+        setShowModal(true);
       }
     } catch (error) {
       console.error('Error updating message:', error);
-      alert('Error updating message. Please try again.');
+      setModalConfig({
+        title: 'Error',
+        message: 'Error updating message. Please try again.',
+        type: 'error'
+      });
+      setShowModal(true);
     } finally {
       setUpdating(false);
     }
@@ -532,6 +572,62 @@ function MaintenanceToggle() {
           </div>
         )}
       </CardContent>
+
+      {/* Modern Modal */}
+      {showModal && modalConfig && (
+        <div 
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-4 animate-in fade-in duration-200"
+          onClick={() => setShowModal(false)}
+        >
+          {/* Backdrop with blur */}
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+          
+          {/* Modal Content */}
+          <div 
+            className="relative bg-background rounded-2xl shadow-2xl max-w-md w-full p-6 animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Icon */}
+            <div className={`mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 ${
+              modalConfig.type === 'success' 
+                ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' 
+                : 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400'
+            }`}>
+              {modalConfig.type === 'success' ? (
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              ) : (
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              )}
+            </div>
+
+            {/* Title */}
+            <h3 className="text-xl font-bold text-center text-foreground mb-2">
+              {modalConfig.title}
+            </h3>
+
+            {/* Message */}
+            <p className="text-center text-muted-foreground mb-6">
+              {modalConfig.message}
+            </p>
+
+            {/* Close Button */}
+            <Button 
+              onClick={() => setShowModal(false)}
+              className={`w-full ${
+                modalConfig.type === 'success' 
+                  ? 'bg-green-600 hover:bg-green-700 text-white' 
+                  : 'bg-red-600 hover:bg-red-700 text-white'
+              }`}
+            >
+              OK
+            </Button>
+          </div>
+        </div>
+      )}
     </Card>
   );
 }
