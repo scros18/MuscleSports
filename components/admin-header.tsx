@@ -21,7 +21,7 @@ export function AdminHeader({ title, onMenuClick }: AdminHeaderProps) {
 
   return (
     <header className="sticky top-0 z-40 w-full bg-slate-950 border-b border-slate-900 shadow-xl">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="w-full h-16 flex items-center justify-between px-4">
         {/* Left: Logo & Brand with Cool Symbol */}
         <div className="flex items-center gap-3">
           {/* Professional Lumify Logo */}
@@ -89,7 +89,7 @@ export function AdminHeader({ title, onMenuClick }: AdminHeaderProps) {
               onClick={() => setShowUserMenu(!showUserMenu)}
               className="px-4 py-2 bg-slate-900 border-2 border-red-500/30 rounded-lg transition-all duration-200 group hover:bg-slate-800 hover:border-red-500/50 hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]"
             >
-              <span className="text-red-500 text-sm font-bold animate-pulse" style={{ textShadow: '0 0 10px rgba(239, 68, 68, 0.8), 0 0 20px rgba(239, 68, 68, 0.4)' }}>
+              <span className="text-red-500 text-sm font-bold" style={{ textShadow: '0 0 10px rgba(239, 68, 68, 0.8), 0 0 20px rgba(239, 68, 68, 0.4)' }}>
                 Administrator
               </span>
             </button>
