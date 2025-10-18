@@ -1,6 +1,15 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 export default function MaintenancePage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if user has an auth token (logged in)
+    const token = localStorage.getItem('authToken');
+    setIsLoggedIn(!!token);
+  }, []);
   return (
     <>
       <div style={{
@@ -227,7 +236,7 @@ export default function MaintenancePage() {
             }}>
               Thank you for your patience. We&apos;ll be back{' '}
               <a 
-                href="https://musclesports.co.uk/login" 
+                href={isLoggedIn ? 'https://musclesports.co.uk/admin' : 'https://musclesports.co.uk/login'}
                 style={{
                   color: '#10b981',
                   textDecoration: 'none',

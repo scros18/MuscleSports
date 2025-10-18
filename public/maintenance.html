@@ -408,7 +408,7 @@
                 <div class="footer-content">
                     <p>Current Time: <span class="current-time" id="current-time"></span></p>
                     <p class="footer-text">
-                        Thank you for your patience. We'll be back <a href="/login" class="admin-link">stronger</a> than ever!
+                        Thank you for your patience. We'll be back <a href="/login" class="admin-link" id="stronger-link">stronger</a> than ever!
                     </p>
                 </div>
             </div>
@@ -421,7 +421,19 @@
             document.getElementById('current-time').textContent = now.toLocaleTimeString();
         }
         
+        // Check if user is logged in and update the stronger link
+        function updateStrongerLink() {
+            const authToken = localStorage.getItem('authToken');
+            const strongerLink = document.getElementById('stronger-link');
+            if (authToken) {
+                strongerLink.href = '/admin';
+            } else {
+                strongerLink.href = '/login';
+            }
+        }
+        
         updateTime();
+        updateStrongerLink();
         setInterval(updateTime, 1000);
     </script>
 </body>
