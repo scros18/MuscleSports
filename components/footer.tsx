@@ -127,59 +127,45 @@ export function Footer() {
 
         {/* Payment Processors Section */}
         <div className="mb-6">
-          <p className="text-center text-xs uppercase tracking-widest font-semibold text-foreground/60 mb-3">We Accept</p>
+          <p className="text-center text-xs uppercase tracking-widest font-semibold text-foreground/60 mb-3">Secure Payments</p>
           <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6">
-            {/* PayPal */}
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg blur opacity-0 group-hover:opacity-75 transition duration-300"></div>
-              <div className="relative bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 px-4 py-2 md:px-5 md:py-2.5 rounded-lg border border-blue-200 dark:border-blue-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all duration-300 shadow-md hover:shadow-lg">
-                <span className="text-lg md:text-xl font-black bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">PayPal</span>
-              </div>
+            {/* PayPal Logo */}
+            <div className="group relative hover:scale-110 transition-transform duration-300">
+              <img 
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20.067 8.478c.492.88.556 2.014.3 3.327-.74 3.806-3.276 5.12-6.514 5.12h-.5a.805.805 0 0 0-.794.68l-.04.22-.63 4.008-.027.15a.806.806 0 0 1-.796.686H8.88a.554.554 0 0 1-.548-.664l1.185-7.524c.063-.402.41-.692.82-.692h.65c2.377 0 4.235-.968 4.77-3.827.205-1.08.142-1.98-.526-2.614-.206-.208-.485-.36-.82-.448.74.05 1.429.164 2.056.484z' fill='%23003087'/%3E%3Cpath d='M12.602 8.478h-3.6a.805.805 0 0 0-.795.68l-.628 3.99a.806.806 0 0 0 .796.933h2.133c1.75 0 3.116-.895 3.47-2.265.172-.653.147-1.27-.15-1.783-.27-.46-.772-.774-1.526-.774.237-.04.465-.12.7-.18z' fill='%23009cde'/%3E%3C/svg%3E" 
+                alt="PayPal"
+                className="w-10 h-10 md:w-12 md:h-12"
+              />
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap">PayPal</div>
             </div>
 
-            {/* Stripe */}
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg blur opacity-0 group-hover:opacity-75 transition duration-300"></div>
-              <div className="relative bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-800/30 px-4 py-2 md:px-5 md:py-2.5 rounded-lg border border-blue-200 dark:border-blue-700 hover:border-indigo-400 dark:hover:border-indigo-600 transition-all duration-300 shadow-md hover:shadow-lg">
-                <span className="text-lg md:text-xl font-black bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">Stripe</span>
-              </div>
+            {/* Visa Logo */}
+            <div className="group relative hover:scale-110 transition-transform duration-300">
+              <img 
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 32'%3E%3Crect width='48' height='32' rx='4' fill='%231434CB'/%3E%3Ctext x='8' y='22' font-size='14' font-weight='bold' fill='white' font-family='Arial'%3EVISA%3C/text%3E%3C/svg%3E" 
+                alt="Visa"
+                className="w-10 h-10 md:w-12 md:h-12"
+              />
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap">Visa</div>
             </div>
 
-            {/* Visa */}
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-700 rounded-lg blur opacity-0 group-hover:opacity-75 transition duration-300"></div>
-              <div className="relative bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 px-4 py-2 md:px-5 md:py-2.5 rounded-lg border border-blue-200 dark:border-blue-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all duration-300 shadow-md hover:shadow-lg">
-                <span className="text-lg md:text-xl font-black bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">Visa</span>
-              </div>
-            </div>
-
-            {/* Mastercard */}
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-red-400 to-orange-600 rounded-lg blur opacity-0 group-hover:opacity-75 transition duration-300"></div>
-              <div className="relative bg-gradient-to-br from-red-50 to-orange-100 dark:from-red-900/30 dark:to-orange-800/30 px-4 py-2 md:px-5 md:py-2.5 rounded-lg border border-red-200 dark:border-red-700 hover:border-orange-400 dark:hover:border-orange-600 transition-all duration-300 shadow-md hover:shadow-lg">
-                <span className="text-lg md:text-xl font-black bg-gradient-to-r from-red-600 to-orange-700 bg-clip-text text-transparent">Mastercard</span>
-              </div>
-            </div>
-
-            {/* Apple Pay */}
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-600 to-gray-900 rounded-lg blur opacity-0 group-hover:opacity-75 transition duration-300"></div>
-              <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900/30 dark:to-gray-800/30 px-4 py-2 md:px-5 md:py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition-all duration-300 shadow-md hover:shadow-lg">
-                <span className="text-lg md:text-xl font-black bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent">Apple Pay</span>
-              </div>
-            </div>
-
-            {/* Google Pay */}
-            <div className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-red-600 rounded-lg blur opacity-0 group-hover:opacity-75 transition duration-300"></div>
-              <div className="relative bg-gradient-to-br from-blue-50 to-red-50 dark:from-blue-900/30 dark:to-red-900/30 px-4 py-2 md:px-5 md:py-2.5 rounded-lg border border-blue-200 dark:border-blue-700 hover:border-red-400 dark:hover:border-red-600 transition-all duration-300 shadow-md hover:shadow-lg">
-                <span className="text-lg md:text-xl font-black bg-gradient-to-r from-blue-600 via-red-600 to-yellow-600 bg-clip-text text-transparent">Google Pay</span>
-              </div>
+            {/* Mastercard Logo */}
+            <div className="group relative hover:scale-110 transition-transform duration-300">
+              <img 
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 32'%3E%3Crect width='48' height='32' rx='4' fill='%23000'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23FF5F00'/%3E%3Ccircle cx='32' cy='16' r='7' fill='%23EB001B'/%3E%3Cellipse cx='24' cy='16' rx='6' ry='7' fill='%23F79E1B'/%3E%3C/svg%3E" 
+                alt="Mastercard"
+                className="w-10 h-10 md:w-12 md:h-12"
+              />
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap">Mastercard</div>
             </div>
           </div>
         </div>
 
         <Separator className="my-4" />
+
+        <div className="text-center text-sm text-foreground/70">
+          <p>&copy; 2025 {currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : 'Ordify Direct Ltd'}. All rights reserved.</p>
+        </div>
       </div>
     </footer>
   );
