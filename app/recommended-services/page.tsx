@@ -336,7 +336,7 @@ export default function RecommendedServicesPage() {
             Know a Great Service?
           </h3>
           <p className="text-slate-300 mb-6 max-w-2xl mx-auto">
-            If you own or know of a business that provides exceptional services aligned with our values, we'd love to hear from you!
+            If you own or know of a business that provides exceptional services aligned with our values, we&apos;d love to hear from you!
           </p>
           <a
             href="mailto:partnerships@musclesports.com"
