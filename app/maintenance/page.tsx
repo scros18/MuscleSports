@@ -223,7 +223,31 @@ export default function MaintenancePage() {
               display: 'block',
               visibility: 'visible'
             }}>
-              Thank you for your patience. We&apos;ll be back stronger than ever! 💪
+              Thank you for your patience. We&apos;ll be back{' '}
+              <a 
+                href="https://musclesports.co.uk/login" 
+                style={{
+                  color: '#10b981',
+                  textDecoration: 'none',
+                  fontWeight: 'bold',
+                  transition: 'all 0.3s ease',
+                  borderBottom: '2px solid #10b981',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#059669';
+                  e.currentTarget.style.borderBottomColor = '#059669';
+                  e.currentTarget.style.textShadow = '0 0 10px rgba(16, 185, 129, 0.5)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#10b981';
+                  e.currentTarget.style.borderBottomColor = '#10b981';
+                  e.currentTarget.style.textShadow = 'none';
+                }}
+              >
+                stronger
+              </a>
+              {' '}than ever! 💪
             </p>
           </div>
         </div>
