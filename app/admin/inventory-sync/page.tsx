@@ -175,7 +175,7 @@ export default function InventorySyncPage() {
               No Products Scanned Yet
             </h3>
             <p className="text-xs md:text-sm text-slate-400 mb-6">
-              Click "Scan Tropicana" to discover and preview all available products from the Tropicana Wholesale catalog.
+              Click &quot;Scan Tropicana&quot; to discover and preview all available products from the Tropicana Wholesale catalog.
             </p>
             <div className="inline-flex items-center gap-2 text-xs md:text-sm text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 md:px-4 py-2 md:py-2.5">
               <AlertCircle className="h-4 w-4 flex-shrink-0" />
