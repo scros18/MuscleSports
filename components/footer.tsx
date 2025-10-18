@@ -131,31 +131,44 @@ export function Footer() {
           <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6">
             {/* PayPal Logo */}
             <div className="group relative md:hover:scale-110 md:transition-transform md:duration-300">
-              <img 
-                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 32'%3E%3Ctext x='8' y='24' font-size='18' font-weight='bold' fill='%23003087'%3EPay%3C/text%3E%3Ctext x='32' y='24' font-size='18' font-weight='bold' fill='%23009cde'%3EPal%3C/text%3E%3C/svg%3E" 
-                alt="PayPal"
-                className="w-12 h-8 md:w-14 md:h-9 object-contain"
-              />
+              <svg 
+                viewBox="0 0 24 24" 
+                className="w-12 h-8 md:w-14 md:h-9"
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M3.5 4h12c1.93 0 3.5 1.57 3.5 3.5v8c0 1.93-1.57 3.5-3.5 3.5h-12C1.57 19 0 17.43 0 15.5v-8C0 5.57 1.57 4 3.5 4z" fill="#003087"/>
+                <path d="M8.2 8.5c-.2 1.2-.9 1.8-2.1 1.8H5.2l.4-2.4h.9c.7 0 1.1.3 1.2.8l-.5 1.6zm3.5 0c-.2 1.2-.9 1.8-2.1 1.8h-.9l.4-2.4h.9c.7 0 1.1.3 1.2.8l-.5 1.6z" fill="#009cde"/>
+                <path d="M14 9.3c0-.3-.3-.5-.6-.5H9.2l-.7 4.2h2.2c1.4 0 2.5-1.1 2.5-2.5 0-.6-.2-1.1-.6-1.5l-.6-.7z" fill="#009cde"/>
+              </svg>
               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 md:group-hover:opacity-100 md:transition-opacity bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap pointer-events-none">PayPal</div>
             </div>
 
             {/* Visa Logo */}
             <div className="group relative md:hover:scale-110 md:transition-transform md:duration-300">
-              <img 
-                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 32'%3E%3Crect width='60' height='32' rx='4' fill='%231434CB'/%3E%3Ctext x='12' y='22' font-size='16' font-weight='bold' fill='white' font-family='Arial'%3EVISA%3C/text%3E%3C/svg%3E" 
-                alt="Visa"
-                className="w-12 h-8 md:w-14 md:h-9 object-contain"
-              />
+              <svg 
+                viewBox="0 0 48 32" 
+                className="w-12 h-8 md:w-14 md:h-9"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="48" height="32" rx="4" fill="#1A1F71"/>
+                <text x="8" y="21" fontFamily="Arial, sans-serif" fontSize="16" fontWeight="bold" fill="white">VISA</text>
+              </svg>
               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 md:group-hover:opacity-100 md:transition-opacity bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap pointer-events-none">Visa</div>
             </div>
 
             {/* Mastercard Logo */}
             <div className="group relative md:hover:scale-110 md:transition-transform md:duration-300">
-              <img 
-                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 32'%3E%3Crect width='60' height='32' rx='4' fill='%23000'/%3E%3Ccircle cx='18' cy='16' r='8' fill='%23FF5F00'/%3E%3Ccircle cx='42' cy='16' r='8' fill='%23EB001B'/%3E%3Cellipse cx='30' cy='16' rx='7' ry='8' fill='%23F79E1B'/%3E%3C/svg%3E" 
-                alt="Mastercard"
-                className="w-12 h-8 md:w-14 md:h-9 object-contain"
-              />
+              <svg 
+                viewBox="0 0 48 32" 
+                className="w-12 h-8 md:w-14 md:h-9"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="48" height="32" rx="4" fill="#000000"/>
+                <circle cx="16" cy="16" r="9" fill="#EB001B"/>
+                <circle cx="32" cy="16" r="9" fill="#F79E1B"/>
+                <ellipse cx="24" cy="16" rx="8" ry="9" fill="#FF5F00"/>
+              </svg>
               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 md:group-hover:opacity-100 md:transition-opacity bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap pointer-events-none">Mastercard</div>
             </div>
           </div>
