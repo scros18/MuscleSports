@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    unoptimized: true, // Disable Next.js image optimization to use original URLs
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 31536000, // 1 year cache
     dangerouslyAllowSVG: true,
