@@ -466,15 +466,15 @@ export function Header() {
 
       {/* Category Navigation Bar - Hidden on mobile */}
       <div className="border-t bg-muted/30 hidden md:block">
-        <div className="container px-4">
+        <div className="container mx-auto px-4">
           <div className="relative flex items-center">
             {/* Left Arrow */}
             <button
               onClick={() => scrollNav('left')}
-              className={`absolute left-0 z-10 p-1 rounded-full bg-background/80 backdrop-blur-sm border shadow-sm transition-all duration-200 ${
+              className={`absolute left-2 z-10 p-1.5 rounded-full bg-background/95 backdrop-blur-sm border shadow-md transition-all duration-200 ${
                 canScrollLeft 
-                  ? 'opacity-100 hover:bg-background hover:scale-105' 
-                  : 'opacity-50 cursor-not-allowed'
+                  ? 'opacity-100 hover:bg-background hover:scale-110' 
+                  : 'opacity-0 pointer-events-none'
               }`}
               disabled={!canScrollLeft}
               aria-label="Scroll navigation left"
@@ -485,10 +485,10 @@ export function Header() {
             {/* Right Arrow */}
             <button
               onClick={() => scrollNav('right')}
-              className={`absolute right-0 z-10 p-1 rounded-full bg-background/80 backdrop-blur-sm border shadow-sm transition-all duration-200 ${
+              className={`absolute right-2 z-10 p-1.5 rounded-full bg-background/95 backdrop-blur-sm border shadow-md transition-all duration-200 ${
                 canScrollRight 
-                  ? 'opacity-100 hover:bg-background hover:scale-105' 
-                  : 'opacity-50 cursor-not-allowed'
+                  ? 'opacity-100 hover:bg-background hover:scale-110' 
+                  : 'opacity-0 pointer-events-none'
               }`}
               disabled={!canScrollRight}
               aria-label="Scroll navigation right"
@@ -497,7 +497,7 @@ export function Header() {
             </button>
 
             <nav
-              className="flex items-center gap-1 py-2 text-sm overflow-x-auto [&::-webkit-scrollbar]:hidden px-8"
+              className="flex items-center gap-2 py-3 text-sm overflow-x-auto [&::-webkit-scrollbar]:hidden px-10"
               ref={navRef}
               style={{
                 scrollbarWidth: 'none',
@@ -505,9 +505,9 @@ export function Header() {
               }}
               onScroll={updateScrollButtons}
             >
-            {/* Mega Menu Items */}
+            {/* Mega Menu Items - Using search instead of category for better results */}
             <Link
-              href="/products?category=Protein+Powders"
+              href="/products?search=protein+powder"
               className="whitespace-nowrap px-3 py-2 rounded-md hover:bg-accent transition-all duration-200 text-foreground/90 hover:text-foreground font-medium"
             >
               Protein Powders
@@ -531,7 +531,7 @@ export function Header() {
                   <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Pre-Workout Types</h3>
                   <div className="space-y-1">
                     <Link 
-                      href="/products?category=Pre-Workout&subcategory=Powders" 
+                      href="/products?search=pre+workout+powder" 
                       className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-green-50 dark:hover:bg-green-950/20 transition-all duration-200 group/item" 
                       onClick={() => setOpenDropdown(null)}
                     >
@@ -544,7 +544,7 @@ export function Header() {
                       </div>
                     </Link>
                     <Link 
-                      href="/products?category=Pre-Workout&subcategory=Shots" 
+                      href="/products?search=pre+workout+shot" 
                       className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-green-50 dark:hover:bg-green-950/20 transition-all duration-200 group/item" 
                       onClick={() => setOpenDropdown(null)}
                     >
@@ -557,7 +557,7 @@ export function Header() {
                       </div>
                     </Link>
                     <Link 
-                      href="/products?category=Pre-Workout&subcategory=Tablets" 
+                      href="/products?search=pre+workout+tablet" 
                       className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-green-50 dark:hover:bg-green-950/20 transition-all duration-200 group/item" 
                       onClick={() => setOpenDropdown(null)}
                     >
@@ -575,13 +575,13 @@ export function Header() {
             </div>
             
             <Link
-              href="/products?category=Creatine"
+              href="/products?search=creatine"
               className="whitespace-nowrap px-3 py-2 rounded-md hover:bg-accent transition-all duration-200 text-foreground/90 hover:text-foreground font-medium"
             >
               Creatine
             </Link>
             <Link
-              href="/products?category=Protein+Bars"
+              href="/products?search=protein+bar"
               className="whitespace-nowrap px-3 py-2 rounded-md hover:bg-accent transition-all duration-200 text-foreground/90 hover:text-foreground font-medium"
             >
               Protein Bars
@@ -605,7 +605,7 @@ export function Header() {
                   <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Shop Accessories</h3>
                   <div className="space-y-1">
                     <Link 
-                      href="/products?category=Accessories&subcategory=Shakers" 
+                      href="/products?search=shaker+bottle" 
                       className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-green-50 dark:hover:bg-green-950/20 transition-all duration-200 group/item" 
                       onClick={() => setOpenDropdown(null)}
                     >
@@ -618,7 +618,7 @@ export function Header() {
                       </div>
                     </Link>
                     <Link 
-                      href="/products?category=Accessories&subcategory=Bottles" 
+                      href="/products?search=water+bottle" 
                       className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-green-50 dark:hover:bg-green-950/20 transition-all duration-200 group/item" 
                       onClick={() => setOpenDropdown(null)}
                     >
@@ -631,7 +631,7 @@ export function Header() {
                       </div>
                     </Link>
                     <Link 
-                      href="/products?category=Accessories&subcategory=Apparel" 
+                      href="/products?search=gym+apparel+clothing" 
                       className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-green-50 dark:hover:bg-green-950/20 transition-all duration-200 group/item" 
                       onClick={() => setOpenDropdown(null)}
                     >
@@ -649,19 +649,19 @@ export function Header() {
             </div>
             
             <Link
-              href="/products?category=Vitamins+%26+Supplements"
+              href="/products?search=vitamins+supplements"
               className="whitespace-nowrap px-3 py-2 rounded-md hover:bg-accent transition-all duration-200 text-foreground/90 hover:text-foreground font-medium"
             >
               Vitamins & Supplements
             </Link>
             <Link
-              href="/products?category=Snacks"
+              href="/products?search=snacks"
               className="whitespace-nowrap px-3 py-2 rounded-md hover:bg-accent transition-all duration-200 text-foreground/90 hover:text-foreground font-medium"
             >
               Snacks
             </Link>
             <Link
-              href="/products?category=Bundles"
+              href="/products?search=bundle"
               className="whitespace-nowrap px-3 py-2 rounded-md hover:bg-accent transition-all duration-200 text-foreground/90 hover:text-foreground font-medium"
             >
               Bundles
@@ -724,15 +724,15 @@ export function Header() {
                 onMouseLeave={() => setOpenDropdown(null)}
               >
                 <div className="bg-background border rounded-xl shadow-2xl p-6 min-w-[340px]">
-                  <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Expert Guides</h3>
+                  <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-4">Expert Fitness Guides</h3>
                   <div className="space-y-1">
                     <Link 
                       href="/guides/muscle-building" 
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-green-50 dark:hover:bg-green-950/20 transition-all duration-200 group/item" 
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 dark:hover:from-green-950/20 dark:hover:to-emerald-950/20 transition-all duration-200 group/item" 
                       onClick={() => setOpenDropdown(null)}
                     >
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-100 to-red-50 dark:from-red-900/40 dark:to-red-800/30 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span className="text-sm">💪</span>
+                      <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-red-100 to-red-50 dark:from-red-900/40 dark:to-red-800/30 flex items-center justify-center group-hover/item:scale-110 transition-transform shadow-sm">
+                        <span className="text-base">💪</span>
                       </div>
                       <div className="flex-1">
                         <div className="text-sm font-semibold text-foreground">Muscle Building</div>
@@ -741,11 +741,11 @@ export function Header() {
                     </Link>
                     <Link 
                       href="/guides/weight-loss" 
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-green-50 dark:hover:bg-green-950/20 transition-all duration-200 group/item" 
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 dark:hover:from-green-950/20 dark:hover:to-emerald-950/20 transition-all duration-200 group/item" 
                       onClick={() => setOpenDropdown(null)}
                     >
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-100 to-green-50 dark:from-green-900/40 dark:to-green-800/30 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span className="text-sm">📉</span>
+                      <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-green-100 to-green-50 dark:from-green-900/40 dark:to-green-800/30 flex items-center justify-center group-hover/item:scale-110 transition-transform shadow-sm">
+                        <span className="text-base">📉</span>
                       </div>
                       <div className="flex-1">
                         <div className="text-sm font-semibold text-foreground">Weight Loss</div>
@@ -754,11 +754,11 @@ export function Header() {
                     </Link>
                     <Link 
                       href="/guides/protein-guide" 
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-green-50 dark:hover:bg-green-950/20 transition-all duration-200 group/item" 
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 dark:hover:from-green-950/20 dark:hover:to-emerald-950/20 transition-all duration-200 group/item" 
                       onClick={() => setOpenDropdown(null)}
                     >
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-900/40 dark:to-amber-800/30 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span className="text-sm">🥩</span>
+                      <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-900/40 dark:to-amber-800/30 flex items-center justify-center group-hover/item:scale-110 transition-transform shadow-sm">
+                        <span className="text-base">🥩</span>
                       </div>
                       <div className="flex-1">
                         <div className="text-sm font-semibold text-foreground">Protein Guide</div>
@@ -767,11 +767,11 @@ export function Header() {
                     </Link>
                     <Link 
                       href="/guides/creatine-benefits" 
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-green-50 dark:hover:bg-green-950/20 transition-all duration-200 group/item" 
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 dark:hover:from-green-950/20 dark:hover:to-emerald-950/20 transition-all duration-200 group/item" 
                       onClick={() => setOpenDropdown(null)}
                     >
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-100 to-yellow-50 dark:from-yellow-900/40 dark:to-yellow-800/30 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span className="text-sm">⚡</span>
+                      <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-yellow-100 to-yellow-50 dark:from-yellow-900/40 dark:to-yellow-800/30 flex items-center justify-center group-hover/item:scale-110 transition-transform shadow-sm">
+                        <span className="text-base">⚡</span>
                       </div>
                       <div className="flex-1">
                         <div className="text-sm font-semibold text-foreground">Creatine Benefits</div>
@@ -780,11 +780,11 @@ export function Header() {
                     </Link>
                     <Link 
                       href="/guides/pre-workout-benefits" 
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-green-50 dark:hover:bg-green-950/20 transition-all duration-200 group/item" 
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 dark:hover:from-green-950/20 dark:hover:to-emerald-950/20 transition-all duration-200 group/item" 
                       onClick={() => setOpenDropdown(null)}
                     >
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-100 to-orange-50 dark:from-orange-900/40 dark:to-orange-800/30 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span className="text-sm">🔥</span>
+                      <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-orange-100 to-orange-50 dark:from-orange-900/40 dark:to-orange-800/30 flex items-center justify-center group-hover/item:scale-110 transition-transform shadow-sm">
+                        <span className="text-base">🔥</span>
                       </div>
                       <div className="flex-1">
                         <div className="text-sm font-semibold text-foreground">Pre-Workout</div>
@@ -793,11 +793,11 @@ export function Header() {
                     </Link>
                     <Link 
                       href="/guides/post-workout-nutrition" 
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-green-50 dark:hover:bg-green-950/20 transition-all duration-200 group/item" 
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 dark:hover:from-green-950/20 dark:hover:to-emerald-950/20 transition-all duration-200 group/item" 
                       onClick={() => setOpenDropdown(null)}
                     >
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-100 to-teal-50 dark:from-teal-900/40 dark:to-teal-800/30 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span className="text-sm">🍗</span>
+                      <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-teal-100 to-teal-50 dark:from-teal-900/40 dark:to-teal-800/30 flex items-center justify-center group-hover/item:scale-110 transition-transform shadow-sm">
+                        <span className="text-base">🍗</span>
                       </div>
                       <div className="flex-1">
                         <div className="text-sm font-semibold text-foreground">Post-Workout</div>
@@ -807,11 +807,11 @@ export function Header() {
                     <div className="border-t my-2"></div>
                     <Link 
                       href="/testosterone-guide" 
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-green-50 dark:hover:bg-green-950/20 transition-all duration-200 group/item" 
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 dark:hover:from-green-950/20 dark:hover:to-emerald-950/20 transition-all duration-200 group/item" 
                       onClick={() => setOpenDropdown(null)}
                     >
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-100 to-indigo-50 dark:from-indigo-900/40 dark:to-indigo-800/30 flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                        <span className="text-sm">🧬</span>
+                      <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-100 to-indigo-50 dark:from-indigo-900/40 dark:to-indigo-800/30 flex items-center justify-center group-hover/item:scale-110 transition-transform shadow-sm">
+                        <span className="text-base">🧬</span>
                       </div>
                       <div className="flex-1">
                         <div className="text-sm font-semibold text-foreground">Testosterone Guide</div>
@@ -1388,22 +1388,22 @@ export function Header() {
     {/* Mobile Sticky Quick Navigation - Shows below header on small screens */}
     <div className="md:hidden sticky z-[99998] bg-gradient-to-b from-background via-background/98 to-background/95 backdrop-blur-3xl border-b border-border/40 shadow-lg shadow-black/10" style={{ top: '64px' }}>
       <div className="flex items-center gap-2.5 overflow-x-auto px-4 py-3 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-        <Link href="/products?category=All" className="flex-shrink-0 px-4 py-2 text-xs font-bold whitespace-nowrap rounded-full bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-md shadow-primary/25 hover:shadow-lg hover:shadow-primary/30 hover:scale-105 active:scale-95 transition-all duration-200">
+        <Link href="/products" className="flex-shrink-0 px-4 py-2 text-xs font-bold whitespace-nowrap rounded-full bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-md shadow-primary/25 hover:shadow-lg hover:shadow-primary/30 hover:scale-105 active:scale-95 transition-all duration-200">
           All Products
         </Link>
-        <Link href="/products?category=Protein+Powder" className="flex-shrink-0 px-4 py-2 text-xs font-semibold whitespace-nowrap rounded-full bg-muted/60 hover:bg-muted hover:shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 border border-border/30">
+        <Link href="/products?search=protein+powder" className="flex-shrink-0 px-4 py-2 text-xs font-semibold whitespace-nowrap rounded-full bg-muted/60 hover:bg-muted hover:shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 border border-border/30">
           Protein
         </Link>
-        <Link href="/products?category=Pre-Workout+Powder" className="flex-shrink-0 px-4 py-2 text-xs font-semibold whitespace-nowrap rounded-full bg-muted/60 hover:bg-muted hover:shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 border border-border/30">
+        <Link href="/products?search=pre+workout" className="flex-shrink-0 px-4 py-2 text-xs font-semibold whitespace-nowrap rounded-full bg-muted/60 hover:bg-muted hover:shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 border border-border/30">
           Pre-Workout
         </Link>
-        <Link href="/products?category=Creatine" className="flex-shrink-0 px-4 py-2 text-xs font-semibold whitespace-nowrap rounded-full bg-muted/60 hover:bg-muted hover:shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 border border-border/30">
+        <Link href="/products?search=creatine" className="flex-shrink-0 px-4 py-2 text-xs font-semibold whitespace-nowrap rounded-full bg-muted/60 hover:bg-muted hover:shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 border border-border/30">
           Creatine
         </Link>
-        <Link href="/products?category=BCAA" className="flex-shrink-0 px-4 py-2 text-xs font-semibold whitespace-nowrap rounded-full bg-muted/60 hover:bg-muted hover:shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 border border-border/30">
+        <Link href="/products?search=bcaa" className="flex-shrink-0 px-4 py-2 text-xs font-semibold whitespace-nowrap rounded-full bg-muted/60 hover:bg-muted hover:shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 border border-border/30">
           BCAAs
         </Link>
-        <Link href="/products?category=Vitamins" className="flex-shrink-0 px-4 py-2 text-xs font-semibold whitespace-nowrap rounded-full bg-muted/60 hover:bg-muted hover:shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 border border-border/30">
+        <Link href="/products?search=vitamins" className="flex-shrink-0 px-4 py-2 text-xs font-semibold whitespace-nowrap rounded-full bg-muted/60 hover:bg-muted hover:shadow-sm hover:scale-105 active:scale-95 transition-all duration-200 border border-border/30">
           Vitamins
         </Link>
         <Link href="/supplement-finder" className="flex-shrink-0 px-4 py-2 text-xs font-bold whitespace-nowrap rounded-full bg-gradient-to-r from-primary/30 to-primary/20 text-primary border border-primary/30 shadow-sm hover:shadow-md hover:from-primary/40 hover:to-primary/30 hover:scale-105 active:scale-95 transition-all duration-200">
