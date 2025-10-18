@@ -375,7 +375,7 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
         {/* Maintenance Mode Button */}
         <button
           onClick={onMaintenanceModeClick}
-          className={`flex items-center gap-3 w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
+          className={`flex items-center gap-3 w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 active:scale-95 ${
             isMaintenanceMode
               ? 'bg-green-500/10 text-green-400 hover:bg-green-500/20 shadow-[0_0_15px_rgba(34,197,94,0.3)]'
               : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'

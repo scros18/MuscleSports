@@ -78,7 +78,15 @@ export default function AdminPage() {
   };
 
   const toggleMaintenanceMode = async () => {
+    // Prevent multiple clicks
+    if (maintenanceLoading) return;
+    
     setMaintenanceLoading(true);
+    const newMaintenanceState = !maintenanceMode;
+    
+    // Immediate optimistic UI update for instant feedback
+    setMaintenanceMode(newMaintenanceState);
+    setMaintenanceModalOpen(false);
     
     try {
       const res = await fetch('/api/maintenance-mode', {
@@ -87,14 +95,11 @@ export default function AdminPage() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('auth_token') || ''}`
         },
-        body: JSON.stringify({ enabled: !maintenanceMode })
+        body: JSON.stringify({ enabled: newMaintenanceState })
       });
       
       if (res.ok) {
         const data = await res.json();
-        const newMaintenanceState = !maintenanceMode;
-        setMaintenanceMode(newMaintenanceState);
-        setMaintenanceModalOpen(false);
         
         // Trigger haptic feedback ONLY when maintenance is enabled (true)
         if (newMaintenanceState) {
@@ -125,15 +130,21 @@ export default function AdminPage() {
         
         // Refresh the page to show the maintenance banner if enabled
         if (newMaintenanceState) {
-          window.location.reload();
+          setTimeout(() => {
+            window.location.reload();
+          }, 300);
         }
       } else {
         const error = await res.json();
         console.error('Failed to toggle maintenance mode:', error);
+        // Revert optimistic update on error
+        setMaintenanceMode(maintenanceMode);
         alert('Failed to toggle maintenance mode. Please try again.');
       }
     } catch (error) {
       console.error('Failed to toggle maintenance mode:', error);
+      // Revert optimistic update on error
+      setMaintenanceMode(maintenanceMode);
       alert('Network error. Please check your connection and try again.');
     } finally {
       setMaintenanceLoading(false);
