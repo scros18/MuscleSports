@@ -438,7 +438,7 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden bg-gray-50 dark:bg-gray-950">
         {/* Maintenance Mode Warning Banner */}
         {isMaintenanceMode && (
           <div className="bg-orange-600 text-white px-4 py-3 flex items-center justify-center gap-3 sticky top-0 z-50 shadow-lg">
@@ -450,35 +450,16 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           </div>
         )}
 
-        {/* Header */}
-        <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-30">
-          <div className="px-4 sm:px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="md:hidden"
-                  onClick={() => setSidebarOpen(true)}
-                >
-                  <Menu className="h-6 w-6" />
-                </Button>
-                <div>
-                  <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{title}</h1>
-                  {description && (
-                    <p className="text-sm text-gray-600 hidden sm:block">{description}</p>
-                  )}
-                </div>
-              </div>
-              <div className="text-right hidden sm:block">
-                <p className="text-sm text-gray-500">Last updated</p>
-                <p className="text-sm font-medium text-gray-900">
-                  {new Date().toLocaleDateString()}
-                </p>
-              </div>
-            </div>
-          </div>
-        </header>
+        {/* Mobile Menu Button */}
+        <div className="md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-4 py-3 sticky top-0 z-30">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setSidebarOpen(true)}
+          >
+            <Menu className="h-6 w-6" />
+          </Button>
+        </div>
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto">
