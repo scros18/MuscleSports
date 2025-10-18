@@ -35,6 +35,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { SimpleChart } from '@/components/simple-chart';
 import { AdminLayout } from '@/components/admin-layout';
+import { MaintenanceModeModal } from '@/components/maintenance-mode-modal';
 
 interface DashboardStats {
   totalOrders: number;
@@ -47,6 +48,9 @@ interface DashboardStats {
 
 export default function AdminPage() {
   const [simpleMode, setSimpleMode] = useState(true);
+  const [maintenanceMode, setMaintenanceMode] = useState(false);
+  const [maintenanceLoading, setMaintenanceLoading] = useState(false);
+  const [maintenanceModalOpen, setMaintenanceModalOpen] = useState(false);
   const [stats, setStats] = useState<DashboardStats>({
     totalOrders: 0,
     totalRevenue: 0,
@@ -58,7 +62,38 @@ export default function AdminPage() {
 
   useEffect(() => {
     loadDashboardStats();
+    checkMaintenanceMode();
   }, []);
+
+  const checkMaintenanceMode = async () => {
+    try {
+      const res = await fetch('/api/maintenance-status');
+      if (res.ok) {
+        const data = await res.json();
+        setMaintenanceMode(data.isMaintenanceMode || false);
+      }
+    } catch (error) {
+      console.error('Failed to check maintenance mode:', error);
+    }
+  };
+
+  const toggleMaintenanceMode = async () => {
+    setMaintenanceLoading(true);
+    try {
+      const res = await fetch('/api/maintenance-mode', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enabled: !maintenanceMode })
+      });
+      if (res.ok) {
+        setMaintenanceMode(!maintenanceMode);
+      }
+    } catch (error) {
+      console.error('Failed to toggle maintenance mode:', error);
+    } finally {
+      setMaintenanceLoading(false);
+    }
+  };
 
   // Live client-side performance metrics (FPS, JS heap, event-loop lag)
   const [clientPerf, setClientPerf] = useState({ fps: 60, jsHeapUsedMB: null as null | number, jsHeapTotalMB: null as null | number, eventLoopLagMs: 0 });
@@ -201,7 +236,19 @@ export default function AdminPage() {
   };
 
   return (
-    <AdminLayout title="Home" description="">
+    <AdminLayout
+      title="Home"
+      description=""
+      isMaintenanceMode={maintenanceMode}
+      onMaintenanceModeClick={() => setMaintenanceModalOpen(true)}
+    >
+      <MaintenanceModeModal
+        isOpen={maintenanceModalOpen}
+        isMaintenanceMode={maintenanceMode}
+        isLoading={maintenanceLoading}
+        onClose={() => setMaintenanceModalOpen(false)}
+        onToggle={toggleMaintenanceMode}
+      />
       <div className="min-h-screen bg-slate-950">
         {/* Mobile Simple View - Shows on mobile only */}
         <div className="md:hidden">

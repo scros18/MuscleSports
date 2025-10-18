@@ -24,15 +24,15 @@ export function AdminHeader({ title, onMenuClick }: AdminHeaderProps) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Left: Logo & Brand */}
         <div className="flex items-start pt-1">
-          {/* Fancy Lumify Logo - No Square */}
+          {/* Professional Lumify Logo */}
           <Link href="/admin" className="flex flex-col justify-start group">
-            <span className="text-white font-black text-2xl italic hidden sm:block tracking-tighter leading-tight" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontWeight: 900, letterSpacing: '-0.02em' }}>
+            <span className="text-white font-bold text-2xl hidden sm:block tracking-tighter leading-tight" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', letterSpacing: '-0.03em', fontWeight: '700' }}>
               Lumify
             </span>
-            <span className="text-white font-black text-2xl italic sm:hidden tracking-tighter" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontWeight: 900, letterSpacing: '-0.02em' }}>
+            <span className="text-white font-bold text-2xl sm:hidden tracking-tighter" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', letterSpacing: '-0.03em', fontWeight: '700' }}>
               Lumify
             </span>
-            <span className="text-blue-400 text-[10px] font-light tracking-widest uppercase hidden sm:block">Admin Panel</span>
+            <span className="text-blue-400 text-[11px] font-semibold tracking-widest uppercase hidden sm:block opacity-80">Administration</span>
           </Link>
 
           {/* Page Title */}
@@ -55,12 +55,9 @@ export function AdminHeader({ title, onMenuClick }: AdminHeaderProps) {
           <div className="relative">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="flex items-center gap-2 px-3 py-2 hover:bg-slate-800/80 rounded-lg transition-all duration-200 group"
+              className="px-3 py-2 text-slate-100 text-sm font-medium hover:bg-slate-800/80 rounded-lg transition-all duration-200 group hover:text-blue-300 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]"
             >
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-md group-hover:shadow-blue-500/40 group-hover:drop-shadow-[0_0_10px_rgba(59,130,246,0.5)] transition-all">
-                A
-              </div>
-              <span className="text-slate-100 text-sm hidden sm:inline font-medium group-hover:text-blue-300 group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.6)] transition-all">Admin</span>
+              Admin
             </button>
 
             {/* Dropdown Menu */}

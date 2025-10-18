@@ -34,15 +34,17 @@ interface AdminLayoutProps {
   children: React.ReactNode;
   title: string;
   description?: string;
+  isMaintenanceMode?: boolean;
+  onMaintenanceModeClick?: () => void;
 }
 
-export function AdminLayout({ children, title, description }: AdminLayoutProps) {
+export function AdminLayout({ children, title, description, isMaintenanceMode = false, onMaintenanceModeClick }: AdminLayoutProps) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [productsExpanded, setProductsExpanded] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<'lumify' | 'ordify' | 'musclesports' | 'vera' | 'blisshair'>('lumify');
-  const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
+  const [layoutMaintenanceMode, setLayoutMaintenanceMode] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -67,7 +69,7 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
       const response = await fetch('/api/maintenance-status');
       if (response.ok) {
         const data = await response.json();
-        setIsMaintenanceMode(data.isMaintenanceMode || false);
+        setLayoutMaintenanceMode(data.isMaintenanceMode || false);
       }
     } catch (error) {
       console.error('Failed to check maintenance mode:', error);
@@ -169,10 +171,10 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
       {/* Sidebar Header - Lumify Branding (Mobile) */}
       <div className="px-4 py-4 border-b border-slate-800 bg-gradient-to-r from-slate-900 to-slate-800">
         <div className="flex flex-col items-center gap-2">
-          <span className="text-white font-black text-xl italic tracking-tighter" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontWeight: 900, letterSpacing: '-0.02em' }}>
+          <span className="text-white font-bold text-xl tracking-tighter" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', letterSpacing: '-0.03em', fontWeight: '700' }}>
             Lumify
           </span>
-          <span className="text-blue-400 text-[10px] font-light tracking-widest uppercase">Admin Panel</span>
+          <span className="text-blue-400 text-[11px] font-semibold tracking-widest uppercase opacity-80">Administration</span>
         </div>
       </div>
 
@@ -382,11 +384,29 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
       </nav>
 
       {/* Footer with Theme Switcher */}
-      <div className="p-3 border-t border-slate-800">
+      <div className="p-3 border-t border-slate-800 space-y-2">
+        {/* Maintenance Mode Button */}
+        <button
+          onClick={onMaintenanceModeClick}
+          className={`flex items-center gap-3 w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
+            isMaintenanceMode
+              ? 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30'
+              : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
+          }`}
+        >
+          <Wrench className="h-5 w-5 flex-shrink-0" />
+          <span>Maintenance</span>
+          {isMaintenanceMode && (
+            <span className="ml-auto">
+              <span className="inline-block w-2 h-2 bg-amber-400 rounded-full animate-pulse"></span>
+            </span>
+          )}
+        </button>
+
         {/* Theme Switcher */}
         <button
           onClick={toggleTheme}
-          className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 mb-3"
+          className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200"
         >
           <Palette className="h-5 w-5 flex-shrink-0" />
           <span className="flex items-center gap-2">
