@@ -80,12 +80,6 @@ export default function AdminPage() {
   const toggleMaintenanceMode = async () => {
     setMaintenanceLoading(true);
     
-    // Trigger haptic feedback (vibration) for mobile devices
-    if ('vibrate' in navigator) {
-      // Double vibration pattern: [vibrate ms, pause ms, vibrate ms]
-      navigator.vibrate([100, 50, 100]);
-    }
-    
     try {
       const res = await fetch('/api/maintenance-mode', {
         method: 'POST',
@@ -98,11 +92,18 @@ export default function AdminPage() {
       
       if (res.ok) {
         const data = await res.json();
-        setMaintenanceMode(!maintenanceMode);
+        const newMaintenanceState = !maintenanceMode;
+        setMaintenanceMode(newMaintenanceState);
         setMaintenanceModalOpen(false);
         
+        // Trigger haptic feedback ONLY when maintenance is enabled (true)
+        if (newMaintenanceState && 'vibrate' in navigator) {
+          // Double vibration pattern: [vibrate ms, pause ms, vibrate ms]
+          navigator.vibrate([100, 50, 100]);
+        }
+        
         // Refresh the page to show the maintenance banner if enabled
-        if (!maintenanceMode) {
+        if (newMaintenanceState) {
           window.location.reload();
         }
       } else {
