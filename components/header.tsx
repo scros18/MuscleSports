@@ -319,7 +319,7 @@ export function Header() {
                     <Button 
                       type="submit" 
                       size="sm"
-                      className="h-7 px-3 text-xs bg-primary text-primary-foreground hover:bg-primary/90 font-semibold"
+                      className="h-7 px-3 text-xs bg-green-600 text-white hover:bg-green-700 font-semibold"
                     >
                       <Search className="h-3.5 w-3.5 mr-1" />
                       Search
@@ -406,7 +406,7 @@ export function Header() {
                 </Button>
               </Link>
               <Link href="/register">
-                <Button size="sm" className="bg-primary text-white hover:bg-primary/90">
+                <Button size="sm" className="bg-green-600 text-white hover:bg-green-700 font-semibold">
                   Register
                 </Button>
               </Link>

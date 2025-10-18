@@ -338,11 +338,11 @@ export default function Home() {
                   </div>
 
                   {/* Trustpilot-inspired review cards */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12 lg:justify-items-center">
                     {displayedReviews.map((review, index) => (
                       <div 
                         key={review.id} 
-                        className="group bg-background border border-border rounded-2xl p-6 hover:shadow-xl hover:border-[#00B67A]/30 transition-all duration-300 hover:-translate-y-1"
+                        className="group bg-background border border-border rounded-2xl p-6 hover:shadow-xl hover:border-[#00B67A]/30 transition-all duration-300 hover:-translate-y-1 w-full max-w-md"
                       >
                         {/* Header with stars and date */}
                         <div className="flex items-start justify-between mb-4">
