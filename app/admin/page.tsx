@@ -97,9 +97,30 @@ export default function AdminPage() {
         setMaintenanceModalOpen(false);
         
         // Trigger haptic feedback ONLY when maintenance is enabled (true)
-        if (newMaintenanceState && 'vibrate' in navigator) {
-          // Double vibration pattern: [vibrate ms, pause ms, vibrate ms]
-          navigator.vibrate([100, 50, 100]);
+        if (newMaintenanceState) {
+          // iOS Haptic Feedback - works on iPhone
+          if ('ontouchstart' in window) {
+            // Create invisible button and trigger click for iOS haptic feedback
+            const btn = document.createElement('button');
+            btn.style.position = 'fixed';
+            btn.style.left = '-9999px';
+            btn.style.pointerEvents = 'none';
+            document.body.appendChild(btn);
+            
+            // Trigger multiple clicks for double-vibration effect
+            setTimeout(() => {
+              btn.click();
+              setTimeout(() => {
+                btn.click();
+                document.body.removeChild(btn);
+              }, 100);
+            }, 0);
+          }
+          
+          // Standard vibration API for Android
+          if ('vibrate' in navigator) {
+            navigator.vibrate([100, 50, 100]);
+          }
         }
         
         // Refresh the page to show the maintenance banner if enabled
