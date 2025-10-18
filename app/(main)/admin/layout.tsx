@@ -7,8 +7,6 @@ import { AuthProvider } from "@/context/auth-context";
 import { CartProvider } from "@/context/cart-context";
 import { NotificationProvider } from "@/context/notification-context";
 import { ToastProvider } from "@/components/toast";
-import { AdminHeader } from "@/components/admin-header";
-import { useState } from "react";
 
 export default function AdminLayout({
   children,
@@ -26,8 +24,7 @@ export default function AdminLayout({
               <NotificationProvider>
                 <CartProvider>
                   <ToastProvider>
-                    <div className="min-h-screen bg-slate-950 text-slate-100" id="main-content" role="main">
-                      <AdminHeader />
+                    <div id="main-content" role="main">
                       {children}
                     </div>
                   </ToastProvider>

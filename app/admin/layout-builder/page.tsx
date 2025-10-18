@@ -239,45 +239,45 @@ export default function LayoutBuilderPage() {
 
   return (
     <AdminLayout title="Layout Builder" description="Drag & drop site layout editor">
-      <div className="p-6 max-w-5xl mx-auto">
+      <div className="p-4 md:p-6 max-w-5xl mx-auto">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl shadow-lg">
-              <Grid3x3 className="h-7 w-7 text-white" />
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+          <div className="flex items-center gap-3 md:gap-4">
+            <div className="p-2 md:p-3 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl shadow-lg">
+              <Grid3x3 className="h-5 md:h-7 w-5 md:w-7 text-white" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-white">Layout Builder</h2>
-              <p className="text-sm text-slate-400">Drag sections to reorder • Click eye icon to toggle</p>
+              <h2 className="text-xl md:text-2xl font-bold text-white">Layout Builder</h2>
+              <p className="text-xs md:text-sm text-slate-400">Drag sections to reorder • Click eye icon to toggle</p>
             </div>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-2 w-full md:w-auto">
             <Button 
               onClick={resetLayout} 
               disabled={saving}
-              className="bg-slate-800 hover:bg-slate-700 text-white rounded-full border border-slate-700 font-semibold shadow-lg hover:shadow-xl transition-all"
+              className="flex-1 md:flex-none bg-slate-800 hover:bg-slate-700 text-white rounded-full border border-slate-700 font-semibold shadow-lg hover:shadow-xl transition-all text-sm md:text-base"
             >
-              <RotateCcw className="h-4 w-4 mr-2" />
+              <RotateCcw className="h-3 md:h-4 w-3 md:w-4 mr-1 md:mr-2" />
               Reset
             </Button>
             <Button 
               onClick={saveLayout} 
               disabled={saving}
-              className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
+              className="flex-1 md:flex-none bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all text-sm md:text-base"
             >
-              <Save className="h-4 w-4 mr-2" />
+              <Save className="h-3 md:h-4 w-3 md:w-4 mr-1 md:mr-2" />
               {saving ? 'Saving...' : 'Save Layout'}
             </Button>
           </div>
         </div>
 
         {/* Page Tabs */}
-        <div className="flex gap-2 mb-6 bg-slate-900 rounded-xl p-1 border border-slate-800">
+        <div className="flex gap-1 md:gap-2 mb-6 bg-slate-900 rounded-xl p-1 border border-slate-800 overflow-x-auto">
           {['homepage', 'products', 'checkout'].map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab as any)}
-              className={`flex-1 px-6 py-3 font-semibold rounded-lg transition-all capitalize ${
+              className={`flex-1 px-3 md:px-6 py-2 md:py-3 font-semibold rounded-lg transition-all capitalize text-sm md:text-base whitespace-nowrap ${
                 activeTab === tab
                   ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg'
                   : 'text-slate-400 hover:text-white hover:bg-slate-800'
@@ -289,12 +289,12 @@ export default function LayoutBuilderPage() {
         </div>
 
         {/* Instructions Card */}
-        <Card className="p-5 mb-6 bg-gradient-to-r from-blue-900/30 to-cyan-900/30 border-blue-500/30">
-          <div className="flex items-start gap-3">
-            <AlertCircle className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
+        <Card className="p-3 md:p-5 mb-6 bg-gradient-to-r from-blue-900/30 to-cyan-900/30 border-blue-500/30">
+          <div className="flex items-start gap-2 md:gap-3">
+            <AlertCircle className="h-4 md:h-5 w-4 md:w-5 text-blue-400 mt-0.5 flex-shrink-0" />
             <div className="space-y-2">
-              <h3 className="font-bold text-blue-300">Layout Editor Instructions</h3>
-              <ul className="text-sm text-slate-300 space-y-1 pl-4">
+              <h3 className="font-bold text-sm md:text-base text-blue-300">Layout Editor Instructions</h3>
+              <ul className="text-xs md:text-sm text-slate-300 space-y-0.5 md:space-y-1 pl-4">
                 <li className="list-disc"><strong>Drag & Drop:</strong> Hold grip icon and drag sections up/down</li>
                 <li className="list-disc"><strong>Show/Hide:</strong> Click eye icon to toggle visibility</li>
                 <li className="list-disc"><strong>Order Numbers:</strong> Each section shows its position</li>
@@ -322,32 +322,32 @@ export default function LayoutBuilderPage() {
                 className={`transition-all duration-200 transform ${isDragging ? 'scale-95' : 'scale-100'} ${isDropTarget ? 'ring-4 ring-blue-500/50 ring-offset-2 scale-105' : ''}`}
               >
                 <Card 
-                  className={`p-4 cursor-move bg-slate-900 border-slate-800 hover:border-blue-500/50 transition-all duration-200 ${!section.enabled ? 'opacity-50' : ''} ${isDragging ? 'shadow-2xl border-blue-500' : 'hover:shadow-xl'}`}
+                  className={`p-3 md:p-4 cursor-move bg-slate-900 border-slate-800 hover:border-blue-500/50 transition-all duration-200 ${!section.enabled ? 'opacity-50' : ''} ${isDragging ? 'shadow-2xl border-blue-500' : 'hover:shadow-xl'}`}
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4">
                     {/* Drag Handle */}
-                    <div className="flex-shrink-0 cursor-grab active:cursor-grabbing">
-                      <GripVertical className="h-7 w-7 text-slate-400 hover:text-blue-400 transition-colors" />
+                    <div className="flex-shrink-0 cursor-grab active:cursor-grabbing hidden md:block">
+                      <GripVertical className="h-6 md:h-7 w-6 md:w-7 text-slate-400 hover:text-blue-400 transition-colors" />
                     </div>
 
                     {/* Order Badge */}
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center shadow-lg">
-                      <span className="text-lg font-bold text-white">{index + 1}</span>
+                    <div className="flex-shrink-0 w-8 md:w-10 h-8 md:h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center shadow-lg">
+                      <span className="text-sm md:text-lg font-bold text-white">{index + 1}</span>
                     </div>
 
                     {/* Icon */}
                     <div className="flex-shrink-0 p-2 rounded-lg bg-blue-500/20">
-                      <Icon className="h-6 w-6 text-blue-400" />
+                      <Icon className="h-5 md:h-6 w-5 md:w-6 text-blue-400" />
                     </div>
 
                     {/* Section Info */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-lg text-white mb-1">{section.title}</h3>
-                      <p className="text-sm text-slate-400 truncate">{section.description}</p>
+                      <h3 className="font-bold text-base md:text-lg text-white mb-0.5 md:mb-1">{section.title}</h3>
+                      <p className="text-xs md:text-sm text-slate-400 truncate">{section.description}</p>
                     </div>
 
-                    {/* Badges */}
-                    <div className="flex items-center gap-2 flex-shrink-0">
+                    {/* Badges - Hidden on mobile to save space */}
+                    <div className="hidden md:flex items-center gap-2 flex-shrink-0">
                       {section.settings && (
                         <div className="px-3 py-1 rounded-full bg-blue-500/20 text-xs font-semibold text-blue-400 border border-blue-500/30">
                           Customized
@@ -363,7 +363,7 @@ export default function LayoutBuilderPage() {
                     {/* Toggle Button */}
                     <Button
                       onClick={() => toggleSection(section.id)}
-                      className={`flex-shrink-0 min-w-[120px] rounded-full font-semibold shadow-lg hover:shadow-xl transition-all ${
+                      className={`flex-shrink-0 w-full md:w-auto px-3 md:px-4 py-1.5 md:py-2 rounded-full font-semibold text-sm md:text-base shadow-lg hover:shadow-xl transition-all ${
                         section.enabled 
                           ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white' 
                           : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700'

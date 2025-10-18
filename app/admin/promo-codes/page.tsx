@@ -143,45 +143,45 @@ export default function PromoCodesPage() {
 
   return (
     <AdminLayout title="Promo Codes" description="Manage discount codes">
-      <div className="p-6 max-w-7xl mx-auto">
+      <div className="p-3 md:p-6 max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-xl shadow-lg">
-              <Tag className="h-7 w-7 text-white" />
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4 mb-6">
+          <div className="flex items-center gap-3 md:gap-4">
+            <div className="p-2 md:p-3 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-xl shadow-lg">
+              <Tag className="h-5 md:h-7 w-5 md:w-7 text-white" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-white">Promo Codes</h2>
-              <p className="text-sm text-slate-400">{promoCodes.length} total codes</p>
+              <h2 className="text-xl md:text-2xl font-bold text-white">Promo Codes</h2>
+              <p className="text-xs md:text-sm text-slate-400">{promoCodes.length} total codes</p>
             </div>
           </div>
           <Button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
+            className="w-full md:w-auto bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all text-sm md:text-base"
           >
-            <Plus className="h-5 w-5 mr-2" />
+            <Plus className="h-4 md:h-5 w-4 md:w-5 mr-1 md:mr-2" />
             Add Code
           </Button>
         </div>
 
         {/* Add Form */}
         {showAddForm && (
-          <Card className="p-6 mb-6 bg-slate-900 border-slate-800">
-            <form onSubmit={handleAddPromoCode} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Card className="p-4 md:p-6 mb-6 bg-slate-900 border-slate-800">
+            <form onSubmit={handleAddPromoCode} className="space-y-3 md:space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                 <div>
-                  <Label className="text-white mb-2 block">Promo Code</Label>
+                  <Label className="text-white mb-2 block text-sm md:text-base">Promo Code</Label>
                   <Input
                     type="text"
                     value={newCode.code}
                     onChange={(e) => setNewCode({ ...newCode, code: e.target.value.toUpperCase() })}
                     placeholder="SUMMER25"
-                    className="bg-slate-800 border-slate-700 text-white"
+                    className="bg-slate-800 border-slate-700 text-white text-sm"
                     required
                   />
                 </div>
                 <div>
-                  <Label className="text-white mb-2 block">Discount %</Label>
+                  <Label className="text-white mb-2 block text-sm md:text-base">Discount %</Label>
                   <Input
                     type="number"
                     min="1"
@@ -189,22 +189,22 @@ export default function PromoCodesPage() {
                     value={newCode.discountPercentage}
                     onChange={(e) => setNewCode({ ...newCode, discountPercentage: parseInt(e.target.value) || 0 })}
                     placeholder="25"
-                    className="bg-slate-800 border-slate-700 text-white"
+                    className="bg-slate-800 border-slate-700 text-white text-sm"
                     required
                   />
                 </div>
               </div>
-              <div className="flex gap-3">
+              <div className="flex gap-2 md:gap-3">
                 <Button
                   type="submit"
-                  className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-full font-semibold"
+                  className="flex-1 md:flex-none bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-full font-semibold text-sm md:text-base"
                 >
                   Create Code
                 </Button>
                 <Button
                   type="button"
                   onClick={() => setShowAddForm(false)}
-                  className="bg-slate-800 hover:bg-slate-700 text-white rounded-full border border-slate-700"
+                  className="flex-1 md:flex-none bg-slate-800 hover:bg-slate-700 text-white rounded-full border border-slate-700 text-sm md:text-base"
                 >
                   Cancel
                 </Button>
@@ -215,69 +215,58 @@ export default function PromoCodesPage() {
 
         {/* Promo Codes List */}
         {promoCodes.length === 0 ? (
-          <Card className="p-12 text-center bg-slate-900 border-slate-800">
-            <Tag className="mx-auto h-12 w-12 text-slate-600 mb-4" />
-            <h3 className="text-lg font-medium text-white mb-2">No Promo Codes</h3>
-            <p className="text-sm text-slate-400">Create your first promo code to get started.</p>
+          <Card className="p-6 md:p-12 text-center bg-slate-900 border-slate-800">
+            <Tag className="mx-auto h-10 md:h-12 w-10 md:w-12 text-slate-600 mb-4" />
+            <h3 className="text-base md:text-lg font-medium text-white mb-2">No Promo Codes</h3>
+            <p className="text-xs md:text-sm text-slate-400">Create your first promo code to get started.</p>
           </Card>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-2 md:space-y-4">
             {promoCodes.map((promo) => (
-              <Card key={promo.id} className="p-5 bg-slate-900 border-slate-800 hover:border-yellow-500/50 transition-all">
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-4 flex-1">
-                    <div className="p-3 bg-yellow-500/20 rounded-lg">
-                      <Tag className="h-6 w-6 text-yellow-400" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-xl font-bold text-white font-mono">{promo.code}</h3>
-                        {promo.isActive ? (
-                          <Badge className="bg-green-500/20 text-green-400 border border-green-500/30">Active</Badge>
-                        ) : (
-                          <Badge className="bg-slate-700 text-slate-400 border border-slate-600">Inactive</Badge>
-                        )}
+              <Card key={promo.id} className="p-3 md:p-5 bg-slate-900 border-slate-800 hover:border-yellow-500/50 transition-all">
+                <div className="flex flex-col gap-2.5">
+                  {/* Top row - Code and Badge */}
+                  <div className="flex items-center gap-2.5 justify-between">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="p-1.5 md:p-2 bg-yellow-500/20 rounded-lg flex-shrink-0">
+                        <Percent className="h-3.5 md:h-5 w-3.5 md:w-5 text-yellow-400" />
                       </div>
-                      <div className="flex items-center gap-4 text-sm text-slate-400">
-                        <div className="flex items-center gap-2">
-                          <Percent className="h-4 w-4" />
-                          <span>{promo.discountPercentage}% off</span>
-                        </div>
-                        <div>
-                          Used: {promo.usedCount} times
-                        </div>
-                        <div>
-                          Created: {new Date(promo.createdAt).toLocaleDateString()}
-                        </div>
-                      </div>
+                      <h3 className="text-sm md:text-lg font-bold text-white font-mono truncate">{promo.code}</h3>
                     </div>
+                    {promo.isActive ? (
+                      <Badge className="bg-green-500/20 text-green-400 border border-green-500/30 text-xs flex-shrink-0">Active</Badge>
+                    ) : (
+                      <Badge className="bg-slate-700 text-slate-400 border border-slate-600 text-xs flex-shrink-0">Inactive</Badge>
+                    )}
                   </div>
-                  <div className="flex items-center gap-2">
+
+                  {/* Middle row - Info */}
+                  <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm text-slate-400 px-1">
+                    <span className="font-semibold text-yellow-400">{promo.discountPercentage}%</span>
+                    <span>off</span>
+                    <span className="text-slate-600">•</span>
+                    <span>Used {promo.usedCount}x</span>
+                    <span className="text-slate-600">•</span>
+                    <span>{new Date(promo.createdAt).toLocaleDateString()}</span>
+                  </div>
+
+                  {/* Bottom row - Actions */}
+                  <div className="flex gap-2 pt-1">
                     <Button
                       onClick={() => togglePromoCodeStatus(promo.id, promo.isActive)}
-                      className={`rounded-full font-semibold shadow-lg hover:shadow-xl transition-all ${
+                      className={`flex-1 px-2 py-1.5 rounded-full font-semibold text-xs md:text-sm transition-all ${
                         promo.isActive
                           ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white'
                           : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700'
                       }`}
                     >
-                      {promo.isActive ? (
-                        <>
-                          <ToggleRight className="h-5 w-5 mr-2" />
-                          Active
-                        </>
-                      ) : (
-                        <>
-                          <ToggleLeft className="h-5 w-5 mr-2" />
-                          Inactive
-                        </>
-                      )}
+                      {promo.isActive ? '✓ Active' : '○ Inactive'}
                     </Button>
                     <Button
                       onClick={() => handleDeletePromoCode(promo.id)}
-                      className="bg-red-600 hover:bg-red-700 text-white rounded-lg p-2"
+                      className="bg-red-600 hover:bg-red-700 text-white rounded-lg p-1.5 flex-shrink-0"
                     >
-                      <Trash2 className="h-5 w-5" />
+                      <Trash2 className="h-3.5 md:h-4 w-3.5 md:w-4" />
                     </Button>
                   </div>
                 </div>

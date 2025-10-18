@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -20,6 +20,7 @@ import {
   Wrench,
   Percent,
   Zap,
+  Database,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -45,6 +46,7 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
   const [productsExpanded, setProductsExpanded] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<'lumify' | 'ordify' | 'musclesports' | 'vera' | 'blisshair'>('lumify');
   const [layoutMaintenanceMode, setLayoutMaintenanceMode] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -166,14 +168,9 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
 
   const closeSidebar = () => setSidebarOpen(false);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleNavClick = () => {
+    // Just close the mobile sidebar on navigation
     closeSidebar();
-    // Prevent scroll to top on navigation
-    e.preventDefault();
-    const href = e.currentTarget.getAttribute('href');
-    if (href) {
-      router.push(href);
-    }
   };
 
   const SidebarContent = () => (
@@ -189,7 +186,7 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 pt-3 pb-3 space-y-1 overflow-y-auto">
+      <nav ref={navRef} className="flex-1 px-3 pt-3 pb-20 space-y-1 overflow-y-auto overscroll-contain scroll-smooth will-change-auto">
         {/* Dashboard */}
         <Link
           href="/admin"
@@ -324,10 +321,7 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
           }`}
         >
           <Zap className="h-5 w-5 flex-shrink-0" />
-          <span className="flex items-center gap-2">
-            Cache+
-            <span className="text-[10px] px-1.5 py-0.5 bg-yellow-400 text-yellow-900 rounded font-bold">PRO</span>
-          </span>
+          <span>Cache+</span>
         </Link>
 
         {/* Settings */}
@@ -359,6 +353,21 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
           <Percent className="h-5 w-5 flex-shrink-0" />
           <span>Promo Codes</span>
         </Link>
+
+        {/* Inventory Sync */}
+        <Link
+          href="/admin/inventory-sync"
+          onClick={handleNavClick}
+          scroll={false}
+          className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 ${
+            pathname === '/admin/inventory-sync'
+              ? 'bg-slate-800 text-white'
+              : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
+          }`}
+        >
+          <Database className="h-5 w-5 flex-shrink-0" />
+          <span>Inventory Sync</span>
+        </Link>
       </nav>
 
       {/* Footer with Theme Switcher */}
@@ -376,11 +385,6 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
           <span className={isMaintenanceMode ? 'font-semibold' : ''}>
             {isMaintenanceMode ? 'Maintenance Mode' : 'Maintenance'}
           </span>
-          {isMaintenanceMode && (
-            <span className="ml-auto">
-              <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
-            </span>
-          )}
         </button>
 
         {/* Theme Switcher */}
@@ -441,7 +445,7 @@ export function AdminLayout({ children, title, description, isMaintenanceMode = 
 
       {/* Sidebar - Mobile */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 border-r border-slate-800 transform transition-transform duration-300 ease-in-out md:hidden flex flex-col ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 border-r border-slate-800 transform transition-transform duration-300 ease-in-out md:hidden flex flex-col overflow-hidden ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
