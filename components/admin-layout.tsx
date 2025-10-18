@@ -166,20 +166,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
 
   const SidebarContent = () => (
     <>
-      {/* Mobile close button */}
-      <div className="flex items-center justify-end p-3 md:hidden border-b">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8"
-          onClick={closeSidebar}
-        >
-          <X className="h-5 w-5" />
-        </Button>
-      </div>
-
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-3 space-y-1 overflow-y-auto">
+      <nav className="flex-1 px-3 pt-3 pb-3 space-y-1 overflow-y-auto">
         {/* Dashboard */}
         <Link
           href="/admin"
@@ -381,56 +369,46 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
           <Percent className="h-5 w-5 flex-shrink-0" />
           <span>Promo Codes</span>
         </Link>
-
-        {/* Theme Switcher */}
-        <div className="pt-3 mt-3 border-t border-gray-200 dark:border-gray-700">
-          <button
-            onClick={toggleTheme}
-            className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white"
-          >
-            <Palette className="h-5 w-5 flex-shrink-0" />
-            <span className="flex items-center gap-2">
-              <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-0.5 rounded">
-                {currentTheme === 'lumify' ? 'Lumify' : currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : currentTheme === 'blisshair' ? 'Bliss Hair' : 'Ordify'}
-              </span>
-            </span>
-          </button>
-          <p className="px-4 mt-2 text-xs text-muted-foreground">
-            {currentTheme === 'lumify'
-              ? '💙 Bright blue Lumify brand theme'
-              : currentTheme === 'musclesports' 
-              ? '🟢 Green sports nutrition theme'
-              : currentTheme === 'vera'
-              ? '🟣 Purple gaming/roleplay theme'
-              : currentTheme === 'blisshair'
-              ? '💚 Emerald green hair & beauty theme'
-              : '🔵 Standard e-commerce theme'}
-          </p>
-        </div>
       </nav>
 
-      {/* User info */}
-      <div className="p-4 border-t">
-        <div className="flex items-center mb-3">
-          <div className="flex-shrink-0">
-            <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-              <span className="text-sm font-medium text-primary-foreground">
-                {user.name.charAt(0).toUpperCase()}
-              </span>
+      {/* Footer with Theme Switcher */}
+      <div className="p-3 border-t border-gray-200 dark:border-gray-700">
+        {/* Theme Switcher */}
+        <button
+          onClick={toggleTheme}
+          className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white mb-3"
+        >
+          <Palette className="h-5 w-5 flex-shrink-0" />
+          <span className="flex items-center gap-2">
+            <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-0.5 rounded">
+              {currentTheme === 'lumify' ? 'Lumify' : currentTheme === 'musclesports' ? 'MuscleSports' : currentTheme === 'vera' ? 'VeraRP' : currentTheme === 'blisshair' ? 'Bliss Hair' : 'Ordify'}
+            </span>
+          </span>
+        </button>
+
+        {/* User info */}
+        <div className="px-1">
+          <div className="flex items-center mb-3">
+            <div className="flex-shrink-0">
+              <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
+                <span className="text-sm font-medium text-primary-foreground">
+                  {user.name.charAt(0).toUpperCase()}
+                </span>
+              </div>
+            </div>
+            <div className="ml-3 min-w-0">
+              <p className="text-sm font-medium truncate">{user.name}</p>
+              <p className="text-xs text-muted-foreground truncate">{user.email}</p>
             </div>
           </div>
-          <div className="ml-3 min-w-0">
-            <p className="text-sm font-medium truncate">{user.name}</p>
-            <p className="text-xs text-muted-foreground truncate">{user.email}</p>
-          </div>
+          <Link
+            href="/"
+            onClick={closeSidebar}
+            className="block text-sm text-primary hover:underline"
+          >
+            ← Back to Store
+          </Link>
         </div>
-        <Link
-          href="/"
-          onClick={closeSidebar}
-          className="block text-sm text-primary hover:underline"
-        >
-          ← Back to Store
-        </Link>
       </div>
     </>
   );

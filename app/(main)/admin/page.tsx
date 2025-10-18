@@ -100,12 +100,12 @@ function MaintenanceToggleModern() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-base">Maintenance Mode</CardTitle>
+    <Card className="h-full">
+      <CardHeader className="border-b border-gray-100 dark:border-gray-800 pb-4">
+        <CardTitle className="text-base font-semibold">Maintenance Mode</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
+      <CardContent className="p-6">
+        <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Badge 
@@ -114,17 +114,21 @@ function MaintenanceToggleModern() {
               >
                 {isMaintenanceMode ? 'Offline' : 'Live'}
               </Badge>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm text-gray-600 dark:text-gray-400">
                 {isMaintenanceMode ? 'Site is down' : 'Site is running'}
               </span>
             </div>
           </div>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            {isMaintenanceMode 
+              ? 'Your store is currently offline. Enable it to make it accessible to customers.' 
+              : 'Toggle maintenance mode to perform updates or maintenance on your store.'}
+          </p>
           <Button 
             onClick={toggleMaintenance} 
             disabled={updating}
             variant={isMaintenanceMode ? "default" : "outline"}
-            className={`w-full ${isMaintenanceMode ? 'bg-green-600 hover:bg-green-700' : ''}`}
-            size="sm"
+            className={`w-full ${isMaintenanceMode ? 'bg-green-600 hover:bg-green-700 text-white' : ''}`}
           >
             {updating ? 'Updating...' : isMaintenanceMode ? 'Enable Site' : 'Enable Maintenance'}
           </Button>
@@ -219,17 +223,48 @@ export default function AdminPage() {
 
   const loadDashboardStats = async () => {
     try {
-      // Load mock data for now - in a real app, these would come from APIs
-      setStats({
-        totalOrders: 156,
-        totalRevenue: 12450.99,
-        totalCustomers: 89,
-        totalProducts: 234,
-        recentOrders: [
+      // Fetch actual orders from API
+      const ordersRes = await fetch('/api/admin/orders');
+      let recentOrders = [];
+      let totalOrders = 156;
+      let totalRevenue = 12450.99;
+      
+      if (ordersRes.ok) {
+        const ordersData = await ordersRes.json();
+        if (ordersData.orders && Array.isArray(ordersData.orders)) {
+          // Get the 3 most recent orders
+          recentOrders = ordersData.orders
+            .slice(0, 3)
+            .map((order: any) => ({
+              id: order.id || order.order_id,
+              customer: `${order.first_name || ''} ${order.last_name || ''}`.trim() || order.email,
+              amount: parseFloat(order.total_amount || order.amount || 0),
+              status: order.status || 'pending',
+              date: new Date(order.created_at || Date.now()).toISOString().split('T')[0]
+            }));
+          
+          totalOrders = ordersData.orders.length;
+          totalRevenue = ordersData.orders.reduce((sum: number, order: any) => 
+            sum + parseFloat(order.total_amount || order.amount || 0), 0
+          );
+        }
+      }
+      
+      // If no orders from API, use mock data
+      if (recentOrders.length === 0) {
+        recentOrders = [
           { id: 'ORD-001', customer: 'John Doe', amount: 299.99, status: 'completed', date: '2025-10-11' },
           { id: 'ORD-002', customer: 'Jane Smith', amount: 149.50, status: 'pending', date: '2025-10-11' },
           { id: 'ORD-003', customer: 'Bob Johnson', amount: 79.99, status: 'completed', date: '2025-10-10' },
-        ],
+        ];
+      }
+
+      setStats({
+        totalOrders,
+        totalRevenue,
+        totalCustomers: 89,
+        totalProducts: 234,
+        recentOrders,
         salesData: [
           { name: 'Jan', value: 2400, color: 'hsl(var(--primary))' },
           { name: 'Feb', value: 1398, color: 'hsl(var(--primary))' },
@@ -242,6 +277,19 @@ export default function AdminPage() {
       });
     } catch (error) {
       console.error('Failed to load dashboard stats:', error);
+      // Fallback to mock data on error
+      setStats({
+        totalOrders: 156,
+        totalRevenue: 12450.99,
+        totalCustomers: 89,
+        totalProducts: 234,
+        recentOrders: [
+          { id: 'ORD-001', customer: 'John Doe', amount: 299.99, status: 'completed', date: '2025-10-11' },
+          { id: 'ORD-002', customer: 'Jane Smith', amount: 149.50, status: 'pending', date: '2025-10-11' },
+          { id: 'ORD-003', customer: 'Bob Johnson', amount: 79.99, status: 'completed', date: '2025-10-10' },
+        ],
+        salesData: []
+      });
     }
   };
 
@@ -305,9 +353,9 @@ export default function AdminPage() {
         </div>
 
         {/* Main Content - Desktop View Only */}
-        <div className="hidden md:block px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
+        <div className="hidden md:block px-6 py-6">
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <Card className="hover:shadow-md transition-shadow">
               <CardContent className="p-5">
                 <div className="flex items-center justify-between mb-2">
@@ -465,32 +513,32 @@ export default function AdminPage() {
               <MaintenanceToggleModern />
 
               {/* Quick Links */}
-              <Card>
+              <Card className="h-full">
                 <CardHeader className="border-b border-gray-100 dark:border-gray-800 pb-4">
                   <CardTitle className="text-base font-semibold">Quick links</CardTitle>
                 </CardHeader>
                 <CardContent className="p-4">
                   <div className="space-y-1">
                     <Link href="/admin/products">
-                      <Button variant="ghost" className="w-full justify-start text-sm" size="sm">
+                      <Button variant="ghost" className="w-full justify-start text-sm hover:bg-gray-50 dark:hover:bg-gray-800" size="sm">
                         <LayoutGrid className="h-4 w-4 mr-2" />
                         Products
                       </Button>
                     </Link>
                     <Link href="/admin/products/categories">
-                      <Button variant="ghost" className="w-full justify-start text-sm" size="sm">
+                      <Button variant="ghost" className="w-full justify-start text-sm hover:bg-gray-50 dark:hover:bg-gray-800" size="sm">
                         <Tag className="h-4 w-4 mr-2" />
                         Categories
                       </Button>
                     </Link>
                     <Link href="/admin/orders">
-                      <Button variant="ghost" className="w-full justify-start text-sm" size="sm">
+                      <Button variant="ghost" className="w-full justify-start text-sm hover:bg-gray-50 dark:hover:bg-gray-800" size="sm">
                         <FileText className="h-4 w-4 mr-2" />
                         Orders
                       </Button>
                     </Link>
-                    <Link href="/admin/users">
-                      <Button variant="ghost" className="w-full justify-start text-sm" size="sm">
+                    <Link href="/admin/customers">
+                      <Button variant="ghost" className="w-full justify-start text-sm hover:bg-gray-50 dark:hover:bg-gray-800" size="sm">
                         <Users className="h-4 w-4 mr-2" />
                         Customers
                       </Button>
