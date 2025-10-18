@@ -294,30 +294,10 @@ export default function AdminPage() {
         onToggle={toggleMaintenanceMode}
       />
       <div className="min-h-screen bg-slate-950">
-        {/* Mobile Simple View - Shows on mobile only */}
+        {/* Mobile Header - Shows on mobile only */}
         <div className="md:hidden">
           <div className="bg-slate-900 border-b border-slate-800 px-4 py-4">
-            <h1 className="text-xl font-semibold text-white mb-4">Dashboard</h1>
-            
-            {/* Simple Stats Grid */}
-            <div className="grid grid-cols-2 gap-3 mb-4">
-              <div className="bg-slate-800 rounded-lg p-3">
-                <div className="text-xs text-slate-400 mb-1">Sales</div>
-                <div className="text-lg font-bold text-white">£{stats.totalRevenue.toLocaleString()}</div>
-              </div>
-              <div className="bg-slate-800 rounded-lg p-3">
-                <div className="text-xs text-slate-400 mb-1">Orders</div>
-                <div className="text-lg font-bold text-white">{stats.totalOrders}</div>
-              </div>
-              <div className="bg-slate-800 rounded-lg p-3">
-                <div className="text-xs text-slate-400 mb-1">Customers</div>
-                <div className="text-lg font-bold text-white">{stats.totalCustomers}</div>
-              </div>
-              <div className="bg-slate-800 rounded-lg p-3">
-                <div className="text-xs text-slate-400 mb-1">Products</div>
-                <div className="text-lg font-bold text-white">{stats.totalProducts}</div>
-              </div>
-            </div>
+            <h1 className="text-xl font-semibold text-white">Dashboard</h1>
           </div>
         </div>
 
