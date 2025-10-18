@@ -708,6 +708,12 @@ export function Header() {
             >
               Community
             </Link>
+            <Link
+              href="/recommended"
+              className="whitespace-nowrap px-3 py-2 rounded-md hover:bg-accent transition-all duration-200 text-foreground/90 hover:text-foreground font-medium"
+            >
+              Vouched Brands
+            </Link>
             
             {/* Fitness Guides Mega Menu */}
             <div className="relative group">
@@ -1220,6 +1226,27 @@ export function Header() {
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
                   style={{
                     background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05))'
+                  }}
+                ></div>
+              </Link>
+              <Link
+                href="/recommended"
+                className={`relative block px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base font-medium rounded-xl backdrop-blur-xl border shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] text-foreground hover:text-primary overflow-hidden group ${
+                  settings.animationsEnabled
+                    ? 'transition-all duration-500 ease-out hover:scale-[1.02] active:scale-98'
+                    : 'transition-all duration-300'
+                }`}
+                style={{
+                  background: 'linear-gradient(135deg, rgba(29, 185, 84, 0.08), rgba(29, 185, 84, 0.02))',
+                  borderColor: 'rgba(255, 255, 255, 0.2)'
+                }}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span className="relative z-10">Vouched Brands</span>
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(29, 185, 84, 0.15), rgba(29, 185, 84, 0.05))'
                   }}
                 ></div>
               </Link>
