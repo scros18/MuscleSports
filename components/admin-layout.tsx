@@ -59,6 +59,7 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
     // Poll every 10 seconds
     const interval = setInterval(checkMaintenanceMode, 10000);
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const checkMaintenanceMode = async () => {

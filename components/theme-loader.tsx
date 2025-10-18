@@ -53,7 +53,6 @@ export function ThemeLoader() {
     <>
       <Script
         id="theme-loader"
-        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             (function() {

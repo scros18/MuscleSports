@@ -1181,8 +1181,6 @@ export default function AccountPage() {
         </main>
       </div>
     </div>
-  );
-}
     </div>
   );
 }

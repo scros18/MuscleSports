@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { ProductCard } from "@/components/product-card";
 import HeroCarousel from '@/components/hero-carousel';
 import HomePanels from '@/components/home-panels';
@@ -812,9 +813,11 @@ export default function Home() {
                       <div key={idx} className={`group text-center p-8 bg-gradient-to-br from-white to-gray-50 dark:from-card dark:to-card/50 rounded-2xl hover:shadow-2xl transition-all duration-300 border-2 hover:border-primary/30 hover:-translate-y-2`}>
                         <div className="mb-6 flex justify-center">
                           <div className="w-48 h-48 rounded-2xl bg-white dark:bg-gray-800 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300 p-6">
-                            <img 
+                            <Image 
                               src={partner.image} 
                               alt={partner.name} 
+                              width={192}
+                              height={192}
                               className="w-full h-full object-contain"
                             />
                           </div>

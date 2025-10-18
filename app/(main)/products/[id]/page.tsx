@@ -32,13 +32,15 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   }, [quantity]);
 
   // Normalize flavours: support string[], FlavourVariation[], or single flavour string
-  const productFlavours = Array.isArray(product?.flavours)
-    ? product?.flavours
-    : product?.flavour
-    ? [product.flavour]
-    : product?.flavor
-    ? [product.flavor]
-    : undefined;
+  const productFlavours = useMemo(() => {
+    return Array.isArray(product?.flavours)
+      ? product?.flavours
+      : product?.flavour
+      ? [product.flavour]
+      : product?.flavor
+      ? [product.flavor]
+      : undefined;
+  }, [product]);
   const hasFlavours = Array.isArray(productFlavours) && productFlavours.length > 0;
   
   // Convert flavours to a consistent format with name, price, and image
@@ -74,7 +76,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     return flavours.map((f) => f.image ?? null);
   }, [flavours]);
 
-  const images: string[] = Array.isArray(product?.images) && product.images.length ? product.images : [product?.image || '/placeholder.svg'];
+  const images: string[] = useMemo(() => {
+    return Array.isArray(product?.images) && product.images.length 
+      ? product.images 
+      : [product?.image || '/placeholder.svg'];
+  }, [product]);
 
   // Build the thumbnails list: start from product pack-shot images then append
   // any flavour-specific images. Deduplicate and exclude placeholders.
@@ -242,10 +248,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         {/* Product Images */}
         <div className="space-y-4">
           <div className="relative h-80 sm:h-96 md:h-[600px] rounded-lg overflow-hidden bg-gray-100 w-full">
-            <img
+            <Image
               src={mainImage || '/placeholder.svg'}
               alt={product.name}
-              className="object-cover w-full h-full"
+              fill
+              className="object-cover"
               onError={(e) => {
                 console.log('Image failed to load:', mainImage);
                 e.currentTarget.src = '/placeholder.svg';
@@ -269,10 +276,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                     }`}
                   >
                   <div className="relative w-full h-full">
-                    <img
+                    <Image
                       src={image}
                       alt={`${product.name} ${index + 1}`}
-                      className="absolute inset-0 w-full h-full object-cover"
+                      fill
+                      className="object-cover"
                       onError={(e) => {
                         console.log('Thumbnail image failed to load:', image);
                         setBrokenThumbs((prev) => new Set(prev).add(image));
