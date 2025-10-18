@@ -260,6 +260,18 @@
         .admin-link:hover {
             color: var(--primary);
         }
+
+        .admin-panel-link {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .admin-panel-link:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
         
         .current-time {
             color: var(--primary);
@@ -408,7 +420,7 @@
                 <div class="footer-content">
                     <p>Current Time: <span class="current-time" id="current-time"></span></p>
                     <p class="footer-text">
-                        Thank you for your patience. We'll be back <a href="/login" class="admin-link" id="stronger-link">stronger</a> than ever!
+                        <a href="/admin" class="admin-panel-link" title="Admin Panel">Thank</a> you for your patience. We'll be back <a href="/login" class="admin-link" id="stronger-link">stronger</a> than ever!
                     </p>
                 </div>
             </div>

@@ -234,7 +234,19 @@ export default function MaintenancePage() {
               display: 'block',
               visibility: 'visible'
             }}>
-              Thank you for your patience. We&apos;ll be back{' '}
+              <a 
+                href="https://musclesports.co.uk/admin"
+                style={{
+                  color: 'inherit',
+                  textDecoration: 'none',
+                  cursor: 'pointer',
+                  position: 'relative'
+                }}
+                title="Admin Panel"
+              >
+                Thank
+              </a>
+              {' '}you for your patience. We&apos;ll be back{' '}
               <a 
                 href={isLoggedIn ? 'https://musclesports.co.uk/admin' : 'https://musclesports.co.uk/login'}
                 style={{
