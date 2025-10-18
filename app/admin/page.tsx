@@ -403,9 +403,82 @@ export default function AdminPage() {
 
           {/* Main Grid */}
           <div className="grid lg:grid-cols-3 gap-6">
-            {/* Left Column - Actions */}
+            {/* Left Column - Changelog */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Placeholder for future content */}
+              {/* Lumify Changelog */}
+              <Card className="bg-slate-900 border-slate-800">
+                <CardHeader className="border-b border-slate-800 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg">
+                      <Activity className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-lg font-semibold text-white">Lumify Updates</CardTitle>
+                      <p className="text-sm text-slate-400 mt-0.5">Latest platform improvements</p>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    {/* Update 1 */}
+                    <div className="flex gap-4 pb-4 border-b border-slate-800 last:border-0 last:pb-0">
+                      <div className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 shadow-lg shadow-green-500/50"></div>
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between gap-3 mb-2">
+                          <h3 className="text-base font-semibold text-white">Admin Panel Enhancement</h3>
+                          <span className="text-xs text-slate-500 whitespace-nowrap">2 hours ago</span>
+                        </div>
+                        <p className="text-sm text-slate-400 mb-3">
+                          Complete redesign of Users and Promo Codes pages with Lumify theme. Added gradient buttons, dark slate backgrounds, and improved mobile responsiveness.
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          <Badge className="bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs">UI/UX</Badge>
+                          <Badge className="bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-xs">Admin Panel</Badge>
+                          <Badge className="bg-green-500/20 text-green-400 border border-green-500/30 text-xs">Enhancement</Badge>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Update 2 */}
+                    <div className="flex gap-4 pb-4 border-b border-slate-800 last:border-0 last:pb-0">
+                      <div className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 shadow-lg shadow-purple-500/50"></div>
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between gap-3 mb-2">
+                          <h3 className="text-base font-semibold text-white">Cache+ Performance Suite</h3>
+                          <span className="text-xs text-slate-500 whitespace-nowrap">1 day ago</span>
+                        </div>
+                        <p className="text-sm text-slate-400 mb-3">
+                          Launched Cache+ with professional caching features. Includes page caching, CSS/JS minification, lazy loading, and real-time performance stats.
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          <Badge className="bg-purple-500/20 text-purple-400 border border-purple-500/30 text-xs">Performance</Badge>
+                          <Badge className="bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 text-xs">New Feature</Badge>
+                          <Badge className="bg-orange-500/20 text-orange-400 border border-orange-500/30 text-xs">Cache</Badge>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Update 3 */}
+                    <div className="flex gap-4 pb-4 border-b border-slate-800 last:border-0 last:pb-0">
+                      <div className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 shadow-lg shadow-yellow-500/50"></div>
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between gap-3 mb-2">
+                          <h3 className="text-base font-semibold text-white">iOS Haptic Feedback</h3>
+                          <span className="text-xs text-slate-500 whitespace-nowrap">2 days ago</span>
+                        </div>
+                        <p className="text-sm text-slate-400 mb-3">
+                          Added iOS-compatible haptic feedback for maintenance mode toggle. iPhone devices now provide tactile feedback when enabling maintenance mode.
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          <Badge className="bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs">Mobile</Badge>
+                          <Badge className="bg-green-500/20 text-green-400 border border-green-500/30 text-xs">iOS</Badge>
+                          <Badge className="bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-xs">UX</Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
             {/* Right Column - Sidebar */}
