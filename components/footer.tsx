@@ -132,14 +132,15 @@ export function Footer() {
             {/* PayPal Logo */}
             <div className="group relative md:hover:scale-110 md:transition-transform md:duration-300">
               <svg 
-                viewBox="0 0 24 24" 
-                className="w-12 h-8 md:w-14 md:h-9"
-                fill="none" 
+                viewBox="0 0 48 32" 
+                className="w-14 h-9"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M3.5 4h12c1.93 0 3.5 1.57 3.5 3.5v8c0 1.93-1.57 3.5-3.5 3.5h-12C1.57 19 0 17.43 0 15.5v-8C0 5.57 1.57 4 3.5 4z" fill="#003087"/>
-                <path d="M8.2 8.5c-.2 1.2-.9 1.8-2.1 1.8H5.2l.4-2.4h.9c.7 0 1.1.3 1.2.8l-.5 1.6zm3.5 0c-.2 1.2-.9 1.8-2.1 1.8h-.9l.4-2.4h.9c.7 0 1.1.3 1.2.8l-.5 1.6z" fill="#009cde"/>
-                <path d="M14 9.3c0-.3-.3-.5-.6-.5H9.2l-.7 4.2h2.2c1.4 0 2.5-1.1 2.5-2.5 0-.6-.2-1.1-.6-1.5l-.6-.7z" fill="#009cde"/>
+                <rect width="48" height="32" rx="4" fill="white"/>
+                <rect x="1" y="1" width="46" height="30" rx="3" fill="white" stroke="#E5E7EB" strokeWidth="1"/>
+                <path d="M14.5 11.5c1.2 0 2.2.4 2.8 1.2.6.7.7 1.7.4 2.8-.4 1.4-1.5 2.3-3 2.3h-1.2l.6-3.8c.1-.3.3-.5.6-.5h.8zm-2.8 8.2l1-6.4c.1-.6.6-1 1.2-1h1.6c1.8 0 3.2.6 3.9 1.8.4.6.5 1.3.3 2-.2 1.3-.9 2.3-1.9 2.9-.8.5-1.9.7-3 .7h-1.1c-.3 0-.6.2-.7.5l-.5 3.2h-1.8l.6-3.7c0-.3.2-.5.4-.5z" fill="#003087"/>
+                <path d="M21 11.5c1.2 0 2.2.4 2.8 1.2.6.7.7 1.7.4 2.8-.4 1.4-1.5 2.3-3 2.3h-1.2l.6-3.8c.1-.3.3-.5.6-.5h.8zm-2.8 8.2l1-6.4c.1-.6.6-1 1.2-1h1.6c1.8 0 3.2.6 3.9 1.8.4.6.5 1.3.3 2-.2 1.3-.9 2.3-1.9 2.9-.8.5-1.9.7-3 .7h-1.1c-.3 0-.6.2-.7.5l-.5 3.2h-1.8l.6-3.7c0-.3.2-.5.4-.5z" fill="#0070BA"/>
+                <path d="M27 11.5c1.2 0 2.2.4 2.8 1.2.6.7.7 1.7.4 2.8-.4 1.4-1.5 2.3-3 2.3h-1.2l.6-3.8c.1-.3.3-.5.6-.5h.8z" fill="#003087"/>
               </svg>
               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 md:group-hover:opacity-100 md:transition-opacity bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap pointer-events-none">PayPal</div>
             </div>
@@ -148,11 +149,11 @@ export function Footer() {
             <div className="group relative md:hover:scale-110 md:transition-transform md:duration-300">
               <svg 
                 viewBox="0 0 48 32" 
-                className="w-12 h-8 md:w-14 md:h-9"
+                className="w-14 h-9"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <rect width="48" height="32" rx="4" fill="#1A1F71"/>
-                <text x="8" y="21" fontFamily="Arial, sans-serif" fontSize="16" fontWeight="bold" fill="white">VISA</text>
+                <path d="M16.5 11.5l-2.8 9h2.5l.4-1.1h2.9l.2 1.1h2.5l-1.8-9h-3.9zm.6 6.2l1-2.8.4 2.8h-1.4zm7.4-6.2l-1.5 6.1-2.4-6.1h-2.8l3.5 8.1h2.7l2.3-8.1h-2.5zm4.5 0l-1.8 9h2.4l1.8-9h-2.4z" fill="white"/>
               </svg>
               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 md:group-hover:opacity-100 md:transition-opacity bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap pointer-events-none">Visa</div>
             </div>
@@ -161,13 +162,13 @@ export function Footer() {
             <div className="group relative md:hover:scale-110 md:transition-transform md:duration-300">
               <svg 
                 viewBox="0 0 48 32" 
-                className="w-12 h-8 md:w-14 md:h-9"
+                className="w-14 h-9"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <rect width="48" height="32" rx="4" fill="#000000"/>
-                <circle cx="16" cy="16" r="9" fill="#EB001B"/>
-                <circle cx="32" cy="16" r="9" fill="#F79E1B"/>
-                <ellipse cx="24" cy="16" rx="8" ry="9" fill="#FF5F00"/>
+                <circle cx="18" cy="16" r="8" fill="#EB001B"/>
+                <circle cx="30" cy="16" r="8" fill="#F79E1B"/>
+                <path d="M24 10.5c-1.2 1-2 2.5-2 4.2s.8 3.2 2 4.2c1.2-1 2-2.5 2-4.2s-.8-3.2-2-4.2z" fill="#FF5F00"/>
               </svg>
               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 md:group-hover:opacity-100 md:transition-opacity bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap pointer-events-none">Mastercard</div>
             </div>
