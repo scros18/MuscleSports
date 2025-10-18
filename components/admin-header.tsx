@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Settings, LogOut, Bell, Menu, X, Sparkles } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
 interface AdminHeaderProps {
@@ -12,6 +13,7 @@ interface AdminHeaderProps {
 }
 
 export function AdminHeader({ title, onMenuClick }: AdminHeaderProps) {
+  const router = useRouter();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -36,6 +38,18 @@ export function AdminHeader({ title, onMenuClick }: AdminHeaderProps) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showUserMenu]);
+
+  const handleLogout = () => {
+    // Clear auth token from localStorage
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('adminUser');
+    
+    // Close dropdown
+    setShowUserMenu(false);
+    
+    // Redirect to the main site
+    window.location.href = 'https://musclesports.co.uk';
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full bg-slate-950 border-b border-slate-900 shadow-xl">
@@ -116,7 +130,7 @@ export function AdminHeader({ title, onMenuClick }: AdminHeaderProps) {
             {mounted && showUserMenu && (
               <div className="absolute right-0 mt-2 w-40 bg-slate-900 border border-slate-800 rounded-lg shadow-2xl shadow-slate-900/50 py-1 z-50">
                 <button 
-                  onClick={() => setShowUserMenu(false)}
+                  onClick={handleLogout}
                   className="w-full flex items-center gap-2 px-4 py-2 text-slate-200 hover:bg-slate-800/80 hover:text-red-400 hover:drop-shadow-[0_0_6px_rgba(239,68,68,0.5)] transition-all text-sm"
                 >
                   <LogOut className="h-4 w-4" />
