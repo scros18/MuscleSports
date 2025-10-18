@@ -2,9 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { usePerformance } from "@/context/performance-context";
-import { Button } from "@/components/ui/button";
 
 type Slide = {
   id: number;
@@ -179,9 +177,9 @@ export default function HeroCarousel() {
             sizes="(min-width: 768px) 100vw, 100vw"
             className="object-cover"
           />
-          <div className="w-full h-full bg-gradient-to-r from-black/80 via-black/50 to-transparent flex items-center relative z-10">
-            <div className="container px-4 sm:px-6 md:px-16">
-              <div className="max-w-xl md:max-w-2xl">
+          <div className="w-full h-full bg-gradient-to-r from-black/80 via-black/50 to-transparent flex items-center justify-center md:justify-start relative z-10">
+            <div className="container px-12 sm:px-16 md:px-20 mx-auto">
+              <div className="flex flex-col items-center md:items-start">
                 {/* Main Title - Bold & Masculine with premium black background */}
                 <div className="inline-block mb-2 md:mb-3">
                   <h2 className="text-white text-2xl sm:text-3xl md:text-6xl font-black tracking-tight leading-tight px-3 sm:px-4 md:px-6 py-2 md:py-3 uppercase bg-black/90 backdrop-blur-sm rounded-lg shadow-2xl">
@@ -207,25 +205,6 @@ export default function HeroCarousel() {
                     </p>
                   </div>
                 )}
-                
-                {/* Shop Now CTA - use the site's Button and Link for consistent styling and correct navigation */}
-                <Link 
-                  href={s.category ? `/products?category=${encodeURIComponent(s.category)}` : '/products'}
-                  tabIndex={i !== index ? -1 : undefined}
-                  className="inline-block"
-                >
-                  <Button
-                    className={`${
-                      settings.animationsEnabled
-                        ? 'mt-4 sm:mt-5 md:mt-6 rounded-full font-black text-xs sm:text-sm md:text-base uppercase tracking-wider shadow-2xl px-5 sm:px-6 md:px-10 py-2 sm:py-2.5 md:py-3.5 transition-all duration-500 hover:scale-105 active:scale-95'
-                        : 'mt-4 sm:mt-5 md:mt-6 rounded-full font-black text-xs sm:text-sm md:text-base uppercase tracking-wider shadow-2xl px-5 sm:px-6 md:px-10 py-2 sm:py-2.5 md:py-3.5 transition-colors duration-200'
-                    }`}
-                    aria-label={s.title + ' - Shop Now'}
-                    tabIndex={i !== index ? -1 : undefined}
-                  >
-                    Shop Now
-                  </Button>
-                </Link>
               </div>
             </div>
           </div>
