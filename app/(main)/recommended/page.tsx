@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ExternalLink, MapPin, Dumbbell, Package, ArrowRight, Instagram, Facebook, Twitter, Youtube, Check, Shield, Users, Target, HelpCircle, Search, TrendingUp, Lock } from "lucide-react";
 
 interface Business {
@@ -73,6 +73,20 @@ export default function RecommendedPage() {
   const [activeTab, setActiveTab] = useState<"gyms" | "wholesalers">("gyms");
   const [failedIframes, setFailedIframes] = useState<string[]>([]);
   const iframeLoadedRef = useRef<Set<string>>(new Set());
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Set initial value
+    setIsMobile(window.innerWidth < 768);
+    
+    // Handle resize
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Comprehensive Premium SEO Schema Markup for Maximum Engagement & Community Building
   const schemaMarkup = {
@@ -533,13 +547,13 @@ export default function RecommendedPage() {
                   </div>
                   <div className="bg-white dark:bg-black rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-800 w-full transition-all duration-500 hover:border-green-500/50">
                     <div className="relative w-full" style={{ 
-                      aspectRatio: window.innerWidth < 768 ? '9 / 16' : '16 / 9', 
-                      minHeight: window.innerWidth < 768 ? '810px' : '500px', 
-                      maxHeight: window.innerWidth < 768 ? '100vh' : '900px',
+                      aspectRatio: isMobile ? '9 / 16' : '16 / 9', 
+                      minHeight: isMobile ? '810px' : '500px', 
+                      maxHeight: isMobile ? '100vh' : '900px',
                       height: '100%'
                     }}>
                       <iframe
-                        src={business.embedUrl + (typeof window !== 'undefined' && window.innerWidth < 768 ? '?mobile=1' : '')}
+                        src={business.embedUrl + (isMobile ? '?mobile=1' : '')}
                         title={`${business.name} Website`}
                         className="absolute inset-0 w-full h-full border-0"
                         sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation"
@@ -557,7 +571,7 @@ export default function RecommendedPage() {
                             if (iframe.contentDocument) {
                               iframe.contentDocument.documentElement.style.scrollbarWidth = 'none';
                               iframe.contentDocument.body.style.scrollbarWidth = 'none';
-                              iframe.contentDocument.documentElement.style.zoom = window.innerWidth < 768 ? '100%' : '100%';
+                              iframe.contentDocument.documentElement.style.zoom = '100%';
                             }
                           } catch (err) {
                             // Cross-origin iframes - expected
