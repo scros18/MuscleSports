@@ -26,7 +26,8 @@ export function LiveChatWidget() {
       id: messages.length + 1,
       sender: "user",
       text: message,
-      time: new Date()
+      time: new Date(),
+      name: "You"
     };
 
     setMessages([...messages, newMessage]);
