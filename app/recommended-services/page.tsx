@@ -75,7 +75,7 @@ export default function RecommendedServicesPage() {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [filterCategory, setFilterCategory] = useState<string>('All');
 
-  const categories = ['All', ...new Set(recommendedServices.map(s => s.category))];
+  const categories = ['All', ...Array.from(new Set(recommendedServices.map(s => s.category)))];
   
   const filteredServices = filterCategory === 'All' 
     ? recommendedServices 
