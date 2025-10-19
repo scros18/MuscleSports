@@ -874,7 +874,7 @@ export default function RecommendedPage() {
                   </div>
                   <h4 className="font-bold text-gray-900 dark:text-white">Can I trust these businesses?</h4>
                 </div>
-                <p className="text-sm text-gray-700 dark:text-gray-400 ml-9">Absolutely. Every partner is vetted for legitimacy. If you have any concerns, contact us immediately at partnerships@musclesports.co.uk and we'll investigate.</p>
+                <p className="text-sm text-gray-700 dark:text-gray-400 ml-9">Absolutely. Every partner is vetted for legitimacy. If you have any concerns, contact us immediately at partnerships@musclesports.co.uk and we&apos;ll investigate.</p>
               </div>
               <div className="p-6 bg-white dark:bg-slate-900/50 rounded-lg border border-slate-200 dark:border-slate-800 hover:shadow-lg hover:border-green-300 dark:hover:border-green-700 transition-all duration-300">
                 <div className="flex items-start gap-4 mb-3">

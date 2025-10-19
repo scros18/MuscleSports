@@ -10,7 +10,7 @@ import { Switch } from '@/components/ui/switch';
 import {
   Zap,
   Database,
-  Image,
+  Image as ImageIcon,
   Code,
   FileCode,
   Globe,
@@ -498,7 +498,7 @@ export default function CachePlusPage() {
               disabled={clearing}
               className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
             >
-              <Image className="mr-2 h-4 w-4" />
+              <ImageIcon className="mr-2 h-4 w-4" />
               Images
             </Button>
             <Button

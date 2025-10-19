@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { DynamicPageTitle } from "@/components/dynamic-page-title";
+import Image from "next/image";
 
 interface Message {
   id: string;
@@ -327,10 +328,11 @@ export default function CommunityPage() {
                 className="group bg-card border rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="relative overflow-hidden aspect-video">
-                  <img
+                  <Image
                     src={video.thumbnail}
                     alt={video.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                     <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center group-hover:scale-110 transition-transform">
