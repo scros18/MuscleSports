@@ -703,3 +703,11 @@ Built with cutting-edge technologies and inspired by the world's best e-commerce
 <sub>Made with 💪 and ☕ by the MuscleSports Team</sub>
 
 </div>
+
+## Tropicana scraping session (manual)
+
+- Run: `npm run tropicana:bootstrap-session` to open a browser with stealth. Log in manually, then press Enter in the terminal to save cookies/localStorage.
+- After that, run: `npm run sync:tropicana` to scrape using the saved session and sync products.
+- Optional env:
+  - `PUPPETEER_HEADLESS=false` to watch it run.
+  - `PROXY_SERVER=http://user:pass@host:port` to route via proxy.
